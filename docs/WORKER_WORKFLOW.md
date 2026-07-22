@@ -18,6 +18,12 @@ If the node needs its own GitHub SSH key:
 bash scripts/setup_github_ssh.sh <owner> Evolution-Hand ~/.ssh/evolution_hand_github
 ```
 
+For the first push from the baseline machine:
+
+```bash
+bash scripts/push_main_to_github.sh <owner> Evolution-Hand ~/.ssh/evolution_hand_github
+```
+
 ## Start a new experiment
 
 ```bash

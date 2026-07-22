@@ -45,6 +45,12 @@ git push -u origin exp/server51-grasp-2026-07-22
 
 When an experiment proves useful, merge the minimal reusable code back into `dev` or `main`. Keep raw logs and result files outside Git.
 
+For first-time GitHub publishing after the remote repo exists:
+
+```bash
+bash scripts/push_main_to_github.sh Jiahe-Zhao Evolution-Hand
+```
+
 ## Notes
 
 - The current imported baseline came from `/home/zjh/Evolution_PC` on `100.81.86.51`.
