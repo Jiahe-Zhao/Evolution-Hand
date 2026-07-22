@@ -7,6 +7,7 @@ Evolution Hand is the baseline repository for hand morphology evolution, multi-t
 - `Isaaclab_other/`: evolution entrypoints, hand generators, evaluation helpers, and Isaac Lab utility scripts.
 - `evolution_tasks/`: task definitions for grasp, strike, stone, manipulation, and cube environments.
 - `parallel_eval_slots/`: per-slot overrides for parallel evaluation workers.
+- `scripts/`: helper scripts for GitHub SSH setup, branch creation, and remote source sync.
 - `项目说明.md`: original Chinese project notes.
 
 ## What is tracked
@@ -36,7 +37,7 @@ Examples:
 ```bash
 git checkout main
 git pull origin main
-git checkout -b exp/server51-grasp-2026-07-22
+bash scripts/create_experiment_branch.sh server51 grasp 2026-07-22
 git add .
 git commit -m "feat: adjust grasp evolution pipeline"
 git push -u origin exp/server51-grasp-2026-07-22
@@ -48,3 +49,4 @@ When an experiment proves useful, merge the minimal reusable code back into `dev
 
 - The current imported baseline came from `/home/zjh/Evolution_PC` on `100.81.86.51`.
 - The original remote directory contained large experiment logs under `evolution_tasks/logs`, which are intentionally excluded from version control.
+- For multi-node collaboration details, see `docs/WORKER_WORKFLOW.md`.
