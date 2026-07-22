@@ -1,0 +1,40 @@
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local environments
+.venv/
+venv/
+
+# Editors
+.idea/
+.vscode/
+
+# Experiment outputs and runtime state
+logs/
+**/logs/
+.thumbs/
+outputs/
+results/
+checkpoints/
+wandb/
+tensorboard/
+*_runtime_state.json
+*_evaluation_states/
+exp_*.json
+exp_*_mutation_stats.*
+*.log
+*.out
+*.err
+*.tmp
+*.last_generated
+*.bak_*
+*.manualbak_*
+
+# Large model artifacts
+*.pt
+*.pth
+*.ckpt
+*.onnx

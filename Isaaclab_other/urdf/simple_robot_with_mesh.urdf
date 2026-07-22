@@ -1,0 +1,412 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<robot name="human_hand">
+  <link name="palm">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/palm_box_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.01" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_box">
+      <geometry>
+        <box size="0.1  0.2  0.02"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger1_link1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger1_link1_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.04"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger1_link2">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger1_link2_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.015" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.03"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger1_link3">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger1_link3_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0125" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.025"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger2_link1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger2_link1_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.04"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger2_link2">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger2_link2_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.015" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.03"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger2_link3">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger2_link3_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0125" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.025"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger3_link1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger3_link1_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.04"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger3_link2">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger3_link2_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.015" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.03"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger3_link3">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger3_link3_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0125" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.025"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger4_link1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger4_link1_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.04"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger4_link2">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger4_link2_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.015" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.03"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger4_link3">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger4_link3_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0125" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.025"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger5_link1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger5_link1_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.02" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.04"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger5_link2">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger5_link2_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.015" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.03"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="finger5_link3">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="generated_meshes/finger5_link3_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0125" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.01" length="0.025"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <joint name="finger1_joint1" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="palm"/>
+    <child link="finger1_link1"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="-0.03 0.08 0.02" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger1_joint2" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger1_link1"/>
+    <child link="finger1_link2"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.04" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger1_joint3" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger1_link2"/>
+    <child link="finger1_link3"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.03" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger2_joint1" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="palm"/>
+    <child link="finger2_link1"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.09 0.02" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger2_joint2" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger2_link1"/>
+    <child link="finger2_link2"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.04" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger2_joint3" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger2_link2"/>
+    <child link="finger2_link3"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.03" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger3_joint1" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="palm"/>
+    <child link="finger3_link1"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.03 0.08 0.02" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger3_joint2" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger3_link1"/>
+    <child link="finger3_link2"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.04" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger3_joint3" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger3_link2"/>
+    <child link="finger3_link3"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.03" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger4_joint1" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="palm"/>
+    <child link="finger4_link1"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.05 0.06 0.02" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger4_joint2" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger4_link1"/>
+    <child link="finger4_link2"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.04" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger4_joint3" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger4_link2"/>
+    <child link="finger4_link3"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.03" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger5_joint1" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="palm"/>
+    <child link="finger5_link1"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="-0.05 0.05 0.02" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger5_joint2" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger5_link1"/>
+    <child link="finger5_link2"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.04" rpy="0.0 -0.0 0.0"/>
+  </joint>
+  <joint name="finger5_joint3" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="finger5_link2"/>
+    <child link="finger5_link3"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.03" rpy="0.0 -0.0 0.0"/>
+  </joint>
+</robot>
