@@ -1,0 +1,43 @@
+# Python and editor artifacts
+__pycache__/
+*.py[cod]
+.DS_Store
+._*
+*.bak_*
+*.manualbak_*
+
+# IsaacLab / RL runtime output
+evolution_tasks/logs/
+parallel_eval_slots/
+Isaaclab_other/*.log
+Isaaclab_other/nohup.out
+Isaaclab_other/run_local_evolution_4090.current.log*
+Isaaclab_other/originalbox_grasponly_*.log
+
+# Per-experiment mutable state, checkpoints, and recovery copies
+Isaaclab_other/exp_*.json
+Isaaclab_other/exp_*.json.*
+Isaaclab_other/exp_*_mutation_stats.txt
+Isaaclab_other/*_runtime_state.json
+Isaaclab_other/*_evaluation_states/
+Isaaclab_other/*.bak_*
+Isaaclab_other/*.manualbak_*
+Isaaclab_other/recover_exp_*.py
+
+# Generated geometry and transient hand assets
+Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf
+Isaaclab_other/agent_for_isaaclab/mesh/
+Isaaclab_other/agent_for_isaaclab_mirror/urdf/current_agent.urdf
+Isaaclab_other/agent_for_isaaclab_mirror/mesh/
+Isaaclab_other/hand_structure_backup_*/
+Isaaclab_other/generated_meshes/
+Isaaclab_other/output_meshes*/
+
+# Generated previews and asset-browser thumbnails
+evolution_tasks/**/*.png
+evolution_tasks/**/.thumbs/
+evolution_tasks/**/*.last_generated
+
+# Local IsaacLab and simulator installations belong outside this repository
+isaac-sim/
+_isaac_sim/

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<robot name="simple_robot">
+  <link name="link_0_0">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="output_meshes/link_0_0_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.2" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.1" length="0.4"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <link name="link_1_0">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="output_meshes/link_1_0_cylinder_0.stl"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.2" rpy="0.0 -0.0 0.0"/>
+    </visual>
+    <collision name="collision_cylinder">
+      <geometry>
+        <cylinder radius="0.1" length="0.4"/>
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+    </collision>
+  </link>
+  <joint name="link_0_0_to_link_1_0" type="revolute">
+    <limit effort="10.0" velocity="1.0" lower="-1.57" upper="1.57"/>
+    <parent link="link_0_0"/>
+    <child link="link_1_0"/>
+    <axis xyz="1. 0. 0."/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 -0.0 0.0"/>
+  </joint>
+</robot>
