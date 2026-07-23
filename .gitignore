@@ -36,6 +36,7 @@ Isaaclab_other/output_meshes*/
 # Generated previews and asset-browser thumbnails
 evolution_tasks/**/*preview*.png
 evolution_tasks/scene_preview.png
+evolution_tasks/**/palmar_*_debug*.png
 evolution_tasks/**/.thumbs/
 evolution_tasks/**/*.last_generated
 
