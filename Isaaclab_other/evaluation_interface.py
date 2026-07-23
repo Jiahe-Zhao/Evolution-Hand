@@ -1,5 +1,6 @@
 """进化程序与 IsaacLab 仿真引擎的接口。"""
 
+import atexit
 from code_to_urdf import generate_urdf_from_dict
 from isaaclab_tool import (
     calculate_observation_number,
@@ -14,6 +15,7 @@ import signal
 import subprocess
 import time
 
+from persistent_isaac_worker import PersistentIsaacWorker
 from mirror_agent import create_mirror_hand
 from read_results import (
     check_finished_folder_exists_in_run_dir,
@@ -27,6 +29,9 @@ ISAACLAB_ROOT = os.environ.get("ISAACLAB_ROOT", os.path.join(HOME_DIR, "IsaacLab
 ISAACLAB_TRAIN_SCRIPT = os.path.join(
     ISAACLAB_ROOT, "source", "isaaclab_tasks", "isaaclab_tasks", "evolution_tasks", "train_interface.py"
 )
+ISAACLAB_TRAIN_WORKER_SCRIPT = os.environ.get(
+    "EVOLUTION_ISAAC_WORKER_SCRIPT", os.path.join(EVOLUTION_ROOT, "Isaaclab_other", "train_worker.py")
+)
 ISAACLAB_ENV_PREFIX = os.environ.get("CONDA_PREFIX", os.path.join(HOME_DIR, "envs", "isaaclab"))
 EVOLUTION_LOG_ROOT = os.environ.get(
     "EVOLUTION_LOG_ROOT",
@@ -38,14 +43,19 @@ ISAAC_SIM_SETUP = os.environ.get(
 )
 ISAACLAB_NUM_ENVS = int(os.environ.get("ISAACLAB_NUM_ENVS", "256"))
 ISAACLAB_MAX_ITERATIONS = os.environ.get("ISAACLAB_MAX_ITERATIONS")
-ISAACLAB_CHECKPOINT_INTERVAL = int(os.environ.get("EVOLUTION_CHECKPOINT_INTERVAL", "20"))
+ISAACLAB_CHECKPOINT_INTERVAL = int(os.environ.get("EVOLUTION_CHECKPOINT_INTERVAL", "50"))
 ISAACLAB_STALL_TIMEOUT_SECONDS = max(60, int(os.environ.get("EVOLUTION_STALL_TIMEOUT_SECONDS", "900")))
 ISAACLAB_TERMINATE_TIMEOUT_SECONDS = max(5, int(os.environ.get("EVOLUTION_TERM_TIMEOUT_SECONDS", "30")))
 ISAACLAB_MAX_RESTARTS = max(0, int(os.environ.get("EVOLUTION_MAX_RESTARTS", "3")))
 ISAACLAB_POLL_INTERVAL_SECONDS = max(5, int(os.environ.get("EVOLUTION_PROCESS_POLL_SECONDS", "15")))
+ISAACLAB_REUSE_PROCESS = os.environ.get("EVOLUTION_REUSE_ISAAC_PROCESS", "0").lower() in {"1", "true", "yes", "on"}
+ISAACLAB_WORKER_STARTUP_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STARTUP_TIMEOUT", "600")))
+ISAACLAB_WORKER_REQUEST_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_REQUEST_TIMEOUT", "7200")))
 RL_LOG_GROUP = "evolution_task"
 STONEGRIND_TASK_NAME = "Isaac-EvolutionHand-StoneGrind-v0"
 PARALLEL_SLOT_ROOT = os.path.join(EVOLUTION_ROOT, "parallel_eval_slots")
+_WORKERS = {}
+_WORKERS_REGISTERED = False
 
 TASK_ENV_CFG_FILES = {
     "Isaac-EvolutionHand-StoneGrind-v0": os.path.join(
@@ -123,6 +133,10 @@ def _slot_root(slot_id):
 
 def _slot_override_root(slot_id):
     return os.path.join(_slot_root(slot_id), "python_overrides")
+
+
+def _slot_tmp_root(slot_id):
+    return os.path.join("/tmp", f"isaaclab_slot_{slot_id}")
 
 
 def _slot_package_path(slot_id, *parts):
@@ -245,6 +259,53 @@ def _split_num_envs_for_parallel(base_num_envs):
     if not split_enabled or slots <= 1:
         return base_num_envs
     return max(1, base_num_envs // slots)
+
+
+def _gpu_count():
+    raw_value = os.environ.get("EVOLUTION_GPU_COUNT")
+    if raw_value not in (None, ""):
+        return max(1, int(raw_value))
+    visible_devices = os.environ.get("CUDA_VISIBLE_DEVICES")
+    if visible_devices not in (None, ""):
+        device_ids = [item.strip() for item in visible_devices.split(",") if item.strip()]
+        if device_ids:
+            return len(device_ids)
+    return 1
+
+
+def _device_for_slot(slot_id):
+    return f"cuda:{slot_id % _gpu_count()}"
+
+
+def _close_workers():
+    for worker in list(_WORKERS.values()):
+        worker.close()
+
+
+def _worker_for_slot(slot_id, python_override_root):
+    global _WORKERS_REGISTERED
+    worker = _WORKERS.get(slot_id)
+    if worker is None:
+        slot_root = _slot_root(slot_id)
+        worker = PersistentIsaacWorker(
+            slot_id=slot_id,
+            device_name=_device_for_slot(slot_id),
+            request_dir=os.path.join(slot_root, "worker_requests"),
+            worker_script=ISAACLAB_TRAIN_WORKER_SCRIPT,
+            python_executable=os.path.join(ISAACLAB_ENV_PREFIX, "bin", "python"),
+            python_override_root=python_override_root or _slot_override_root(slot_id),
+            isaaclab_root=ISAACLAB_ROOT,
+            isaac_sim_setup=ISAAC_SIM_SETUP,
+            evolution_log_root=EVOLUTION_LOG_ROOT,
+            tmp_root=_slot_tmp_root(slot_id),
+            startup_timeout=ISAACLAB_WORKER_STARTUP_TIMEOUT,
+            request_timeout=ISAACLAB_WORKER_REQUEST_TIMEOUT,
+        )
+        _WORKERS[slot_id] = worker
+    if not _WORKERS_REGISTERED:
+        atexit.register(_close_workers)
+        _WORKERS_REGISTERED = True
+    return worker
 
 
 def _find_latest_checkpoint(run_dir):
@@ -492,6 +553,28 @@ def run_isaaclab_simulation(
         effective_max_iterations = int(ISAACLAB_MAX_ITERATIONS)
 
     run_dir = _task_run_dir(run_name) if run_name else None
+    if ISAACLAB_REUSE_PROCESS:
+        worker = _worker_for_slot(slot_id, python_override_root)
+        worker.run(
+            task_name=task_name,
+            num_envs=num_envs,
+            run_name=run_name,
+            checkpoint_path=checkpoint_path,
+            max_iterations=effective_max_iterations,
+            checkpoint_interval=ISAACLAB_CHECKPOINT_INTERVAL,
+        )
+        if not run_name:
+            return float("-4000")
+        if not os.path.isdir(run_dir):
+            raise RuntimeError(f"Persistent worker finished without creating run directory: {run_dir}")
+        if check_finished_folder_exists_in_run_dir(run_dir):
+            return get_reward_from_run_dir(run_dir)
+        reward = get_reward_from_run_dir(run_dir)
+        if reward is not None:
+            print("Finished marker missing, but reward checkpoint exists. Using checkpoint reward directly.")
+            return reward
+        raise RuntimeError(f"Persistent worker finished without a reward: {run_dir}")
+
     next_checkpoint_path = checkpoint_path if checkpoint_path and os.path.exists(checkpoint_path) else None
     restart_count = 0
 
