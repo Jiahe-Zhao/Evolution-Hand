@@ -50,8 +50,8 @@ TASK_SPECS = {
     "carry": {
         "task_id": "Isaac-EvolutionHand-Carry-v0",
         "cfg_cls": CarryEnvCfg,
-        "camera_eye": (0.02, -0.02, 0.68),
-        "camera_target": (-0.04, 0.01, 0.35),
+        "camera_eye": (0.18, -0.22, 0.62),
+        "camera_target": (0.01, 0.0, 0.36),
     },
     "branch": {
         "task_id": "Isaac-EvolutionHand-BranchGrasp-v0",

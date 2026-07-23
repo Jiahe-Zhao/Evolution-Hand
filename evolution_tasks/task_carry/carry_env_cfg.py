@@ -12,7 +12,10 @@ class CarryEnvCfg(EvolutionGraspEnvCfg):
 
     def __post_init__(self):
         super().__post_init__()
-        # The grasp task's support reference is 4 cm below its spawn point.
-        # Spawn here directly so carry starts with the ball on the hand.
-        self.grasp_object_cfg.init_state.pos = (-0.05, 0.01, 0.338)
+        # Unlike grasp's vertical approach pose, carry begins with an open,
+        # horizontal palm so gravity seats the sphere against the hand.
+        self.robot_cfg.init_state.rot = (1.0, 0.0, 0.0, 0.0)
+        # The model root is at the wrist. Shift along the finger direction to
+        # center the sphere in the open palm rather than beside the wrist.
+        self.grasp_object_cfg.init_state.pos = (-0.060, 0.0, 0.390)
         self.grasp_object_cfg.init_state.rot = (1.0, 0.0, 0.0, 0.0)
