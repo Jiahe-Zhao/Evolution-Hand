@@ -6,7 +6,7 @@ from isaaclab.app import AppLauncher
 
 
 parser = argparse.ArgumentParser(description="Capture one preview image for an evolution task.")
-parser.add_argument("--task-key", type=str, required=True, help="Task key: branch|forage|grasp|manipulation|strike|stone")
+parser.add_argument("--task-key", type=str, required=True, help="Task key: branch|carry|forage|grasp|manipulation|strike|stone")
 parser.add_argument("--output", type=str, required=True, help="Output PNG path.")
 parser.add_argument("--num_envs", type=int, default=1, help="Number of environments.")
 parser.add_argument("--steps", type=int, default=16, help="Number of simulation steps before saving the frame.")
@@ -31,12 +31,14 @@ import torch
 
 import isaaclab_tasks  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_branch_grasp  # noqa: F401
+import isaaclab_tasks.evolution_tasks.task_carry  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_forage  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_grasp  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_manipulation  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_strike  # noqa: F401
 import isaaclab_tasks.evolution_tasks.task_stone  # noqa: F401
 from isaaclab_tasks.evolution_tasks.task_branch_grasp.branch_grasp_env_cfg import BranchGraspEnvCfg
+from isaaclab_tasks.evolution_tasks.task_carry.carry_env_cfg import CarryEnvCfg
 from isaaclab_tasks.evolution_tasks.task_forage.forage_env_cfg import ForageEnvCfg
 from isaaclab_tasks.evolution_tasks.task_grasp.evolution_grasp_env_cfg import EvolutionGraspEnvCfg
 from isaaclab_tasks.evolution_tasks.task_manipulation.evolution_manipulation_env_cfg import EvolutionManipulationEnvCfg
@@ -45,6 +47,12 @@ from isaaclab_tasks.evolution_tasks.task_strike.evolution_strike_env_cfg import 
 
 
 TASK_SPECS = {
+    "carry": {
+        "task_id": "Isaac-EvolutionHand-Carry-v0",
+        "cfg_cls": CarryEnvCfg,
+        "camera_eye": (0.02, -0.02, 0.68),
+        "camera_target": (-0.04, 0.01, 0.35),
+    },
     "branch": {
         "task_id": "Isaac-EvolutionHand-BranchGrasp-v0",
         "cfg_cls": BranchGraspEnvCfg,
