@@ -87,6 +87,9 @@ def _prepare_clean_stage():
         timeline.stop()
     for _ in range(3):
         simulation_app.update()
+    stage_utils.create_new_stage()
+    for _ in range(3):
+        simulation_app.update()
 
 
 def _checkpoint_reward(path):
@@ -109,9 +112,6 @@ def _prune_run_checkpoints(run_dir):
     for path in checkpoints:
         if path not in set(latest) | set(best):
             os.remove(path)
-    stage_utils.create_new_stage()
-    for _ in range(3):
-        simulation_app.update()
 
 
 def _run_training(request):
@@ -209,9 +209,12 @@ def main():
             if request.get("command") == "shutdown":
                 _atomic_write_json(os.path.join(request_dir, f"{request_id}.response.json"), {"ok": True})
                 break
+            print(f"[WORKER] Starting request {request_id}: {request['task']}", flush=True)
             response = {"ok": True, **_run_training(request)}
+            print(f"[WORKER] Completed request {request_id}: {request['task']}", flush=True)
         except Exception as error:  # noqa: BLE001
             response = {"ok": False, "error": str(error), "traceback": traceback.format_exc()}
+            print(f"[WORKER] Request {request.get('id', 'unknown')} failed: {error}", flush=True)
         _atomic_write_json(os.path.join(request_dir, f"{request.get('id', 'unknown')}.response.json"), response)
         os.remove(working_path)
     simulation_app.close()

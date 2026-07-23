@@ -51,6 +51,9 @@ ISAACLAB_POLL_INTERVAL_SECONDS = max(5, int(os.environ.get("EVOLUTION_PROCESS_PO
 ISAACLAB_REUSE_PROCESS = os.environ.get("EVOLUTION_REUSE_ISAAC_PROCESS", "0").lower() in {"1", "true", "yes", "on"}
 ISAACLAB_WORKER_STARTUP_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STARTUP_TIMEOUT", "600")))
 ISAACLAB_WORKER_REQUEST_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_REQUEST_TIMEOUT", "7200")))
+ISAACLAB_WORKER_STALL_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STALL_TIMEOUT", "600")))
+ISAACLAB_WORKER_MAX_REQUESTS = max(0, int(os.environ.get("EVOLUTION_ISAAC_WORKER_MAX_REQUESTS", "3")))
+ISAACLAB_WORKER_REQUEST_RETRIES = max(0, int(os.environ.get("EVOLUTION_ISAAC_WORKER_REQUEST_RETRIES", "1")))
 RL_LOG_GROUP = "evolution_task"
 STONEGRIND_TASK_NAME = "Isaac-EvolutionHand-StoneGrind-v0"
 PARALLEL_SLOT_ROOT = os.path.join(EVOLUTION_ROOT, "parallel_eval_slots")
@@ -324,6 +327,9 @@ def _worker_for_slot(slot_id, python_override_root):
             tmp_root=_slot_tmp_root(slot_id),
             startup_timeout=ISAACLAB_WORKER_STARTUP_TIMEOUT,
             request_timeout=ISAACLAB_WORKER_REQUEST_TIMEOUT,
+            stall_timeout=ISAACLAB_WORKER_STALL_TIMEOUT,
+            max_requests=ISAACLAB_WORKER_MAX_REQUESTS,
+            request_retries=ISAACLAB_WORKER_REQUEST_RETRIES,
         )
         _WORKERS[slot_id] = worker
     if not _WORKERS_REGISTERED:
