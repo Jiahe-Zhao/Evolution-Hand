@@ -61,6 +61,9 @@ _WORKERS = {}
 _WORKERS_REGISTERED = False
 
 TASK_ENV_CFG_FILES = {
+    "Isaac-EvolutionHand-BranchGrasp-v0": os.path.join(
+        ISAACLAB_ROOT, "source", "isaaclab_tasks", "isaaclab_tasks", "evolution_tasks", "task_branch_grasp", "branch_grasp_env_cfg.py"
+    ),
     "Isaac-EvolutionHand-Carry-v0": os.path.join(
         ISAACLAB_ROOT,
         "source",
@@ -118,6 +121,7 @@ TASK_ENV_CFG_FILES = {
 }
 
 TASK_SLOT_RELATIVE_PATHS = {
+    "Isaac-EvolutionHand-BranchGrasp-v0": ("task_branch_grasp", "branch_grasp_env_cfg.py"),
     "Isaac-EvolutionHand-Carry-v0": ("task_carry", "carry_env_cfg.py"),
     "Isaac-EvolutionHand-StoneGrind-v0": ("task_stone", "evolution_stone_grind_env_cfg.py"),
     "Isaac-EvolutionHand-Grasp-v0": ("task_grasp", "evolution_grasp_env_cfg.py"),
@@ -201,6 +205,7 @@ _SUBPKG_PATHS = {{
     "isaaclab_tasks.evolution_tasks": _EVOLUTION_TASKS_ROOT,
     "isaaclab_tasks.evolution_tasks.current_right_hand": os.path.join(_EVOLUTION_TASKS_ROOT, "current_right_hand"),
     "isaaclab_tasks.evolution_tasks.current_left_hand": os.path.join(_EVOLUTION_TASKS_ROOT, "current_left_hand"),
+    "isaaclab_tasks.evolution_tasks.task_branch_grasp": os.path.join(_EVOLUTION_TASKS_ROOT, "task_branch_grasp"),
     "isaaclab_tasks.evolution_tasks.task_carry": os.path.join(_EVOLUTION_TASKS_ROOT, "task_carry"),
     "isaaclab_tasks.evolution_tasks.task_grasp": os.path.join(_EVOLUTION_TASKS_ROOT, "task_grasp"),
     "isaaclab_tasks.evolution_tasks.task_strike": os.path.join(_EVOLUTION_TASKS_ROOT, "task_strike"),
@@ -221,6 +226,7 @@ for _module_name, _path in _SUBPKG_PATHS.items():
     for relative_dir in (
         ("isaaclab_tasks", "evolution_tasks", "current_right_hand"),
         ("isaaclab_tasks", "evolution_tasks", "current_left_hand"),
+        ("isaaclab_tasks", "evolution_tasks", "task_branch_grasp"),
         ("isaaclab_tasks", "evolution_tasks", "task_carry"),
         ("isaaclab_tasks", "evolution_tasks", "task_grasp"),
         ("isaaclab_tasks", "evolution_tasks", "task_strike"),
