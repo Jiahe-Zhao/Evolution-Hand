@@ -9,10 +9,13 @@ source /home/zjh/miniconda3/etc/profile.d/conda.sh
 conda activate evolution_isaaclab
 cd /home/zjh/IsaacLab
 
-for task in branch grasp manipulation strike stone; do
+for task in branch forage grasp manipulation strike stone; do
   case "$task" in
     branch)
       out="$EVOLUTION_ROOT/evolution_tasks/task_branch_grasp/scene_preview.png"
+      ;;
+    forage)
+      out="$EVOLUTION_ROOT/evolution_tasks/task_forage/scene_preview.png"
       ;;
     grasp)
       out="$EVOLUTION_ROOT/evolution_tasks/task_grasp/scene_preview.png"

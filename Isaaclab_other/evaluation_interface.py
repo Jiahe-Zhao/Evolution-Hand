@@ -94,6 +94,15 @@ TASK_ENV_CFG_FILES = {
         "task_manipulation",
         "evolution_manipulation_env_cfg.py",
     ),
+    "Isaac-EvolutionHand-Forage-v0": os.path.join(
+        ISAACLAB_ROOT,
+        "source",
+        "isaaclab_tasks",
+        "isaaclab_tasks",
+        "evolution_tasks",
+        "task_forage",
+        "forage_env_cfg.py",
+    ),
 }
 
 TASK_SLOT_RELATIVE_PATHS = {
@@ -101,6 +110,7 @@ TASK_SLOT_RELATIVE_PATHS = {
     "Isaac-EvolutionHand-Grasp-v0": ("task_grasp", "evolution_grasp_env_cfg.py"),
     "Isaac-EvolutionHand-Strike-v0": ("task_strike", "evolution_strike_env_cfg.py"),
     "Isaac-EvolutionHand-Manipulation-v0": ("task_manipulation", "evolution_manipulation_env_cfg.py"),
+    "Isaac-EvolutionHand-Forage-v0": ("task_forage", "forage_env_cfg.py"),
 }
 
 
@@ -182,6 +192,7 @@ _SUBPKG_PATHS = {{
     "isaaclab_tasks.evolution_tasks.task_strike": os.path.join(_EVOLUTION_TASKS_ROOT, "task_strike"),
     "isaaclab_tasks.evolution_tasks.task_manipulation": os.path.join(_EVOLUTION_TASKS_ROOT, "task_manipulation"),
     "isaaclab_tasks.evolution_tasks.task_stone": os.path.join(_EVOLUTION_TASKS_ROOT, "task_stone"),
+    "isaaclab_tasks.evolution_tasks.task_forage": os.path.join(_EVOLUTION_TASKS_ROOT, "task_forage"),
 }}
 
 for _module_name, _path in _SUBPKG_PATHS.items():
@@ -200,6 +211,7 @@ for _module_name, _path in _SUBPKG_PATHS.items():
         ("isaaclab_tasks", "evolution_tasks", "task_strike"),
         ("isaaclab_tasks", "evolution_tasks", "task_manipulation"),
         ("isaaclab_tasks", "evolution_tasks", "task_stone"),
+        ("isaaclab_tasks", "evolution_tasks", "task_forage"),
     ):
         os.makedirs(os.path.join(override_root, *relative_dir), exist_ok=True)
 
