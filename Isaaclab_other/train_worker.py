@@ -47,6 +47,9 @@ EVOLUTION_LOG_ROOT = os.environ.get(
     "EVOLUTION_LOG_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC", "evolution_tasks", "logs")
 )
 TASK_MODULES = {
+    "Isaac-EvolutionHand-BranchGrasp-v0": "isaaclab_tasks.evolution_tasks.task_branch_grasp.branch_grasp_env_cfg",
+    "Isaac-EvolutionHand-Carry-v0": "isaaclab_tasks.evolution_tasks.task_carry.carry_env_cfg",
+    "Isaac-EvolutionHand-Forage-v0": "isaaclab_tasks.evolution_tasks.task_forage.forage_env_cfg",
     "Isaac-EvolutionHand-Grasp-v0": "isaaclab_tasks.evolution_tasks.task_grasp.evolution_grasp_env_cfg",
     "Isaac-EvolutionHand-Manipulation-v0": "isaaclab_tasks.evolution_tasks.task_manipulation.evolution_manipulation_env_cfg",
     "Isaac-EvolutionHand-Strike-v0": "isaaclab_tasks.evolution_tasks.task_strike.evolution_strike_env_cfg",
@@ -124,6 +127,8 @@ def _run_training(request):
     agent_cfg = copy.deepcopy(agent_cfg.to_dict() if hasattr(agent_cfg, "to_dict") else agent_cfg)
     env_cfg.scene.num_envs = int(request["num_envs"])
     env_cfg.sim.device = request["device"]
+    # Keep physics and the RL policy on the same Slurm-assigned GPU slot.
+    agent_cfg["params"]["config"]["device"] = request["device"]
     env_cfg.seed = request.get("seed", agent_cfg["params"]["seed"])
     if env_cfg.seed == -1:
         env_cfg.seed = random.randint(0, 10000)

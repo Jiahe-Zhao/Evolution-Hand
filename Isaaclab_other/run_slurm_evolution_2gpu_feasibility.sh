@@ -1,0 +1,43 @@
+#!/bin/bash
+#SBATCH --job-name=evolution-5task-25g
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:l40s:2
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=128G
+#SBATCH --time=7-00:00:00
+#SBATCH --output=/share/home/zjh/Evolution/slurm-%x-%j.out
+#SBATCH --error=/share/home/zjh/Evolution/slurm-%x-%j.err
+
+set -euo pipefail
+
+EVOLUTION_ROOT=/share/home/zjh/Evolution
+EVOLUTION_OTHER_ROOT="$EVOLUTION_ROOT/Isaaclab_other"
+ISAACLAB_ROOT=/share/home/zjh/IsaacLab
+ISAAC_ENV_PREFIX=/share/home/zjh/envs/isaaclab
+
+export TERM=xterm PYTHONUNBUFFERED=1 ACCEPT_EULA=Y PRIVACY_CONSENT=Y
+export CONDA_PREFIX="$ISAAC_ENV_PREFIX" PATH="$ISAAC_ENV_PREFIX/bin:$PATH"
+export EVOLUTION_ROOT ISAACLAB_ROOT
+export EVOLUTION_LOG_ROOT="$EVOLUTION_ROOT/evolution_tasks/logs"
+
+# Slurm makes exactly two L40S devices visible. One persistent worker is bound to each device.
+export EVOLUTION_GPU_COUNT=2 EVOLUTION_PARALLEL_SLOTS=2 EVOLUTION_PARALLEL_SPLIT_ENVS=0
+export EVOLUTION_REUSE_ISAAC_PROCESS=1 EVOLUTION_ISAAC_WORKER_MAX_REQUESTS=3
+export ISAACLAB_NUM_ENVS=384
+
+# Stage 1 screens every child quickly; stage 2 fully trains the top quarter.
+export ISAACLAB_MAX_ITERATIONS=300 EVOLUTION_STAGE1_MAX_ITERATIONS=100
+export EVOLUTION_STAGE2_MAX_ITERATIONS=300 EVOLUTION_STAGE2_TOP_FRACTION=0.25
+
+export EVOLUTION_EXPERIMENT_NAME=exp_20260724_5tasks_25g_p16_2gpu
+export EVOLUTION_FORCE_NEW_LINEAGE=1 EVOLUTION_MAX_GENERATION=25 EVOLUTION_MAX_POPULATION=16
+export EVOLUTION_MAX_VARIATION=2 EVOLUTION_INITIAL_POPULATION_SIZE=8
+export EVOLUTION_INITIAL_POPULATION_ATTEMPTS=200 EVOLUTION_INITIAL_POPULATION_VARIATION=0.05
+export EVOLUTION_INITIAL_POPULATION_LENGTH=0.02
+export EVOLUTION_CHECKPOINT_INTERVAL=50 EVOLUTION_KEEP_LATEST_CHECKPOINTS=1 EVOLUTION_KEEP_BEST_CHECKPOINTS=1
+export EVOLUTION_TASKS=Isaac-EvolutionHand-Grasp-v0,Isaac-EvolutionHand-BranchGrasp-v0,Isaac-EvolutionHand-Carry-v0,Isaac-EvolutionHand-Forage-v0,Isaac-EvolutionHand-Strike-v0
+export OMP_NUM_THREADS=16 MKL_NUM_THREADS=16 NUMEXPR_NUM_THREADS=16 DISABLE_DEFAULT_GROUND_PLANE=1
+
+mkdir -p "$EVOLUTION_LOG_ROOT/evolution_task" "$EVOLUTION_ROOT/parallel_eval_slots"
+cd "$EVOLUTION_OTHER_ROOT"
+exec "$ISAAC_ENV_PREFIX/bin/python" main_evolution.py

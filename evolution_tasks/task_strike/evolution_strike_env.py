@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import os
 import numpy as np
 import torch
 from collections.abc import Sequence
@@ -104,8 +105,9 @@ class EvolutionStrikeEnv(DirectRLEnv):
         self.strike_object=RigidObject(self.cfg.strike_object_cfg)
         self.contact_sensor=ContactSensor(self.cfg.contact_sensor_cfg)
         
-        # add ground plane
-        spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
+        # The cluster is offline, so avoid the default ground USD when requested.
+        if os.environ.get("DISABLE_DEFAULT_GROUND_PLANE", "0").lower() not in {"1", "true", "yes", "on"}:
+            spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
         
         # clone and replicate (no need to filter for this environment)
         self.scene.clone_environments(copy_from_source=False)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+import os
 from typing import TYPE_CHECKING
 
 import torch
@@ -38,7 +39,8 @@ class ForageEnv(DirectRLEnv):
         self.food = RigidObject(self.cfg.food_cfg)
         self.leaf_one = RigidObject(self.cfg.leaf_one_cfg)
         self.leaf_two = RigidObject(self.cfg.leaf_two_cfg)
-        spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
+        if os.environ.get("DISABLE_DEFAULT_GROUND_PLANE", "0").lower() not in {"1", "true", "yes", "on"}:
+            spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
         self.scene.clone_environments(copy_from_source=False)
         self.scene.articulations["robot"] = self.hand
         self.scene.rigid_objects["food"] = self.food

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+import os
 from typing import TYPE_CHECKING
 
 import torch
@@ -43,7 +44,8 @@ class BranchGraspEnv(DirectRLEnv):
         self.hand = Articulation(self.cfg.robot_cfg)
         self.branch = RigidObject(self.cfg.branch_cfg)
 
-        spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
+        if os.environ.get("DISABLE_DEFAULT_GROUND_PLANE", "0").lower() not in {"1", "true", "yes", "on"}:
+            spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
         self.scene.clone_environments(copy_from_source=False)
         self.scene.articulations["robot"] = self.hand
         self.scene.rigid_objects["branch"] = self.branch
