@@ -8,6 +8,7 @@ import torch
 import isaaclab.sim as sim_utils
 from isaaclab.assets import Articulation, RigidObject
 from isaaclab.envs import DirectRLEnv
+from isaaclab.sensors import ContactSensor
 from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
 from isaaclab.utils.math import sample_uniform, saturate
 
@@ -37,16 +38,18 @@ class BranchGraspEnv(DirectRLEnv):
         self.hand_dof_lower_limits = joint_pos_limits[..., 0]
         self.hand_dof_upper_limits = joint_pos_limits[..., 1]
 
-        self.branch_target_offset = torch.tensor(self.cfg.branch_target_offset, dtype=torch.float32, device=self.device)
+        self.branch_success_streak = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
 
     def _setup_scene(self):
         self.hand = Articulation(self.cfg.robot_cfg)
         self.branch = RigidObject(self.cfg.branch_cfg)
+        self.branch_contact_sensor = ContactSensor(self.cfg.branch_contact_sensor_cfg)
 
         spawn_ground_plane(prim_path="/World/ground", cfg=GroundPlaneCfg())
         self.scene.clone_environments(copy_from_source=False)
         self.scene.articulations["robot"] = self.hand
         self.scene.rigid_objects["branch"] = self.branch
+        self.scene.sensors["branch_contact_sensor"] = self.branch_contact_sensor
 
         light_cfg = sim_utils.DomeLightCfg(intensity=2000.0, color=(0.75, 0.75, 0.75))
         light_cfg.func("/World/Light", light_cfg)
@@ -90,16 +93,15 @@ class BranchGraspEnv(DirectRLEnv):
 
     def _get_rewards(self) -> torch.Tensor:
         self._compute_intermediate_values()
-        finger_center = self.fingertip_pos.mean(dim=1)
-        target_pos = self.branch_pos + self.branch_target_offset
-        dist = torch.norm(finger_center - target_pos, dim=-1)
-        action_penalty = torch.sum(self.actions**2, dim=-1)
-        reward = self.cfg.fingertip_tracking_reward_scale * torch.exp(-8.0 * dist) - self.cfg.action_penalty_scale * action_penalty
-        return reward
+        contact_force = torch.norm(self.branch_contact_sensor.data.net_forces_w[:, 0, :], dim=-1)
+        in_contact = contact_force >= self.cfg.branch_contact_force_threshold
+        self.branch_success_streak = torch.where(in_contact, self.branch_success_streak + 1, 0)
+        just_succeeded = self.branch_success_streak == self.cfg.branch_success_hold_steps
+        return self.cfg.success_reward * just_succeeded.float()
 
     def _get_dones(self) -> tuple[torch.Tensor, torch.Tensor]:
+        terminated = self.branch_success_streak >= self.cfg.branch_success_hold_steps
         time_out = self.episode_length_buf >= self.max_episode_length - 1
-        terminated = torch.zeros_like(time_out)
         return terminated, time_out
 
     def _reset_idx(self, env_ids: Sequence[int] | None):
@@ -124,6 +126,7 @@ class BranchGraspEnv(DirectRLEnv):
         self.hand_dof_targets[env_ids] = dof_pos
         self.hand.set_joint_position_target(dof_pos, env_ids=env_ids)
         self.hand.write_joint_state_to_sim(dof_pos, dof_vel, env_ids=env_ids)
+        self.branch_success_streak[env_ids] = 0
 
         self._compute_intermediate_values()
 

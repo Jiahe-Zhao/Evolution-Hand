@@ -232,7 +232,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
         #时间超过最大时间长度
         time_out = self.episode_length_buf >= self.max_episode_length - 1
 
-        return out_of_reach, time_out
+        return out_of_reach | self.reset_goal_buf, time_out
     
     def _reset_idx(self, env_ids: Sequence[int] | None):
         if env_ids is None:
@@ -440,49 +440,13 @@ def compute_rewards(
     fall_penalty: float,    #掉落惩罚
     av_factor: float,   #用于平滑连续成功的奖励
 ):
-    #增加中间奖励
-    #当锥体靠近被敲击物体位置时，给予奖励
-    #物体的位置：pos=(0.0, -0.39, 0), rot=(1.0, 0.0, 0.0, 0.0)
-    #print("--------------:",cone_pos,cone_pos.shape)
-    distance_to_target = torch.norm(cone_pos - target_pos, p=2, dim=-1)
-    proximity_reward = -distance_to_target * dist_reward_scale
-    
-    #当施加的力接近目标力时，给予奖励
-    force_diff = torch.abs(object_force[:, 2] - target_force)
-    force_reward = -force_diff * force_reward_scale
-    
-    # print("cone_pos",cone_pos)
     goal_dist = torch.norm(cone_pos - target_pos, p=2, dim=-1)
-    # print("goal_dist:",goal_dist)
-    dist_rew = goal_dist * dist_reward_scale
-    # print(dist_rew.shape)
-    # rot_dist = rotation_distance(object_rot, target_rot)
-    # 计算 Z 方向的受力差异
-    # print(object_force.shape)
-    z_force = object_force[:, 2]  # 提取 Z 方向的受力
-    # print("z_force:",z_force)
-    z_force_diff = torch.abs(z_force - target_force)  # 计算受力差异
-    # 根据差异计算受力奖励
-    z_force_rew = z_force_diff * force_reward_scale
-    # print(z_force_rew.shape)
-    action_penalty = torch.sum(actions**2, dim=-1)
-
-    # Total reward is: position distance + orientation alignment + action regularization + success bonus + fall penalty
-    #reward = proximity_reward+force_reward+dist_rew + z_force_rew + action_penalty * action_penalty_scale
-    reward = dist_rew + z_force_rew + action_penalty * action_penalty_scale
-    #reward = force_reward+ dist_rew+action_penalty * action_penalty_scale
-    # Find out which envs hit the goal and update successes count
-    goal_resets = torch.where(torch.abs(z_force_diff) <= success_tolerance, torch.ones_like(reset_goal_buf), reset_goal_buf)
+    contact_force = torch.norm(object_force, dim=-1)
+    hit_goal = (goal_dist < fall_dist) & (contact_force >= 10.0)
+    goal_resets = torch.where(hit_goal, torch.ones_like(reset_goal_buf), torch.zeros_like(reset_goal_buf))
     successes = successes + goal_resets
-
-    # Success bonus: orientation is within `success_tolerance` of goal orientation
-    reward = torch.where(goal_resets == 1, reward + reach_goal_bonus, reward)
-
-    # Fall penalty: distance to the goal is larger than a threshold
-    reward = torch.where(goal_dist >= fall_dist, reward + fall_penalty, reward)
-
-    # Check env termination conditions, including maximum success number
-    resets = torch.where(goal_dist >= fall_dist, torch.ones_like(reset_buf), reset_buf)
+    reward = torch.where(hit_goal, torch.full_like(goal_dist, 1000.0), torch.zeros_like(goal_dist))
+    resets = torch.where((goal_dist >= fall_dist) | hit_goal, torch.ones_like(reset_buf), reset_buf)
 
     num_resets = torch.sum(resets)
     finished_cons_successes = torch.sum(successes * resets.float())

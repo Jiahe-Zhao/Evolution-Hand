@@ -4,6 +4,7 @@ from isaaclab.envs import DirectRLEnvCfg
 from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.sim import PhysxCfg, SimulationCfg
 from isaaclab.sim.spawners.materials.physics_materials_cfg import RigidBodyMaterialCfg
+from isaaclab.sensors import ContactSensorCfg
 from isaaclab.utils import configclass
 
 from isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg import CURRENT_HAND_CFG as RIGHT_HAND_CFG
@@ -86,11 +87,16 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
         ),
     )
 
+    branch_contact_sensor_cfg: ContactSensorCfg = ContactSensorCfg(
+        prim_path="/World/envs/env_.*/branch",
+        filter_prim_paths_expr=["/World/envs/env_.*/Robot/.*"],
+    )
+
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=1.5, replicate_physics=True)
 
-    action_penalty_scale = 1.0e-4
-    fingertip_tracking_reward_scale = 2.0
-    branch_target_offset = (0.0, 0.0, 0.02)
+    branch_contact_force_threshold = 1.0
+    branch_success_hold_steps = 10
+    success_reward = 1000.0
     reset_dof_pos_noise = 0.05
     reset_dof_vel_noise = 0.0
     act_moving_average = 0.4
