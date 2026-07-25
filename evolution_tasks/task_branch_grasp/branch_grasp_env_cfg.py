@@ -67,6 +67,8 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
         spawn=sim_utils.CylinderCfg(
             radius=0.012,
             height=0.18,
+            # The branch-mounted contact sensor requires PhysX contact reporting.
+            activate_contact_sensors=True,
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 kinematic_enabled=True,
                 disable_gravity=True,
