@@ -10,7 +10,7 @@ from isaaclab.assets import Articulation, RigidObject
 from isaaclab.envs import DirectRLEnv
 from isaaclab.sensors import ContactSensor
 from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
-from isaaclab.utils.math import sample_uniform, saturate
+from isaaclab.utils.math import quat_conjugate, quat_mul, sample_uniform, saturate
 
 if TYPE_CHECKING:
     from isaaclab_tasks.evolution_tasks.task_branch_grasp.branch_grasp_env_cfg import BranchGraspEnvCfg
@@ -159,7 +159,7 @@ class BranchGraspEnv(DirectRLEnv):
 
     def _branch_relative_pose(self) -> tuple[torch.Tensor, torch.Tensor]:
         relative_pos = self.branch.data.root_pos_w - self.hand.data.root_pos_w
-        relative_quat = self.branch.data.root_quat_w
+        relative_quat = quat_mul(quat_conjugate(self.hand.data.root_quat_w), self.branch.data.root_quat_w)
         return relative_pos, relative_quat
 
 
