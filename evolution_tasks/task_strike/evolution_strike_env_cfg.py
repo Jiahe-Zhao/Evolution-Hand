@@ -294,6 +294,11 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     reach_goal_bonus = 400
     fall_penalty = 0
     fall_dist = 0.045
+    # Cone-root target corresponding to the centre of the strike block's top face.
+    target_position = (-0.05, 0.01, 0.25)
+    workspace_xy_radius = 0.18
+    workspace_min_height = 0.015
+    workspace_max_height = 0.50
     vel_obs_scale = 0.2
     success_tolerance = 0.2
     max_consecutive_success = 0

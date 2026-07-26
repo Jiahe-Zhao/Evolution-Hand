@@ -1,3 +1,5 @@
+import os
+
 import isaaclab.sim as sim_utils
 from isaaclab.assets import ArticulationCfg, RigidObjectCfg
 from isaaclab.envs import DirectRLEnvCfg
@@ -29,6 +31,12 @@ class ForageEnvCfg(DirectRLEnvCfg):
     observation_space = len(actuated_joint_names) * 3 + len(fingertip_body_names) * 3 + 7 * 3
     state_space = 0
 
+    # Stage one teaches the sparse event with one nearby leaf. Stage two restores
+    # the full two-leaf, 7.5 cm task without introducing any shaping reward.
+    curriculum_stage = os.environ.get("EVOLUTION_FORAGE_CURRICULUM_STAGE", "stage2").lower()
+    use_easy_curriculum = curriculum_stage == "stage1"
+    active_leaf_count = 1 if use_easy_curriculum else 2
+
     sim: SimulationCfg = SimulationCfg(
         dt=1 / 120,
         render_interval=decimation,
@@ -39,7 +47,7 @@ class ForageEnvCfg(DirectRLEnvCfg):
     # The wrist is directly above the food. This quaternion points the palm toward the ground.
     robot_cfg: ArticulationCfg = RIGHT_HAND_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
         init_state=ArticulationCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.16),
+            pos=(0.0, 0.0, 0.135 if use_easy_curriculum else 0.16),
             rot=(-0.707107, 0.707107, 0.0, 0.0),
             joint_pos={".*": 0.0},
         )
@@ -77,18 +85,21 @@ class ForageEnvCfg(DirectRLEnvCfg):
         spawn=sim_utils.CuboidCfg(
             size=(0.095, 0.060, 0.004),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(),
-            collision_props=sim_utils.CollisionPropertiesCfg(collision_enabled=True),
+            collision_props=sim_utils.CollisionPropertiesCfg(collision_enabled=not use_easy_curriculum),
             mass_props=sim_utils.MassPropertiesCfg(mass=0.004),
             visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.31, 0.58, 0.16)),
             physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=0.65, dynamic_friction=0.50, restitution=0.0),
         ),
-        init_state=RigidObjectCfg.InitialStateCfg(pos=(0.020, 0.002, 0.068), rot=(0.991445, 0.0, 0.0, -0.130526)),
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=(0.20, 0.20, 0.01) if use_easy_curriculum else (0.020, 0.002, 0.068),
+            rot=(1.0, 0.0, 0.0, 0.0) if use_easy_curriculum else (0.991445, 0.0, 0.0, -0.130526),
+        ),
     )
 
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=1.0, replicate_physics=True)
     action_penalty_scale = 1.0e-4
     uncover_reward_scale = 2.0
     success_reward = 5.0
-    reveal_distance = 0.075
+    reveal_distance = 0.035 if use_easy_curriculum else 0.075
     reset_dof_pos_noise = 0.02
     act_moving_average = 0.4

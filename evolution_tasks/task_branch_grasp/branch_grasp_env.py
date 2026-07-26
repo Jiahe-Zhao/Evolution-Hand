@@ -39,6 +39,8 @@ class BranchGraspEnv(DirectRLEnv):
         self.hand_dof_upper_limits = joint_pos_limits[..., 1]
 
         self.branch_success_streak = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
+        self.previous_branch_relative_pos = torch.zeros((self.num_envs, 3), device=self.device)
+        self.previous_branch_relative_quat = torch.zeros((self.num_envs, 4), device=self.device)
 
     def _setup_scene(self):
         self.hand = Articulation(self.cfg.robot_cfg)
@@ -93,9 +95,22 @@ class BranchGraspEnv(DirectRLEnv):
 
     def _get_rewards(self) -> torch.Tensor:
         self._compute_intermediate_values()
-        contact_force = torch.norm(self.branch_contact_sensor.data.net_forces_w[:, 0, :], dim=-1)
-        in_contact = contact_force >= self.cfg.branch_contact_force_threshold
-        self.branch_success_streak = torch.where(in_contact, self.branch_success_streak + 1, 0)
+        fingertip_forces = torch.norm(self.branch_contact_sensor.data.force_matrix_w[:, 0, :, :], dim=-1)
+        thumb_contact = fingertip_forces[:, 0] >= self.cfg.branch_contact_force_threshold
+        other_finger_contact = torch.any(
+            fingertip_forces[:, 1:] >= self.cfg.branch_contact_force_threshold, dim=-1
+        )
+        relative_pos, relative_quat = self._branch_relative_pose()
+        position_delta = torch.norm(relative_pos - self.previous_branch_relative_pos, dim=-1)
+        quat_dot = torch.sum(relative_quat * self.previous_branch_relative_quat, dim=-1).abs().clamp(max=1.0)
+        rotation_delta = 2.0 * torch.acos(quat_dot)
+        pose_stable = (position_delta <= self.cfg.branch_relative_position_tolerance) & (
+            rotation_delta <= self.cfg.branch_relative_rotation_tolerance
+        )
+        qualified = thumb_contact & other_finger_contact & pose_stable
+        self.branch_success_streak = torch.where(qualified, self.branch_success_streak + 1, 0)
+        self.previous_branch_relative_pos = relative_pos
+        self.previous_branch_relative_quat = relative_quat
         just_succeeded = self.branch_success_streak == self.cfg.branch_success_hold_steps
         return self.cfg.success_reward * just_succeeded.float()
 
@@ -129,6 +144,9 @@ class BranchGraspEnv(DirectRLEnv):
         self.branch_success_streak[env_ids] = 0
 
         self._compute_intermediate_values()
+        relative_pos, relative_quat = self._branch_relative_pose()
+        self.previous_branch_relative_pos[env_ids] = relative_pos[env_ids]
+        self.previous_branch_relative_quat[env_ids] = relative_quat[env_ids]
 
     def _compute_intermediate_values(self):
         self.fingertip_pos = self.hand.data.body_pos_w[:, self.finger_bodies]
@@ -138,6 +156,11 @@ class BranchGraspEnv(DirectRLEnv):
         self.branch_pos = self.branch.data.root_pos_w - self.scene.env_origins
         self.branch_rot = self.branch.data.root_quat_w
         self.branch_pose = torch.cat((self.branch_pos, self.branch_rot), dim=-1)
+
+    def _branch_relative_pose(self) -> tuple[torch.Tensor, torch.Tensor]:
+        relative_pos = self.branch.data.root_pos_w - self.hand.data.root_pos_w
+        relative_quat = self.branch.data.root_quat_w
+        return relative_pos, relative_quat
 
 
 @torch.jit.script

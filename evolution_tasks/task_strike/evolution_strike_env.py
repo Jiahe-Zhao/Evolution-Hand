@@ -64,8 +64,11 @@ class EvolutionStrikeEnv(DirectRLEnv):
         self.conical_object_initial_state = torch.zeros((self.num_envs, 7), dtype=torch.float, device=self.device)
         #击打目标物体的受力
         self.strike_object_force=torch.zeros((self.num_envs, 3), dtype=torch.float, device=self.device)
-        #目标受力
-        self.target_force=-10
+        # The target is the explicit centre of the strike block's top surface,
+        # expressed as the cone root position at impact.
+        self.strike_target_pos = torch.tensor(self.cfg.target_position, dtype=torch.float, device=self.device).repeat(
+            self.num_envs, 1
+        )
         # 手的初始状态
         # self.hand_initial_state = torch.zeros((self.num_envs, 13), dtype=torch.float, device=self.device)
         # self.hand_initial_state=self.hand.data.default_root_state.clone()
@@ -80,10 +83,6 @@ class EvolutionStrikeEnv(DirectRLEnv):
         # self.ground_target_pos = torch.zeros((self.num_envs, 3), dtype=torch.float, device=self.device)
         # self.ground_target_pos[:, 2] = -0.01  # 假设地面目标点在地面下方0.01米处
 
-        # used to compare object position
-        self.in_hand_pos = self.cone.data.default_root_state[:, 0:3].clone()
-        self.in_hand_pos[:, 2] -= 0.04
-        # print("in_hand_pos:",self.in_hand_pos)
         # initialize goal marker
         # self.goal_markers = VisualizationMarkers(self.cfg.goal_object_cfg)
 
@@ -184,8 +183,8 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.max_episode_length,
                 self.cone_pos,
                 self.strike_object_force,
-                self.in_hand_pos,
-                self.target_force,    # print("z_force:",z_force)
+                self.strike_target_pos,
+                10,
 
                 self.cfg.dist_reward_scale,
                 self.cfg.force_reward_scale,
@@ -201,6 +200,10 @@ class EvolutionStrikeEnv(DirectRLEnv):
         if "log" not in self.extras:
             self.extras["log"] = dict()
         self.extras["log"]["consecutive_successes"] = self.consecutive_successes.mean()
+        self.extras["log"]["strike_goal_distance"] = torch.norm(
+            self.cone_pos - self.strike_target_pos, p=2, dim=-1
+        ).mean()
+        self.extras["log"]["strike_contact_force"] = torch.norm(self.strike_object_force, dim=-1).mean()
 
         # reset goals if the goal has been reached
         # goal_env_ids = self.reset_goal_buf.nonzero(as_tuple=False).squeeze(-1)
@@ -213,18 +216,17 @@ class EvolutionStrikeEnv(DirectRLEnv):
     def _get_dones(self) -> tuple[torch.Tensor, torch.Tensor]:
         self._compute_intermediate_values()
 
-        # reset when cone has fallen
-        goal_dist = torch.norm(self.cone_pos - self.in_hand_pos, p=2, dim=-1)
-        # print("1111111111:",goal_dist)
-        out_of_reach = goal_dist >= self.cfg.fall_dist
+        horizontal_distance = torch.norm(self.cone_pos[:, :2] - self.strike_target_pos[:, :2], p=2, dim=-1)
+        out_of_workspace = (
+            (horizontal_distance >= self.cfg.workspace_xy_radius)
+            | (self.cone_pos[:, 2] <= self.cfg.workspace_min_height)
+            | (self.cone_pos[:, 2] >= self.cfg.workspace_max_height)
+        )
 
         if self.cfg.max_consecutive_success > 0:
             # Reset progress (episode length buf) on goal envs if max_consecutive_success > 0
-            # 计算 Z 方向的受力差异
-            z_force = self.strike_object_force[:, 2]  # 提取 Z 方向的受力
-            z_force_diff = torch.abs(z_force - self.target_force)
             self.episode_length_buf = torch.where(
-                torch.abs(z_force_diff) <= self.cfg.success_tolerance,
+                self.reset_goal_buf,
                 torch.zeros_like(self.episode_length_buf),
                 self.episode_length_buf,
             )
@@ -232,7 +234,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
         #时间超过最大时间长度
         time_out = self.episode_length_buf >= self.max_episode_length - 1
 
-        return out_of_reach | self.reset_goal_buf, time_out
+        return out_of_workspace | self.reset_goal_buf, time_out
     
     def _reset_idx(self, env_ids: Sequence[int] | None):
         if env_ids is None:

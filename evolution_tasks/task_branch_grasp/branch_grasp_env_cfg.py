@@ -91,13 +91,22 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
 
     branch_contact_sensor_cfg: ContactSensorCfg = ContactSensorCfg(
         prim_path="/World/envs/env_.*/branch",
-        filter_prim_paths_expr=["/World/envs/env_.*/Robot/.*"],
+        # Keep contact channels separate so palm/root collisions cannot count as a grasp.
+        filter_prim_paths_expr=[
+            "/World/envs/env_.*/Robot/link_1_2",
+            "/World/envs/env_.*/Robot/link_2_3",
+            "/World/envs/env_.*/Robot/link_3_3",
+            "/World/envs/env_.*/Robot/link_4_3",
+            "/World/envs/env_.*/Robot/link_5_3",
+        ],
     )
 
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=1.5, replicate_physics=True)
 
     branch_contact_force_threshold = 1.0
-    branch_success_hold_steps = 10
+    branch_relative_position_tolerance = 0.012
+    branch_relative_rotation_tolerance = 0.12
+    branch_success_hold_steps = 15
     success_reward = 1000.0
     reset_dof_pos_noise = 0.05
     reset_dof_vel_noise = 0.0

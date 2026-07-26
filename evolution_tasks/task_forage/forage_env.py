@@ -83,24 +83,22 @@ class ForageEnv(DirectRLEnv):
 
     def _get_rewards(self):
         self._compute_intermediate_values()
-        leaf_distances = torch.stack((
-            torch.norm(self.leaf_one_pos[:, :2] - self.food_pos[:, :2], dim=-1),
-            torch.norm(self.leaf_two_pos[:, :2] - self.food_pos[:, :2], dim=-1),
-        ), dim=-1)
-        # Both pieces must be moved laterally away from the food for a robust reveal.
-        uncovered = leaf_distances.min(dim=-1).values
+        uncovered = self._minimum_active_leaf_distance()
         return 1000.0 * (uncovered > self.cfg.reveal_distance).float()
 
     def _get_dones(self):
         self._compute_intermediate_values()
-        leaf_distances = torch.stack((
-            torch.norm(self.leaf_one_pos[:, :2] - self.food_pos[:, :2], dim=-1),
-            torch.norm(self.leaf_two_pos[:, :2] - self.food_pos[:, :2], dim=-1),
-        ), dim=-1)
-        uncovered = leaf_distances.min(dim=-1).values > self.cfg.reveal_distance
+        uncovered = self._minimum_active_leaf_distance() > self.cfg.reveal_distance
         food_lost = torch.norm(self.food_pos[:, :2], dim=-1) > 0.22
         time_out = self.episode_length_buf >= self.max_episode_length - 1
         return food_lost | uncovered, time_out
+
+    def _minimum_active_leaf_distance(self) -> torch.Tensor:
+        leaf_one_distance = torch.norm(self.leaf_one_pos[:, :2] - self.food_pos[:, :2], dim=-1)
+        if self.cfg.active_leaf_count == 1:
+            return leaf_one_distance
+        leaf_two_distance = torch.norm(self.leaf_two_pos[:, :2] - self.food_pos[:, :2], dim=-1)
+        return torch.minimum(leaf_one_distance, leaf_two_distance)
 
     def _reset_idx(self, env_ids: Sequence[int] | None):
         if env_ids is None:

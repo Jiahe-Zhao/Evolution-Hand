@@ -578,6 +578,7 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                         individual_id=child["child_id"],
                         max_iterations=stage_max_iterations,
                         slot_id=slot_id,
+                        curriculum_stage=stage_name,
                     )
 
                     score_value = current_score if math.isfinite(current_score) else float("-inf")

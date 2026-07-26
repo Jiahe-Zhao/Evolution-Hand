@@ -420,6 +420,7 @@ def evaluation(
     individual_id=None,
     max_iterations=None,
     slot_id=0,
+    curriculum_stage=None,
 ):
     ordered_tasks = sorted(evaluation_tasks)
     if not ordered_tasks:
@@ -537,6 +538,7 @@ def evaluation(
                 max_iterations=effective_max_iterations,
                 slot_id=slot_id,
                 python_override_root=slot_paths["override_root"],
+                curriculum_stage=curriculum_stage,
             )
 
         task_scores[current_task] = score
@@ -583,6 +585,7 @@ def run_isaaclab_simulation(
     max_iterations=None,
     slot_id=0,
     python_override_root=None,
+    curriculum_stage=None,
 ):
     effective_max_iterations = max_iterations
     if effective_max_iterations is None and ISAACLAB_MAX_ITERATIONS:
@@ -644,6 +647,7 @@ def run_isaaclab_simulation(
         export PATH="{ISAACLAB_ENV_PREFIX}/bin:$PATH"
         export EVOLUTION_LOG_ROOT="{EVOLUTION_LOG_ROOT}"
         export EVOLUTION_PARALLEL_SLOT="{slot_id}"
+        export EVOLUTION_FORAGE_CURRICULUM_STAGE="{curriculum_stage or 'stage2'}"
         export PYTHONPATH="{python_override_root or ''}:$PYTHONPATH"
         set +u
         source "{ISAAC_SIM_SETUP}"
