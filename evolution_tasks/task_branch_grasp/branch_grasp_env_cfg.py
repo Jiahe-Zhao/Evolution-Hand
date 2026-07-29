@@ -1,3 +1,5 @@
+import os
+
 import isaaclab.sim as sim_utils
 from isaaclab.assets import ArticulationCfg, RigidObjectCfg
 from isaaclab.envs import DirectRLEnvCfg
@@ -103,10 +105,15 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
 
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=1.5, replicate_physics=True)
 
-    branch_contact_force_threshold = 1.0
+    # Stage one uses a reachable contact event. Stage two restores the full
+    # force, hold duration, and pose-stability requirement.
+    curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
+    use_easy_curriculum = curriculum_stage == "stage1"
+    branch_contact_force_threshold = 0.4 if use_easy_curriculum else 1.0
     branch_relative_position_tolerance = 0.012
     branch_relative_rotation_tolerance = 0.12
-    branch_success_hold_steps = 15
+    require_pose_stability = not use_easy_curriculum
+    branch_success_hold_steps = 5 if use_easy_curriculum else 15
     success_reward = 1000.0
     reset_dof_pos_noise = 0.05
     reset_dof_vel_noise = 0.0

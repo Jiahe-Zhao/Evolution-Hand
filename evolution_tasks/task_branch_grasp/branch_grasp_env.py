@@ -107,11 +107,20 @@ class BranchGraspEnv(DirectRLEnv):
         pose_stable = (position_delta <= self.cfg.branch_relative_position_tolerance) & (
             rotation_delta <= self.cfg.branch_relative_rotation_tolerance
         )
+        if not self.cfg.require_pose_stability:
+            pose_stable = torch.ones_like(pose_stable)
         qualified = thumb_contact & other_finger_contact & pose_stable
         self.branch_success_streak = torch.where(qualified, self.branch_success_streak + 1, 0)
         self.previous_branch_relative_pos = relative_pos
         self.previous_branch_relative_quat = relative_quat
         just_succeeded = self.branch_success_streak == self.cfg.branch_success_hold_steps
+
+        if "log" not in self.extras:
+            self.extras["log"] = dict()
+        self.extras["log"]["branch_thumb_force"] = fingertip_forces[:, 0].mean()
+        self.extras["log"]["branch_other_finger_force"] = fingertip_forces[:, 1:].amax(dim=-1).mean()
+        self.extras["log"]["branch_qualified_rate"] = qualified.float().mean()
+        self.extras["log"]["branch_hold_steps"] = self.branch_success_streak.float().mean()
         return self.cfg.success_reward * just_succeeded.float()
 
     def _get_dones(self) -> tuple[torch.Tensor, torch.Tensor]:
