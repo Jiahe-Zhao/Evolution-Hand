@@ -184,7 +184,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.cone_pos,
                 self.strike_object_force,
                 self.strike_target_pos,
-                10,
+                self.cfg.success_force_threshold,
 
                 self.cfg.dist_reward_scale,
                 self.cfg.force_reward_scale,
@@ -192,7 +192,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.cfg.action_penalty_scale,
                 self.cfg.success_tolerance,
                 self.cfg.reach_goal_bonus,
-                self.cfg.fall_dist,
+                self.cfg.success_distance,
                 self.cfg.fall_penalty,
                 self.cfg.av_factor,
         )
@@ -430,7 +430,7 @@ def compute_rewards(
     cone_pos:torch.Tensor,      #锥体的位置
     object_force:torch.Tensor,  #物体的受力
     target_pos: torch.Tensor,   #目标位置 
-    target_force: int,   #目标受力
+    target_force: float,   #目标受力
     dist_reward_scale: float,   #距离奖励因子
     force_reward_scale: float,    #受力奖励因子
     # rot_eps: float, #用于防止除零错误的一个小值（？）
@@ -438,17 +438,17 @@ def compute_rewards(
     action_penalty_scale: float,    #动作惩罚因子
     success_tolerance: float,   #受力成功的容忍度
     reach_goal_bonus: float,    #达到目标时的奖励
-    fall_dist: float,   #掉落阈值
+    success_distance: float,   #成功位置阈值
     fall_penalty: float,    #掉落惩罚
     av_factor: float,   #用于平滑连续成功的奖励
 ):
     goal_dist = torch.norm(cone_pos - target_pos, p=2, dim=-1)
     contact_force = torch.norm(object_force, dim=-1)
-    hit_goal = (goal_dist < fall_dist) & (contact_force >= 10.0)
+    hit_goal = (goal_dist < success_distance) & (contact_force >= target_force)
     goal_resets = torch.where(hit_goal, torch.ones_like(reset_goal_buf), torch.zeros_like(reset_goal_buf))
     successes = successes + goal_resets
     reward = torch.where(hit_goal, torch.full_like(goal_dist, 1000.0), torch.zeros_like(goal_dist))
-    resets = torch.where((goal_dist >= fall_dist) | hit_goal, torch.ones_like(reset_buf), reset_buf)
+    resets = torch.where(hit_goal, torch.ones_like(reset_buf), reset_buf)
 
     num_resets = torch.sum(resets)
     finished_cons_successes = torch.sum(successes * resets.float())

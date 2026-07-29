@@ -375,8 +375,9 @@ def _task_slug(task_name):
     )
 
 
-def _make_task_run_name(experiment_name, individual_id, task_name):
-    return f"{experiment_name}_{individual_id[:8]}_{_task_slug(task_name)}"
+def _make_task_run_name(experiment_name, individual_id, task_name, curriculum_stage=None):
+    stage_suffix = f"_{curriculum_stage.lower()}" if curriculum_stage else ""
+    return f"{experiment_name}_{individual_id[:8]}_{_task_slug(task_name)}{stage_suffix}"
 
 
 def _remove_path(path):
@@ -408,8 +409,14 @@ def _cleanup_eliminated_children(experiment_name, generation, hand_lineage, orde
         child_state = _load_json(child_state_path) or {}
         run_names = dict(child_state.get("run_names", {}))
 
+        run_names_to_remove = set(run_names.values())
         for task_name in ordered_tasks:
-            run_name = run_names.get(task_name) or _make_task_run_name(experiment_name, child_id, task_name)
+            # Clean both curriculum stages, plus the legacy unqualified name.
+            run_names_to_remove.add(_make_task_run_name(experiment_name, child_id, task_name))
+            run_names_to_remove.add(_make_task_run_name(experiment_name, child_id, task_name, "stage1"))
+            run_names_to_remove.add(_make_task_run_name(experiment_name, child_id, task_name, "stage2"))
+
+        for run_name in run_names_to_remove:
             if _remove_path(os.path.join(EVOLUTION_LOG_ROOT, run_name)):
                 removed_run_dirs += 1
 

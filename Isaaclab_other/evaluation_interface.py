@@ -253,8 +253,10 @@ def _task_slug(task_name):
     )
 
 
-def _make_task_run_name(experiment_name, individual_id, task_name):
-    return f"{experiment_name}_{individual_id[:8]}_{_task_slug(task_name)}"
+def _make_task_run_name(experiment_name, individual_id, task_name, curriculum_stage=None):
+    """Keep each curriculum stage in an independent RL run directory."""
+    stage_suffix = f"_{curriculum_stage.lower()}" if curriculum_stage else ""
+    return f"{experiment_name}_{individual_id[:8]}_{_task_slug(task_name)}{stage_suffix}"
 
 
 def _task_run_dir(run_name):
@@ -498,6 +500,7 @@ def evaluation(
 
     task_scores = dict(state.get("task_scores", {}))
     run_names = dict(state.get("run_names", {}))
+    stage_name = (curriculum_stage or "default").lower()
     effective_max_iterations = max_iterations if max_iterations is not None else state.get("max_iterations")
 
     for current_task in ordered_tasks:
@@ -513,8 +516,11 @@ def evaluation(
             task_env_cfg_path,
         )
 
-        run_name = run_names.get(current_task) or _make_task_run_name(experiment_name, individual_id, current_task)
-        run_names[current_task] = run_name
+        run_key = f"{stage_name}:{current_task}"
+        run_name = run_names.get(run_key) or _make_task_run_name(
+            experiment_name, individual_id, current_task, stage_name
+        )
+        run_names[run_key] = run_name
         run_dir = _task_run_dir(run_name)
 
         state["run_names"] = run_names
@@ -527,6 +533,17 @@ def evaluation(
             score = get_reward_from_run_dir(run_dir)
         else:
             checkpoint_path = _find_latest_checkpoint(run_dir)
+            # Stage two has a new run directory, but starts from the policy
+            # learned during stage one instead of training from scratch.
+            if checkpoint_path is None and stage_name == "stage2":
+                stage_one_name = run_names.get(f"stage1:{current_task}")
+                if stage_one_name is None:
+                    # Preserve resume compatibility with experiments created
+                    # before stage-qualified run names were introduced.
+                    stage_one_name = run_names.get(current_task) or _make_task_run_name(
+                        experiment_name, individual_id, current_task, "stage1"
+                    )
+                checkpoint_path = _find_latest_checkpoint(_task_run_dir(stage_one_name))
             task_num_envs = _num_envs_for_task(current_task)
             print(f"[INFO] Launching {current_task} with num_envs={task_num_envs}")
             score = run_isaaclab_simulation(
@@ -647,6 +664,7 @@ def run_isaaclab_simulation(
         export PATH="{ISAACLAB_ENV_PREFIX}/bin:$PATH"
         export EVOLUTION_LOG_ROOT="{EVOLUTION_LOG_ROOT}"
         export EVOLUTION_PARALLEL_SLOT="{slot_id}"
+        export EVOLUTION_CURRICULUM_STAGE="{curriculum_stage or 'stage2'}"
         export EVOLUTION_FORAGE_CURRICULUM_STAGE="{curriculum_stage or 'stage2'}"
         export PYTHONPATH="{python_override_root or ''}:$PYTHONPATH"
         set +u

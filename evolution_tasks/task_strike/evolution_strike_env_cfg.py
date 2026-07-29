@@ -293,7 +293,12 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     action_penalty_scale = -0.0002
     reach_goal_bonus = 400
     fall_penalty = 0
-    fall_dist = 0.045
+    curriculum_stage = os.environ.get(
+        "EVOLUTION_CURRICULUM_STAGE",
+        os.environ.get("EVOLUTION_FORAGE_CURRICULUM_STAGE", "stage2"),
+    ).lower()
+    success_distance = 0.075 if curriculum_stage == "stage1" else 0.045
+    success_force_threshold = 3.0 if curriculum_stage == "stage1" else 10.0
     # Cone-root target corresponding to the centre of the strike block's top face.
     target_position = (-0.05, 0.01, 0.25)
     workspace_xy_radius = 0.18
