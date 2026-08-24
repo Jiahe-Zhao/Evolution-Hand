@@ -118,7 +118,7 @@ from collections import defaultdict
 class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # Configuration for the environment
 
-    # urdf_path = "/share/home/zjh/Evolution/Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf"
+    # urdf_path = "/home/qyx/Desktop/Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf"
     # observation_number = 157
 
     # Actuated joints and fingertip links

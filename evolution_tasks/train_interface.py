@@ -48,10 +48,12 @@ simulation_app = app_launcher.app
 
 """Rest everything follows."""
 
+import glob
 import gymnasium as gym
 import math
 import os
 import random
+import re
 from datetime import datetime
 
 from rl_games.common import env_configurations, vecenv
@@ -77,7 +79,70 @@ EVOLUTION_LOG_ROOT = os.environ.get(
     "EVOLUTION_LOG_ROOT",
     os.path.join(os.path.expanduser("~"), "Evolution_PC", "evolution_tasks", "logs"),
 )
-DEFAULT_CHECKPOINT_INTERVAL = int(os.environ.get("EVOLUTION_CHECKPOINT_INTERVAL", "20"))
+DEFAULT_CHECKPOINT_INTERVAL = int(os.environ.get("EVOLUTION_CHECKPOINT_INTERVAL", "50"))
+KEEP_LATEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_LATEST_CHECKPOINTS", "1")))
+KEEP_BEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_BEST_CHECKPOINTS", "1")))
+CHECKPOINT_REWARD_PATTERN = re.compile(r"rew_([-+]?\d*\.?\d+|\d+)")
+CHECKPOINT_EPOCH_PATTERN = re.compile(r"_ep_(\d+)")
+
+
+def _parse_checkpoint_reward(checkpoint_path):
+    match = CHECKPOINT_REWARD_PATTERN.search(os.path.basename(checkpoint_path))
+    if not match:
+        return float("-inf")
+    return float(match.group(1))
+
+
+def _parse_checkpoint_epoch(checkpoint_path):
+    match = CHECKPOINT_EPOCH_PATTERN.search(os.path.basename(checkpoint_path))
+    if not match:
+        return -1
+    return int(match.group(1))
+
+
+def _checkpoint_mtime(checkpoint_path):
+    try:
+        return os.path.getmtime(checkpoint_path)
+    except OSError:
+        return 0.0
+
+
+def _select_checkpoints_to_keep(checkpoints):
+    latest_checkpoints = sorted(
+        checkpoints,
+        key=lambda path: (_checkpoint_mtime(path), _parse_checkpoint_epoch(path)),
+        reverse=True,
+    )[:KEEP_LATEST_CHECKPOINTS]
+    best_checkpoints = sorted(
+        checkpoints,
+        key=lambda path: (_parse_checkpoint_reward(path), _parse_checkpoint_epoch(path), _checkpoint_mtime(path)),
+        reverse=True,
+    )[:KEEP_BEST_CHECKPOINTS]
+    return set(latest_checkpoints) | set(best_checkpoints)
+
+
+def prune_run_checkpoints(run_dir):
+    nn_dir = os.path.join(run_dir, "nn")
+    if not os.path.isdir(nn_dir):
+        return
+
+    checkpoints = glob.glob(os.path.join(nn_dir, "*.pth"))
+    if len(checkpoints) <= 1:
+        return
+
+    keep_paths = _select_checkpoints_to_keep(checkpoints)
+    removed_count = 0
+    for checkpoint_path in checkpoints:
+        if checkpoint_path in keep_paths:
+            continue
+        try:
+            os.remove(checkpoint_path)
+            removed_count += 1
+        except OSError as error:
+            print(f"[WARN] Failed to remove checkpoint {checkpoint_path}: {error}")
+
+    kept_names = sorted(os.path.basename(path) for path in keep_paths)
+    print(f"[INFO] Checkpoint cleanup complete for {run_dir}: kept={kept_names}, removed={removed_count}")
 
 
 @hydra_task_config(args_cli.task, "rl_games_cfg_entry_point")
@@ -153,6 +218,7 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
 
     # create isaac environment
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None)
+
     # wrap for video recording
     if args_cli.video:
         video_kwargs = {
@@ -193,11 +259,13 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agen
     else:
         runner.run({"train": True, "play": False, "sigma": train_sigma})
 
-    create_finished_folder(os.path.join(log_root_path, log_dir))
+    run_dir = os.path.join(log_root_path, log_dir)
+    create_finished_folder(run_dir)
+    prune_run_checkpoints(run_dir)
 
     # close the simulator
     env.close()
-    return os.path.join(log_root_path, log_dir)
+    return run_dir
 
 
 def create_finished_folder(run_dir):

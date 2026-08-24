@@ -1,13 +1,17 @@
 
 import isaaclab.sim as sim_utils
+import os
 from isaaclab.actuators.actuator_cfg import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 
-# Configuration based on URDF file /share/home/zjh/Evolution/Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf
+EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC"))
+ASSET_PATH = os.path.join(EVOLUTION_ROOT, "Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf")
+
+# The active individual is generated into this path by the evaluation slot.
 CURRENT_HAND_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
-        asset_path="/share/home/zjh/Evolution/Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf",  
+        asset_path=ASSET_PATH,
         activate_contact_sensors=False,  # 禁用接触传感器模拟
         fix_base=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(

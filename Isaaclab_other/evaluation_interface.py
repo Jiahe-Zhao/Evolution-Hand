@@ -60,6 +60,25 @@ PARALLEL_SLOT_ROOT = os.path.join(EVOLUTION_ROOT, "parallel_eval_slots")
 _WORKERS = {}
 _WORKERS_REGISTERED = False
 
+def _fitness_from_task_scores(task_scores):
+    """Prioritize tasks that have not produced a sparse-success score yet.
+
+    While any task remains below the shared success threshold, cap every
+    already-successful task at that threshold. This prevents repeated reward
+    accumulation in one easy task from masking an unsolved task. Once every
+    task reaches the threshold, retain each task's raw score for finer ranking.
+    """
+    if not task_scores:
+        return float("-inf")
+    success_score = float(os.environ.get("EVOLUTION_TASK_SUCCESS_SCORE", "1000"))
+    if success_score <= 0.0:
+        raise ValueError("EVOLUTION_TASK_SUCCESS_SCORE must be positive")
+
+    scores = [float(score) for score in task_scores.values()]
+    has_unsolved_task = any(score < success_score for score in scores)
+    counted_scores = [min(score, success_score) if has_unsolved_task else score for score in scores]
+    return sum(counted_scores) / len(counted_scores)
+
 TASK_ENV_CFG_FILES = {
     "Isaac-EvolutionHand-BranchGrasp-v0": os.path.join(
         ISAACLAB_ROOT, "source", "isaaclab_tasks", "isaaclab_tasks", "evolution_tasks", "task_branch_grasp", "branch_grasp_env_cfg.py"
@@ -486,7 +505,7 @@ def evaluation(
         and max_iterations > stored_max_iterations
     )
     if state.get("status") == "completed" and not rerun_completed:
-        average_score = sum(state["task_scores"].values()) / len(state["task_scores"])
+        average_score = _fitness_from_task_scores(state["task_scores"])
         print(f"task_scores:{state['task_scores']}")
         print(f"average_score:{average_score}")
         return average_score
@@ -564,7 +583,7 @@ def evaluation(
         if evaluation_state_path:
             _atomic_write_json(evaluation_state_path, state)
 
-    average_score = sum(task_scores.values()) / len(task_scores)
+    average_score = _fitness_from_task_scores(task_scores)
     state["status"] = "completed"
     state["task_scores"] = task_scores
     if evaluation_state_path:
@@ -618,6 +637,7 @@ def run_isaaclab_simulation(
             checkpoint_path=checkpoint_path,
             max_iterations=effective_max_iterations,
             checkpoint_interval=ISAACLAB_CHECKPOINT_INTERVAL,
+            curriculum_stage=curriculum_stage,
         )
         if not run_name:
             return float("-4000")

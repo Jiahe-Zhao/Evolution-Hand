@@ -11,6 +11,11 @@ from isaaclab.envs import DirectRLEnv
 from isaaclab.sensors import ContactSensor
 from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
 from isaaclab.utils.math import quat_conjugate, quat_mul, sample_uniform, saturate
+from isaaclab_tasks.evolution_tasks.palm_coupling import (
+    apply_branch_finger_coordination,
+    finger_flexion_scores,
+)
+from isaaclab_tasks.evolution_tasks.cartesian_hand_controller import MorphologyAwareFingertipIK, canonical_joint_observation
 
 if TYPE_CHECKING:
     from isaaclab_tasks.evolution_tasks.task_branch_grasp.branch_grasp_env_cfg import BranchGraspEnvCfg
@@ -31,12 +36,23 @@ class BranchGraspEnv(DirectRLEnv):
         self.prev_targets = torch.zeros_like(self.hand_dof_targets)
         self.cur_targets = torch.zeros_like(self.hand_dof_targets)
         self.actions = torch.zeros(
-            (self.num_envs, len(self.cfg.actuated_joint_names)), dtype=torch.float32, device=self.device
+            (self.num_envs, 20), dtype=torch.float32, device=self.device
         )
+        self.finger_action_scores = torch.zeros((self.num_envs, 5), dtype=torch.float32, device=self.device)
+        self.long_finger_velocity_spread = torch.zeros(self.num_envs, dtype=torch.float32, device=self.device)
+        self.long_finger_joint_ids = self.actuated_dof_indices[3:7] + self.actuated_dof_indices[7:11] + self.actuated_dof_indices[11:15] + self.actuated_dof_indices[15:19]
+        self.previous_long_finger_joint_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
+        self.long_finger_joint_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
+        self.long_finger_joint_velocity_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
+        self.long_finger_joint_velocity_spread = torch.zeros(self.num_envs, dtype=torch.float32, device=self.device)
 
         joint_pos_limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
         self.hand_dof_lower_limits = joint_pos_limits[..., 0]
         self.hand_dof_upper_limits = joint_pos_limits[..., 1]
+        self.canonical_joint_names = tuple(self.cfg.actuated_joint_names)
+        self.cartesian_ik = MorphologyAwareFingertipIK(
+            self.hand, self.cfg.fingertip_body_names, num_envs=self.num_envs, device=self.device
+        )
 
         self.branch_success_streak = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
         self.previous_branch_relative_pos = torch.zeros((self.num_envs, 3), device=self.device)
@@ -44,6 +60,13 @@ class BranchGraspEnv(DirectRLEnv):
 
     def _setup_scene(self):
         self.hand = Articulation(self.cfg.robot_cfg)
+        # PhysX body_names is unavailable until the scene is initialized.  Keep
+        # the canonical sensor paths here; the IK/controller handles missing
+        # links after articulation initialization.
+        available_tips = list(self.cfg.fingertip_body_names)
+        self.cfg.branch_contact_sensor_cfg.filter_prim_paths_expr = [
+            f"/World/envs/env_.*/Robot/{name}" for name in available_tips
+        ]
         self.branch = RigidObject(self.cfg.branch_cfg)
         self.branch_contact_sensor = ContactSensor(self.cfg.branch_contact_sensor_cfg)
 
@@ -58,35 +81,51 @@ class BranchGraspEnv(DirectRLEnv):
 
     def _pre_physics_step(self, actions: torch.Tensor):
         self.actions = actions.clone()
+        self.finger_action_scores = self.actions[:, 15:20]
 
     def _apply_action(self):
-        self.cur_targets[:, self.actuated_dof_indices] = scale(
-            self.actions,
-            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
-            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
+        targets = self.cartesian_ik.compute(self.actions)
+        targets = self.cfg.act_moving_average * targets + (1.0 - self.cfg.act_moving_average) * self.prev_targets
+        targets = saturate(targets, self.hand_dof_lower_limits, self.hand_dof_upper_limits)
+        self.cur_targets[:] = targets
+        self.prev_targets[:] = targets
+        self.hand.set_joint_position_target(targets)
+
+    def _apply_synchronized_long_finger_rate_limit(self):
+        """Advance all four long fingers by one shared angular increment.
+
+        A digit that is close to its requested target naturally stops early;
+        the remaining digits continue at the shared trajectory rate.
+        """
+        joint_ids = self.long_finger_joint_ids
+        desired = self.cur_targets[:, joint_ids]
+        previous = self.prev_targets[:, joint_ids]
+        mean_remaining = (desired - previous).mean(dim=-1, keepdim=True)
+        max_step = self.cfg.long_finger_joint_speed_rad_s * self.cfg.sim.dt * self.cfg.decimation
+        shared_step = torch.clamp(mean_remaining, -max_step, max_step)
+        next_targets = previous + shared_step
+        next_targets = torch.where(
+            shared_step >= 0.0,
+            torch.minimum(next_targets, desired),
+            torch.maximum(next_targets, desired),
         )
-        self.cur_targets[:, self.actuated_dof_indices] = (
-            self.cfg.act_moving_average * self.cur_targets[:, self.actuated_dof_indices]
-            + (1.0 - self.cfg.act_moving_average) * self.prev_targets[:, self.actuated_dof_indices]
-        )
-        self.cur_targets[:, self.actuated_dof_indices] = saturate(
-            self.cur_targets[:, self.actuated_dof_indices],
-            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
-            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
-        )
-        self.prev_targets[:, self.actuated_dof_indices] = self.cur_targets[:, self.actuated_dof_indices]
-        self.hand.set_joint_position_target(
-            self.cur_targets[:, self.actuated_dof_indices], joint_ids=self.actuated_dof_indices
-        )
+        self.cur_targets[:, joint_ids] = next_targets
+        # Shared before individual target saturation; zero denotes perfectly matched command speed.
+        self.long_finger_velocity_spread.zero_()
 
     def _get_observations(self) -> dict:
         self._compute_intermediate_values()
+        canonical_pos, canonical_vel = canonical_joint_observation(
+            self.hand, self.canonical_joint_names, self.hand_dof_pos, self.hand_dof_vel,
+            self.hand_dof_lower_limits, self.hand_dof_upper_limits
+        )
         obs = torch.cat(
             (
-                unscale(self.hand_dof_pos, self.hand_dof_lower_limits, self.hand_dof_upper_limits),
-                self.hand_dof_vel,
+                canonical_pos,
+                canonical_vel,
                 self.fingertip_pos.view(self.num_envs, self.num_fingertips * 3),
                 self.branch_pose,
+                self.cartesian_ik.morphology_descriptor(),
                 self.actions,
             ),
             dim=-1,
@@ -97,9 +136,8 @@ class BranchGraspEnv(DirectRLEnv):
         self._compute_intermediate_values()
         fingertip_forces = torch.norm(self.branch_contact_sensor.data.force_matrix_w[:, 0, :, :], dim=-1)
         thumb_contact = fingertip_forces[:, 0] >= self.cfg.branch_contact_force_threshold
-        other_finger_contact = torch.any(
-            fingertip_forces[:, 1:] >= self.cfg.branch_contact_force_threshold, dim=-1
-        )
+        long_finger_contacts = fingertip_forces[:, 1:] >= self.cfg.branch_contact_force_threshold
+        other_finger_contact = long_finger_contacts.sum(dim=-1) >= self.cfg.min_long_finger_contacts
         relative_pos, relative_quat = self._branch_relative_pose()
         position_delta = torch.norm(relative_pos - self.previous_branch_relative_pos, dim=-1)
         quat_dot = torch.sum(relative_quat * self.previous_branch_relative_quat, dim=-1).abs().clamp(max=1.0)
@@ -119,8 +157,16 @@ class BranchGraspEnv(DirectRLEnv):
             self.extras["log"] = dict()
         self.extras["log"]["branch_thumb_force"] = fingertip_forces[:, 0].mean()
         self.extras["log"]["branch_other_finger_force"] = fingertip_forces[:, 1:].amax(dim=-1).mean()
+        self.extras["log"]["branch_long_finger_contact_count"] = long_finger_contacts.sum(dim=-1).float().mean()
         self.extras["log"]["branch_qualified_rate"] = qualified.float().mean()
         self.extras["log"]["branch_hold_steps"] = self.branch_success_streak.float().mean()
+        self.extras["log"]["branch_finger_action_spread"] = (
+            self.finger_action_scores[:, 1:].max(dim=-1).values - self.finger_action_scores[:, 1:].min(dim=-1).values
+        ).mean()
+        self.extras["log"]["branch_long_finger_velocity_spread"] = self.long_finger_velocity_spread.mean()
+        self.extras["log"]["branch_long_finger_joint_velocity_spread"] = (
+            self.long_finger_joint_velocity_spread.mean()
+        )
         return self.cfg.success_reward * just_succeeded.float()
 
     def _get_dones(self) -> tuple[torch.Tensor, torch.Tensor]:
@@ -151,8 +197,13 @@ class BranchGraspEnv(DirectRLEnv):
         self.hand.set_joint_position_target(dof_pos, env_ids=env_ids)
         self.hand.write_joint_state_to_sim(dof_pos, dof_vel, env_ids=env_ids)
         self.branch_success_streak[env_ids] = 0
+        self.long_finger_velocity_spread[env_ids] = 0.0
+        self.cartesian_ik.reset(env_ids)
 
         self._compute_intermediate_values()
+        self._update_long_finger_joint_velocity()
+        self.long_finger_joint_velocity_scores[env_ids] = 0.0
+        self.long_finger_joint_velocity_spread[env_ids] = 0.0
         relative_pos, relative_quat = self._branch_relative_pose()
         self.previous_branch_relative_pos[env_ids] = relative_pos[env_ids]
         self.previous_branch_relative_quat[env_ids] = relative_quat[env_ids]
@@ -165,6 +216,30 @@ class BranchGraspEnv(DirectRLEnv):
         self.branch_pos = self.branch.data.root_pos_w - self.scene.env_origins
         self.branch_rot = self.branch.data.root_quat_w
         self.branch_pose = torch.cat((self.branch_pos, self.branch_rot), dim=-1)
+
+    def _update_long_finger_joint_velocity(self):
+        """Measure achieved, rather than commanded, four-finger closing speed."""
+        normalized_joint_pos = unscale(
+            self.hand_dof_pos[:, self.actuated_dof_indices],
+            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
+            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
+        )
+        scores = torch.stack(
+            [
+                normalized_joint_pos[:, 3:7].mean(dim=-1),
+                normalized_joint_pos[:, 7:11].mean(dim=-1),
+                normalized_joint_pos[:, 11:15].mean(dim=-1),
+                normalized_joint_pos[:, 15:19].mean(dim=-1),
+            ],
+            dim=-1,
+        )
+        self.long_finger_joint_scores = scores
+        self.long_finger_joint_velocity_scores = scores - self.previous_long_finger_joint_scores
+        self.long_finger_joint_velocity_spread = (
+            self.long_finger_joint_velocity_scores.max(dim=-1).values
+            - self.long_finger_joint_velocity_scores.min(dim=-1).values
+        )
+        self.previous_long_finger_joint_scores = scores
 
     def _branch_relative_pose(self) -> tuple[torch.Tensor, torch.Tensor]:
         relative_pos = self.branch.data.root_pos_w - self.hand.data.root_pos_w

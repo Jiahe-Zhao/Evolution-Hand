@@ -47,6 +47,8 @@ EVOLUTION_LOG_ROOT = os.environ.get(
     "EVOLUTION_LOG_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC", "evolution_tasks", "logs")
 )
 TASK_MODULES = {
+    "Isaac-EvolutionHand-BranchGrasp-v0": "isaaclab_tasks.evolution_tasks.task_branch_grasp.branch_grasp_env_cfg",
+    "Isaac-EvolutionHand-Forage-v0": "isaaclab_tasks.evolution_tasks.task_forage.forage_env_cfg",
     "Isaac-EvolutionHand-Grasp-v0": "isaaclab_tasks.evolution_tasks.task_grasp.evolution_grasp_env_cfg",
     "Isaac-EvolutionHand-Manipulation-v0": "isaaclab_tasks.evolution_tasks.task_manipulation.evolution_manipulation_env_cfg",
     "Isaac-EvolutionHand-Strike-v0": "isaaclab_tasks.evolution_tasks.task_strike.evolution_strike_env_cfg",
@@ -116,6 +118,13 @@ def _prune_run_checkpoints(run_dir):
 
 def _run_training(request):
     task_name = request["task"]
+    curriculum_stage = str(request.get("curriculum_stage") or "stage2").lower()
+    if curriculum_stage not in {"stage1", "stage2"}:
+        raise ValueError(f"Unsupported curriculum stage: {curriculum_stage}")
+    # The persistent process reloads task config modules for every request.
+    # Set these before reloading so each request receives its intended stage.
+    os.environ["EVOLUTION_CURRICULUM_STAGE"] = curriculum_stage
+    os.environ["EVOLUTION_FORAGE_CURRICULUM_STAGE"] = curriculum_stage
     _prepare_clean_stage()
     _reload_generated_configs(task_name)
 
@@ -128,10 +137,29 @@ def _run_training(request):
     if env_cfg.seed == -1:
         env_cfg.seed = random.randint(0, 10000)
     agent_cfg["params"]["seed"] = env_cfg.seed
+    # Keep PPO batch tuning in the launcher so every task uses one tested setting.
+    config = agent_cfg["params"]["config"]
+    horizon_override = os.environ.get("EVOLUTION_PPO_HORIZON_LENGTH")
+    minibatch_override = os.environ.get("EVOLUTION_PPO_MINIBATCH_SIZE")
+    mini_epochs_override = os.environ.get("EVOLUTION_PPO_MINI_EPOCHS")
+    if horizon_override:
+        config["horizon_length"] = int(horizon_override)
+    if minibatch_override:
+        config["minibatch_size"] = int(minibatch_override)
+    if mini_epochs_override:
+        config["mini_epochs"] = int(mini_epochs_override)
+    rollout_batch_size = env_cfg.scene.num_envs * config["horizon_length"]
+    if config["horizon_length"] <= 0 or config["minibatch_size"] <= 0 or config["mini_epochs"] <= 0:
+        raise ValueError("PPO horizon_length, minibatch_size, and mini_epochs must be positive.")
+    if rollout_batch_size % config["minibatch_size"] != 0:
+        raise ValueError(
+            f"PPO rollout batch ({rollout_batch_size}) must be divisible by minibatch_size "
+            f"({config['minibatch_size']})."
+        )
     if request.get("max_iterations") is not None:
-        agent_cfg["params"]["config"]["max_epochs"] = int(request["max_iterations"])
+        config["max_epochs"] = int(request["max_iterations"])
     if request.get("checkpoint_interval", 0) > 0:
-        agent_cfg["params"]["config"]["save_frequency"] = int(request["checkpoint_interval"])
+        config["save_frequency"] = int(request["checkpoint_interval"])
 
     run_name = request["run_name"]
     log_root = os.path.abspath(os.path.join(EVOLUTION_LOG_ROOT, agent_cfg["params"]["config"]["name"]))

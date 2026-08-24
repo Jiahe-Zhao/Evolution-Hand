@@ -442,14 +442,14 @@ initial_population_attempts = _env_int("EVOLUTION_INITIAL_POPULATION_ATTEMPTS", 
 initial_population_variation = _env_float("EVOLUTION_INITIAL_POPULATION_VARIATION", 0.05)
 initial_population_length = _env_float("EVOLUTION_INITIAL_POPULATION_LENGTH", 0.02)
 variation_probabilities = {
-    "change_link_length": 1.0 / 30.0,
-    "change_link_radius": 1.0 / 30.0,
-    "remove_link": 1.0 / 30.0,
-    "add_link": 1.0 / 30.0,
-    "change_joint_origin_translation": 1.0 / 30.0,
-    "change_joint_origin_rpy": 1.0 / 30.0,
-    "change_thumb_length": 0.4,
-    "change_palm_curvature": 0.4,
+    "change_link_length": 0.30,
+    "change_link_radius": 0.10,
+    "remove_link": 0.05,
+    "add_link": 0.05,
+    "change_joint_origin_translation": 0.05,
+    "change_joint_origin_rpy": 0.05,
+    "change_thumb_length": 0.30,
+    "change_palm_curvature": 0.10,
 }
 experiment_save_path = os.environ.get("EVOLUTION_EXPERIMENT_NAME", "exp_20260709_multitask_1")
 evaluation_tasks_env = os.environ.get("EVOLUTION_TASKS")
@@ -473,6 +473,9 @@ stage1_max_iterations = _env_int(
 )
 stage2_max_iterations = _env_int("EVOLUTION_STAGE2_MAX_ITERATIONS", 500)
 stage2_top_fraction = min(1.0, max(0.0, _env_float("EVOLUTION_STAGE2_TOP_FRACTION", 0.2)))
+single_stage_name = os.environ.get("EVOLUTION_SINGLE_STAGE_NAME", "stage1").lower()
+if single_stage_name not in {"stage1", "stage2"}:
+    raise ValueError("EVOLUTION_SINGLE_STAGE_NAME must be 'stage1' or 'stage2'")
 variation_standard = _env_float("EVOLUTION_STANDARD_VARIATION", 0.2)
 variation_length = _env_float("EVOLUTION_STANDARD_LENGTH", 0.1)
 
@@ -639,7 +642,9 @@ for current_generation in range(runtime_state["current_generation"], max_generat
 
             return stage_results
 
-        stage1_results = _evaluate_stage(pending_children, stage1_max_iterations, "stage1")
+        # A one-stage experiment can train directly against either the easy
+        # stage1 or strict stage2 task definition without a restart boundary.
+        stage1_results = _evaluate_stage(pending_children, stage1_max_iterations, single_stage_name)
 
         stage2_enabled = stage2_max_iterations > stage1_max_iterations and stage2_top_fraction > 0.0
         if stage2_enabled:

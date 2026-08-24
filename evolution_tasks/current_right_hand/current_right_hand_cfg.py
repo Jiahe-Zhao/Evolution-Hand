@@ -10,7 +10,7 @@ from isaaclab.sim.converters import UrdfConverterCfg
 EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC"))
 ASSET_PATH = os.path.join(EVOLUTION_ROOT, 'Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf')
 
-# Configuration based on URDF file /home/zjh/Evolution_PC/Isaaclab_other/agent_for_isaaclab/urdf/current_agent.urdf
+# Shared right-hand V3: continuous long-finger fan with a fixed palm link.
 CURRENT_HAND_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=ASSET_PATH,

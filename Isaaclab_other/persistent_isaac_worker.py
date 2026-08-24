@@ -130,6 +130,8 @@ class PersistentIsaacWorker:
         export EVOLUTION_PARALLEL_SLOT=\"{self.slot_id}\"
         export EVOLUTION_DEVICE_NAME=\"{self.device_name}\"
         export PYTHONPATH=\"{self.python_override_root}:$PYTHONPATH\"
+        # Isaac Sim enumerates CUDA devices itself; inherited masking can crash Kit at startup.
+        unset CUDA_VISIBLE_DEVICES
         set +u
         source \"{self.isaac_sim_setup}\"
         set -u
@@ -156,7 +158,17 @@ class PersistentIsaacWorker:
         self._force_terminate()
         raise PersistentIsaacWorkerError(f"Worker did not become ready within {self.startup_timeout}s")
 
-    def run(self, *, task_name, num_envs, run_name, checkpoint_path, max_iterations, checkpoint_interval):
+    def run(
+        self,
+        *,
+        task_name,
+        num_envs,
+        run_name,
+        checkpoint_path,
+        max_iterations,
+        checkpoint_interval,
+        curriculum_stage,
+    ):
         last_error = None
         for attempt in range(self.request_retries + 1):
             self._start()
@@ -173,6 +185,7 @@ class PersistentIsaacWorker:
                     "checkpoint_path": checkpoint_path,
                     "max_iterations": max_iterations,
                     "checkpoint_interval": checkpoint_interval,
+                    "curriculum_stage": curriculum_stage,
                 },
             )
             deadline = time.time() + self.request_timeout

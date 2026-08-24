@@ -200,6 +200,29 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
     robot.set("name", agent_dict["agent_code"])
 
     all_links = agent_dict["base_link"] + agent_dict["links"]
+    base_link_names = {link["name_code"] for link in agent_dict["base_link"]}
+    link_names = {link["name_code"] for link in agent_dict["links"]}
+    finger_root_names = {f"link_{digit}_0" for digit in range(1, 6)}
+    palm_root_names = {
+        link["name_code"]
+        for link in agent_dict["links"]
+        if link["name_code"] in finger_root_names and link.get("joint_parent") == "link_0_0"
+    }
+    # Every evolved hand is rendered with the same passive palm that was
+    # validated in V3.  It adds no degree of freedom, while giving the five
+    # fingers a common mechanical parent instead of five independent wrists.
+    add_fixed_palm = (
+        "link_0_0" in base_link_names
+        and "link_palm" not in link_names
+        and bool(palm_root_names)
+    )
+    palm_data = {
+        "name_code": "link_palm",
+        "geometry_type": "box",
+        "geometry_size": [0.040, 0.020, 0.058],
+        "mass": 0.16,
+        "visual_color": [0.72, 0.49, 0.30, 1.0],
+    }
     for link_data in all_links:
         mesh_filename_abs, collision_filename_abs, origin_z = write_mesh(link_data, output_dir)
         mesh_filename = os.path.relpath(mesh_filename_abs, output_urdf_dir)
@@ -231,19 +254,59 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
             if overlay_data.get("collision_enabled", False):
                 add_visual_or_collision(link_tag, "collision", overlay_collision, overlay_origin_z)
 
+    if add_fixed_palm:
+        mesh_filename_abs, _, origin_z = write_mesh(palm_data, output_dir)
+        palm_tag = ET.SubElement(robot, "link")
+        palm_tag.set("name", "link_palm")
+        add_inertial(palm_tag, palm_data)
+        add_visual_or_collision(
+            palm_tag,
+            "visual",
+            os.path.relpath(mesh_filename_abs, output_urdf_dir),
+            origin_z,
+            palm_data["visual_color"],
+        )
+
+        fixed_joint = ET.SubElement(robot, "joint")
+        fixed_joint.set("name", "link_0_0_to_link_palm")
+        fixed_joint.set("type", "fixed")
+        parent = ET.SubElement(fixed_joint, "parent")
+        parent.set("link", "link_0_0")
+        child = ET.SubElement(fixed_joint, "child")
+        child.set("link", "link_palm")
+        add_origin(fixed_joint, [0.0, 0.0, 0.0], [0.0, 0.0, 0.0])
+
     for link_data in agent_dict["links"]:
         joint_tag = ET.SubElement(robot, "joint")
         joint_tag.set("name", link_data["joint_name"])
         joint_tag.set("type", link_data.get("joint_type", "revolute"))
 
         parent = ET.SubElement(joint_tag, "parent")
-        parent.set("link", link_data.get("joint_parent", "base_link"))
+        joint_parent = link_data.get("joint_parent", "base_link")
+        if add_fixed_palm and link_data["name_code"] in palm_root_names:
+            joint_parent = "link_palm"
+        parent.set("link", joint_parent)
 
         child = ET.SubElement(joint_tag, "child")
         child.set("link", link_data["name_code"])
 
         origin_translation = link_data.get("joint_origin_translation", [0, 0, 0])
         origin_rpy = link_data.get("joint_origin_rpy", [0, 0, 0])
+        if link_data["name_code"] in palm_root_names:
+            # Preserve V3's coordinated fan geometry even when an evolutionary
+            # mutation targets a root joint.  The mirrored hand flips x/y.
+            digit = int(link_data["name_code"].split("_")[1])
+            root_origins = {
+                1: ([0.015, 0.0, 0.000], [0.0, 1.87, 0.0]),
+                2: ([0.015, 0.0, 0.010], [0.0, 1.67, 0.0]),
+                3: ([0.015, 0.0, 0.020], [0.0, 1.57, 0.0]),
+                4: ([0.015, 0.0, 0.030], [0.0, 1.47, 0.0]),
+                5: ([0.015, 0.0, 0.040], [0.0, 1.37, 0.0]),
+            }
+            origin_translation, origin_rpy = root_origins[digit]
+            if "mirror" in agent_dict["agent_code"].lower():
+                origin_translation = [-origin_translation[0], *origin_translation[1:]]
+                origin_rpy = [origin_rpy[0], -origin_rpy[1], -origin_rpy[2]]
         add_origin(joint_tag, origin_translation, origin_rpy)
 
         if link_data.get("joint_type", "revolute") != "fixed":

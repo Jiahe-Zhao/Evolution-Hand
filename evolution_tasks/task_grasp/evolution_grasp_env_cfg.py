@@ -3,6 +3,8 @@ from isaaclab_tasks.evolution_tasks.current_left_hand.current_left_hand_cfg impo
 
 from isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg import CURRENT_HAND_CFG  as RIGHT_HAND_CFG#hand cfg需要修改
 
+import os
+
 import numpy as np
 import torch
 
@@ -36,7 +38,7 @@ class EventCfg:
             "asset_cfg": SceneEntityCfg("right_hand"),
             "static_friction_range": (0.7, 1.3), # 静摩擦范围
             "dynamic_friction_range": (1.0, 1.0),
-            "restitution_range": (1.0, 1.0), # 回弹
+            "restitution_range": (0.0, 0.0), # 禁用接触回弹，避免指尖与球持续弹跳
             "num_buckets": 250,
         },
     )
@@ -90,7 +92,7 @@ class EventCfg:
             "asset_cfg": SceneEntityCfg("object"),
             "static_friction_range": (0.7, 1.3),
             "dynamic_friction_range": (1.0, 1.0),
-            "restitution_range": (1.0, 1.0),
+            "restitution_range": (0.0, 0.0),
             "num_buckets": 250,
         },
     )
@@ -159,9 +161,10 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     decimation = 2
     episode_length_s = 10.0
     
-    action_space = len(actuated_joint_names)
-    
-    observation_space = len(actuated_joint_names)*3+len(fingertip_body_names)*13+16
+    # 15 fingertip displacement targets + 5 task-level closure residuals.
+    action_space = 20
+    # Full observation plus the morphology descriptor (15 positions + 5 mask).
+    observation_space = 159
    
     # state_space = (len(actuated_joint_names)*3+len(fingertip_body_names)*19)+16
     state_space=0
@@ -175,6 +178,7 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
         physics_material=RigidBodyMaterialCfg(
             static_friction=1.0,
             dynamic_friction=1.0,
+            restitution=0.0,
         ),
         physx=PhysxCfg(
             bounce_threshold_velocity=0.2,
@@ -189,7 +193,8 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
         init_state=ArticulationCfg.InitialStateCfg(
             pos=(0.0, 0.0, 0.35),
             rot=(-0.707107, 0.707107, 0.0, 0),
-            joint_pos={".*": 0.0},
+            # Start from a finger-pad pre-grasp instead of an open hand.
+            joint_pos={".*": 0.35},
         )
     )
     
@@ -200,7 +205,11 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
             radius=0.02,
             activate_contact_sensors=True,
             visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.8, 1.0, 0.0)),
-            physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=0.7),
+            physics_material=sim_utils.RigidBodyMaterialCfg(
+                static_friction=0.7,
+                dynamic_friction=0.7,
+                restitution=0.0,
+            ),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 kinematic_enabled=False,
                 disable_gravity=False,
@@ -219,14 +228,23 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
             mass_props=sim_utils.MassPropertiesCfg(density=567.0),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
-            pos=(-0.05, 0.01, 0.378),  
+    # Runtime reset places the ball at proximal_finger_region_center in the
+    # hand frame. This placeholder only defines the asset's default state.
+            pos=(0.010, 0.005, 0.365),
             rot=(1.0,0.0,0.0,0.0),#初始状态 
         )
     )
     # contact_sensor_cfg
     contact_sensor_cfg:ContactSensorCfg=ContactSensorCfg(
         prim_path="/World/envs/env_.*/grasp_object",
-        # filter_prim_paths_expr=["/World/envs/env_.*/Cone"],
+        # One channel per fingertip, ordered thumb then four long fingers.
+        filter_prim_paths_expr=[
+            "/World/envs/env_.*/LeftRobot/link_1_2",
+            "/World/envs/env_.*/LeftRobot/link_2_3",
+            "/World/envs/env_.*/LeftRobot/link_3_3",
+            "/World/envs/env_.*/LeftRobot/link_4_3",
+            "/World/envs/env_.*/LeftRobot/link_5_3",
+        ],
     )
     
 
@@ -234,8 +252,11 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=20, env_spacing=1.5, replicate_physics=True)
 
     # reset
-    reset_position_noise = 0.01  # range of position at reset
-    reset_dof_pos_noise = 0.2  # range of dof pos at reset
+    reset_position_noise = 0.0
+    curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
+    # First establish stable distal-finger support from a reproducible pose;
+    # then reintroduce a modest joint perturbation for the strict stage.
+    reset_dof_pos_noise = 0.0 if curriculum_stage == "stage1" else 0.05
     reset_dof_vel_noise = 0.0  # range of dof vel at reset
     # scales and constants
     # fall_dist = 0.24
@@ -254,10 +275,42 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     action_penalty_scale = 0.0
     reach_goal_bonus = 1000
     fall_penalty = 0
-    # Local oriented box on the skeletal hand root used only for training.
-    palm_region_center = (0.010, 0.0, 0.016)
-    palm_region_half_extents = (0.035, 0.035, 0.026)
-    palm_region_reward_scale = 4.0
+    # This box covers the visible central palm between the five fingers.  It
+    # intentionally excludes the root-side edge that previously permitted
+    # visual "edge support" to count as a grasp.
+    visual_palm_region_center = (0.018, 0.0, 0.018)
+    visual_palm_region_half_extents = (0.018, 0.024, 0.018)
+    # The middle three first phalanges form a stable shelf just distal to the
+    # palm. It is added to, rather than replacing, the original palm region.
+    proximal_finger_region_center = (-0.025, -0.025, 0.030)
+    proximal_finger_region_half_extents = (0.020, 0.020, 0.015)
+    # Dynamic distal-finger enclosure: require the ball to be close to at least
+    # two terminal phalanges, so a widely open hand cannot obtain a false success.
+    distal_region_margin = 0.024
+    distal_contact_radius = 0.060
+    min_distal_nearby_fingers = 2
+    spawn_on_distal_fingers = True
+    distal_support_body_names = ("link_2_3", "link_3_3", "link_4_3")
+    # World-frame upward offset: sphere radius plus a small contact clearance.
+    distal_support_offset = (0.0, 0.0, 0.032)
+    palm_region_reward_scale = 0.0
+    # Three sparse milestones are active in both training stages and evaluation.
+    # Stage1/Stage2 only differ in training budget and reset perturbation.
+    m1_contact_force_threshold = 0.10  # any fingertip
+    m2_contact_force_threshold = 0.10  # thumb plus another fingertip
+    m3_contact_force_threshold = 0.25  # all five fingertips
+    m1_hold_steps = 3
+    m2_hold_steps = 5
+    m3_hold_steps = 10
+    m1_reward = 50.0
+    m2_reward = 250.0
+    m3_reward = 1000.0
+    # Retained for compatibility with old reports; success is always M3 now.
+    require_full_hand_contact = True
+    full_hand_contact_force_threshold = m3_contact_force_threshold
+    thumb_contact_index = 0
+    required_fingertip_count = 5
+    min_success_hold_steps = m3_hold_steps
     # grasp_dist = 0.025
     success_tolerance = 3
     max_consecutive_success = 0

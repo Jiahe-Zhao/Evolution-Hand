@@ -33,6 +33,15 @@ Isaaclab_other/hand_structure_backup_*/
 Isaaclab_other/generated_meshes/
 Isaaclab_other/output_meshes*/
 
+# Local experimental outputs and generated hand snapshots
+experiment_results/
+outputs/
+Isaaclab_other/bench_*.json
+Isaaclab_other/agent_for_isaaclab/
+Isaaclab_other/agent_for_isaaclab_mirror/
+evolution_tasks/**/*.bak_*
+evolution_tasks/task_suite/*_diagnostic.py
+
 # Generated previews and asset-browser thumbnails
 evolution_tasks/**/*preview*.png
 evolution_tasks/scene_preview.png

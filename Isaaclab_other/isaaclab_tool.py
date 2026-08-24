@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import os
+import shutil
 
 
 def parse_urdf_and_generate_articulation_cfg(urdf_path, asset_path, output_py_file):
@@ -139,6 +140,22 @@ def calculate_observation_number (urdf_path):
     return observation_number
 
 def task_generate_env_cfg(current_task, urdf_path,mirror_urdf_path, observation_number, output_py_file):
+    # The task environments own the morphology-aware Cartesian action and
+    # observation contract. Copy those verified templates verbatim so a slot
+    # cannot regenerate the old joint-action interface during evolution.
+    template_paths = {
+        "Isaac-EvolutionHand-Grasp-v0": ("task_grasp", "evolution_grasp_env_cfg.py"),
+        "Isaac-EvolutionHand-BranchGrasp-v0": ("task_branch_grasp", "branch_grasp_env_cfg.py"),
+        "Isaac-EvolutionHand-Forage-v0": ("task_forage", "forage_env_cfg.py"),
+        "Isaac-EvolutionHand-Strike-v0": ("task_strike", "evolution_strike_env_cfg.py"),
+    }
+    if current_task in template_paths:
+        evolution_root = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC"))
+        source_path = os.path.join(evolution_root, "evolution_tasks", *template_paths[current_task])
+        os.makedirs(os.path.dirname(output_py_file), exist_ok=True)
+        shutil.copyfile(source_path, output_py_file)
+        print(f"Copied unified Cartesian task template {source_path} -> {output_py_file}")
+        return
     if current_task == 'Isaac-Hand-Cube-v0':
         cube_task_generate_env_cfg(urdf_path, observation_number, output_py_file)
     elif current_task =='Isaac-EvolutionHand-Grasp-v0':
@@ -170,7 +187,9 @@ def grasp_task_generate_env_cfg(urdf_path, mirror_urdf_path,observation_number, 
 
         for joint in root.findall("joint"):
             joint_name = joint.get("name")
-            if joint_name:
+            # The V3 palm is attached by a fixed joint.  It is a body link,
+            # not an actuator, and including it shifts the policy dimensions.
+            if joint_name and joint.get("type") != "fixed":
                 joint_names.append(joint_name)
 
         for link in root.findall("link"):
@@ -193,6 +212,7 @@ from isaaclab_tasks.evolution_tasks.current_left_hand.current_left_hand_cfg impo
 
 from isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg import CURRENT_HAND_CFG  as RIGHT_HAND_CFG#hand cfg需要修改
 
+import os
 import numpy as np
 import torch
 
@@ -344,6 +364,11 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     for finger_id, joints in finger_links.items():
         max_joint = max(joints, key=lambda x: x[0])
         fingertip_body_names.append(max_joint[1])  # only name
+    thumb_contact_index = next(
+        (index for index, name in enumerate(fingertip_body_names) if name.startswith("link_1_")),
+        -1,
+    )
+    required_fingertip_count = 5
     
     # Environment settings
     decimation = 2
@@ -416,7 +441,9 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # contact_sensor_cfg
     contact_sensor_cfg:ContactSensorCfg=ContactSensorCfg(
         prim_path="/World/envs/env_.*/grasp_object",
-        # filter_prim_paths_expr=["/World/envs/env_.*/Cone"],
+        filter_prim_paths_expr=[
+            f"/World/envs/env_.*/LeftRobot/{{name}}" for name in fingertip_body_names
+        ],
     )
     
 
@@ -424,8 +451,9 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=20, env_spacing=1.5, replicate_physics=True)
 
     # reset
-    reset_position_noise = 0.01  # range of position at reset
-    reset_dof_pos_noise = 0.2  # range of dof pos at reset
+    reset_position_noise = 0.0
+    curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
+    reset_dof_pos_noise = 0.0 if curriculum_stage == "stage1" else 0.05
     reset_dof_vel_noise = 0.0  # range of dof vel at reset
     # scales and constants
     # fall_dist = 0.24
@@ -438,14 +466,37 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # dist_reward_scale = 20.0
 
     # reward scales
-    dist_reward_scale = -1.0#-1.0
+    dist_reward_scale = 0.0
     angle_reward_scale=-3.0
-    force_reward_scale= -5.0
-    action_penalty_scale = -0.0002
+    force_reward_scale= 0.0
+    action_penalty_scale = 0.0
     reach_goal_bonus = 1000
     fall_penalty = 0
-    # grasp_dist = 0.025
-    success_tolerance = 1
+    visual_palm_region_center = (0.018, 0.0, 0.018)
+    visual_palm_region_half_extents = (0.018, 0.024, 0.018)
+    proximal_finger_region_center = (-0.025, -0.025, 0.030)
+    proximal_finger_region_half_extents = (0.020, 0.020, 0.015)
+    distal_region_margin = 0.024
+    distal_contact_radius = 0.060
+    min_distal_nearby_fingers = 2
+    spawn_on_distal_fingers = False
+    distal_support_body_names = ()
+    distal_support_offset = (0.0, 0.0, 0.032)
+    palm_region_reward_scale = 0.0
+    # Keep reward semantics identical in stage1, stage2, and evaluation.
+    m1_contact_force_threshold = 0.10
+    m2_contact_force_threshold = 0.10
+    m3_contact_force_threshold = 0.25
+    m1_hold_steps = 3
+    m2_hold_steps = 5
+    m3_hold_steps = 10
+    m1_reward = 50.0
+    m2_reward = 250.0
+    m3_reward = 1000.0
+    require_full_hand_contact = True
+    full_hand_contact_force_threshold = m3_contact_force_threshold
+    min_success_hold_steps = m3_hold_steps
+    success_tolerance = 3
     max_consecutive_success = 0
     av_factor = 0.1
     fall_dist=0.15
@@ -781,7 +832,7 @@ def strike_task_generate_env_cfg(urdf_path, mirror_urdf_path,observation_number,
 
         for joint in root.findall("joint"):
             joint_name = joint.get("name")
-            if joint_name:
+            if joint_name and joint.get("type") != "fixed":
                 joint_names.append(joint_name)
 
         for link in root.findall("link"):
@@ -958,8 +1009,11 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     # env
     decimation = 2
     episode_length_s = 10.0
-    action_space = len(actuated_joint_names)
-    observation_space = len(actuated_joint_names)*3+len(fingertip_body_names)*13+16  # (full)
+    # The policy controls every revolute hand joint plus x/y/z wrist motion.
+    # Full observations contain only actuated joint states/actions (3N),
+    # fingertip state (13F), object state (16), and wrist action (3).
+    action_space = len(actuated_joint_names) + 3
+    observation_space = len(actuated_joint_names)*3+len(fingertip_body_names)*13+19
     state_space = 0
     asymmetric_obs = False
     obs_type = "full"

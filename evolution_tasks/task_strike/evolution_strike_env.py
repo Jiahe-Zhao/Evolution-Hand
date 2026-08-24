@@ -18,8 +18,10 @@ from isaaclab.assets import ArticulationCfg, RigidObjectCfg
 from isaaclab.envs import DirectRLEnv
 from isaaclab.markers import VisualizationMarkers
 from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
-from isaaclab.utils.math import quat_conjugate, quat_from_angle_axis, quat_mul, sample_uniform, saturate
+from isaaclab.utils.math import quat_apply, quat_conjugate, quat_from_angle_axis, quat_mul, sample_uniform, saturate
 from isaaclab.sensors import ContactSensor,ContactSensorCfg
+from isaaclab_tasks.evolution_tasks.palm_coupling import apply_virtual_palm_coupling
+from isaaclab_tasks.evolution_tasks.cartesian_hand_controller import MorphologyAwareFingertipIK, canonical_joint_observation
 
 if TYPE_CHECKING:
     from isaaclab_tasks.direct.allegro_hand.allegro_hand_env_cfg import AllegroHandEnvCfg
@@ -37,6 +39,11 @@ class EvolutionStrikeEnv(DirectRLEnv):
         self.hand_dof_targets = torch.zeros((self.num_envs, self.num_hand_dofs), dtype=torch.float, device=self.device)
         self.prev_targets = torch.zeros((self.num_envs, self.num_hand_dofs), dtype=torch.float, device=self.device)
         self.cur_targets = torch.zeros((self.num_envs, self.num_hand_dofs), dtype=torch.float, device=self.device)
+        self.raw_actions = torch.zeros((self.num_envs, self.cfg.action_space), dtype=torch.float, device=self.device)
+        self.hand_actions = torch.zeros((self.num_envs, 20), dtype=torch.float, device=self.device)
+        self.wrist_actions = torch.zeros((self.num_envs, 3), dtype=torch.float, device=self.device)
+        self.wrist_action_scale = torch.tensor(self.cfg.wrist_action_scale, dtype=torch.float, device=self.device)
+        self.held_tool_offset = torch.tensor(self.cfg.held_tool_offset, dtype=torch.float, device=self.device)
 
         # list of actuated joints
         self.actuated_dof_indices = list()
@@ -55,6 +62,10 @@ class EvolutionStrikeEnv(DirectRLEnv):
         joint_pos_limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
         self.hand_dof_lower_limits = joint_pos_limits[..., 0]
         self.hand_dof_upper_limits = joint_pos_limits[..., 1]
+        self.canonical_joint_names = tuple(self.cfg.actuated_joint_names)
+        self.cartesian_ik = MorphologyAwareFingertipIK(
+            self.hand, self.cfg.fingertip_body_names, num_envs=self.num_envs, device=self.device
+        )
 
         # track goal resets
         self.reset_goal_buf = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
@@ -89,6 +100,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
         # track successes
         self.successes = torch.zeros(self.num_envs, dtype=torch.float, device=self.device)
         self.consecutive_successes = torch.zeros(1, dtype=torch.float, device=self.device)
+        self.tool_was_held = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
 
         # unit tensors
         self.x_unit_tensor = torch.tensor([1, 0, 0], dtype=torch.float, device=self.device).repeat((self.num_envs, 1))
@@ -98,6 +110,13 @@ class EvolutionStrikeEnv(DirectRLEnv):
     def _setup_scene(self):
         
         self.hand = Articulation(self.cfg.robot_cfg)
+        # PhysX body_names is unavailable until the scene is initialized.  Keep
+        # the canonical sensor paths here; the IK/controller handles missing
+        # links after articulation initialization.
+        available_tips = list(self.cfg.fingertip_body_names)
+        self.cfg.contact_sensor_cfg.filter_prim_paths_expr = [
+            f"/World/envs/env_.*/RightRobot/{name}" for name in available_tips
+        ]
         # self.object = RigidObject(self.cfg.object_cfg)
         self.cone=RigidObject(self.cfg.Cone_cfg)
         self.strike_object=RigidObject(self.cfg.strike_object_cfg)
@@ -124,29 +143,37 @@ class EvolutionStrikeEnv(DirectRLEnv):
         light_cfg.func("/World/Light", light_cfg)
         
     def _pre_physics_step(self, actions: torch.Tensor) -> None:
-        self.actions = actions.clone()
+        self.raw_actions = actions.clone()
+        # Zero policy action holds the reset pre-grasp; policy commands are
+        # relative deviations so the tool is not released at the first step.
+        self.hand_actions = self.raw_actions[:, :20].clone()
+        self.wrist_actions = torch.clamp(self.raw_actions[:, 20:], -1.0, 1.0)
 
     def _apply_action(self) -> None:
-        self.cur_targets[:, self.actuated_dof_indices] = scale(
-            self.actions,
-            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
-            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
-        )
-        self.cur_targets[:, self.actuated_dof_indices] = (
-            self.cfg.act_moving_average * self.cur_targets[:, self.actuated_dof_indices]
-            + (1.0 - self.cfg.act_moving_average) * self.prev_targets[:, self.actuated_dof_indices]
-        )
-        self.cur_targets[:, self.actuated_dof_indices] = saturate(
-            self.cur_targets[:, self.actuated_dof_indices],
-            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
-            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
-        )
+        # The URDF has a fixed base, so wrist motion is imposed as a Cartesian
+        # root-pose command.  This keeps the hand stable while exposing an
+        # explicit reach/strike action to the policy.
+        root_state = self.hand.data.default_root_state.clone()
+        root_state[:, :3] += self.scene.env_origins
+        root_state[:, :3] += self.wrist_actions * self.wrist_action_scale
+        root_state[:, 7:] = 0.0
+        self.hand.write_root_pose_to_sim(root_state[:, :7])
+        self.hand.write_root_velocity_to_sim(root_state[:, 7:])
+        if self.cfg.hold_tool_to_hand:
+            # Strike evaluates tool use after a known pre-grasp, not the
+            # separate grasp-acquisition problem.  The kinematic tool remains
+            # attached to the wrist while the policy controls the strike.
+            tool_state = self.cone.data.default_root_state.clone()
+            tool_state[:, :3] = root_state[:, :3] + self.held_tool_offset
+            tool_state[:, 7:] = 0.0
+            self.cone.write_root_state_to_sim(tool_state)
 
-        self.prev_targets[:, self.actuated_dof_indices] = self.cur_targets[:, self.actuated_dof_indices]
-
-        self.hand.set_joint_position_target(
-            self.cur_targets[:, self.actuated_dof_indices], joint_ids=self.actuated_dof_indices
-        )
+        targets = self.cartesian_ik.compute(self.hand_actions)
+        targets = self.cfg.act_moving_average * targets + (1.0 - self.cfg.act_moving_average) * self.prev_targets
+        targets = saturate(targets, self.hand_dof_lower_limits, self.hand_dof_upper_limits)
+        self.cur_targets[:] = targets
+        self.prev_targets[:] = targets
+        self.hand.set_joint_position_target(targets)
 
     def _get_observations(self) -> dict:
         if self.cfg.asymmetric_obs:
@@ -170,6 +197,19 @@ class EvolutionStrikeEnv(DirectRLEnv):
         return observations
 
     def _get_rewards(self) -> torch.Tensor:
+        # This task starts with a prescribed pre-grasp.  World height is not a
+        # grasp signal: lowering the wrist to strike would otherwise invalidate
+        # a tool that is still rigidly attached to the hand.
+        expected_tool_pos = self.hand.data.root_pos_w + torch.tensor(
+            self.cfg.held_tool_offset, dtype=torch.float, device=self.device
+        )
+        self.tool_attachment_error = torch.norm(self.cone.data.root_pos_w - expected_tool_pos, dim=-1)
+        attached_to_hand = self.tool_attachment_error <= self.cfg.tool_attachment_tolerance
+        # This task supplies a prescribed kinematic pre-grasp.  The tool is
+        # written from the wrist pose every control step, so numerical contact
+        # drift after impact must not invalidate an already attached tool.
+        held_after_settling = (self.episode_length_buf >= self.cfg.stabilization_steps) & self.cfg.hold_tool_to_hand
+        self.tool_was_held |= held_after_settling
         (
             total_reward,
             self.reset_goal_buf,
@@ -181,29 +221,31 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.successes,
                 self.consecutive_successes,
                 self.max_episode_length,
-                self.cone_pos,
+                self.cone_tip_pos,
                 self.strike_object_force,
                 self.strike_target_pos,
                 self.cfg.success_force_threshold,
 
                 self.cfg.dist_reward_scale,
                 self.cfg.force_reward_scale,
-                self.actions,
+                self.hand_actions,
                 self.cfg.action_penalty_scale,
                 self.cfg.success_tolerance,
                 self.cfg.reach_goal_bonus,
                 self.cfg.success_distance,
                 self.cfg.fall_penalty,
                 self.cfg.av_factor,
+                (self.episode_length_buf >= self.cfg.stabilization_steps) & self.tool_was_held,
         )
 
         if "log" not in self.extras:
             self.extras["log"] = dict()
         self.extras["log"]["consecutive_successes"] = self.consecutive_successes.mean()
         self.extras["log"]["strike_goal_distance"] = torch.norm(
-            self.cone_pos - self.strike_target_pos, p=2, dim=-1
+            self.cone_tip_pos[:, :2] - self.strike_target_pos[:, :2], p=2, dim=-1
         ).mean()
         self.extras["log"]["strike_contact_force"] = torch.norm(self.strike_object_force, dim=-1).mean()
+        self.extras["log"]["strike_tool_was_held"] = self.tool_was_held.float().mean()
 
         # reset goals if the goal has been reached
         # goal_env_ids = self.reset_goal_buf.nonzero(as_tuple=False).squeeze(-1)
@@ -269,6 +311,14 @@ class EvolutionStrikeEnv(DirectRLEnv):
         dof_pos_noise = sample_uniform(-1.0, 1.0, (len(env_ids), self.num_hand_dofs), device=self.device)
         rand_delta = delta_min + (delta_max - delta_min) * 0.5 * dof_pos_noise
         dof_pos = self.hand.data.default_joint_pos[env_ids] + self.cfg.reset_dof_pos_noise * rand_delta
+        pregrasp = torch.full(
+            (len(env_ids), len(self.actuated_dof_indices)), self.cfg.pregrasp_action, device=self.device
+        )
+        dof_pos[:, self.actuated_dof_indices] = scale(
+            pregrasp,
+            self.hand_dof_lower_limits[env_ids][:, self.actuated_dof_indices],
+            self.hand_dof_upper_limits[env_ids][:, self.actuated_dof_indices],
+        )
 
         dof_vel_noise = sample_uniform(-1.0, 1.0, (len(env_ids), self.num_hand_dofs), device=self.device)
         dof_vel = self.hand.data.default_joint_vel[env_ids] + self.cfg.reset_dof_vel_noise * dof_vel_noise
@@ -276,11 +326,24 @@ class EvolutionStrikeEnv(DirectRLEnv):
         self.prev_targets[env_ids] = dof_pos
         self.cur_targets[env_ids] = dof_pos
         self.hand_dof_targets[env_ids] = dof_pos
+        self.raw_actions[env_ids] = 0.0
+        self.cartesian_ik.reset(env_ids)
 
         self.hand.set_joint_position_target(dof_pos, env_ids=env_ids)
         self.hand.write_joint_state_to_sim(dof_pos, dof_vel, env_ids=env_ids)
+        hand_root_state = self.hand.data.default_root_state.clone()[env_ids]
+        hand_root_state[:, :3] += self.scene.env_origins[env_ids]
+        hand_root_state[:, 7:] = 0.0
+        self.hand.write_root_pose_to_sim(hand_root_state[:, :7], env_ids=env_ids)
+        self.hand.write_root_velocity_to_sim(hand_root_state[:, 7:], env_ids=env_ids)
+        if self.cfg.hold_tool_to_hand:
+            tool_state = self.cone.data.default_root_state.clone()[env_ids]
+            tool_state[:, :3] = hand_root_state[:, :3] + self.held_tool_offset
+            tool_state[:, 7:] = 0.0
+            self.cone.write_root_state_to_sim(tool_state, env_ids=env_ids)
 
         self.successes[env_ids] = 0
+        self.tool_was_held[env_ids] = False
         self._compute_intermediate_values()
 
     #更新环境类中的属性
@@ -302,6 +365,11 @@ class EvolutionStrikeEnv(DirectRLEnv):
          # 锥体数据
         self.cone_pos = self.cone.data.root_pos_w - self.scene.env_origins  # 锥体的位置
         self.cone_rot = self.cone.data.root_quat_w  # 锥体的旋转
+        cone_tip_local = torch.zeros_like(self.cone_pos)
+        # The active tool is a sphere; its lowest point is one radius below
+        # the root.  Keeping this configurable preserves the old cone logic.
+        cone_tip_local[:, 2] = -self.cfg.tool_impact_offset
+        self.cone_tip_pos = self.cone_pos + quat_apply(self.cone_rot, cone_tip_local)
         self.cone_velocities = self.cone.data.root_vel_w  # 锥体的速度
         self.cone_linvel = self.cone.data.root_lin_vel_w  # 锥体的线速度
         self.cone_angvel = self.cone.data.root_ang_vel_w  # 锥体的角速度
@@ -326,20 +394,24 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.cone_pos,
                 self.strike_object_force,
                 # quat_mul(self.object_rot, quat_conjugate(self.goal_rot)),
-                self.actions,
+                self.hand_actions,
             ),
             dim=-1,
         )
         return obs
 
     def compute_full_observations(self):
+        canonical_pos, canonical_vel = canonical_joint_observation(
+            self.hand, self.canonical_joint_names, self.hand_dof_pos, self.hand_dof_vel,
+            self.hand_dof_lower_limits, self.hand_dof_upper_limits
+        )
         obs = torch.cat(
             (
                 # hand
                 #len(joint)
-                unscale(self.hand_dof_pos, self.hand_dof_lower_limits, self.hand_dof_upper_limits),
+                canonical_pos,
                 #len(joint)
-                self.cfg.vel_obs_scale * self.hand_dof_vel,
+                self.cfg.vel_obs_scale * canonical_vel,
                 # cone
                 #3
                 self.cone_pos,
@@ -358,8 +430,10 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.fingertip_pos.view(self.num_envs, self.num_fingertips * 3),
                 self.fingertip_rot.view(self.num_envs, self.num_fingertips * 4),
                 self.fingertip_velocities.view(self.num_envs, self.num_fingertips * 6),
-                # actions len(joint)
-                self.actions,
+                self.cartesian_ik.morphology_descriptor(),
+                # 19 finger actions and 3 Cartesian wrist actions
+                self.hand_actions,
+                self.wrist_actions,
                 
             ),
             dim=-1,
@@ -386,7 +460,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
                 self.cfg.force_torque_obs_scale
                 * self.fingertip_force_sensors.view(self.num_envs, self.num_fingertips * 6),
                 # actions
-                self.actions,
+                self.hand_actions,
             ),
             dim=-1,
         )
@@ -441,10 +515,11 @@ def compute_rewards(
     success_distance: float,   #成功位置阈值
     fall_penalty: float,    #掉落惩罚
     av_factor: float,   #用于平滑连续成功的奖励
+    task_active: torch.Tensor,
 ):
-    goal_dist = torch.norm(cone_pos - target_pos, p=2, dim=-1)
+    goal_dist = torch.norm(cone_pos[:, :2] - target_pos[:, :2], p=2, dim=-1)
     contact_force = torch.norm(object_force, dim=-1)
-    hit_goal = (goal_dist < success_distance) & (contact_force >= target_force)
+    hit_goal = (goal_dist < success_distance) & (contact_force >= target_force) & task_active
     goal_resets = torch.where(hit_goal, torch.ones_like(reset_goal_buf), torch.zeros_like(reset_goal_buf))
     successes = successes + goal_resets
     reward = torch.where(hit_goal, torch.full_like(goal_dist, 1000.0), torch.zeros_like(goal_dist))

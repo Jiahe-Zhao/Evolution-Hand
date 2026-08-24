@@ -7,9 +7,35 @@ from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.sim import PhysxCfg, SimulationCfg
 from isaaclab.sim.spawners.materials.physics_materials_cfg import RigidBodyMaterialCfg
 from isaaclab.sensors import ContactSensorCfg
+from isaaclab.actuators.actuator_cfg import ImplicitActuatorCfg
 from isaaclab.utils import configclass
 
 from isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg import CURRENT_HAND_CFG as RIGHT_HAND_CFG
+
+
+EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC"))
+_THUMB_JOINTS = ("link_0_0_to_link_1_0", "link_1_0_to_link_1_1", "link_1_1_to_link_1_2")
+_FAST_LONG_FINGER_JOINTS = (
+    "link_0_0_to_link_2_0", "link_2_0_to_link_2_1", "link_2_1_to_link_2_2", "link_2_2_to_link_2_3",
+    "link_0_0_to_link_3_0", "link_3_0_to_link_3_1", "link_3_1_to_link_3_2", "link_3_2_to_link_3_3",
+)
+_SLOW_LONG_FINGER_JOINTS = (
+    "link_0_0_to_link_4_0", "link_4_0_to_link_4_1", "link_4_1_to_link_4_2", "link_4_2_to_link_4_3",
+    "link_0_0_to_link_5_0", "link_5_0_to_link_5_1", "link_5_1_to_link_5_2", "link_5_2_to_link_5_3",
+)
+_BRANCH_STIFFNESS = {name: 80.0 for name in _THUMB_JOINTS}
+_BRANCH_STIFFNESS.update({name: 35.0 for name in _FAST_LONG_FINGER_JOINTS})
+_BRANCH_STIFFNESS.update({name: 180.0 for name in _SLOW_LONG_FINGER_JOINTS})
+_BRANCH_DAMPING = {name: 2.0 for name in _THUMB_JOINTS}
+_BRANCH_DAMPING.update({name: 5.0 for name in _FAST_LONG_FINGER_JOINTS})
+_BRANCH_DAMPING.update({name: 1.0 for name in _SLOW_LONG_FINGER_JOINTS})
+# The source hand's implicit 1.0 stiffness leaves the 19 joints effectively
+# static in this contact task.  Branch uses a local actuator override so its
+# scripted and learned closing motion produces measurable joint motion.
+# BranchGrasp must evaluate the same evolved morphology as the other tasks.
+# Keep the task-specific reward and scene, but bind the robot to the current
+# right-hand URDF generated for this individual.
+BRANCH_HAND_CFG = RIGHT_HAND_CFG
 
 
 @configclass
@@ -45,8 +71,8 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
 
     decimation = 2
     episode_length_s = 5.0
-    action_space = len(actuated_joint_names)
-    observation_space = len(actuated_joint_names) * 3 + len(fingertip_body_names) * 3 + 7
+    action_space = 20
+    observation_space = 100
     state_space = 0
 
     sim: SimulationCfg = SimulationCfg(
@@ -56,7 +82,7 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
         physx=PhysxCfg(bounce_threshold_velocity=0.2),
     )
 
-    robot_cfg: ArticulationCfg = RIGHT_HAND_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
+    robot_cfg: ArticulationCfg = BRANCH_HAND_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
         init_state=ArticulationCfg.InitialStateCfg(
             pos=(0.0, 0.0, 0.36),
             rot=(0.5, 0.5, 0.5, 0.5),
@@ -110,6 +136,9 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
     curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
     use_easy_curriculum = curriculum_stage == "stage1"
     branch_contact_force_threshold = 0.4 if use_easy_curriculum else 1.0
+    # A branch wrap must use the thumb and at least two long fingers; a single
+    # incidental fingertip contact is not a meaningful grasp.
+    min_long_finger_contacts = 2
     branch_relative_position_tolerance = 0.012
     branch_relative_rotation_tolerance = 0.12
     require_pose_stability = not use_easy_curriculum
@@ -118,3 +147,9 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
     reset_dof_pos_noise = 0.05
     reset_dof_vel_noise = 0.0
     act_moving_average = 0.4
+    # Maximum difference between any long finger's average normalized flexion
+    # drive and the four-finger mean.  The thumb remains independent.
+    finger_coordination_max_deviation = 0.18
+    # Four long fingers advance by this shared target-angle speed; the thumb
+    # remains independent and contact can stop an individual finger naturally.
+    long_finger_joint_speed_rad_s = 1.2
