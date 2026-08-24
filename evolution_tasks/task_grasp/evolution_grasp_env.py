@@ -79,6 +79,16 @@ class EvolutionGraspEnv(DirectRLEnv):
                 self.finger_bodies.append(self.hand.body_names.index(body_name))
         self.num_fingertips = len(self.finger_bodies)
 
+        # The ball starts on the actual first phalanges of the loaded
+        # morphology, rather than at a fixed point in the nominal hand frame.
+        self.proximal_support_body_ids = [
+            self.hand.body_names.index(body_name)
+            for body_name in self.cfg.proximal_support_body_names
+            if body_name in self.hand.body_names
+        ]
+        if not self.proximal_support_body_ids:
+            raise RuntimeError("Grasp task requires at least one configured proximal support body.")
+
         # joint limits
         joint_pos_limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
         self.hand_dof_lower_limits = joint_pos_limits[..., 0]
@@ -92,23 +102,7 @@ class EvolutionGraspEnv(DirectRLEnv):
         # used to compare object position
         self.in_hand_pos = self.grasp_object.data.default_root_state[:, 0:3].clone()
         self.in_hand_pos[:, 2] -= 0.04
-        #击打目标物体的受力
         self.grasp_object_force=torch.zeros((self.num_envs, 3), dtype=torch.float, device=self.device)
-        #目标受力
-        self.target_force=10
-
-        # #施加外力
-        # force=torch.tensor([[[0.0, 0.0, 10.0]]])
-        # torque = torch.tensor([[[0.0, 0.0, 0.0]]])
-        # self.grasp_object.set_external_force_and_torque(forces=force, torques=torque)
-        force_value = [0.0, 0.0, -10.0]
-        self.grasp_load_force = torch.tensor(force_value, device=self.device).repeat(
-            self.num_envs, self.grasp_object.num_bodies, 1
-        )
-        torque_value= [0.0,0.0,0.0]
-        self.grasp_load_torque = torch.tensor(torque_value, device=self.device).repeat(
-            self.num_envs, self.grasp_object.num_bodies, 1
-        )
 
 
         # # default goal positions
@@ -180,12 +174,18 @@ class EvolutionGraspEnv(DirectRLEnv):
         self.cur_targets[:] = targets
         self.prev_targets[:] = targets
         self.hand.set_joint_position_target(targets)
-        # IsaacLab clears external wrenches after each physics write. Reapply
-        # the prescribed downward load so the 10 N grasp criterion is physical.
-        self.grasp_object.set_external_force_and_torque(
-            forces=self.grasp_load_force, torques=self.grasp_load_torque
-        )
-        self.grasp_object.write_data_to_sim()
+
+    def _compute_proximal_support_point(self, env_ids: Sequence[int]) -> torch.Tensor:
+        """Return a morphology-aware ball center above the first phalanges."""
+        phalanx_positions = self.hand.data.body_pos_w[env_ids][:, self.proximal_support_body_ids]
+        phalanx_center = phalanx_positions.mean(dim=1)
+        normal_local = torch.tensor(
+            self.cfg.proximal_support_normal_local, dtype=torch.float, device=self.device
+        ).expand(len(env_ids), -1)
+        normal_world = quat_apply(self.hand.data.root_quat_w[env_ids], normal_local)
+        normal_world = torch.nn.functional.normalize(normal_world, dim=-1)
+        support_offset = self.cfg.grasp_object_radius + self.cfg.proximal_support_clearance
+        return phalanx_center + normal_world * support_offset
     def _get_observations(self) -> dict:
         if self.cfg.asymmetric_obs:
             self.fingertip_force_sensors = self.hand.root_physx_view.get_link_incoming_joint_force()[
@@ -269,17 +269,8 @@ class EvolutionGraspEnv(DirectRLEnv):
         out_of_reach = goal_dist >= self.cfg.fall_dist
 
         if self.cfg.max_consecutive_success > 0:
-            # Reset progress (episode length buf) on goal envs if max_consecutive_success > 0
-            # 计算 Z 方向的受力差异
-            # The object is loaded downward, while contact normal direction can
-            # be positive or negative.  Success depends on support magnitude.
-            z_force = torch.abs(self.grasp_object_force[:, 2])
-            z_force_diff = torch.abs(z_force - self.target_force)
-            self.episode_length_buf = torch.where(
-                torch.abs(z_force_diff) <= self.cfg.success_tolerance,
-                torch.zeros_like(self.episode_length_buf),
-                self.episode_length_buf,
-            )
+            # This legacy mode is independent of the current five-fingertip
+            # M3 success condition and no longer depends on an external load.
             max_success_reached = self.successes >= self.cfg.max_consecutive_success
         #时间超过最大时间长度
         time_out = self.episode_length_buf >= self.max_episode_length - 1
@@ -294,28 +285,6 @@ class EvolutionGraspEnv(DirectRLEnv):
 
         # reset goals
         self.reset_goal_buf[env_ids] = 0
-
-        # Spawn at the stable shelf formed by the middle three proximal phalanges.
-        # The target is expressed in the hand frame, so it remains correct for every cloned env.
-        object_default_state = self.grasp_object.data.default_root_state.clone()[env_ids]
-        support_center_local = torch.tensor(
-            self.cfg.proximal_finger_region_center, dtype=torch.float, device=self.device
-        ).expand(len(env_ids), -1)
-        object_default_state[:, 0:3] = self.hand.data.root_pos_w[env_ids] + quat_apply(
-            self.hand.data.root_quat_w[env_ids], support_center_local
-        )
-
-        # rot_noise = sample_uniform(-1.0, 1.0, (len(env_ids), 2), device=self.device)  # noise for X and Y rotation
-        # object_default_state[:, 3:7] = randomize_rotation(
-        #     rot_noise[:, 0], rot_noise[:, 1], self.x_unit_tensor[env_ids], self.y_unit_tensor[env_ids]
-        # )
-
-        object_default_state[:, 7:] = torch.zeros_like(self.grasp_object.data.default_root_state[env_ids, 7:])
-        self.grasp_object.write_root_state_to_sim(object_default_state, env_ids)
-        # The fall check is relative to the actual reset pose.  The old value
-        # came from the placeholder asset state and could end an episode before
-        # the policy had an opportunity to establish fingertip contact.
-        self.in_hand_pos[env_ids] = object_default_state[:, 0:3]
 
         # reset hand
         delta_max = self.hand_dof_upper_limits[env_ids] - self.hand.data.default_joint_pos[env_ids]
@@ -334,6 +303,17 @@ class EvolutionGraspEnv(DirectRLEnv):
 
         self.hand.set_joint_position_target(dof_pos, env_ids=env_ids)
         self.hand.write_joint_state_to_sim(dof_pos, dof_vel, env_ids=env_ids)
+
+        # Refresh kinematics after the evolved morphology and reset pose are
+        # loaded, then place the ball on the real first-phalanx support shelf.
+        self.sim.forward()
+        self.scene.update(dt=0.0)
+        object_default_state = self.grasp_object.data.default_root_state.clone()[env_ids]
+        object_default_state[:, 0:3] = self._compute_proximal_support_point(env_ids)
+        object_default_state[:, 7:] = torch.zeros_like(self.grasp_object.data.default_root_state[env_ids, 7:])
+        self.grasp_object.write_root_state_to_sim(object_default_state, env_ids)
+        # The fall check is relative to the actual dynamic reset pose.
+        self.in_hand_pos[env_ids] = object_default_state[:, 0:3]
 
         self.successes[env_ids] = 0
         self.success_streaks[env_ids] = 0

@@ -284,6 +284,13 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # palm. It is added to, rather than replacing, the original palm region.
     proximal_finger_region_center = (-0.025, -0.025, 0.030)
     proximal_finger_region_half_extents = (0.020, 0.020, 0.015)
+    # Reset computes the support center from these bodies after the evolved
+    # URDF and reset joint state are loaded. The normal is expressed in the
+    # hand-root frame; local -Y is the upward-facing palm direction here.
+    proximal_support_body_names = ("link_2_0", "link_3_0", "link_4_0")
+    proximal_support_normal_local = (0.0, -1.0, 0.0)
+    grasp_object_radius = 0.02
+    proximal_support_clearance = 0.006
     # Dynamic distal-finger enclosure: require the ball to be close to at least
     # two terminal phalanges, so a widely open hand cannot obtain a false success.
     distal_region_margin = 0.024
