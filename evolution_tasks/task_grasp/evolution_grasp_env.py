@@ -312,6 +312,10 @@ class EvolutionGraspEnv(DirectRLEnv):
 
         object_default_state[:, 7:] = torch.zeros_like(self.grasp_object.data.default_root_state[env_ids, 7:])
         self.grasp_object.write_root_state_to_sim(object_default_state, env_ids)
+        # The fall check is relative to the actual reset pose.  The old value
+        # came from the placeholder asset state and could end an episode before
+        # the policy had an opportunity to establish fingertip contact.
+        self.in_hand_pos[env_ids] = object_default_state[:, 0:3]
 
         # reset hand
         delta_max = self.hand_dof_upper_limits[env_ids] - self.hand.data.default_joint_pos[env_ids]

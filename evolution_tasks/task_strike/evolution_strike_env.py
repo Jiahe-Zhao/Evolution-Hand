@@ -110,12 +110,11 @@ class EvolutionStrikeEnv(DirectRLEnv):
     def _setup_scene(self):
         
         self.hand = Articulation(self.cfg.robot_cfg)
-        # PhysX body_names is unavailable until the scene is initialized.  Keep
-        # the canonical sensor paths here; the IK/controller handles missing
-        # links after articulation initialization.
-        available_tips = list(self.cfg.fingertip_body_names)
+        # The strike sensor is mounted on the target block.  It must monitor
+        # the tool, not the hand links; otherwise an impact is invisible to
+        # the success test even when the cone reaches the target.
         self.cfg.contact_sensor_cfg.filter_prim_paths_expr = [
-            f"/World/envs/env_.*/RightRobot/{name}" for name in available_tips
+            "/World/envs/env_.*/Cone"
         ]
         # self.object = RigidObject(self.cfg.object_cfg)
         self.cone=RigidObject(self.cfg.Cone_cfg)
