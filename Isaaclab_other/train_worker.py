@@ -2,6 +2,8 @@
 
 import argparse
 import copy
+from contextlib import contextmanager
+import fcntl
 import gc
 import glob
 import importlib
@@ -62,6 +64,19 @@ KEEP_LATEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_LATEST_CHECK
 KEEP_BEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_BEST_CHECKPOINTS", "1")))
 CHECKPOINT_REWARD_PATTERN = re.compile(r"rew_([-+]?\d*\.?\d+|\d+)")
 CHECKPOINT_EPOCH_PATTERN = re.compile(r"_ep_(\d+)")
+
+
+@contextmanager
+def _scene_initialization_lock():
+    """Serialize native USD import and PhysX scene creation across slots."""
+    lock_path = os.environ.get("EVOLUTION_ISAAC_INIT_LOCK_PATH", "/tmp/evolution_isaac_scene_init.lock")
+    os.makedirs(os.path.dirname(lock_path), exist_ok=True)
+    with open(lock_path, "w", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def _atomic_write_json(path, payload):
@@ -185,7 +200,10 @@ def _run_training(request):
     env = None
     runner = None
     try:
-        env = gym.make(task_name, cfg=env_cfg)
+        # Two 4096-env Isaac processes may train concurrently, but their
+        # native USD import and PhysX cloning must not overlap.
+        with _scene_initialization_lock():
+            env = gym.make(task_name, cfg=env_cfg)
         if isinstance(env.unwrapped, DirectMARLEnv):
             env = multi_agent_to_single_agent(env)
         env = RlGamesVecEnvWrapper(env, rl_device, clip_obs, clip_actions)

@@ -54,11 +54,17 @@ from isaaclab.sim.converters import UrdfConverterCfg
 
 EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution"))
 ASSET_PATH = os.path.join(EVOLUTION_ROOT, {asset_rel_path!r})
+# Keep converted USD files next to this slot-specific URDF.  The default
+# /tmp/IsaacLab location is shared by concurrent workers and can make one
+# morphology resolve another worker's current_agent.usd during scene cloning.
+USD_DIR = os.path.join(os.path.dirname(ASSET_PATH), "usd_cache")
+os.makedirs(USD_DIR, exist_ok=True)
 
 # Configuration based on URDF file {urdf_path}
 CURRENT_HAND_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
         asset_path=ASSET_PATH,
+        usd_dir=USD_DIR,
         activate_contact_sensors=False,  # 禁用接触传感器模拟
         fix_base=True, #True
         rigid_props=sim_utils.RigidBodyPropertiesCfg(

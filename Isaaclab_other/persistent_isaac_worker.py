@@ -126,10 +126,20 @@ class PersistentIsaacWorker:
         export TMPDIR=\"{self.tmp_root}\"
         export TMP=\"{self.tmp_root}\"
         export TEMP=\"{self.tmp_root}\"
+        # Kit writes user settings and shader/asset metadata outside TMPDIR.
+        # Keep those paths private to each concurrent Isaac worker.
+        export XDG_CACHE_HOME=\"{self.tmp_root}/xdg_cache\"
+        export XDG_CONFIG_HOME=\"{self.tmp_root}/xdg_config\"
+        export XDG_DATA_HOME=\"{self.tmp_root}/xdg_data\"
+        export OMNI_USER_CONFIG_PATH=\"{self.tmp_root}/omni_config\"
+        export OMNI_USER_DATA_PATH=\"{self.tmp_root}/omni_data\"
+        export EVOLUTION_ISAAC_INIT_LOCK_PATH=\"{os.path.join(os.path.dirname(os.path.dirname(self.tmp_root)), 'isaac_scene_init.lock')}\"
         export EVOLUTION_LOG_ROOT=\"{self.evolution_log_root}\"
         export EVOLUTION_PARALLEL_SLOT=\"{self.slot_id}\"
         export EVOLUTION_DEVICE_NAME=\"{self.device_name}\"
         export PYTHONPATH=\"{self.python_override_root}:$PYTHONPATH\"
+        mkdir -p \"$XDG_CACHE_HOME\" \"$XDG_CONFIG_HOME\" \"$XDG_DATA_HOME\" \\
+          \"$OMNI_USER_CONFIG_PATH\" \"$OMNI_USER_DATA_PATH\"
         # Isaac Sim enumerates CUDA devices itself; inherited masking can crash Kit at startup.
         unset CUDA_VISIBLE_DEVICES
         set +u
