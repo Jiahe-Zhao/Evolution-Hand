@@ -133,7 +133,7 @@ class PersistentIsaacWorker:
         export XDG_DATA_HOME=\"{self.tmp_root}/xdg_data\"
         export OMNI_USER_CONFIG_PATH=\"{self.tmp_root}/omni_config\"
         export OMNI_USER_DATA_PATH=\"{self.tmp_root}/omni_data\"
-        export EVOLUTION_ISAAC_INIT_LOCK_PATH=\"{os.path.join(os.path.dirname(os.path.dirname(self.tmp_root)), 'isaac_scene_init.lock')}\"
+        export EVOLUTION_ISAAC_INIT_LOCK_PATH=\"/tmp/evolution_isaac_scene_init.lock\"
         export EVOLUTION_LOG_ROOT=\"{self.evolution_log_root}\"
         export EVOLUTION_PARALLEL_SLOT=\"{self.slot_id}\"
         export EVOLUTION_DEVICE_NAME=\"{self.device_name}\"
