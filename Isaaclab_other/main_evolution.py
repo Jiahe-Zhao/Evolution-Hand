@@ -572,30 +572,51 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                         child_state_path,
                         child["child_id"],
                     )
-                    current_score = evaluation(
-                        child["urdf_info"],
-                        evaluation_taks,
-                        isaaclab_urdf_path,
-                        isaaclab_urdf_mesh_path,
-                        isaaclab_urdf_code_path,
-                        isaaclab_mirror_urdf_path,
-                        isaaclab_mirror_urdf_mesh_path,
-                        isaaclab_mirror_urdf_code_path,
-                        isaaclab_env_code_path,
-                        isaaclab_test_result_path,
-                        experiment_name=experiment_save_path,
-                        evaluation_state_path=child_state_path,
-                        individual_id=child["child_id"],
-                        max_iterations=stage_max_iterations,
-                        slot_id=slot_id,
-                        curriculum_stage=stage_name,
-                    )
+                    evaluation_error = None
+                    try:
+                        current_score = evaluation(
+                            child["urdf_info"],
+                            evaluation_taks,
+                            isaaclab_urdf_path,
+                            isaaclab_urdf_mesh_path,
+                            isaaclab_urdf_code_path,
+                            isaaclab_mirror_urdf_path,
+                            isaaclab_mirror_urdf_mesh_path,
+                            isaaclab_mirror_urdf_code_path,
+                            isaaclab_env_code_path,
+                            isaaclab_test_result_path,
+                            experiment_name=experiment_save_path,
+                            evaluation_state_path=child_state_path,
+                            individual_id=child["child_id"],
+                            max_iterations=stage_max_iterations,
+                            slot_id=slot_id,
+                            curriculum_stage=stage_name,
+                        )
+                    except Exception as error:  # noqa: BLE001
+                        evaluation_error = f"{type(error).__name__}: {error}"
+                        current_score = float("-inf")
+                        failed_state = _load_json(child_state_path) or {}
+                        failed_state.update(
+                            {
+                                "status": "failed",
+                                "current_task": failed_state.get("current_task"),
+                                "error": evaluation_error,
+                            }
+                        )
+                        _atomic_write_json(child_state_path, failed_state)
+                        print(
+                            f"[WARN] Slot {slot_id} failed child {child['child_id']} during {stage_name}: "
+                            f"{evaluation_error}. Marking the child as failed and continuing.",
+                            flush=True,
+                        )
 
                     score_value = current_score if math.isfinite(current_score) else float("-inf")
                     metadata_updates = {
                         f"{stage_name}_score": score_value,
                         f"{stage_name}_max_iterations": stage_max_iterations,
                     }
+                    if evaluation_error is not None:
+                        metadata_updates[f"{stage_name}_error"] = evaluation_error
 
                     with state_lock:
                         stage_results[child["child_id"]] = score_value

@@ -72,7 +72,16 @@ def _scene_initialization_lock():
     lock_path = os.environ.get("EVOLUTION_ISAAC_INIT_LOCK_PATH", "/tmp/evolution_isaac_scene_init.lock")
     os.makedirs(os.path.dirname(lock_path), exist_ok=True)
     with open(lock_path, "w", encoding="utf-8") as lock_file:
-        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        waited_seconds = 0
+        while True:
+            try:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                if waited_seconds % 15 == 0:
+                    print("[WORKER] Waiting for shared scene initialization lock", flush=True)
+                time.sleep(1)
+                waited_seconds += 1
         try:
             yield
         finally:
@@ -201,20 +210,21 @@ def _run_training(request):
     runner = None
     try:
         # Two 4096-env Isaac processes may train concurrently, but their
-        # native USD import and PhysX cloning must not overlap.
+        # native USD import, PhysX cloning, and first runner initialization
+        # must not overlap.
         with _scene_initialization_lock():
             env = gym.make(task_name, cfg=env_cfg)
-        if isinstance(env.unwrapped, DirectMARLEnv):
-            env = multi_agent_to_single_agent(env)
-        env = RlGamesVecEnvWrapper(env, rl_device, clip_obs, clip_actions)
-        vecenv.register(
-            "IsaacRlgWrapper", lambda config_name, num_actors, **kwargs: RlGamesGpuEnv(config_name, num_actors, **kwargs)
-        )
-        env_configurations.register("rlgpu", {"vecenv_type": "IsaacRlgWrapper", "env_creator": lambda **kwargs: env})
-        agent_cfg["params"]["config"]["num_actors"] = env.unwrapped.num_envs
-        runner = Runner(IsaacAlgoObserver())
-        runner.load(agent_cfg)
-        runner.reset()
+            if isinstance(env.unwrapped, DirectMARLEnv):
+                env = multi_agent_to_single_agent(env)
+            env = RlGamesVecEnvWrapper(env, rl_device, clip_obs, clip_actions)
+            vecenv.register(
+                "IsaacRlgWrapper", lambda config_name, num_actors, **kwargs: RlGamesGpuEnv(config_name, num_actors, **kwargs)
+            )
+            env_configurations.register("rlgpu", {"vecenv_type": "IsaacRlgWrapper", "env_creator": lambda **kwargs: env})
+            agent_cfg["params"]["config"]["num_actors"] = env.unwrapped.num_envs
+            runner = Runner(IsaacAlgoObserver())
+            runner.load(agent_cfg)
+            runner.reset()
         run_args = {"train": True, "play": False}
         if resume_path:
             run_args["checkpoint"] = resume_path

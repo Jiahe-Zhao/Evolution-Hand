@@ -1,5 +1,7 @@
 """Lifecycle management for one persistent Isaac Sim process per GPU slot."""
 
+from contextlib import contextmanager
+import fcntl
 import json
 import os
 import signal
@@ -9,6 +11,27 @@ import time
 
 class PersistentIsaacWorkerError(RuntimeError):
     """Raised when a persistent Isaac worker cannot serve a request."""
+
+
+@contextmanager
+def _initialization_lock(lock_path, description):
+    """Serialize native Isaac startup while emitting a heartbeat when waiting."""
+    os.makedirs(os.path.dirname(lock_path) or ".", exist_ok=True)
+    with open(lock_path, "w", encoding="utf-8") as lock_file:
+        waited_seconds = 0
+        while True:
+            try:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                if waited_seconds % 15 == 0:
+                    print(f"[WORKER] Waiting for shared Isaac initialization lock: {description}", flush=True)
+                time.sleep(1)
+                waited_seconds += 1
+        try:
+            yield
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def _atomic_write_json(path, payload):
@@ -149,24 +172,27 @@ class PersistentIsaacWorker:
         exec \"{self.python_executable}\" \"{self.worker_script}\" \\
           --request-dir \"{self.request_dir}\" --device \"{self.device_name}\" --headless
         """
-        self._log_file = open(self.worker_log, "a", encoding="utf-8")
-        self.process = subprocess.Popen(
-            ["bash", "-c", shell_cmd],
-            stdout=self._log_file,
-            stderr=subprocess.STDOUT,
-            text=True,
-            start_new_session=True,
-        )
-        ready_path = os.path.join(self.request_dir, "ready.json")
-        deadline = time.time() + self.startup_timeout
-        while time.time() < deadline:
-            if os.path.exists(ready_path):
-                return
-            if self.process.poll() is not None:
-                raise PersistentIsaacWorkerError(f"Worker exited during startup; see {self.worker_log}")
-            time.sleep(1)
-        self._force_terminate()
-        raise PersistentIsaacWorkerError(f"Worker did not become ready within {self.startup_timeout}s")
+        # Kit startup and first CUDA context creation are native global operations.
+        # Train concurrently only after each slot has finished this initialization.
+        with _initialization_lock("/tmp/evolution_isaac_worker_start.lock", f"slot {self.slot_id} startup"):
+            self._log_file = open(self.worker_log, "a", encoding="utf-8")
+            self.process = subprocess.Popen(
+                ["bash", "-c", shell_cmd],
+                stdout=self._log_file,
+                stderr=subprocess.STDOUT,
+                text=True,
+                start_new_session=True,
+            )
+            ready_path = os.path.join(self.request_dir, "ready.json")
+            deadline = time.time() + self.startup_timeout
+            while time.time() < deadline:
+                if os.path.exists(ready_path):
+                    return
+                if self.process.poll() is not None:
+                    raise PersistentIsaacWorkerError(f"Worker exited during startup; see {self.worker_log}")
+                time.sleep(1)
+            self._force_terminate()
+            raise PersistentIsaacWorkerError(f"Worker did not become ready within {self.startup_timeout}s")
 
     def run(
         self,
