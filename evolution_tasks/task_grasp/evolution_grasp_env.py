@@ -123,6 +123,7 @@ class EvolutionGraspEnv(DirectRLEnv):
         self.any_fingertip_contact = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         self.stage1_contact = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
         self.full_hand_contact = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.m3_long_finger_contact_count = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
         self.consecutive_successes = torch.zeros(1, dtype=torch.float, device=self.device)
 
         # unit tensors
@@ -248,6 +249,7 @@ class EvolutionGraspEnv(DirectRLEnv):
         self.extras["log"]["grasp_m1_contact"] = self.any_fingertip_contact.float().mean()
         self.extras["log"]["grasp_stage1_contact"] = self.stage1_contact.float().mean()
         self.extras["log"]["grasp_stage2_contact"] = self.full_hand_contact.float().mean()
+        self.extras["log"]["grasp_m3_long_finger_contacts"] = self.m3_long_finger_contact_count.float().mean()
         for index, streak in enumerate(self.milestone_streaks.unbind(dim=-1), start=1):
             self.extras["log"][f"grasp_m{index}_hold_steps"] = streak.mean()
         for index, claimed in enumerate(self.milestone_claimed.unbind(dim=-1), start=1):
@@ -395,9 +397,20 @@ class EvolutionGraspEnv(DirectRLEnv):
                 )
         self.stage1_contact = thumb_contact & other_contact
         required_fingertips = getattr(self.cfg, "required_fingertip_count", 5)
+        m3_thumb_contact = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
+        self.m3_long_finger_contact_count.zero_()
+        if 0 <= thumb_index < contact_count:
+            m3_contact_active = self.full_hand_contact_forces >= m3_threshold
+            m3_thumb_contact = m3_contact_active[:, thumb_index]
+            if contact_count > 1:
+                long_finger_active = torch.cat(
+                    (m3_contact_active[:, :thumb_index], m3_contact_active[:, thumb_index + 1 :]), dim=-1
+                )
+                self.m3_long_finger_contact_count = long_finger_active.sum(dim=-1)
         self.full_hand_contact = (
-            contact_count == required_fingertips
-        ) & torch.all(self.full_hand_contact_forces >= m3_threshold, dim=-1)
+            m3_thumb_contact
+            & (self.m3_long_finger_contact_count >= self.cfg.m3_min_long_finger_contacts)
+        )
         self.object_in_visual_palm = self.object_in_support_region
 
         # 物体的受力数据 ？？ z轴吗
@@ -565,7 +578,8 @@ def compute_rewards(
     goal_dist = torch.norm(object_pos - target_pos, p=2, dim=-1)
 
     # Sparse contacts are decomposed into ordered, one-time milestones:
-    # M1 any fingertip, M2 thumb plus another fingertip, M3 all five fingertips.
+    # M1 any fingertip, M2 thumb plus another fingertip, M3 thumb plus a
+    # stable multi-finger enclosure.
     contacts = torch.stack((any_fingertip_contact, stage1_contact, full_hand_contact), dim=-1)
     milestone_streaks = torch.where(
         contacts,

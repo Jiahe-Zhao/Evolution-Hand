@@ -221,12 +221,14 @@ def _task_evidence(task: str, raw_env: Any, reward: float) -> tuple[bool, dict[s
         evidence = {
             "m1_any_fingertip_contact": bool(raw_env.any_fingertip_contact[0].item()),
             "m2_thumb_plus_other_contact": bool(raw_env.stage1_contact[0].item()),
-            "m3_five_fingertip_contact": bool(raw_env.full_hand_contact[0].item()),
+            "m3_thumb_plus_long_finger_enclosure": bool(raw_env.full_hand_contact[0].item()),
             "milestone_hold_steps": _list(raw_env.milestone_streaks[0]),
             "milestones_claimed": [bool(item) for item in raw_env.milestone_claimed[0].tolist()],
             "m1_threshold_n": float(raw_env.cfg.m1_contact_force_threshold),
             "m2_threshold_n": float(raw_env.cfg.m2_contact_force_threshold),
             "m3_threshold_n": float(raw_env.cfg.m3_contact_force_threshold),
+            "m3_long_finger_contacts": int(raw_env.m3_long_finger_contact_count[0].item()),
+            "m3_required_long_finger_contacts": int(raw_env.cfg.m3_min_long_finger_contacts),
             "fingertip_contact_forces_n": contact_forces,
         }
     elif task == "branch":

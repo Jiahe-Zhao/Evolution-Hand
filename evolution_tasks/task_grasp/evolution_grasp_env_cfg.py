@@ -305,15 +305,18 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # Stage1/Stage2 only differ in training budget and reset perturbation.
     m1_contact_force_threshold = 0.10  # any fingertip
     m2_contact_force_threshold = 0.10  # thumb plus another fingertip
-    m3_contact_force_threshold = 0.25  # all five fingertips
+    m3_contact_force_threshold = 0.25  # thumb plus a stable long-finger enclosure
     m1_hold_steps = 3
-    m2_hold_steps = 5
+    m2_hold_steps = 3
     m3_hold_steps = 10
+    # M3 must be morphologically meaningful without requiring every digit to
+    # touch a small sphere at exactly the same time.
+    m3_min_long_finger_contacts = 2
     m1_reward = 50.0
     m2_reward = 250.0
     m3_reward = 1000.0
     # Retained for compatibility with old reports; success is always M3 now.
-    require_full_hand_contact = True
+    require_full_hand_contact = False
     full_hand_contact_force_threshold = m3_contact_force_threshold
     thumb_contact_index = 0
     required_fingertip_count = 5
