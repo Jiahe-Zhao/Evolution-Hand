@@ -179,30 +179,39 @@ def _restore_morphology(backup: MorphologyBackup | None) -> None:
         shutil.copy2(backup.left_backup, backup.left_cfg)
 
 
-def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: MorphologyBackup | None) -> None:
-    """Keep Grasp contact sites consistent with the evolved URDF."""
-    if task != "grasp" or backup is None:
-        return
+def _evolved_fingertips(backup: MorphologyBackup) -> list[str]:
+    """Return one existing distal body per canonical finger, thumb first."""
     fingertip_names = []
     for finger_id in range(1, 6):
         prefix = f"link_{finger_id}_"
         candidates = [
-            name for name in backup.body_names
+            name
+            for name in backup.body_names
             if name.startswith(prefix) and name.rsplit("_", 1)[-1].isdigit()
         ]
-        if candidates:
-            fingertip_names.append(max(candidates, key=lambda name: int(name.rsplit("_", 1)[-1])))
-    if len(fingertip_names) < 2 or not any(name.startswith("link_1_") for name in fingertip_names):
-        raise ValueError(
-            f"Grasp morphology {args.individual_key} must retain a thumb and one other fingertip."
-        )
-    env_cfg.contact_sensor_cfg.filter_prim_paths_expr = [
-        f"/World/envs/env_.*/LeftRobot/{name}" for name in fingertip_names
-    ]
-    env_cfg.thumb_contact_index = next(
-        index for index, name in enumerate(fingertip_names) if name.startswith("link_1_")
-    )
-    env_cfg.required_fingertip_count = 5
+        if not candidates:
+            raise ValueError(f"Morphology {args.individual_key} has no remaining body for finger {finger_id}.")
+        fingertip_names.append(max(candidates, key=lambda name: int(name.rsplit("_", 1)[-1])))
+    return fingertip_names
+
+
+def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: MorphologyBackup | None) -> None:
+    """Keep contact channels aligned with the actual evolved distal links."""
+    if task not in {"grasp", "branch"} or backup is None:
+        return
+    fingertip_names = _evolved_fingertips(backup)
+    if task == "grasp":
+        env_cfg.contact_sensor_cfg.filter_prim_paths_expr = [
+            f"/World/envs/env_.*/LeftRobot/{name}" for name in fingertip_names
+        ]
+        env_cfg.thumb_contact_index = 0
+        env_cfg.required_fingertip_count = len(fingertip_names)
+    else:
+        env_cfg.fingertip_body_names = fingertip_names
+        env_cfg.branch_contact_sensor_cfg.filter_prim_paths_expr = [
+            f"/World/envs/env_.*/Robot/{name}" for name in fingertip_names
+        ]
+    print(f"[EVAL] {task} adaptive fingertips: {fingertip_names}", flush=True)
 
 
 def _task_evidence(task: str, raw_env: Any, reward: float) -> tuple[bool, dict[str, float | bool]]:
@@ -253,7 +262,9 @@ def main() -> None:
         raise ValueError("Run exactly one episode per IsaacLab process; use scripts/task_suite/run_reproducible_evaluation.sh for N episodes.")
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    print(f"[EVAL] Preparing morphology for {args.task}", flush=True)
     backup = _prepare_morphology(output_dir)
+    print("[EVAL] Morphology configuration ready", flush=True)
     env = None
     try:
         import isaaclab_tasks  # noqa: F401
@@ -267,7 +278,9 @@ def main() -> None:
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
         agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
         resume_path = retrieve_file_path(args.checkpoint)
+        print(f"[EVAL] Creating {args.task} environment", flush=True)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
+        print(f"[EVAL] Environment created", flush=True)
         if args.record_video:
             set_camera_view(eye=env_cfg.viewer.eye, target=env_cfg.viewer.lookat, camera_prim_path="/OmniverseKit_Persp")
         if isinstance(raw_env.unwrapped, DirectMARLEnv):
