@@ -28,7 +28,14 @@ class BranchGraspEnv(DirectRLEnv):
         super().__init__(cfg, render_mode, **kwargs)
 
         self.num_hand_dofs = self.hand.num_joints
-        self.actuated_dof_indices = [self.hand.joint_names.index(name) for name in self.cfg.actuated_joint_names]
+        # Preserve the canonical policy interface while allowing evolution to
+        # remove distal links and therefore their associated joints.
+        self.canonical_joint_names = tuple(self.cfg.actuated_joint_names)
+        self.actuated_dof_indices = [
+            self.hand.joint_names.index(name)
+            for name in self.canonical_joint_names
+            if name in self.hand.joint_names
+        ]
         self.finger_bodies = [self.hand.body_names.index(name) for name in self.cfg.fingertip_body_names]
         self.num_fingertips = len(self.finger_bodies)
 
@@ -40,7 +47,16 @@ class BranchGraspEnv(DirectRLEnv):
         )
         self.finger_action_scores = torch.zeros((self.num_envs, 5), dtype=torch.float32, device=self.device)
         self.long_finger_velocity_spread = torch.zeros(self.num_envs, dtype=torch.float32, device=self.device)
-        self.long_finger_joint_ids = self.actuated_dof_indices[3:7] + self.actuated_dof_indices[7:11] + self.actuated_dof_indices[11:15] + self.actuated_dof_indices[15:19]
+        self.long_finger_joint_groups = [
+            [
+                self.hand.joint_names.index(name)
+                for name in self.canonical_joint_names
+                if (name.startswith(f"link_{finger_id}_") or f"to_link_{finger_id}_" in name)
+                and name in self.hand.joint_names
+            ]
+            for finger_id in range(2, 6)
+        ]
+        self.long_finger_joint_ids = [joint_id for group in self.long_finger_joint_groups for joint_id in group]
         self.previous_long_finger_joint_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
         self.long_finger_joint_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
         self.long_finger_joint_velocity_scores = torch.zeros((self.num_envs, 4), dtype=torch.float32, device=self.device)
@@ -49,7 +65,6 @@ class BranchGraspEnv(DirectRLEnv):
         joint_pos_limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
         self.hand_dof_lower_limits = joint_pos_limits[..., 0]
         self.hand_dof_upper_limits = joint_pos_limits[..., 1]
-        self.canonical_joint_names = tuple(self.cfg.actuated_joint_names)
         self.cartesian_ik = MorphologyAwareFingertipIK(
             self.hand, self.cfg.fingertip_body_names, num_envs=self.num_envs, device=self.device
         )
@@ -98,6 +113,8 @@ class BranchGraspEnv(DirectRLEnv):
         the remaining digits continue at the shared trajectory rate.
         """
         joint_ids = self.long_finger_joint_ids
+        if not joint_ids:
+            return
         desired = self.cur_targets[:, joint_ids]
         previous = self.prev_targets[:, joint_ids]
         mean_remaining = (desired - previous).mean(dim=-1, keepdim=True)
@@ -220,16 +237,14 @@ class BranchGraspEnv(DirectRLEnv):
     def _update_long_finger_joint_velocity(self):
         """Measure achieved, rather than commanded, four-finger closing speed."""
         normalized_joint_pos = unscale(
-            self.hand_dof_pos[:, self.actuated_dof_indices],
-            self.hand_dof_lower_limits[:, self.actuated_dof_indices],
-            self.hand_dof_upper_limits[:, self.actuated_dof_indices],
+            self.hand_dof_pos,
+            self.hand_dof_lower_limits,
+            self.hand_dof_upper_limits,
         )
         scores = torch.stack(
             [
-                normalized_joint_pos[:, 3:7].mean(dim=-1),
-                normalized_joint_pos[:, 7:11].mean(dim=-1),
-                normalized_joint_pos[:, 11:15].mean(dim=-1),
-                normalized_joint_pos[:, 15:19].mean(dim=-1),
+                normalized_joint_pos[:, joint_ids].mean(dim=-1)
+                for joint_ids in self.long_finger_joint_groups
             ],
             dim=-1,
         )
