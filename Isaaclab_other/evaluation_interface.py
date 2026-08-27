@@ -295,6 +295,26 @@ def _num_envs_for_task(task_name):
     return _split_num_envs_for_parallel(min(ISAACLAB_NUM_ENVS, 64))
 
 
+def _task_iteration_limit(task_name, default_iterations, curriculum_stage):
+    """Allow inexpensive validation budgets for already-saturated tasks.
+
+    Format: ``TASK_NAME=EPOCHS,TASK_NAME=EPOCHS``.  Tasks omitted from the
+    mapping keep the global stage budget, so Grasp and Branch remain full-RL
+    training tasks while Forage/Strike can be periodically checked cheaply.
+    """
+    if default_iterations is None:
+        return None
+    stage = (curriculum_stage or "stage2").upper()
+    raw_mapping = os.environ.get(f"EVOLUTION_TASK_MAX_ITERATIONS_{stage}", "")
+    for item in raw_mapping.split(","):
+        if "=" not in item:
+            continue
+        name, raw_value = item.split("=", 1)
+        if name.strip() == task_name:
+            return max(1, int(raw_value.strip()))
+    return default_iterations
+
+
 def _parallel_slots():
     raw_value = os.environ.get("EVOLUTION_PARALLEL_SLOTS")
     if raw_value in (None, ""):
@@ -564,14 +584,18 @@ def evaluation(
                     )
                 checkpoint_path = _find_latest_checkpoint(_task_run_dir(stage_one_name))
             task_num_envs = _num_envs_for_task(current_task)
-            print(f"[INFO] Launching {current_task} with num_envs={task_num_envs}")
+            task_max_iterations = _task_iteration_limit(current_task, effective_max_iterations, stage_name)
+            print(
+                f"[INFO] Launching {current_task} with num_envs={task_num_envs} "
+                f"max_iterations={task_max_iterations}"
+            )
             score = run_isaaclab_simulation(
                 current_task,
                 isaaclab_test_result_path,
                 num_envs=task_num_envs,
                 run_name=run_name,
                 checkpoint_path=checkpoint_path,
-                max_iterations=effective_max_iterations,
+                max_iterations=task_max_iterations,
                 slot_id=slot_id,
                 python_override_root=slot_paths["override_root"],
                 curriculum_stage=curriculum_stage,
