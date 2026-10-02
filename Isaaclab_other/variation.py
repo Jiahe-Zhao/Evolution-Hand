@@ -433,6 +433,10 @@ def variation(robot_data, random_name_code, random_task, random_alpha, standard_
     if task_status == "task_failed":
         success = False
     else:
+        # Normalize the complete chain after every mutation, including
+        # translation mutations.  This is the single source of truth for
+        # morphology-to-kinematics synchronization.
+        synchronize_kinematic_connections(urdf_copy)
         success = check_success(urdf_copy)  # 要确保移动之后符合物理约束，比如origin不能离父节点太远
 
     return success, urdf_copy
@@ -445,13 +449,15 @@ def seed_initial_population(
     max_attempts=200,
     standard_variation=0.05,
     standard_length=0.02,
+    candidate_validator=None,
 ):
     """
     通过轻微变异生成初始种群
     """
     population = []
-    if include_base:
-        population.append(base_urdf)
+    candidate = copy.deepcopy(base_urdf)
+    if include_base and (candidate_validator is None or candidate_validator(candidate)):
+        population.append(candidate)
 
     attempts = 0
     while len(population) < population_size and attempts < max_attempts:
@@ -464,12 +470,10 @@ def seed_initial_population(
             standard_variation=standard_variation,
             standard_length=standard_length,
         )
-        if success_tag:
+        if success_tag and (candidate_validator is None or candidate_validator(new_urdf)):
             population.append(new_urdf)
         attempts += 1
 
     return population
-
-
 
 
