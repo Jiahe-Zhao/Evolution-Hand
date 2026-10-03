@@ -12,47 +12,54 @@ export CONDA_PREFIX="$ISAAC_ENV_PREFIX" PATH="$ISAAC_ENV_PREFIX/bin:$PATH"
 export EVOLUTION_ROOT ISAACLAB_ROOT ISAAC_SIM_SETUP=/dev/null
 export EVOLUTION_LOG_ROOT="$EVOLUTION_ROOT/evolution_tasks/logs"
 
-# Two slots split the original 4096 environments into 2048 each.  This keeps
-# two individuals in flight without placing two independent 4096-env scenes
-# on the same RTX 4090.
+# One Isaac process is the stable default on a single RTX 4090. The values
+# remain externally overridable for an explicit multi-slot experiment.
 export ISAACLAB_NUM_ENVS=4096
-export EVOLUTION_PARALLEL_SLOTS=2
-export EVOLUTION_PARALLEL_SPLIT_ENVS=1
+export EVOLUTION_PARALLEL_SLOTS=1
+export EVOLUTION_PARALLEL_SPLIT_ENVS=0
 export OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 NUMEXPR_NUM_THREADS=8
-
 export EVOLUTION_PPO_HORIZON_LENGTH=16
 export EVOLUTION_PPO_MINIBATCH_SIZE=4096
 export EVOLUTION_PPO_MINI_EPOCHS=5
-export ISAACLAB_MAX_ITERATIONS=800
-export EVOLUTION_STAGE1_MAX_ITERATIONS=200
-export EVOLUTION_STAGE2_MAX_ITERATIONS=800
-export EVOLUTION_STAGE2_TOP_FRACTION=1.0
+export ISAACLAB_MAX_ITERATIONS="${ISAACLAB_MAX_ITERATIONS:-800}"
+export EVOLUTION_STAGE1_MAX_ITERATIONS="${EVOLUTION_STAGE1_MAX_ITERATIONS:-100}"
+export EVOLUTION_STAGE2_MAX_ITERATIONS="${EVOLUTION_STAGE2_MAX_ITERATIONS:-250}"
+export EVOLUTION_STAGE2_TOP_FRACTION="${EVOLUTION_STAGE2_TOP_FRACTION:-0.25}"
 
 # Grasp and Branch retain the full 200 -> 800 curriculum.  Forage/Strike are
 # already saturated, so every morphology still receives a compact validation
 # run without spending the full budget on tasks that no longer rank designs.
-export EVOLUTION_TASK_MAX_ITERATIONS_STAGE1='Isaac-EvolutionHand-Forage-v0=50,Isaac-EvolutionHand-Strike-v0=50'
-export EVOLUTION_TASK_MAX_ITERATIONS_STAGE2='Isaac-EvolutionHand-Forage-v0=100,Isaac-EvolutionHand-Strike-v0=100'
+export EVOLUTION_TASK_MAX_ITERATIONS_STAGE1="${EVOLUTION_TASK_MAX_ITERATIONS_STAGE1:-Isaac-EvolutionHand-Forage-v0=25,Isaac-EvolutionHand-Strike-v0=25}"
+export EVOLUTION_TASK_MAX_ITERATIONS_STAGE2="${EVOLUTION_TASK_MAX_ITERATIONS_STAGE2:-Isaac-EvolutionHand-Forage-v0=50,Isaac-EvolutionHand-Strike-v0=50}"
+export EVOLUTION_SCRIPTED_PREFLIGHT=1
+export EVOLUTION_REQUIRE_SCRIPTED_PREFLIGHT_SUCCESS=1
+export EVOLUTION_SCRIPTED_PREFLIGHT_TIMEOUT=900
+export EVOLUTION_INHERIT_POLICY=1
 
-# Reuse once to amortize Isaac startup, then recycle before repeated native
-# scene switches accumulate state across a long job.
+# Recycle after a bounded number of scene switches.  Unlimited reuse leaks
+# native Kit/PhysX state across changing morphologies and can exit mid-task.
 export EVOLUTION_REUSE_ISAAC_PROCESS=1
-export EVOLUTION_ISAAC_WORKER_MAX_REQUESTS=2
-export EVOLUTION_ISAAC_WORKER_STALL_TIMEOUT=600
+export EVOLUTION_ISAAC_WORKER_MAX_REQUESTS="${EVOLUTION_ISAAC_WORKER_MAX_REQUESTS:-4}"
+export EVOLUTION_ISAAC_RESTART_AT_BOUNDARIES="${EVOLUTION_ISAAC_RESTART_AT_BOUNDARIES:-1}"
+export EVOLUTION_ISAAC_WORKER_STALL_TIMEOUT=180
+export EVOLUTION_ISAAC_SCENE_INIT_LOCK_TIMEOUT=600
 export EVOLUTION_ISAAC_WORKER_REQUEST_TIMEOUT=14400
 export EVOLUTION_CHECKPOINT_INTERVAL=50
 export EVOLUTION_KEEP_LATEST_CHECKPOINTS=1 EVOLUTION_KEEP_BEST_CHECKPOINTS=1
 
-export EVOLUTION_EXPERIMENT_NAME="${EVOLUTION_EXPERIMENT_NAME:-exp_20260827_fast_4tasks_grasp_m3thumb2_env2048x2}"
+export EVOLUTION_EXPERIMENT_NAME="${EVOLUTION_EXPERIMENT_NAME:-exp_20261003_scripted_preflight_inherit_15g}"
 export EVOLUTION_FORCE_NEW_LINEAGE="${EVOLUTION_FORCE_NEW_LINEAGE:-1}"
 export EVOLUTION_MAX_GENERATION="${EVOLUTION_MAX_GENERATION:-15}"
-export EVOLUTION_MAX_POPULATION="${EVOLUTION_MAX_POPULATION:-16}"
-export EVOLUTION_MAX_VARIATION="${EVOLUTION_MAX_VARIATION:-1}"
+export EVOLUTION_MAX_POPULATION="${EVOLUTION_MAX_POPULATION:-8}"
 export EVOLUTION_INITIAL_POPULATION_SIZE="${EVOLUTION_INITIAL_POPULATION_SIZE:-8}"
+export EVOLUTION_MAX_VARIATION="${EVOLUTION_MAX_VARIATION:-1}"
+# Optional 8 parents + 8 children -> top 8 selection.  Keep disabled for
+# legacy runs; enable with MAX_VARIATION=1 for the one-to-two-day schedule.
+export EVOLUTION_RETAIN_PARENT_ELITES="${EVOLUTION_RETAIN_PARENT_ELITES:-1}"
 export EVOLUTION_INITIAL_POPULATION_ATTEMPTS="${EVOLUTION_INITIAL_POPULATION_ATTEMPTS:-200}"
 export EVOLUTION_INITIAL_POPULATION_VARIATION="${EVOLUTION_INITIAL_POPULATION_VARIATION:-0.05}"
 export EVOLUTION_INITIAL_POPULATION_LENGTH="${EVOLUTION_INITIAL_POPULATION_LENGTH:-0.02}"
-export EVOLUTION_TASKS='Isaac-EvolutionHand-Grasp-v0,Isaac-EvolutionHand-BranchGrasp-v0,Isaac-EvolutionHand-Forage-v0,Isaac-EvolutionHand-Strike-v0'
+export EVOLUTION_TASKS="${EVOLUTION_TASKS:-Isaac-EvolutionHand-Grasp-v0,Isaac-EvolutionHand-BranchGrasp-v0,Isaac-EvolutionHand-Forage-v0,Isaac-EvolutionHand-Strike-v0}"
 export DISABLE_DEFAULT_GROUND_PLANE=1
 
 mkdir -p "$EVOLUTION_LOG_ROOT/evolution_task" "$EVOLUTION_ROOT/parallel_eval_slots"
