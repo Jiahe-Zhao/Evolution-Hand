@@ -638,6 +638,7 @@ def main() -> None:
         calibration_sustained_success,
         calibration_sustained_forces,
     ) = calibration
+    calibrated_object_position = adaptive_object_position.clone()
     # Recenter the object on the actual closed fingertip envelope for this
     # morphology. The proximal support point is useful as a safe reset pose,
     # but it can be several centimetres away from the evolved fingertips after
@@ -656,10 +657,7 @@ def main() -> None:
     adaptive_object_position = adaptive_object_position + torch.tensor([0.030, 0.000, 0.020], device=raw_env.device)
     if args.palm_start:
         palm_ids = torch.arange(raw_env.num_envs, device=raw_env.device)
-        adaptive_object_position = raw_env._compute_proximal_support_point(palm_ids)
-        palm_normal_local = torch.tensor(raw_env.cfg.proximal_support_normal_local, dtype=torch.float32, device=raw_env.device).expand(raw_env.num_envs, -1)
-        palm_normal_world = quat_apply(raw_env.hand.data.root_quat_w, palm_normal_local)
-        adaptive_object_position = adaptive_object_position + 0.010 * palm_normal_world
+        adaptive_object_position = calibrated_object_position
     _set_hand_pose(raw_env, initial_joint_pos)
     raw_env.sim.forward()
     raw_env.scene.update(dt=0.0)
