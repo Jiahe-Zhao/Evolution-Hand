@@ -41,6 +41,7 @@ parser.add_argument("--force_threshold", type=float, default=0.10)
 parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
 parser.add_argument("--palm_start", action=argparse.BooleanOptionalAction, default=True, help="Place the ball on the morphology-specific palm support point.")
 parser.add_argument("--release_object", action="store_true", help="Release the ball after closure; default keeps it supported for reachability validation.")
+parser.add_argument("--cartesian_replay", action="store_true", help="Close each finger toward its sphere surface target using the task IK.")
 parser.add_argument("--contact_radius", type=float, default=0.021)
 parser.add_argument(
     "--palm_residual",
@@ -72,6 +73,13 @@ from isaaclab.utils.math import quat_apply, quat_conjugate
 
 
 NUM_FINGERS = 5
+
+def _bc_array(value):
+    if isinstance(value, dict):
+        return np.concatenate([_bc_array(value[key]).reshape(-1) for key in sorted(value)])
+    if isinstance(value, (tuple, list)):
+        return np.concatenate([_bc_array(item).reshape(-1) for item in value])
+    return np.asarray(value, dtype=np.float32).reshape(-1)
 # Match the environment's Cartesian step scale. The target is fixed after reset
 # so every finger closes along one stable inward ray instead of chasing a moving ball.
 POSITION_SCALE = torch.tensor((0.005, 0.005, 0.005))
@@ -571,6 +579,9 @@ def main() -> None:
         "isaaclab_tasks.evolution_tasks.task_grasp.evolution_grasp_env_cfg"
     )
     cfg = cfg_module.EvolutionGraspEnvCfg()
+    if args.release_object:
+        cfg.grasp_object_cfg.spawn.rigid_props.kinematic_enabled = False
+        cfg.grasp_object_cfg.spawn.rigid_props.disable_gravity = False
     initial_state = cfg.robot_cfg.init_state
     initial_state = initial_state.replace(joint_pos={
         name: value for name, value in (initial_state.joint_pos or {}).items()
@@ -743,6 +754,8 @@ def main() -> None:
         set_camera_view(eye=cfg.viewer.eye, target=cfg.viewer.lookat, camera_prim_path="/OmniverseKit_Persp")
     writer = None if args.preflight else imageio.get_writer(output_path, fps=30, codec="libx264", quality=8)
     history: list[dict] = []
+    bc_observations: list[np.ndarray] = []
+    bc_actions: list[np.ndarray] = []
     all_five_streak = 0
     env_m3_success = False
     five_finger_success = False
@@ -785,7 +798,16 @@ def main() -> None:
                 raw_env.successes.zero_()
                 all_five_streak = 0
             action = torch.zeros((1, 20), device=raw_env.device)
-            _, reward, terminated, truncated, _ = env.step(action)
+            if args.cartesian_replay:
+                raw_env.scripted_joint_target = None
+                action = _adaptive_action(raw_env, tip_ids, "close", object_anchor, approach_directions)
+                active_contacts = raw_env.full_hand_contact_forces[0] >= args.force_threshold
+                for finger_index in range(NUM_FINGERS):
+                    if bool(active_contacts[finger_index]):
+                        action[:, 3 * finger_index:3 * finger_index + 3] = 0.0
+            observation, reward, terminated, truncated, _ = env.step(action)
+            bc_observations.append(_bc_array(observation))
+            bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
             forces = raw_env.full_hand_contact_forces[0].detach().cpu().tolist()
             mesh_result = None
             if mesh_auditor is not None:
@@ -796,8 +818,9 @@ def main() -> None:
                 penetration_count += int(float(mesh_result["clearance_m"]) < -1e-4)
             contact_flags = [float(force) >= args.force_threshold for force in forces]
             palm_contact_success = palm_contact_success or (args.palm_start and all(contact_flags))
-            all_five_streak = all_five_streak + 1 if step >= release_step and all(contact_flags) else 0
-            env_m3_success = env_m3_success or (step >= release_step and bool(raw_env.milestone_claimed[0, 2]))
+            evaluate_contact = not args.release_object or step >= release_step
+            all_five_streak = all_five_streak + 1 if evaluate_contact and all(contact_flags) else 0
+            env_m3_success = env_m3_success or (evaluate_contact and bool(raw_env.milestone_claimed[0, 2]))
             five_finger_success = five_finger_success or all_five_streak >= hold_steps
             hard_limits = raw_env.hand.root_physx_view.get_dof_limits()[0].to(raw_env.device)
             joint_pos = raw_env.hand.data.joint_pos[0]
@@ -838,10 +861,13 @@ def main() -> None:
             writer.close()
         env.close()
 
+    bc_path = Path(args.metrics).with_suffix('.bc.npz')
+    if bc_observations:
+        np.savez_compressed(bc_path, observations=np.asarray(bc_observations), actions=np.asarray(bc_actions))
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",
-        "success": bool((env_m3_success or palm_contact_success) and limit_violation_count == 0 and penetration_count == 0),
+        "success": bool(env_m3_success and limit_violation_count == 0 and penetration_count == 0),
         "source_mesh_penetration_steps": penetration_count,
         "source_mesh_penetration_tolerance_m": 1e-4,
         "controller": "morphology_adaptive_synchronized_joint_closure",
@@ -854,6 +880,7 @@ def main() -> None:
         "calibration_contact_forces_n": calibration_forces,
         "calibration_sustained_success": calibration_sustained_success,
         "calibration_sustained_forces_n": calibration_sustained_forces,
+        "bc_dataset": str(bc_path),
         "success_definition": (
             f"thumb + at least 2 long fingertips >= {args.force_threshold} N for "
             f"{raw_env.cfg.m3_hold_steps} consecutive control steps"
