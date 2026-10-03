@@ -901,10 +901,10 @@ def main(task: str) -> None:
     finally:
         if writer is not None:
             writer.close()
-    bc_path = Path(args.metrics).with_suffix('.bc.npz')
+    bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations=np.asarray(bc_observations), actions=np.asarray(bc_actions))
-    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "effective_drives": effective_drives, "steps_executed": len(history), "bc_dataset": str(bc_path), "initial_geometry": initial_geometry, "history": history}
+        np.savez_compressed(bc_path, observations_after_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions))
+    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps({key: value for key, value in summary.items() if key != "history"}, indent=2))

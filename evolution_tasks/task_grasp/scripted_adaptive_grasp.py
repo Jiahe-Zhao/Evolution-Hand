@@ -861,9 +861,9 @@ def main() -> None:
             writer.close()
         env.close()
 
-    bc_path = Path(args.metrics).with_suffix('.bc.npz')
+    bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations=np.asarray(bc_observations), actions=np.asarray(bc_actions))
+        np.savez_compressed(bc_path, observations_after_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions))
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",
@@ -880,7 +880,7 @@ def main() -> None:
         "calibration_contact_forces_n": calibration_forces,
         "calibration_sustained_success": calibration_sustained_success,
         "calibration_sustained_forces_n": calibration_sustained_forces,
-        "bc_dataset": str(bc_path),
+        "scripted_trace": str(bc_path),
         "success_definition": (
             f"thumb + at least 2 long fingertips >= {args.force_threshold} N for "
             f"{raw_env.cfg.m3_hold_steps} consecutive control steps"
