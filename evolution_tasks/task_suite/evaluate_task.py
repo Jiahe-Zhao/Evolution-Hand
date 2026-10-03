@@ -6,7 +6,6 @@ import importlib
 import json
 import math
 import os
-import shutil
 import sys
 import time
 from dataclasses import dataclass
@@ -20,7 +19,8 @@ from task_registry import TASKS
 
 parser = argparse.ArgumentParser(description="Evaluate one fixed morphology and policy over fixed seeds.")
 parser.add_argument("--task", choices=TASKS, required=True)
-parser.add_argument("--checkpoint", required=True)
+parser.add_argument("--checkpoint", default="auto")
+parser.add_argument("--curriculum_stage", choices=("auto", "stage1", "stage2"), default="auto")
 parser.add_argument("--output_dir", required=True)
 parser.add_argument("--episodes", type=int, default=1, help="One process evaluates one episode; use run_reproducible_evaluation.sh for N episodes.")
 parser.add_argument("--seed", type=int, default=7, help="First deterministic episode seed.")
@@ -68,18 +68,58 @@ CAMERA_VIEWS = {
 
 
 @dataclass
-class MorphologyBackup:
-    right_cfg: Path
-    left_cfg: Path
-    right_backup: Path
-    left_backup: Path
+class MorphologyContext:
+    override_task_root: Path
     body_names: set[str]
+    morphology_contract: dict[str, Any]
 
 
 def _as_float(value: Any) -> float:
     if isinstance(value, torch.Tensor):
         return float(value.detach().flatten()[0].cpu())
     return float(value)
+
+
+def _resolve_checkpoint() -> str:
+    if args.checkpoint != "auto":
+        if args.curriculum_stage == "auto":
+            raise ValueError("Manual checkpoints require --curriculum_stage stage1 or stage2")
+        return args.checkpoint
+    if not args.lineage_json or not args.individual_key:
+        raise ValueError("--checkpoint auto requires --lineage_json and --individual_key")
+    with Path(args.lineage_json).open(encoding="utf-8") as file:
+        individual = json.load(file)["lineage"][args.individual_key]
+    metadata = individual.get("metadata", {})
+    stage = metadata.get("selected_curriculum_stage", "stage1")
+    if args.curriculum_stage != "auto" and args.curriculum_stage != stage:
+        raise ValueError(f"Checkpoint lineage stage is {stage}, but --curriculum_stage={args.curriculum_stage}")
+    run_names = metadata.get(f"{stage}_run_names", {})
+    env_id = TASKS[args.task][0]
+    run_name = next((value for key, value in run_names.items() if key.endswith(f":{env_id}")), None)
+    if run_name is None:
+        raise FileNotFoundError(f"No {stage} run metadata for {args.task}")
+    root = Path(os.environ.get("EVOLUTION_CODE_ROOT", "/home/zjh/Evolution_PC"))
+    nn_dir = root / "evolution_tasks" / "logs" / "evolution_task" / run_name / "nn"
+    named = nn_dir / "evolution_task.pth"
+    if named.is_file():
+        return str(named)
+    candidates = sorted(nn_dir.glob("*.pth"), key=lambda path: path.stat().st_mtime, reverse=True)
+    if not candidates:
+        raise FileNotFoundError(f"No checkpoint in {nn_dir}")
+    return str(candidates[0])
+
+
+def _selected_curriculum_stage() -> str:
+    if args.curriculum_stage != "auto":
+        return args.curriculum_stage
+    if args.checkpoint != "auto" or not args.lineage_json or not args.individual_key:
+        raise ValueError("Cannot infer curriculum stage without an automatic lineage checkpoint")
+    with Path(args.lineage_json).open(encoding="utf-8") as file:
+        individual = json.load(file)["lineage"][args.individual_key]
+    stage = individual.get("metadata", {}).get("selected_curriculum_stage", "stage1")
+    if stage not in {"stage1", "stage2"}:
+        raise ValueError(f"Unknown checkpoint curriculum stage: {stage}")
+    return stage
 
 
 def _metric(raw_env: Any, name: str, default: float = 0.0) -> float:
@@ -121,13 +161,13 @@ def _initial_geometry(task: str, raw_env: Any) -> dict[str, Any]:
             "strike_target_world_m": _list(target),
             "target_force_threshold_n": float(raw_env.cfg.success_force_threshold),
             "target_distance_threshold_m": float(raw_env.cfg.success_distance),
-            "prestrike_hold_height_m": float(raw_env.cfg.prestrike_hold_height),
+            "prestrike_hold_height_m": float(getattr(raw_env.cfg, "prestrike_hold_height", 0.0)),
         }
     return {}
 
 
-def _prepare_morphology(output_dir: Path) -> MorphologyBackup | None:
-    """Install one lineage morphology only until the task config has been loaded."""
+def _prepare_morphology(output_dir: Path) -> MorphologyContext | None:
+    """Build one morphology in an evaluation-local import override."""
     if not args.lineage_json:
         if args.individual_key:
             raise ValueError("--individual_key requires --lineage_json")
@@ -136,10 +176,6 @@ def _prepare_morphology(output_dir: Path) -> MorphologyBackup | None:
         raise ValueError("--lineage_json requires --individual_key")
 
     code_root = Path(os.environ.get("EVOLUTION_CODE_ROOT", "/home/zjh/Evolution_PC"))
-    isaac_tasks = Path(os.environ.get(
-        "ISAACLAB_EVOLUTION_TASK_ROOT",
-        "/home/zjh/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/evolution_tasks",
-    ))
     sys.path.insert(0, str(code_root / "Isaaclab_other"))
     from code_to_urdf import generate_urdf_from_dict
     from isaaclab_tool import parse_urdf_and_generate_articulation_cfg
@@ -157,59 +193,95 @@ def _prepare_morphology(output_dir: Path) -> MorphologyBackup | None:
     left_hand = create_mirror_hand(hand, f"{args.individual_key}_evaluation_left")
     generate_urdf_from_dict(left_hand, output_dir=str(morphology_dir / "left" / "meshes"), output_urdf=str(left_urdf))
 
-    right_cfg = isaac_tasks / "current_right_hand" / "current_right_hand_cfg.py"
-    left_cfg = isaac_tasks / "current_left_hand" / "current_left_hand_cfg.py"
-    backup_dir = output_dir / ".config_backup"
-    backup_dir.mkdir(parents=True, exist_ok=True)
-    right_backup, left_backup = backup_dir / "right.py", backup_dir / "left.py"
-    shutil.copy2(right_cfg, right_backup)
-    shutil.copy2(left_cfg, left_backup)
+    override_task_root = morphology_dir / "python_overrides" / "isaaclab_tasks" / "evolution_tasks"
+    right_cfg = override_task_root / "current_right_hand" / "current_right_hand_cfg.py"
+    left_cfg = override_task_root / "current_left_hand" / "current_left_hand_cfg.py"
+    right_cfg.parent.mkdir(parents=True, exist_ok=True)
+    left_cfg.parent.mkdir(parents=True, exist_ok=True)
     parse_urdf_and_generate_articulation_cfg(str(right_urdf), str(right_urdf), str(right_cfg))
     parse_urdf_and_generate_articulation_cfg(str(left_urdf), str(left_urdf), str(left_cfg))
+    import isaaclab_tasks.evolution_tasks as evolution_tasks
+    override_root = str(override_task_root)
+    if override_root not in evolution_tasks.__path__:
+        evolution_tasks.__path__ = [override_root, *list(evolution_tasks.__path__)]
+    importlib.invalidate_caches()
     body_names = {
         link["name_code"]
         for link in hand.get("base_link", []) + hand.get("links", [])
     }
-    return MorphologyBackup(right_cfg, left_cfg, right_backup, left_backup, body_names)
+    contract_path = right_cfg
+    spec = importlib.util.spec_from_file_location("evaluation_hand_cfg", contract_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generated morphology config: {contract_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return MorphologyContext(override_task_root, body_names, module.MORPHOLOGY_CONTRACT)
 
 
-def _restore_morphology(backup: MorphologyBackup | None) -> None:
-    if backup is not None:
-        shutil.copy2(backup.right_backup, backup.right_cfg)
-        shutil.copy2(backup.left_backup, backup.left_cfg)
+def _evolved_fingertips(backup: MorphologyContext) -> list[str]:
+    """Return the last actuated link body per finger, matching the training worker."""
+    from policy_inheritance import distal_body_name
 
-
-def _evolved_fingertips(backup: MorphologyBackup) -> list[str]:
-    """Return one existing distal body per canonical finger, thumb first."""
     fingertip_names = []
+    available_joints = set(backup.morphology_contract["all_actuated_joints"])
     for finger_id in range(1, 6):
-        prefix = f"link_{finger_id}_"
-        candidates = [
-            name
-            for name in backup.body_names
-            if name.startswith(prefix) and name.rsplit("_", 1)[-1].isdigit()
-        ]
-        if not candidates:
+        body_name = distal_body_name(finger_id, available_joints)
+        if body_name is None:
             raise ValueError(f"Morphology {args.individual_key} has no remaining body for finger {finger_id}.")
-        fingertip_names.append(max(candidates, key=lambda name: int(name.rsplit("_", 1)[-1])))
+        fingertip_names.append(body_name)
     return fingertip_names
 
 
-def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: MorphologyBackup | None) -> None:
-    """Keep contact channels aligned with the actual evolved distal links."""
-    if task not in {"grasp", "branch"} or backup is None:
+def _reload_task_modules(task: str) -> None:
+    """Load generated hand modules before recreating the task configuration."""
+    module_names = (
+        "isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg",
+        "isaaclab_tasks.evolution_tasks.current_left_hand.current_left_hand_cfg",
+        TASKS[task][2],
+    )
+    importlib.invalidate_caches()
+    for module_name in module_names:
+        module = importlib.import_module(module_name)
+        importlib.reload(module)
+
+
+def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: MorphologyContext | None) -> None:
+    """Bind the scene to the generated morphology exactly as the training worker does."""
+    if backup is None:
         return
     fingertip_names = _evolved_fingertips(backup)
+    available_joints = set(backup.morphology_contract["all_actuated_joints"])
+    initial_state = env_cfg.robot_cfg.init_state
+    requested_joint_pos = dict(initial_state.joint_pos or {})
+    env_cfg.robot_cfg = env_cfg.robot_cfg.replace(
+        init_state=initial_state.replace(
+            joint_pos={name: value for name, value in requested_joint_pos.items() if name == ".*" or name in available_joints}
+        )
+    )
+    right_cfg_path = backup.override_task_root / "current_right_hand" / "current_right_hand_cfg.py"
+    spec = importlib.util.spec_from_file_location("evaluation_bound_hand_cfg", right_cfg_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generated morphology config: {right_cfg_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    env_cfg.robot_cfg = module.CURRENT_HAND_CFG.replace(prim_path=env_cfg.robot_cfg.prim_path).replace(
+        init_state=env_cfg.robot_cfg.init_state
+    )
+    if hasattr(env_cfg, "fingertip_body_names"):
+        env_cfg.fingertip_body_names = fingertip_names
     if task == "grasp":
         env_cfg.contact_sensor_cfg.filter_prim_paths_expr = [
             f"/World/envs/env_.*/LeftRobot/{name}" for name in fingertip_names
         ]
         env_cfg.thumb_contact_index = 0
         env_cfg.required_fingertip_count = len(fingertip_names)
-    else:
-        env_cfg.fingertip_body_names = fingertip_names
+    elif task == "branch":
         env_cfg.branch_contact_sensor_cfg.filter_prim_paths_expr = [
             f"/World/envs/env_.*/Robot/{name}" for name in fingertip_names
+        ]
+    elif task == "strike":
+        env_cfg.tool_contact_sensor_cfg.filter_prim_paths_expr = [
+            f"/World/envs/env_.*/RightRobot/{name}" for name in fingertip_names
         ]
     print(f"[EVAL] {task} adaptive fingertips: {fingertip_names}", flush=True)
 
@@ -252,7 +324,9 @@ def _task_evidence(task: str, raw_env: Any, reward: float) -> tuple[bool, dict[s
             "strike_goal_distance_m": _metric(raw_env, "strike_goal_distance"),
             "strike_contact_force_n": _metric(raw_env, "strike_contact_force"),
             "tool_was_held": bool(raw_env.tool_was_held[0].item()),
-            "tool_attachment_error_m": _as_float(raw_env.tool_attachment_error[0]),
+            "tool_attachment_error_m": _as_float(
+                getattr(raw_env, "tool_attachment_error", torch.zeros(1, device=raw_env.device))[0]
+            ),
         }
     # All four current tasks emit their sparse terminal reward only on a true
     # success event. This remains valid even when DirectRLEnv resets afterward.
@@ -262,6 +336,9 @@ def _task_evidence(task: str, raw_env: Any, reward: float) -> tuple[bool, dict[s
 def main() -> None:
     if args.episodes != 1:
         raise ValueError("Run exactly one episode per IsaacLab process; use scripts/task_suite/run_reproducible_evaluation.sh for N episodes.")
+    curriculum_stage = _selected_curriculum_stage()
+    os.environ["EVOLUTION_CURRICULUM_STAGE"] = curriculum_stage
+    os.environ["EVOLUTION_FORAGE_CURRICULUM_STAGE"] = curriculum_stage
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     print(f"[EVAL] Preparing morphology for {args.task}", flush=True)
@@ -273,13 +350,15 @@ def main() -> None:
 
         env_id, module_name, _, _ = TASKS[args.task]
         importlib.import_module(module_name)
+        if backup is not None:
+            _reload_task_modules(args.task)
         env_cfg = parse_env_cfg(env_id, device=args.device, num_envs=1)
         _configure_structure_adaptive_evaluation(args.task, env_cfg, backup)
         env_cfg.seed = args.seed
         env_cfg.viewer.eye, env_cfg.viewer.lookat = CAMERA_VIEWS[args.task]
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
         agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
-        resume_path = retrieve_file_path(args.checkpoint)
+        resume_path = retrieve_file_path(_resolve_checkpoint())
         print(f"[EVAL] Creating {args.task} environment", flush=True)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         print(f"[EVAL] Environment created", flush=True)
@@ -384,6 +463,8 @@ def main() -> None:
         report = {
             "task": args.task,
             "checkpoint": resume_path,
+            "curriculum_stage": curriculum_stage,
+            "reset_dof_pos_noise": float(env_cfg.reset_dof_pos_noise),
             "morphology": {"lineage_json": args.lineage_json, "individual_key": args.individual_key},
             "seed_start": args.seed,
             "episodes": 1,
@@ -398,7 +479,6 @@ def main() -> None:
             json.dump(report, file, ensure_ascii=False, indent=2)
     finally:
         if env is not None: env.close()
-        _restore_morphology(backup)
         app.close()
 
 

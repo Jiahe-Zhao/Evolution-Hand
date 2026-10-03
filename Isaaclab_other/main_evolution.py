@@ -927,7 +927,9 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                         if trace_path and os.path.isfile(trace_path):
                             try:
                                 trace = np.load(trace_path)
-                                if trace['actions_control_fingers'].all() and bool(preflight.get('tasks', {}).get('grasp', {}).get('passed')):
+                                if (trace['actions_control_fingers'].all()
+                                    and trace['scene_unmodified'].all()
+                                    and bool(preflight.get('tasks', {}).get('grasp', {}).get('passed'))):
                                     bc_dataset_path = trace_path
                             except Exception:
                                 bc_dataset_path = None

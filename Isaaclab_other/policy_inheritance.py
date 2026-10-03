@@ -182,6 +182,14 @@ def train_behavior_cloning(agent, dataset_path, run_dir, epochs=10, batch_size=2
     actions = torch.as_tensor(data['submitted_actions'], dtype=torch.float32, device=agent.ppo_device)
     if observations.ndim != 2 or actions.ndim != 2 or len(observations) != len(actions):
         raise ValueError(f'Invalid BC dataset shapes: {observations.shape}, {actions.shape}')
+    if len(observations) == 0 or not torch.isfinite(observations).all() or not torch.isfinite(actions).all():
+        raise ValueError('BC dataset is empty or contains non-finite values')
+    if 'actions_control_fingers' not in data or not bool(np.asarray(data['actions_control_fingers']).all()):
+        raise ValueError('BC dataset contains steps driven by a scripted joint override')
+    if 'scene_unmodified' not in data or not bool(np.asarray(data['scene_unmodified']).all()):
+        raise ValueError('BC dataset contains scripted changes to the task scene')
+    if actions.shape[1] < 20 or not bool((actions[:, :20].abs().amax(dim=0) > 1e-4).any()):
+        raise ValueError('BC dataset contains no fingertip actions')
     optimizer = torch.optim.Adam(agent.model.parameters(), lr=learning_rate)
     agent.model.train()
     losses = []

@@ -24,6 +24,7 @@ def main(task: str) -> None:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--min_video_steps", type=int, default=90, help="Minimum rendered frames; 90 at 30 fps is 3 seconds.")
     parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
+    parser.add_argument("--replay_actions_json", help="Forage diagnostic: replay recorded policy actions in a fresh task reset.")
     parser.add_argument("--direct_envelope_closure", action=argparse.BooleanOptionalAction, default=True, help="Retain the joint target used to generate the grasp envelope.")
     parser.add_argument("--max_physical_candidates", type=int, default=36)
     parser.add_argument("--strike_thumb_bias", type=float, default=0.0, help="Diagnostic tool-position bias toward the closed thumb, in metres.")
@@ -710,6 +711,12 @@ def main(task: str) -> None:
     history = []
     bc_observations = []
     bc_actions = []
+    replay_actions = None
+    if args.replay_actions_json:
+        if task != "forage":
+            raise ValueError("Recorded policy-action replay is currently supported only for Forage")
+        replay_history = json.loads(Path(args.replay_actions_json).read_text(encoding="utf-8"))["history"]
+        replay_actions = [entry["action"] for entry in replay_history]
     success = False
     strike_pinch_action = None
     strike_initial_tool_state = None
@@ -751,6 +758,12 @@ def main(task: str) -> None:
                 raw.scripted_joint_target = initial_joint_pos + approach * (closure_target - initial_joint_pos)
                 action = torch.zeros((1, 20), device=raw.device)
                 action[:, 15:20] = 0.95 * approach
+            elif task == "forage" and replay_actions is not None:
+                if step >= len(replay_actions):
+                    break
+                action = torch.tensor(replay_actions[step], device=raw.device, dtype=torch.float32).view(1, 23)
+                forage_stage = "replay"
+                selected_force = 0.0
             elif task == "forage":
                 raw._compute_intermediate_values()
                 leaf_asset = raw.leaf_two if forage_leaf_index == 1 else raw.leaf_one
@@ -904,7 +917,13 @@ def main(task: str) -> None:
             writer.close()
     bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations_before_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions), actions_control_fingers=np.full(len(bc_actions), task == "forage"))
+        np.savez_compressed(
+            bc_path,
+            observations_before_step=np.asarray(bc_observations),
+            submitted_actions=np.asarray(bc_actions),
+            actions_control_fingers=np.full(len(bc_actions), task == "forage"),
+            scene_unmodified=np.full(len(bc_actions), task == "forage"),
+        )
     summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")

@@ -234,7 +234,11 @@ class EvolutionGraspEnv(DirectRLEnv):
         ).expand(len(env_ids), -1)
         palm_normal = quat_apply(root_quat, normal_local)
         clearance = float(self.cfg.grasp_object_radius + self.cfg.proximal_support_clearance)
-        return support + palm_normal * clearance
+        local_offset = torch.tensor(
+            getattr(self.cfg, "proximal_support_offset_local", (0.0, 0.0, 0.0)),
+            dtype=torch.float32, device=self.device,
+        ).expand(len(env_ids), -1)
+        return support + palm_normal * clearance + quat_apply(root_quat, local_offset)
     def _get_observations(self) -> dict:
         if self.cfg.asymmetric_obs:
             self.fingertip_force_sensors = self.hand.root_physx_view.get_link_incoming_joint_force()[

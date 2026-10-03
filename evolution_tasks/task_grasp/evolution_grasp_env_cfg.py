@@ -133,8 +133,8 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     
 
     # Actuated joints and fingertip links
-    actuated_joint_names = ['link_0_0_to_link_1_0', 'link_1_0_to_link_1_1', 'link_1_1_to_link_1_2', 'link_0_0_to_link_2_0', 'link_2_0_to_link_2_1', 'link_2_1_to_link_2_2', 'link_2_2_to_link_2_3', 'link_0_0_to_link_3_0', 'link_3_0_to_link_3_1', 'link_3_1_to_link_3_2', 'link_3_2_to_link_3_3', 'link_0_0_to_link_4_0', 'link_4_0_to_link_4_1', 'link_4_1_to_link_4_2', 'link_4_2_to_link_4_3', 'link_0_0_to_link_5_0', 'link_5_0_to_link_5_1', 'link_5_1_to_link_5_2', 'link_5_2_to_link_5_3']
-    finger_body_names = ['link_0_0', 'link_1_0', 'link_1_1', 'link_1_2', 'link_2_0', 'link_2_1', 'link_2_2', 'link_2_3', 'link_3_0', 'link_3_1', 'link_3_2', 'link_3_3', 'link_4_0', 'link_4_1', 'link_4_2', 'link_4_3', 'link_5_0', 'link_5_1', 'link_5_2', 'link_5_3']
+    actuated_joint_names = ['link_0_0_to_link_1_0', 'link_1_0_to_link_1_1', 'link_1_1_to_link_1_2', 'link_2_mcp_spread_joint', 'link_0_0_to_link_2_0', 'link_2_0_to_link_2_1', 'link_2_1_to_link_2_2', 'link_3_mcp_spread_joint', 'link_0_0_to_link_3_0', 'link_3_0_to_link_3_1', 'link_3_1_to_link_3_2', 'link_4_mcp_spread_joint', 'link_0_0_to_link_4_0', 'link_4_0_to_link_4_1', 'link_4_1_to_link_4_2', 'link_5_mcp_spread_joint', 'link_0_0_to_link_5_0', 'link_5_0_to_link_5_1', 'link_5_1_to_link_5_2']
+    finger_body_names = ['link_0_0', 'link_1_0', 'link_1_1', 'link_1_2', 'link_2_0', 'link_2_1', 'link_2_2', 'link_3_0', 'link_3_1', 'link_3_2', 'link_4_0', 'link_4_1', 'link_4_2', 'link_5_0', 'link_5_1', 'link_5_2']
 
     #分离出指尖
     finger_links = defaultdict(list)
@@ -181,6 +181,7 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
             restitution=0.0,
         ),
         physx=PhysxCfg(
+            gpu_max_rigid_patch_count=2**20,
             bounce_threshold_velocity=0.2,
         ),
     )
@@ -194,7 +195,26 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
             pos=(0.0, 0.0, 0.35),
             rot=(-0.707107, 0.707107, 0.0, 0),
             # Start from a finger-pad pre-grasp instead of an open hand.
-            joint_pos={".*": 0.35},
+            # Keep all MCP abduction/adduction joints at their anatomical
+            # neutral pose. Long-finger flexion is learned from an open hand;
+            # a blanket nonzero target would otherwise violate the tighter
+            # middle and ring MCP side-splay limits.
+            joint_pos={
+                "link_1_thumb_spread_joint": -0.80,
+                "link_0_0_to_link_1_0": 0.45,
+                "link_2_mcp_spread_joint": 0.0,
+                "link_3_mcp_spread_joint": 0.0,
+                "link_4_mcp_spread_joint": 0.0,
+                "link_5_mcp_spread_joint": 0.0,
+                "link_0_0_to_link_2_0": 0.58,
+                "link_0_0_to_link_3_0": 0.58,
+                "link_0_0_to_link_4_0": 0.58,
+                "link_0_0_to_link_5_0": 0.58,
+                "link_2_0_to_link_2_1": 0.52,
+                "link_3_0_to_link_3_1": 0.52,
+                "link_4_0_to_link_4_1": 0.52,
+                "link_5_0_to_link_5_1": 0.52,
+            },
         )
     )
     
@@ -211,17 +231,19 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
                 restitution=0.0,
             ),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
-                kinematic_enabled=False,
-                disable_gravity=False,
+                kinematic_enabled=True,
+                disable_gravity=True,
                 enable_gyroscopic_forces=True,
                 solver_position_iteration_count=8,
-                solver_velocity_iteration_count=0,
+                solver_velocity_iteration_count=4,
                 sleep_threshold=0.005,
                 stabilization_threshold=0.0025,
-                max_depenetration_velocity=1000.0,
+                max_depenetration_velocity=10.0,
             ),
             collision_props=sim_utils.CollisionPropertiesCfg(
                 collision_enabled=True,
+                contact_offset=0.002,
+                rest_offset=0.001,
                 # contact_offset=0.005,  # 可以尝试增加此值
                 # rest_offset=0.001,     # 可以尝试增加此值
             ),
@@ -240,10 +262,10 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
         # One channel per fingertip, ordered thumb then four long fingers.
         filter_prim_paths_expr=[
             "/World/envs/env_.*/LeftRobot/link_1_2",
-            "/World/envs/env_.*/LeftRobot/link_2_3",
-            "/World/envs/env_.*/LeftRobot/link_3_3",
-            "/World/envs/env_.*/LeftRobot/link_4_3",
-            "/World/envs/env_.*/LeftRobot/link_5_3",
+            "/World/envs/env_.*/LeftRobot/link_2_2",
+            "/World/envs/env_.*/LeftRobot/link_3_2",
+            "/World/envs/env_.*/LeftRobot/link_4_2",
+            "/World/envs/env_.*/LeftRobot/link_5_2",
         ],
     )
     
@@ -256,7 +278,7 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
     # First establish stable distal-finger support from a reproducible pose;
     # then reintroduce a modest joint perturbation for the strict stage.
-    reset_dof_pos_noise = 0.0 if curriculum_stage == "stage1" else 0.05
+    reset_dof_pos_noise = 0.0 if curriculum_stage == "stage1" else 0.02
     reset_dof_vel_noise = 0.0  # range of dof vel at reset
     # scales and constants
     # fall_dist = 0.24
@@ -290,14 +312,17 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     proximal_support_body_names = ("link_2_0", "link_3_0", "link_4_0")
     proximal_support_normal_local = (0.0, -1.0, 0.0)
     grasp_object_radius = 0.02
-    proximal_support_clearance = 0.006
+    # Keep the reset sphere outside the evolved palm collision solids. The
+    # previous 6 mm clearance was insufficient for the current palm boxes.
+    proximal_support_clearance = 0.045
+    proximal_support_offset_local = (0.012, 0.0, 0.011)
     # Dynamic distal-finger enclosure: require the ball to be close to at least
     # two terminal phalanges, so a widely open hand cannot obtain a false success.
     distal_region_margin = 0.024
     distal_contact_radius = 0.060
     min_distal_nearby_fingers = 2
     spawn_on_distal_fingers = True
-    distal_support_body_names = ("link_2_3", "link_3_3", "link_4_3")
+    distal_support_body_names = ("link_2_2", "link_3_2", "link_4_2")
     # World-frame upward offset: sphere radius plus a small contact clearance.
     distal_support_offset = (0.0, 0.0, 0.032)
     palm_region_reward_scale = 0.0
@@ -305,7 +330,7 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     # Stage1/Stage2 only differ in training budget and reset perturbation.
     m1_contact_force_threshold = 0.10  # any fingertip
     m2_contact_force_threshold = 0.10  # thumb plus another fingertip
-    m3_contact_force_threshold = 0.25  # thumb plus a stable long-finger enclosure
+    m3_contact_force_threshold = 0.05  # thumb plus a stable long-finger enclosure
     m1_hold_steps = 3
     m2_hold_steps = 3
     m3_hold_steps = 10
@@ -325,4 +350,6 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     success_tolerance = 3
     max_consecutive_success = 0
     av_factor = 0.1
-    fall_dist=0.15
+    # Keep the episode alive long enough for the policy to recover a transient
+    # contact; M3 still requires the unchanged 10-step stable enclosure.
+    fall_dist=0.22

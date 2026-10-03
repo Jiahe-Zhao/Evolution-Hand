@@ -39,9 +39,12 @@ parser.add_argument("--script_velocity_limit", type=float, default=None)
 parser.add_argument("--script_effort_limit", type=float, default=None)
 parser.add_argument("--force_threshold", type=float, default=0.10)
 parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
+parser.add_argument("--preflight_close_steps", type=int, default=90, help="Diagnostic closure duration without video.")
 parser.add_argument("--palm_start", action=argparse.BooleanOptionalAction, default=True, help="Place the ball on the morphology-specific palm support point.")
 parser.add_argument("--release_object", action="store_true", help="Release the ball after closure; default keeps it supported for reachability validation.")
 parser.add_argument("--cartesian_replay", action="store_true", help="Close each finger toward its sphere surface target using the task IK.")
+parser.add_argument("--training_scene", action="store_true", help="Use only the task reset scene; never relocate or pin the object.")
+parser.add_argument("--ik_gain_probe", type=float, default=None)
 parser.add_argument("--contact_radius", type=float, default=0.021)
 parser.add_argument(
     "--palm_residual",
@@ -59,6 +62,8 @@ parser.add_argument(
 )
 AppLauncher.add_app_launcher_args(parser)
 args, hydra_args = parser.parse_known_args()
+if args.training_scene and not args.cartesian_replay:
+    parser.error("--training_scene requires --cartesian_replay")
 args.enable_cameras = not args.preflight
 sys.argv = [sys.argv[0]] + hydra_args
 app = AppLauncher(args).app
@@ -622,6 +627,8 @@ def main() -> None:
         render_mode=None if args.preflight else "rgb_array",
     )
     raw_env = env.unwrapped
+    if args.ik_gain_probe is not None:
+        raw_env.cartesian_ik.gain = args.ik_gain_probe
     env.reset(seed=args.seed)
     raw_env._compute_intermediate_values()
     if os.environ.get("EVOLUTION_DEBUG_JOINT_ORDER") == "1":
@@ -680,21 +687,24 @@ def main() -> None:
     raw_env._compute_intermediate_values()
     tip_ids = [raw_env.hand.body_names.index(name) for name in tips]
     initial_joint_pos = raw_env.hand.data.joint_pos.clone()
-    object_state = raw_env.grasp_object.data.default_root_state[:1].clone()
-    object_state[:, 0:3] = adaptive_object_position
-    object_state[:, 7:13] = 0.0
-    raw_env.grasp_object.write_root_state_to_sim(object_state)
-    raw_env.in_hand_pos[:1] = object_state[:, 0:3]
-    _set_hand_pose(raw_env, initial_joint_pos)
-    raw_env.sim.forward()
-    raw_env.scene.update(dt=0.0)
-    raw_env._compute_intermediate_values()
+    if not args.training_scene:
+        object_state = raw_env.grasp_object.data.default_root_state[:1].clone()
+        object_state[:, 0:3] = adaptive_object_position
+        object_state[:, 7:13] = 0.0
+        raw_env.grasp_object.write_root_state_to_sim(object_state)
+        raw_env.in_hand_pos[:1] = object_state[:, 0:3]
+        _set_hand_pose(raw_env, initial_joint_pos)
+        raw_env.sim.forward()
+        raw_env.scene.update(dt=0.0)
+        raw_env._compute_intermediate_values()
     object_anchor = raw_env.grasp_object.data.root_pos_w[:, 0:3].clone()
     initial_tip_pos = raw_env.cartesian_ik.fingertip_positions_world().clone()
     approach_directions = initial_tip_pos - object_anchor.unsqueeze(1)
     approach_directions = approach_directions / torch.linalg.vector_norm(
         approach_directions, dim=-1, keepdim=True
     ).clamp_min(1e-5)
+    if args.training_scene and (any(args.object_offset_world) or args.project_closure):
+        raise ValueError("Training-scene replay cannot offset the object or project by writing joint states")
     offset = torch.tensor(args.object_offset_world, dtype=torch.float32, device=raw_env.device)
     if bool(torch.any(offset)):
         object_state = raw_env.grasp_object.data.default_root_state[:1].clone()
@@ -726,7 +736,8 @@ def main() -> None:
             alpha = index / 40.0
             candidate = start_target + alpha * (closure_target - start_target)
             _set_hand_pose(raw_env, candidate)
-            raw_env.grasp_object.write_root_state_to_sim(stabilized_object_state)
+            if not args.training_scene:
+                raw_env.grasp_object.write_root_state_to_sim(stabilized_object_state)
             raw_env.sim.forward()
             raw_env.scene.update(dt=0.0)
             raw_env._compute_intermediate_values()
@@ -745,10 +756,21 @@ def main() -> None:
             "projected_fraction": float(index - 1) / 40.0 if last_clearance and float(last_clearance["clearance_m"]) < -1.0e-4 else 1.0,
         })
         _set_hand_pose(raw_env, initial_joint_pos)
-        raw_env.grasp_object.write_root_state_to_sim(stabilized_object_state)
+        if not args.training_scene:
+            raw_env.grasp_object.write_root_state_to_sim(stabilized_object_state)
         raw_env.sim.forward()
         raw_env.scene.update(dt=0.0)
         raw_env._compute_intermediate_values()
+    if args.training_scene:
+        env.reset(seed=args.seed)
+        raw_env.scripted_joint_target = None
+        raw_env._compute_intermediate_values()
+        object_anchor = raw_env.grasp_object.data.root_pos_w[:, 0:3].clone()
+        initial_tip_pos = raw_env.cartesian_ik.fingertip_positions_world()
+        approach_directions = initial_tip_pos - object_anchor.unsqueeze(1)
+        approach_directions /= torch.linalg.vector_norm(
+            approach_directions, dim=-1, keepdim=True
+        ).clamp_min(1e-5)
     if not args.preflight:
         from isaacsim.core.utils.viewports import set_camera_view
         set_camera_view(eye=cfg.viewer.eye, target=cfg.viewer.lookat, camera_prim_path="/OmniverseKit_Persp")
@@ -764,7 +786,7 @@ def main() -> None:
     penetration_count = 0
     try:
         approach_steps = 30 if args.preflight else args.approach_steps
-        close_steps = 90 if args.preflight else args.close_steps
+        close_steps = args.preflight_close_steps if args.preflight else args.close_steps
         hold_steps = max(args.hold_steps, int(raw_env.cfg.m1_hold_steps + raw_env.cfg.m2_hold_steps + raw_env.cfg.m3_hold_steps) + 10)
         release_step = min(args.stabilize_steps, approach_steps + close_steps) if args.release_object else approach_steps + close_steps + hold_steps + 1
         total_steps = approach_steps + close_steps + hold_steps
@@ -786,8 +808,8 @@ def main() -> None:
                 target_joint_pos = closure_target
             # Replay the calibrated morphology-specific joint trajectory.
             # This validates physical grasping, not PPO's ability to discover it.
-            raw_env.scripted_joint_target = target_joint_pos
-            if step < release_step:
+            raw_env.scripted_joint_target = None if args.training_scene else target_joint_pos
+            if step < release_step and not args.training_scene:
                 raw_env.grasp_object.write_root_state_to_sim(stabilized_object_state)
                 raw_env.sim.forward()
                 raw_env.scene.update(dt=0.0)
@@ -835,7 +857,7 @@ def main() -> None:
                 {
                     "step": step,
                     "phase": phase,
-                    "object_pinned": step < release_step,
+                    "object_pinned": step < release_step and not args.training_scene,
                     "source_mesh_clearance": mesh_result,
                     "state_after_auto_reset": bool(terminated[0] or truncated[0]),
                     "joint_target_rad": target_joint_pos[0].detach().cpu().tolist(),
@@ -864,7 +886,13 @@ def main() -> None:
 
     bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations_before_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions), actions_control_fingers=np.full(len(bc_actions), bool(args.cartesian_replay)))
+        np.savez_compressed(
+            bc_path,
+            observations_before_step=np.asarray(bc_observations),
+            submitted_actions=np.asarray(bc_actions),
+            actions_control_fingers=np.full(len(bc_actions), bool(args.cartesian_replay)),
+            scene_unmodified=np.asarray([args.training_scene or not step["object_pinned"] for step in history], dtype=bool),
+        )
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",
