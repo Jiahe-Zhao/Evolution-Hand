@@ -39,6 +39,8 @@ parser.add_argument("--script_velocity_limit", type=float, default=None)
 parser.add_argument("--script_effort_limit", type=float, default=None)
 parser.add_argument("--force_threshold", type=float, default=0.10)
 parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
+parser.add_argument("--palm_start", action=argparse.BooleanOptionalAction, default=True, help="Place the ball on the morphology-specific palm support point.")
+parser.add_argument("--release_object", action="store_true", help="Release the ball after closure; default keeps it supported for reachability validation.")
 parser.add_argument("--contact_radius", type=float, default=0.021)
 parser.add_argument(
     "--palm_residual",
@@ -652,6 +654,12 @@ def main() -> None:
     # The generated palm frame places the fingertip envelope distal and dorsal
     # to this raw mean; shift the sphere into the physical pad envelope.
     adaptive_object_position = adaptive_object_position + torch.tensor([0.030, 0.000, 0.020], device=raw_env.device)
+    if args.palm_start:
+        palm_ids = torch.arange(raw_env.num_envs, device=raw_env.device)
+        adaptive_object_position = raw_env._compute_proximal_support_point(palm_ids)
+        palm_normal_local = torch.tensor(raw_env.cfg.proximal_support_normal_local, dtype=torch.float32, device=raw_env.device).expand(raw_env.num_envs, -1)
+        palm_normal_world = quat_apply(raw_env.hand.data.root_quat_w, palm_normal_local)
+        adaptive_object_position = adaptive_object_position + 0.010 * palm_normal_world
     _set_hand_pose(raw_env, initial_joint_pos)
     raw_env.sim.forward()
     raw_env.scene.update(dt=0.0)
@@ -746,7 +754,7 @@ def main() -> None:
         approach_steps = 30 if args.preflight else args.approach_steps
         close_steps = 90 if args.preflight else args.close_steps
         hold_steps = max(args.hold_steps, int(raw_env.cfg.m1_hold_steps + raw_env.cfg.m2_hold_steps + raw_env.cfg.m3_hold_steps) + 10)
-        release_step = min(args.stabilize_steps, approach_steps + close_steps)
+        release_step = min(args.stabilize_steps, approach_steps + close_steps) if args.release_object else approach_steps + close_steps + hold_steps + 1
         total_steps = approach_steps + close_steps + hold_steps
         for step in range(total_steps):
             if step < approach_steps:
