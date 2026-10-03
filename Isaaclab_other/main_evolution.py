@@ -906,6 +906,18 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                     if _env_flag('EVOLUTION_INHERIT_POLICY', True) and stage_name == 'stage1':
                         inherited_checkpoint = select_parent_checkpoint(
                             parent, batch_task, EVOLUTION_LOG_ROOT, parent_state)
+                        if inherited_checkpoint is None and current_generation == 0:
+                            seed_lineage_path = os.environ.get('EVOLUTION_SEED_POLICY_LINEAGE')
+                            seed_individual_key = os.environ.get('EVOLUTION_SEED_POLICY_INDIVIDUAL', '15_0')
+                            if seed_lineage_path:
+                                seed_lineage = _load_json(seed_lineage_path) or {}
+                                seed_parent = seed_lineage.get('lineage', {}).get(seed_individual_key)
+                                if seed_parent is None:
+                                    raise ValueError(f'Seed policy individual not found: {seed_individual_key}')
+                                inherited_checkpoint = select_parent_checkpoint(
+                                    seed_parent, batch_task, EVOLUTION_LOG_ROOT)
+                                if inherited_checkpoint is None:
+                                    raise FileNotFoundError(f'Seed policy checkpoint missing: {batch_task}')
                     try:
                         current_score = evaluation(
                             child["urdf_info"],

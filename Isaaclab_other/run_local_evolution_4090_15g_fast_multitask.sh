@@ -35,6 +35,8 @@ export EVOLUTION_SCRIPTED_PREFLIGHT=1
 export EVOLUTION_REQUIRE_SCRIPTED_PREFLIGHT_SUCCESS=1
 export EVOLUTION_SCRIPTED_PREFLIGHT_TIMEOUT=900
 export EVOLUTION_INHERIT_POLICY=1
+export EVOLUTION_SEED_POLICY_LINEAGE="${EVOLUTION_SEED_POLICY_LINEAGE:-$EVOLUTION_ROOT/Isaaclab_other/exp_20261001_fast15_parallel2_kinadapt_fast_v3.json}"
+export EVOLUTION_SEED_POLICY_INDIVIDUAL="${EVOLUTION_SEED_POLICY_INDIVIDUAL:-15_0}"
 
 # Recycle after a bounded number of scene switches.  Unlimited reuse leaks
 # native Kit/PhysX state across changing morphologies and can exit mid-task.
