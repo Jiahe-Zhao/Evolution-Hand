@@ -131,8 +131,8 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     # observation_number = 157
 
     # Actuated joints and fingertip links
-    actuated_joint_names = ['link_0_0_to_link_1_0', 'link_1_0_to_link_1_1', 'link_1_1_to_link_1_2', 'link_0_0_to_link_2_0', 'link_2_0_to_link_2_1', 'link_2_1_to_link_2_2', 'link_2_2_to_link_2_3', 'link_0_0_to_link_3_0', 'link_3_0_to_link_3_1', 'link_3_1_to_link_3_2', 'link_3_2_to_link_3_3', 'link_0_0_to_link_4_0', 'link_4_0_to_link_4_1', 'link_4_1_to_link_4_2', 'link_4_2_to_link_4_3', 'link_0_0_to_link_5_0', 'link_5_0_to_link_5_1', 'link_5_1_to_link_5_2', 'link_5_2_to_link_5_3']
-    finger_body_names = ['link_0_0', 'link_1_0', 'link_1_1', 'link_1_2', 'link_2_0', 'link_2_1', 'link_2_2', 'link_2_3', 'link_3_0', 'link_3_1', 'link_3_2', 'link_3_3', 'link_4_0', 'link_4_1', 'link_4_2', 'link_4_3', 'link_5_0', 'link_5_1', 'link_5_2', 'link_5_3']
+    actuated_joint_names = ['link_0_0_to_link_1_0', 'link_1_0_to_link_1_1', 'link_1_1_to_link_1_2', 'link_2_mcp_spread_joint', 'link_0_0_to_link_2_0', 'link_2_0_to_link_2_1', 'link_2_1_to_link_2_2', 'link_3_mcp_spread_joint', 'link_0_0_to_link_3_0', 'link_3_0_to_link_3_1', 'link_3_1_to_link_3_2', 'link_4_mcp_spread_joint', 'link_0_0_to_link_4_0', 'link_4_0_to_link_4_1', 'link_4_1_to_link_4_2', 'link_5_mcp_spread_joint', 'link_0_0_to_link_5_0', 'link_5_0_to_link_5_1', 'link_5_1_to_link_5_2']
+    finger_body_names = ['link_0_0', 'link_1_0', 'link_1_1', 'link_1_2', 'link_2_0', 'link_2_1', 'link_2_2', 'link_3_0', 'link_3_1', 'link_3_2', 'link_4_0', 'link_4_1', 'link_4_2', 'link_5_0', 'link_5_1', 'link_5_2']
 
     #分离出指尖
     finger_links = defaultdict(list)
@@ -174,6 +174,7 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
             dynamic_friction=1.0,
         ),
         physx=PhysxCfg(
+            gpu_max_rigid_patch_count=2**20,
             bounce_threshold_velocity=0.2,
         ),
     )
@@ -185,9 +186,17 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     #strike_hand 位置还得改 右手
     robot_cfg: ArticulationCfg = RIGHT_HAND_CFG.replace(prim_path="/World/envs/env_.*/RightRobot").replace(
         init_state=ArticulationCfg.InitialStateCfg(
-            pos=(-0.05, 0.01, 0.380),
+            # Move the palm over the target so the initial flexed fingertips
+            # surround the tool instead of leaving it on the palm edge.
+            pos=(-0.027, 0.07, 0.380),
             rot=(0.0, 0.0, 1.0, 0),
-            joint_pos={".*": 0.0},
+            # The prescribed tool begins in an oppositional pre-grasp: thumb
+            # and long fingers occupy opposite sides of the handle.
+            joint_pos={
+                "^(?!link_1_thumb_spread_joint$|link_0_0_to_link_1_0$).*": 0.0,
+                "link_1_thumb_spread_joint": 0.0,
+                "link_0_0_to_link_1_0": 0.25,
+            },
             # joint_pos={'link_0_0_to_link_1_0':1.0, 
             #            'link_1_0_to_link_1_1':1.5, 
             #            'link_1_1_to_link_1_2':1.5, 
@@ -216,25 +225,28 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
         prim_path="/World/envs/env_.*/Cone",
         spawn=sim_utils.CuboidCfg(
             # Long tool: its lower end reaches the target before the hand.
+            # A thinner tool is easier to envelop with the evolved fingertips;
+            # length and impact target remain unchanged.
             size=(0.025, 0.025, 0.180),
+            activate_contact_sensors=True,
             visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.8, 1.0, 0.0)),
-            physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=0.7),
+            physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=3.0, dynamic_friction=2.5),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 kinematic_enabled=False,
-                disable_gravity=True,
+                disable_gravity=False,
                 enable_gyroscopic_forces=True,
                 solver_position_iteration_count=8,
                 solver_velocity_iteration_count=0,
                 sleep_threshold=0.005,
                 stabilization_threshold=0.0025,
-                max_depenetration_velocity=1000.0,
+                max_depenetration_velocity=3.0,
             ),
             collision_props=sim_utils.CollisionPropertiesCfg(
                 collision_enabled=True,
                 # contact_offset=0.005,  # 可以尝试增加此值
                 # rest_offset=0.001,     # 可以尝试增加此值
             ),
-            mass_props=sim_utils.MassPropertiesCfg(mass=0.200),
+            mass_props=sim_utils.MassPropertiesCfg(mass=0.080),
         ),
         init_state=RigidObjectCfg.InitialStateCfg(
             # The tool starts in a prescribed pre-grasp and is carried by the
@@ -274,6 +286,16 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
         prim_path="/World/envs/env_.*/strike_object",
         filter_prim_paths_expr=["/World/envs/env_.*/Cone"],
     )
+    tool_contact_sensor_cfg: ContactSensorCfg = ContactSensorCfg(
+        prim_path="/World/envs/env_.*/Cone",
+        filter_prim_paths_expr=[
+            "/World/envs/env_.*/RightRobot/link_1_2",
+            "/World/envs/env_.*/RightRobot/link_2_2",
+            "/World/envs/env_.*/RightRobot/link_3_2",
+            "/World/envs/env_.*/RightRobot/link_4_2",
+            "/World/envs/env_.*/RightRobot/link_5_2",
+        ],
+    )
     
 
     # scene
@@ -300,26 +322,22 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     # is unreachable without numerical penetration, so Stage 2 evaluates a
     # physically observed 5 N impact instead.
     success_force_threshold = 3.0 if curriculum_stage == "stage1" else 5.0
-    # At reset, zero policy action maintains this physical pre-grasp.  A short
-    # settling period cannot earn rewards, so gravity alone cannot solve Strike.
-    # Joint limits are [0, upper], so positive normalized values close the
-    # fingers.  The prior -0.90 configuration was nearly fully open.
-    pregrasp_action = 0.60
+    # Start close enough to support the free tool, while retaining room for
+    # the adaptive controller to establish measured fingertip contact.
+    pregrasp_action = 0.45
     action_delta_scale = 0.35
     stabilization_steps = 45
     # Cartesian displacement limits for the three wrist action channels.
     wrist_action_scale = (0.025, 0.025, 0.060)
     # Cone-root target corresponding to the centre of the strike block's top face.
     target_position = (-0.05, 0.01, 0.214)
-    # A valid hit must originate from a tool that remained elevated in the
-    # pre-grasp after the settling phase; a dropped cone cannot score.
-    prestrike_hold_height = 0.320
     tool_impact_offset = 0.090
-    hold_tool_to_hand = True
-    # The wrist root is at z=0.38 m; the prescribed pre-grasp holds the
-    # tool root 3 cm lower, at its intended z=0.35 m starting position.
-    held_tool_offset = (0.0, 0.0, -0.030)
-    tool_attachment_tolerance = 0.010
+    hold_tool_to_hand = False
+    tool_finger_contact_force_threshold = 0.1
+    min_long_finger_contacts = 2
+    tool_grasp_hold_steps = 10
+    grasp_reward = 250.0
+    success_reward = 1000.0
     workspace_xy_radius = 0.18
     workspace_min_height = 0.015
     workspace_max_height = 0.50

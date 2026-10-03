@@ -20,7 +20,7 @@ from isaaclab.sim.spawners.from_files import GroundPlaneCfg, spawn_ground_plane
 from isaaclab.utils.math import quat_apply, quat_conjugate, quat_from_angle_axis, quat_mul, sample_uniform, saturate
 from isaaclab.sensors import ContactSensor,ContactSensorCfg
 from isaaclab_tasks.evolution_tasks.palm_coupling import apply_virtual_palm_coupling
-from isaaclab_tasks.evolution_tasks.cartesian_hand_controller import MorphologyAwareFingertipIK
+from isaaclab_tasks.evolution_tasks.cartesian_hand_controller import MorphologyAwareFingertipIK, resolve_fingertip_body_names
 
 if TYPE_CHECKING:
     from isaaclab_tasks.direct.allegro_hand.allegro_hand_env_cfg import AllegroHandEnvCfg
@@ -70,7 +70,7 @@ class EvolutionGraspEnv(DirectRLEnv):
                 self.active_action_indices.append(action_index)
                 self.actuated_dof_indices.append(self.hand.joint_names.index(joint_name))
 
-        self.canonical_fingertip_names = tuple(self.cfg.fingertip_body_names)
+        self.canonical_fingertip_names = resolve_fingertip_body_names(self.hand, self.cfg.fingertip_body_names)
         self.finger_bodies = []
         self.active_fingertip_indices = []
         for fingertip_index, body_name in enumerate(self.canonical_fingertip_names):
@@ -96,6 +96,9 @@ class EvolutionGraspEnv(DirectRLEnv):
         self.cartesian_ik = MorphologyAwareFingertipIK(
             self.hand, self.canonical_fingertip_names, num_envs=self.num_envs, device=self.device
         )
+        # Evaluation scripts may provide a morphology-specific joint target.
+        # Training keeps the Cartesian fingertip interface unchanged.
+        self.scripted_joint_target = None
 
         # track goal resets
         self.reset_goal_buf = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
@@ -169,24 +172,69 @@ class EvolutionGraspEnv(DirectRLEnv):
         self.actions = actions.clone()
 
     def _apply_action(self) -> None:
-        targets = self.cartesian_ik.compute(self.actions)
+        hard_limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
+        hard_lower, hard_upper = hard_limits[..., 0], hard_limits[..., 1]
+        # Leave a small physical margin so actuator lag cannot drive the
+        # measured joint state through the PhysX hard limit.
+        limit_margin = 0.02
+        safe_lower = hard_lower + limit_margin
+        safe_upper = hard_upper - limit_margin
+        current = self.hand.data.joint_pos
+        finite = torch.isfinite(current)
+        # PhysX fixed-tendon joints can overshoot their hard stop by a few
+        # 1e-4 rad numerically. Rewriting state for that noise destabilizes
+        # contact, so reserve projection for a meaningful violation.
+        violation_tolerance = 0.005
+        violation = (~finite) | (current < hard_lower - violation_tolerance) | (
+            current > hard_upper + violation_tolerance
+        )
+        self.cartesian_ik.last_joint_limit_violation = violation.any(dim=-1)
+        safe_default = 0.5 * (hard_lower + hard_upper)
+        current = torch.where(finite, current, safe_default)
+        projected = torch.clamp(current, hard_lower, hard_upper)
+        if self.cartesian_ik.last_joint_limit_violation.any():
+            bad_env_ids = self.cartesian_ik.last_joint_limit_violation.nonzero(as_tuple=False).squeeze(-1)
+            self.hand.write_joint_state_to_sim(
+                projected[bad_env_ids],
+                torch.zeros_like(projected[bad_env_ids]),
+                env_ids=bad_env_ids,
+            )
+
+        if self.scripted_joint_target is None:
+            targets = self.cartesian_ik.compute(self.actions)
+        else:
+            # A scripted closure still follows the same hard ROM and one-step
+            # velocity bound as the learned controller.
+            requested = self.scripted_joint_target.to(self.device)
+            safe_limits = self.cartesian_ik._safe_joint_limits(hard_limits)
+            safe_limits[..., 0] = torch.maximum(safe_limits[..., 0], safe_lower)
+            safe_limits[..., 1] = torch.minimum(safe_limits[..., 1], safe_upper)
+            requested = self.cartesian_ik._apply_flexion_coupling(requested.clone())
+            requested = torch.clamp(requested, safe_limits[..., 0], safe_limits[..., 1])
+            # Rate-limit the command against the previous command, not the
+            # lagging measured joint state. Otherwise actuator lag makes the
+            # target permanently chase the current angle and closure stalls.
+            previous_target = torch.clamp(self.prev_targets, hard_lower, hard_upper)
+            delta = torch.clamp(requested - previous_target, -0.013, 0.013)
+            targets = previous_target + delta
+            targets = torch.clamp(targets, safe_lower, safe_upper)
         targets = self.cfg.act_moving_average * targets + (1.0 - self.cfg.act_moving_average) * self.prev_targets
         targets = saturate(targets, self.hand_dof_lower_limits, self.hand_dof_upper_limits)
+        targets = torch.clamp(targets, safe_lower, safe_upper)
         self.cur_targets[:] = targets
         self.prev_targets[:] = targets
         self.hand.set_joint_position_target(targets)
 
     def _compute_proximal_support_point(self, env_ids: Sequence[int]) -> torch.Tensor:
-        """Return a morphology-aware ball center above the first phalanges."""
-        phalanx_positions = self.hand.data.body_pos_w[env_ids][:, self.proximal_support_body_ids]
-        phalanx_center = phalanx_positions.mean(dim=1)
+        """Place the ball on the morphology-specific proximal phalanx shelf."""
+        support = self.hand.data.body_pos_w[env_ids][:, self.proximal_support_body_ids].mean(dim=1)
+        root_quat = self.hand.data.root_quat_w[env_ids]
         normal_local = torch.tensor(
-            self.cfg.proximal_support_normal_local, dtype=torch.float, device=self.device
+            self.cfg.proximal_support_normal_local, dtype=torch.float32, device=self.device
         ).expand(len(env_ids), -1)
-        normal_world = quat_apply(self.hand.data.root_quat_w[env_ids], normal_local)
-        normal_world = torch.nn.functional.normalize(normal_world, dim=-1)
-        support_offset = self.cfg.grasp_object_radius + self.cfg.proximal_support_clearance
-        return phalanx_center + normal_world * support_offset
+        palm_normal = quat_apply(root_quat, normal_local)
+        clearance = float(self.cfg.grasp_object_radius + self.cfg.proximal_support_clearance)
+        return support + palm_normal * clearance
     def _get_observations(self) -> dict:
         if self.cfg.asymmetric_obs:
             self.fingertip_force_sensors = self.hand.root_physx_view.get_link_incoming_joint_force()[
@@ -293,8 +341,9 @@ class EvolutionGraspEnv(DirectRLEnv):
         delta_min = self.hand_dof_lower_limits[env_ids] - self.hand.data.default_joint_pos[env_ids]
 
         dof_pos_noise = sample_uniform(-1.0, 1.0, (len(env_ids), self.num_hand_dofs), device=self.device)
-        rand_delta = delta_min + (delta_max - delta_min) * 0.5 * dof_pos_noise
+        rand_delta = delta_min + (delta_max - delta_min) * 0.5 * (dof_pos_noise + 1.0)
         dof_pos = self.hand.data.default_joint_pos[env_ids] + self.cfg.reset_dof_pos_noise * rand_delta
+        dof_pos = torch.maximum(torch.minimum(dof_pos, self.hand_dof_upper_limits[env_ids]), self.hand_dof_lower_limits[env_ids])
 
         dof_vel_noise = sample_uniform(-1.0, 1.0, (len(env_ids), self.num_hand_dofs), device=self.device)
         dof_vel = self.hand.data.default_joint_vel[env_ids] + self.cfg.reset_dof_vel_noise * dof_vel_noise
@@ -315,7 +364,8 @@ class EvolutionGraspEnv(DirectRLEnv):
         object_default_state[:, 7:] = torch.zeros_like(self.grasp_object.data.default_root_state[env_ids, 7:])
         self.grasp_object.write_root_state_to_sim(object_default_state, env_ids)
         # The fall check is relative to the actual dynamic reset pose.
-        self.in_hand_pos[env_ids] = object_default_state[:, 0:3]
+        # Reward and termination compare positions in the environment frame.
+        self.in_hand_pos[env_ids] = object_default_state[:, 0:3] - self.scene.env_origins[env_ids]
 
         self.successes[env_ids] = 0
         self.success_streaks[env_ids] = 0

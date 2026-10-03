@@ -16,12 +16,12 @@ from isaaclab_tasks.evolution_tasks.current_right_hand.current_right_hand_cfg im
 EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution_PC"))
 _THUMB_JOINTS = ("link_0_0_to_link_1_0", "link_1_0_to_link_1_1", "link_1_1_to_link_1_2")
 _FAST_LONG_FINGER_JOINTS = (
-    "link_0_0_to_link_2_0", "link_2_0_to_link_2_1", "link_2_1_to_link_2_2", "link_2_2_to_link_2_3",
-    "link_0_0_to_link_3_0", "link_3_0_to_link_3_1", "link_3_1_to_link_3_2", "link_3_2_to_link_3_3",
+    "link_2_mcp_spread_joint", "link_0_0_to_link_2_0", "link_2_0_to_link_2_1", "link_2_1_to_link_2_2",
+    "link_3_mcp_spread_joint", "link_0_0_to_link_3_0", "link_3_0_to_link_3_1", "link_3_1_to_link_3_2",
 )
 _SLOW_LONG_FINGER_JOINTS = (
-    "link_0_0_to_link_4_0", "link_4_0_to_link_4_1", "link_4_1_to_link_4_2", "link_4_2_to_link_4_3",
-    "link_0_0_to_link_5_0", "link_5_0_to_link_5_1", "link_5_1_to_link_5_2", "link_5_2_to_link_5_3",
+    "link_4_mcp_spread_joint", "link_0_0_to_link_4_0", "link_4_0_to_link_4_1", "link_4_1_to_link_4_2",
+    "link_5_mcp_spread_joint", "link_0_0_to_link_5_0", "link_5_0_to_link_5_1", "link_5_1_to_link_5_2",
 )
 _BRANCH_STIFFNESS = {name: 80.0 for name in _THUMB_JOINTS}
 _BRANCH_STIFFNESS.update({name: 35.0 for name in _FAST_LONG_FINGER_JOINTS})
@@ -44,29 +44,25 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
         "link_0_0_to_link_1_0",
         "link_1_0_to_link_1_1",
         "link_1_1_to_link_1_2",
-        "link_0_0_to_link_2_0",
+        "link_2_mcp_spread_joint", "link_0_0_to_link_2_0",
         "link_2_0_to_link_2_1",
         "link_2_1_to_link_2_2",
-        "link_2_2_to_link_2_3",
-        "link_0_0_to_link_3_0",
+        "link_3_mcp_spread_joint", "link_0_0_to_link_3_0",
         "link_3_0_to_link_3_1",
         "link_3_1_to_link_3_2",
-        "link_3_2_to_link_3_3",
-        "link_0_0_to_link_4_0",
+        "link_4_mcp_spread_joint", "link_0_0_to_link_4_0",
         "link_4_0_to_link_4_1",
         "link_4_1_to_link_4_2",
-        "link_4_2_to_link_4_3",
-        "link_0_0_to_link_5_0",
+        "link_5_mcp_spread_joint", "link_0_0_to_link_5_0",
         "link_5_0_to_link_5_1",
         "link_5_1_to_link_5_2",
-        "link_5_2_to_link_5_3",
     ]
     fingertip_body_names = [
         "link_1_2",
-        "link_2_3",
-        "link_3_3",
-        "link_4_3",
-        "link_5_3",
+        "link_2_2",
+        "link_3_2",
+        "link_4_2",
+        "link_5_2",
     ]
 
     decimation = 2
@@ -79,21 +75,41 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
         dt=1 / 120,
         render_interval=decimation,
         physics_material=RigidBodyMaterialCfg(static_friction=1.0, dynamic_friction=1.0),
-        physx=PhysxCfg(bounce_threshold_velocity=0.2),
+        physx=PhysxCfg(bounce_threshold_velocity=0.2, gpu_max_rigid_patch_count=2**20),
     )
 
     robot_cfg: ArticulationCfg = BRANCH_HAND_CFG.replace(prim_path="/World/envs/env_.*/Robot").replace(
         init_state=ArticulationCfg.InitialStateCfg(
-            pos=(0.0, 0.0, 0.36),
+            # Keep the hand visibly above the work object; reset places the
+            # branch relative to the proximal phalanges below this frame.
+            pos=(0.0, 0.0, 0.40),
             rot=(0.5, 0.5, 0.5, 0.5),
-            joint_pos={".*": 0.0},
+            # Start from an open opposition pre-grasp.  The thumb first rotates
+            # across the palm; long fingers then close from the other side.
+            # This relation exists for every reset and is not camera-dependent.
+            joint_pos={
+                "link_1_thumb_spread_joint": -0.80,
+                "link_0_0_to_link_1_0": 0.30,
+                "link_2_mcp_spread_joint": 0.0,
+                "link_3_mcp_spread_joint": 0.0,
+                "link_4_mcp_spread_joint": 0.0,
+                "link_5_mcp_spread_joint": 0.0,
+                "link_0_0_to_link_2_0": 0.55,
+                "link_0_0_to_link_3_0": 0.55,
+                "link_0_0_to_link_4_0": 0.55,
+                "link_0_0_to_link_5_0": 0.55,
+                "link_2_0_to_link_2_1": 0.55,
+                "link_3_0_to_link_3_1": 0.55,
+                "link_4_0_to_link_4_1": 0.55,
+                "link_5_0_to_link_5_1": 0.55,
+            },
         )
     )
 
     branch_cfg: RigidObjectCfg = RigidObjectCfg(
         prim_path="/World/envs/env_.*/branch",
         spawn=sim_utils.CylinderCfg(
-            radius=0.012,
+            radius=0.009,
             height=0.18,
             # The branch-mounted contact sensor requires PhysX contact reporting.
             activate_contact_sensors=True,
@@ -120,13 +136,9 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
     branch_contact_sensor_cfg: ContactSensorCfg = ContactSensorCfg(
         prim_path="/World/envs/env_.*/branch",
         # Keep contact channels separate so palm/root collisions cannot count as a grasp.
-        filter_prim_paths_expr=[
-            "/World/envs/env_.*/Robot/link_1_2",
-            "/World/envs/env_.*/Robot/link_2_3",
-            "/World/envs/env_.*/Robot/link_3_3",
-            "/World/envs/env_.*/Robot/link_4_3",
-            "/World/envs/env_.*/Robot/link_5_3",
-        ],
+        # Replaced at runtime with all rigid bodies of the surviving
+        # morphology. Keeping this list nonempty is required by ContactSensor.
+        filter_prim_paths_expr=["/World/envs/env_.*/Robot/link_1_2"],
     )
 
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=32, env_spacing=1.5, replicate_physics=True)
@@ -136,6 +148,16 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
     curriculum_stage = os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower()
     use_easy_curriculum = curriculum_stage == "stage1"
     branch_contact_force_threshold = 0.4 if use_easy_curriculum else 1.0
+    # Define one shared local workspace for all morphologies: the center of
+    # the index, middle, and ring proximal phalanges, palm-facing.
+    branch_support_body_names = ("link_2_0", "link_3_0", "link_4_0")
+    branch_palm_normal_local = (0.0, -1.0, 0.0)
+    branch_radius = 0.009
+    # Increase the palm-side drop so the branch sits between the thumb and
+    # long fingers instead of intersecting the proximal finger shelf.
+    # Move the branch closer to the two-sided pinch plane so thumb and long
+    # fingers can establish contact in the same closing phase.
+    branch_palm_clearance = 0.010
     # A branch wrap must use the thumb and at least two long fingers; a single
     # incidental fingertip contact is not a meaningful grasp.
     min_long_finger_contacts = 2
@@ -144,7 +166,7 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
     require_pose_stability = not use_easy_curriculum
     branch_success_hold_steps = 5 if use_easy_curriculum else 15
     success_reward = 1000.0
-    reset_dof_pos_noise = 0.05
+    reset_dof_pos_noise = 0.0 if os.environ.get("EVOLUTION_CURRICULUM_STAGE", "stage2").lower() == "stage1" else 0.02
     reset_dof_vel_noise = 0.0
     act_moving_average = 0.4
     # Maximum difference between any long finger's average normalized flexion

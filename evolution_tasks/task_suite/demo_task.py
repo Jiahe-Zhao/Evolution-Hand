@@ -109,7 +109,7 @@ def main():
     if args.task == "grasp":
         # Pre-grasp: curl all fingers before physics starts, with the ball in
         # the finger-pad envelope rather than resting on the distal-link backs.
-        cfg.robot_cfg.init_state.joint_pos = {".*": 0.35}
+        cfg.robot_cfg.init_state.joint_pos = {".*": 0.0}
         cfg.grasp_object_cfg.init_state.pos = (0.010, 0.005, 0.365)
     elif args.task == "branch":
         cfg.branch_cfg.init_state.pos = (0.0, 0.012, 0.30)
@@ -135,15 +135,6 @@ def main():
     locked_base_action_indices = []
     locked_base_actions = None
     if args.task == "grasp":
-        support_links = ("link_2_0", "link_3_0", "link_4_0")
-        proximal_support_body_ids = [env.unwrapped.hand.body_names.index(name) for name in support_links]
-        support_center_w = env.unwrapped.hand.data.body_pos_w[demo_env_index, proximal_support_body_ids].mean(dim=0)
-        object_state = env.unwrapped.grasp_object.data.default_root_state[demo_env_index : demo_env_index + 1].clone()
-        object_state[:, 0:3] = support_center_w + torch.tensor([0.0, 0.0, 0.030], device=env.unwrapped.device)
-        object_state[:, 7:] = 0.0
-        demo_env_ids = torch.tensor([demo_env_index], dtype=torch.long, device=env.unwrapped.device)
-        env.unwrapped.grasp_object.write_root_state_to_sim(object_state, demo_env_ids)
-
         base_joint_names = ("link_0_0_to_link_2_0", "link_0_0_to_link_3_0", "link_0_0_to_link_4_0", "link_0_0_to_link_5_0")
         joint_ids = env.unwrapped.actuated_dof_indices
         locked_base_action_indices = [joint_ids.index(env.unwrapped.hand.joint_names.index(name)) for name in base_joint_names]
@@ -244,8 +235,8 @@ def main():
                 "task": args.task,
                 "success_rule": f"reward >= {args.success_reward}",
                 "successes": successes,
-                "scripted_successes": scripted_successes,
-                "scripted_success_rule": "two proximal support links within 0.06 m, vertical force >= 7 N, held for 10 steps",
+                "scripted_successes": scripted_successes if args.task == "grasp" else None,
+                "scripted_success_rule": "Grasp proximal shelf hold >= 10 steps" if args.task == "grasp" else None,
                 "max_reward": max_reward,
                 "steps_executed": len(history),
                 "history": history,
