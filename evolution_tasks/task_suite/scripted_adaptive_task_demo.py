@@ -832,8 +832,9 @@ def main(task: str) -> None:
                     action[:, 20:23] = torch.clamp(
                         (desired_root - neutral_root) / raw.wrist_action_scale, -1.0, 1.0
                     )
-            observation, reward, terminated, truncated, _ = env.step(action)
-            bc_observations.append(_bc_array(observation))
+            observation_before = raw._get_observations()["policy"][0].detach().cpu().numpy().astype(np.float32)
+            _, reward, terminated, truncated, _ = env.step(action)
+            bc_observations.append(observation_before)
             bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
             raw._compute_intermediate_values()
             entry = {"step": step, "reward": float(reward[0].item()),
@@ -903,7 +904,7 @@ def main(task: str) -> None:
             writer.close()
     bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations_after_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions))
+        np.savez_compressed(bc_path, observations_before_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions), actions_control_fingers=np.full(len(bc_actions), task == "forage"))
     summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")

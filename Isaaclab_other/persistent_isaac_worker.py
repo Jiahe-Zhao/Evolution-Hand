@@ -66,8 +66,8 @@ class PersistentIsaacWorker:
         tmp_root,
         startup_timeout=600,
         request_timeout=7200,
-        stall_timeout=600,
-        max_requests=3,
+        stall_timeout=900,
+        max_requests=0,
         request_retries=1,
     ):
         self.slot_id = slot_id
@@ -204,10 +204,18 @@ class PersistentIsaacWorker:
         max_iterations,
         checkpoint_interval,
         curriculum_stage,
+        inherited_checkpoint_path=None,
+        bc_dataset_path=None,
     ):
         last_error = None
         for attempt in range(self.request_retries + 1):
             self._start()
+            print(
+                f"[WORKER] slot={self.slot_id} task={task_name} "
+                f"num_envs={num_envs} stage={curriculum_stage} "
+                f"request={self.requests_served + 1}",
+                flush=True,
+            )
             request_id = f"{int(time.time() * 1_000_000)}_{os.getpid()}"
             response_path = os.path.join(self.request_dir, f"{request_id}.response.json")
             _atomic_write_json(
@@ -222,6 +230,8 @@ class PersistentIsaacWorker:
                     "max_iterations": max_iterations,
                     "checkpoint_interval": checkpoint_interval,
                     "curriculum_stage": curriculum_stage,
+                    "inherited_checkpoint_path": inherited_checkpoint_path,
+                    "bc_dataset_path": bc_dataset_path,
                 },
             )
             deadline = time.time() + self.request_timeout
@@ -230,7 +240,12 @@ class PersistentIsaacWorker:
             try:
                 while time.time() < deadline:
                     if os.path.exists(response_path):
-                        response = _load_json(response_path)
+                        try:
+                            response = _load_json(response_path)
+                        except (OSError, json.JSONDecodeError) as error:
+                            raise PersistentIsaacWorkerError(
+                                f"Worker wrote an invalid response for task={task_name}: {error}"
+                            ) from error
                         os.remove(response_path)
                         if not response.get("ok"):
                             raise PersistentIsaacWorkerError(

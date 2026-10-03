@@ -7,11 +7,13 @@ import fcntl
 import gc
 import glob
 import importlib
+import importlib.util
 import json
 import math
 import os
 import random
 import re
+import shlex
 import time
 import traceback
 
@@ -22,6 +24,18 @@ parser = argparse.ArgumentParser(description="Persistent IsaacLab evolution work
 parser.add_argument("--request-dir", required=True)
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
+
+# One Kit worker avoids the observed 4096-env PhysX initialization failure.
+isaac_task_threads = int(os.environ.get("EVOLUTION_ISAAC_TASK_THREADS", "1"))
+if isaac_task_threads < 1:
+    raise ValueError("EVOLUTION_ISAAC_TASK_THREADS must be positive")
+thread_setting = "--/plugins/carb.tasking.plugin/threadCount"
+kit_tokens = shlex.split(args_cli.kit_args or "")
+if any(token == thread_setting or token.startswith(thread_setting + "=") for token in kit_tokens):
+    raise ValueError("Set Kit thread count through EVOLUTION_ISAAC_TASK_THREADS only")
+kit_tokens.append(f"{thread_setting}={isaac_task_threads}")
+args_cli.kit_args = shlex.join(kit_tokens)
+print(f"[WORKER] Kit task threads: {isaac_task_threads}", flush=True)
 
 # Isaac Sim must start before importing the rest of IsaacLab.
 app_launcher = AppLauncher(args_cli)
@@ -62,8 +76,11 @@ HAND_MODULES = (
 )
 KEEP_LATEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_LATEST_CHECKPOINTS", "1")))
 KEEP_BEST_CHECKPOINTS = max(1, int(os.environ.get("EVOLUTION_KEEP_BEST_CHECKPOINTS", "1")))
-CHECKPOINT_REWARD_PATTERN = re.compile(r"rew_([-+]?\d*\.?\d+|\d+)")
+CHECKPOINT_REWARD_PATTERN = re.compile(r"rew_+([-+]?(?:\d+(?:\.\d*)?|\.\d+))")
 CHECKPOINT_EPOCH_PATTERN = re.compile(r"_ep_(\d+)")
+SCENE_INITIALIZATION_LOCK_TIMEOUT_SECONDS = max(
+    30, int(os.environ.get("EVOLUTION_ISAAC_SCENE_INIT_LOCK_TIMEOUT", "180"))
+)
 
 
 @contextmanager
@@ -78,6 +95,11 @@ def _scene_initialization_lock():
                 fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
                 break
             except BlockingIOError:
+                if waited_seconds >= SCENE_INITIALIZATION_LOCK_TIMEOUT_SECONDS:
+                    raise TimeoutError(
+                        "Timed out waiting for shared scene initialization lock "
+                        f"after {SCENE_INITIALIZATION_LOCK_TIMEOUT_SECONDS}s"
+                    )
                 if waited_seconds % 15 == 0:
                     print("[WORKER] Waiting for shared scene initialization lock", flush=True)
                 time.sleep(1)
@@ -105,6 +127,41 @@ def _reload_generated_configs(task_name):
         importlib.reload(module)
 
 
+def _load_slot_hand_cfg(env_cfg):
+    """Bind this request to its generated morphology, not an import-cache copy."""
+    evolution_root = os.environ.get("EVOLUTION_ROOT", os.path.expanduser("~/Evolution_PC"))
+    slot_id = int(os.environ.get("EVOLUTION_PARALLEL_SLOT", "0"))
+    cfg_path = os.path.join(
+        evolution_root,
+        "parallel_eval_slots",
+        f"slot_{slot_id}",
+        "python_overrides",
+        "isaaclab_tasks",
+        "evolution_tasks",
+        "current_right_hand",
+        "current_right_hand_cfg.py",
+    )
+    spec = importlib.util.spec_from_file_location(f"evolution_hand_slot_{slot_id}", cfg_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generated morphology config: {cfg_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    hand_cfg = module.CURRENT_HAND_CFG
+    return hand_cfg, module.MORPHOLOGY_CONTRACT
+
+
+def _distal_body_name(finger_id, available_joints):
+    """Resolve the furthest surviving link body for one evolved finger."""
+    from policy_inheritance import distal_body_name
+    return distal_body_name(finger_id, available_joints)
+
+
+def _adapt_task_config_to_morphology(env_cfg, morphology_contract):
+    """Remove task-template references to joints or tips removed by evolution."""
+    from policy_inheritance import adapt_task_config
+    return adapt_task_config(env_cfg, morphology_contract['all_actuated_joints'])
+
+
 def _prepare_clean_stage():
     """Reset the stage after the previous task while retaining the Isaac application."""
     SimulationContext.clear_instance()
@@ -129,12 +186,29 @@ def _checkpoint_epoch(path):
 
 
 def _prune_run_checkpoints(run_dir):
+    """Keep exactly the best policy and newest resumable policy."""
     nn_dir = os.path.join(run_dir, "nn")
     checkpoints = glob.glob(os.path.join(nn_dir, "*.pth")) if os.path.isdir(nn_dir) else []
     if len(checkpoints) <= 1:
         return
-    latest = sorted(checkpoints, key=os.path.getmtime, reverse=True)[:KEEP_LATEST_CHECKPOINTS]
-    best = sorted(checkpoints, key=_checkpoint_reward, reverse=True)[:KEEP_BEST_CHECKPOINTS]
+
+    def _stable_name(path):
+        return "__" not in os.path.basename(path)
+
+    latest = sorted(
+        checkpoints,
+        key=lambda path: (_checkpoint_epoch(path), _stable_name(path), os.path.getmtime(path)),
+        reverse=True,
+    )[:KEEP_LATEST_CHECKPOINTS]
+    named_best = os.path.join(nn_dir, "evolution_task.pth")
+    if os.path.exists(named_best):
+        best = [named_best]
+    else:
+        best = sorted(
+            checkpoints,
+            key=lambda path: (_checkpoint_reward(path), _stable_name(path), os.path.getmtime(path)),
+            reverse=True,
+        )[:KEEP_BEST_CHECKPOINTS]
     for path in checkpoints:
         if path not in set(latest) | set(best):
             os.remove(path)
@@ -153,6 +227,17 @@ def _run_training(request):
     _reload_generated_configs(task_name)
 
     env_cfg = load_cfg_from_registry(task_name, "env_cfg_entry_point")
+    hand_cfg, morphology_contract = _load_slot_hand_cfg(env_cfg)
+    resolved_tips = _adapt_task_config_to_morphology(env_cfg, morphology_contract)
+    env_cfg.robot_cfg = hand_cfg.replace(prim_path=env_cfg.robot_cfg.prim_path).replace(
+        init_state=env_cfg.robot_cfg.init_state
+    )
+    print(
+        "[MORPHOLOGY] "
+        f"configured_joints={len(morphology_contract['all_actuated_joints'])} "
+        f"resolved_tips={resolved_tips}",
+        flush=True,
+    )
     agent_cfg = load_cfg_from_registry(task_name, "rl_games_cfg_entry_point")
     agent_cfg = copy.deepcopy(agent_cfg.to_dict() if hasattr(agent_cfg, "to_dict") else agent_cfg)
     env_cfg.scene.num_envs = int(request["num_envs"])
@@ -208,12 +293,20 @@ def _run_training(request):
     clip_actions = agent_cfg["params"]["env"].get("clip_actions", math.inf)
     env = None
     runner = None
+    run_dir = os.path.join(log_root, run_name)
     try:
         # Two 4096-env Isaac processes may train concurrently, but their
         # native USD import, PhysX cloning, and first runner initialization
         # must not overlap.
         with _scene_initialization_lock():
             env = gym.make(task_name, cfg=env_cfg)
+            actual_joints = list(env.unwrapped.hand.joint_names)
+            print(
+                "[MORPHOLOGY] "
+                f"urdf_joints={len(morphology_contract['all_actuated_joints'])} "
+                f"physx_joints={len(actual_joints)} names={actual_joints}",
+                flush=True,
+            )
             if isinstance(env.unwrapped, DirectMARLEnv):
                 env = multi_agent_to_single_agent(env)
             env = RlGamesVecEnvWrapper(env, rl_device, clip_obs, clip_actions)
@@ -225,11 +318,31 @@ def _run_training(request):
             runner = Runner(IsaacAlgoObserver())
             runner.load(agent_cfg)
             runner.reset()
+            from policy_inheritance import TASKS, save_contract, train_inherited
+            contract = save_contract(run_dir, task_name, env.unwrapped) if task_name in TASKS else None
         run_args = {"train": True, "play": False}
         if resume_path:
             run_args["checkpoint"] = resume_path
-        runner.run(run_args)
-        run_dir = os.path.join(log_root, run_name)
+        bc_dataset = request.get('bc_dataset_path')
+        if not resume_path and request.get('inherited_checkpoint_path'):
+            if contract is None:
+                raise ValueError('Policy inheritance is supported for the four evolution tasks only')
+            agent = train_inherited(runner, request['inherited_checkpoint_path'], contract, run_dir, start_training=not bc_dataset)
+            if bc_dataset:
+                if not os.path.isfile(bc_dataset):
+                    raise FileNotFoundError(f'BC dataset missing: {bc_dataset}')
+                from policy_inheritance import train_behavior_cloning
+                train_behavior_cloning(agent, bc_dataset, run_dir, epochs=int(os.environ.get('EVOLUTION_BC_EPOCHS', '10')))
+                agent.train()
+        elif bc_dataset:
+            if not os.path.isfile(bc_dataset):
+                raise FileNotFoundError(f'BC dataset missing: {bc_dataset}')
+            from policy_inheritance import train_behavior_cloning
+            agent = runner.algo_factory.create(runner.algo_name, base_name='run', params=runner.params)
+            train_behavior_cloning(agent, bc_dataset, run_dir, epochs=int(os.environ.get('EVOLUTION_BC_EPOCHS', '10')))
+            agent.train()
+        else:
+            runner.run(run_args)
         os.makedirs(os.path.join(run_dir, "finished"), exist_ok=True)
         _prune_run_checkpoints(run_dir)
         return {"run_dir": run_dir}
@@ -240,6 +353,7 @@ def _run_training(request):
         env = None
         gc.collect()
         torch.cuda.empty_cache()
+        _prune_run_checkpoints(run_dir)
 
 
 def main():
@@ -270,7 +384,11 @@ def main():
             print(f"[WORKER] Completed request {request_id}: {request['task']}", flush=True)
         except Exception as error:  # noqa: BLE001
             response = {"ok": False, "error": str(error), "traceback": traceback.format_exc()}
-            print(f"[WORKER] Request {request.get('id', 'unknown')} failed: {error}", flush=True)
+            print(
+                f"[WORKER] Request {request.get('id', 'unknown')} failed: {error}\n"
+                f"{response['traceback']}",
+                flush=True,
+            )
         _atomic_write_json(os.path.join(request_dir, f"{request.get('id', 'unknown')}.response.json"), response)
         os.remove(working_path)
     simulation_app.close()

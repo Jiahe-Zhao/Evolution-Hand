@@ -698,6 +698,7 @@ def _run_scripted_preflight(child, experiment_name):
             # A force-based scripted success is not enough: reject/record
             # trajectories that penetrate the generated collision solids.
             command.append("--audit_mesh")
+            command.append("--cartesian_replay")
         if task_name != "grasp":
             command.extend(["--min_video_steps", "1"])
         log_path = os.path.join(task_root, "preflight.log")
@@ -918,6 +919,18 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                     seed_parent, batch_task, EVOLUTION_LOG_ROOT)
                                 if inherited_checkpoint is None:
                                     raise FileNotFoundError(f'Seed policy checkpoint missing: {batch_task}')
+                    bc_dataset_path = None
+                    if current_generation == 0 and batch_task == 'Isaac-EvolutionHand-Grasp-v0':
+                        preflight = child.get('metadata', {}).get('scripted_preflight', {})
+                        metrics_path = preflight.get('tasks', {}).get('grasp', {}).get('metrics_path')
+                        trace_path = os.path.splitext(metrics_path)[0] + '.trace.npz' if metrics_path else None
+                        if trace_path and os.path.isfile(trace_path):
+                            try:
+                                trace = np.load(trace_path)
+                                if trace['actions_control_fingers'].all() and bool(preflight.get('tasks', {}).get('grasp', {}).get('passed')):
+                                    bc_dataset_path = trace_path
+                            except Exception:
+                                bc_dataset_path = None
                     try:
                         current_score = evaluation(
                             child["urdf_info"],
@@ -939,6 +952,7 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                             all_evaluation_tasks=task_names,
                             inherited_checkpoint_path=inherited_checkpoint,
                             parent_individual_id=parent.get('id'),
+                            bc_dataset_path=bc_dataset_path,
                         )
                     except Exception as error:  # noqa: BLE001
                         evaluation_error = f"{type(error).__name__}: {error}"

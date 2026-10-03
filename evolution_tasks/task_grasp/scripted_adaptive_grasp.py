@@ -805,8 +805,9 @@ def main() -> None:
                 for finger_index in range(NUM_FINGERS):
                     if bool(active_contacts[finger_index]):
                         action[:, 3 * finger_index:3 * finger_index + 3] = 0.0
-            observation, reward, terminated, truncated, _ = env.step(action)
-            bc_observations.append(_bc_array(observation))
+            observation_before = raw_env._get_observations()["policy"][0].detach().cpu().numpy().astype(np.float32)
+            _, reward, terminated, truncated, _ = env.step(action)
+            bc_observations.append(observation_before)
             bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
             forces = raw_env.full_hand_contact_forces[0].detach().cpu().tolist()
             mesh_result = None
@@ -863,7 +864,7 @@ def main() -> None:
 
     bc_path = Path(args.metrics).with_suffix('.trace.npz')
     if bc_observations:
-        np.savez_compressed(bc_path, observations_after_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions))
+        np.savez_compressed(bc_path, observations_before_step=np.asarray(bc_observations), submitted_actions=np.asarray(bc_actions), actions_control_fingers=np.full(len(bc_actions), bool(args.cartesian_replay)))
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",

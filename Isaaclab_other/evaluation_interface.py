@@ -51,14 +51,30 @@ ISAACLAB_POLL_INTERVAL_SECONDS = max(5, int(os.environ.get("EVOLUTION_PROCESS_PO
 ISAACLAB_REUSE_PROCESS = os.environ.get("EVOLUTION_REUSE_ISAAC_PROCESS", "0").lower() in {"1", "true", "yes", "on"}
 ISAACLAB_WORKER_STARTUP_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STARTUP_TIMEOUT", "600")))
 ISAACLAB_WORKER_REQUEST_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_REQUEST_TIMEOUT", "7200")))
-ISAACLAB_WORKER_STALL_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STALL_TIMEOUT", "600")))
-ISAACLAB_WORKER_MAX_REQUESTS = max(0, int(os.environ.get("EVOLUTION_ISAAC_WORKER_MAX_REQUESTS", "3")))
+# A complete 4096-env request can spend several minutes in native PhysX/USD
+# cleanup without emitting Python logs. Keep the worker alive unless it is
+# truly stalled, and only recycle it when a caller explicitly requests a cap.
+ISAACLAB_WORKER_STALL_TIMEOUT = max(60, int(os.environ.get("EVOLUTION_ISAAC_WORKER_STALL_TIMEOUT", "900")))
+ISAACLAB_WORKER_MAX_REQUESTS = max(0, int(os.environ.get("EVOLUTION_ISAAC_WORKER_MAX_REQUESTS", "0")))
 ISAACLAB_WORKER_REQUEST_RETRIES = max(0, int(os.environ.get("EVOLUTION_ISAAC_WORKER_REQUEST_RETRIES", "1")))
 RL_LOG_GROUP = "evolution_task"
 STONEGRIND_TASK_NAME = "Isaac-EvolutionHand-StoneGrind-v0"
 PARALLEL_SLOT_ROOT = os.path.join(EVOLUTION_ROOT, "parallel_eval_slots")
 _WORKERS = {}
 _WORKERS_REGISTERED = False
+
+
+def _read_completed_task_score(run_dir):
+    """Return a finite sparse-task score for a completed worker request."""
+    score = get_reward_from_run_dir(run_dir)
+    if score is None:
+        # RL-Games may write only `rew_-inf` during a very short or entirely
+        # unsuccessful run.  The worker has completed correctly; score it as
+        # the task's neutral sparse reward instead of marking the child failed.
+        print(f"[WARN] No finite reward checkpoint in completed run {run_dir}; using score=0.0.")
+        return 0.0
+    return float(score)
+
 
 def _fitness_from_task_scores(task_scores):
     """Prioritize tasks that have not produced a sparse-success score yet.
@@ -356,6 +372,15 @@ def _close_workers():
         worker.close()
 
 
+def close_evaluation_workers():
+    """Restart Isaac workers at an explicit evolution boundary.
+
+    The evolution loop owns the boundary decision; keeping this small public
+    wrapper avoids exposing the worker registry to the outer loop.
+    """
+    _close_workers()
+
+
 def _worker_for_slot(slot_id, python_override_root):
     global _WORKERS_REGISTERED
     worker = _WORKERS.get(slot_id)
@@ -462,9 +487,15 @@ def evaluation(
     max_iterations=None,
     slot_id=0,
     curriculum_stage=None,
+    all_evaluation_tasks=None,
+    inherited_checkpoint_path=None,
+    parent_individual_id=None,
+    bc_dataset_path=None,
 ):
-    ordered_tasks = sorted(evaluation_tasks)
-    if not ordered_tasks:
+    requested_tasks = sorted(evaluation_tasks)
+    ordered_tasks = sorted(all_evaluation_tasks or evaluation_tasks)
+    stage_name = (curriculum_stage or "default").lower()
+    if not requested_tasks:
         raise ValueError("evaluation_tasks is empty")
     if not individual_id:
         raise ValueError("individual_id is required for resumable evaluation")
@@ -513,7 +544,23 @@ def evaluation(
             "run_names": {},
             "current_task": None,
             "max_iterations": max_iterations,
+            "curriculum_stage": stage_name,
         }
+        if evaluation_state_path:
+            _atomic_write_json(evaluation_state_path, state)
+
+    state["ordered_tasks"] = ordered_tasks
+
+    # Task scores are stage-local evidence. Never let a completed stage1 task
+    # make stage2 appear complete merely because both stages use the same env
+    # id or iteration count.
+    if state.get("curriculum_stage") != stage_name:
+        state["status"] = "running"
+        state["task_scores"] = {}
+        state["current_task"] = None
+        state["error"] = None
+        state["curriculum_stage"] = stage_name
+        state["max_iterations"] = max_iterations
         if evaluation_state_path:
             _atomic_write_json(evaluation_state_path, state)
 
@@ -539,10 +586,9 @@ def evaluation(
 
     task_scores = dict(state.get("task_scores", {}))
     run_names = dict(state.get("run_names", {}))
-    stage_name = (curriculum_stage or "default").lower()
     effective_max_iterations = max_iterations if max_iterations is not None else state.get("max_iterations")
 
-    for current_task in ordered_tasks:
+    for current_task in requested_tasks:
         if current_task in task_scores:
             continue
 
@@ -569,7 +615,7 @@ def evaluation(
             _atomic_write_json(evaluation_state_path, state)
 
         if check_finished_folder_exists_in_run_dir(run_dir):
-            score = get_reward_from_run_dir(run_dir)
+            score = _read_completed_task_score(run_dir)
         else:
             checkpoint_path = _find_latest_checkpoint(run_dir)
             # Stage two has a new run directory, but starts from the policy
@@ -599,7 +645,15 @@ def evaluation(
                 slot_id=slot_id,
                 python_override_root=slot_paths["override_root"],
                 curriculum_stage=curriculum_stage,
+                inherited_checkpoint_path=inherited_checkpoint_path if checkpoint_path is None else None,
+                bc_dataset_path=bc_dataset_path if checkpoint_path is None else None,
             )
+            state.setdefault('policy_initialization', {})[run_key] = {
+                'mode': 'resume' if checkpoint_path else ('inherit' if inherited_checkpoint_path else 'scratch'),
+                'checkpoint': checkpoint_path or inherited_checkpoint_path,
+                'parent_individual_id': parent_individual_id,
+                'bc_dataset': bc_dataset_path if checkpoint_path is None else None,
+            }
 
         task_scores[current_task] = score
         state["task_scores"] = task_scores
@@ -608,7 +662,7 @@ def evaluation(
             _atomic_write_json(evaluation_state_path, state)
 
     average_score = _fitness_from_task_scores(task_scores)
-    state["status"] = "completed"
+    state["status"] = "completed" if set(ordered_tasks).issubset(task_scores) else "running"
     state["task_scores"] = task_scores
     if evaluation_state_path:
         _atomic_write_json(evaluation_state_path, state)
@@ -646,6 +700,8 @@ def run_isaaclab_simulation(
     slot_id=0,
     python_override_root=None,
     curriculum_stage=None,
+    inherited_checkpoint_path=None,
+    bc_dataset_path=None,
 ):
     effective_max_iterations = max_iterations
     if effective_max_iterations is None and ISAACLAB_MAX_ITERATIONS:
@@ -662,18 +718,23 @@ def run_isaaclab_simulation(
             max_iterations=effective_max_iterations,
             checkpoint_interval=ISAACLAB_CHECKPOINT_INTERVAL,
             curriculum_stage=curriculum_stage,
+            inherited_checkpoint_path=inherited_checkpoint_path,
+            bc_dataset_path=bc_dataset_path,
         )
         if not run_name:
             return float("-4000")
         if not os.path.isdir(run_dir):
             raise RuntimeError(f"Persistent worker finished without creating run directory: {run_dir}")
         if check_finished_folder_exists_in_run_dir(run_dir):
-            return get_reward_from_run_dir(run_dir)
+            return _read_completed_task_score(run_dir)
         reward = get_reward_from_run_dir(run_dir)
         if reward is not None:
             print("Finished marker missing, but reward checkpoint exists. Using checkpoint reward directly.")
             return reward
         raise RuntimeError(f"Persistent worker finished without a reward: {run_dir}")
+
+    if bc_dataset_path:
+        raise RuntimeError('BC initialization requires the persistent Isaac worker')
 
     next_checkpoint_path = checkpoint_path if checkpoint_path and os.path.exists(checkpoint_path) else None
     restart_count = 0
@@ -695,6 +756,8 @@ def run_isaaclab_simulation(
             command.extend(["--run_name", run_name])
         if next_checkpoint_path and os.path.exists(next_checkpoint_path):
             command.extend(["--checkpoint", next_checkpoint_path])
+        elif inherited_checkpoint_path:
+            command.extend(["--inherit_checkpoint", inherited_checkpoint_path])
         if effective_max_iterations is not None:
             command.extend(["--max_iterations", str(effective_max_iterations)])
         if ISAACLAB_CHECKPOINT_INTERVAL > 0:
@@ -739,7 +802,7 @@ def run_isaaclab_simulation(
                 last_checkpoint_mtime = latest_checkpoint_mtime
                 last_progress_time = time.time()
 
-            reward = get_reward_from_run_dir(run_dir) if run_dir else None
+            reward = _read_completed_task_score(run_dir) if run_dir else None
             if return_code is not None:
                 break
 
@@ -769,10 +832,10 @@ def run_isaaclab_simulation(
         print("Simulation finished.")
 
         if run_dir and check_finished_folder_exists_in_run_dir(run_dir):
-            score = get_reward_from_run_dir(run_dir)
+            score = _read_completed_task_score(run_dir)
             return score
 
-        reward = get_reward_from_run_dir(run_dir) if run_dir else None
+        reward = _read_completed_task_score(run_dir) if run_dir else None
         if reward is not None:
             print("Finished marker missing, but reward checkpoint exists. Using checkpoint reward directly.")
             return reward
@@ -784,7 +847,7 @@ def run_isaaclab_simulation(
             and latest_epoch is not None
             and latest_epoch >= effective_max_iterations
         ):
-            reward = get_reward_from_run_dir(run_dir) if run_dir else None
+            reward = _read_completed_task_score(run_dir) if run_dir else None
             if reward is not None:
                 print("Latest checkpoint reached max_iterations. Using checkpoint reward directly.")
                 return reward
@@ -836,9 +899,9 @@ def run_isaaclab_simulation(
 
     run_dir = _task_run_dir(run_name)
     if check_finished_folder_exists_in_run_dir(run_dir):
-        score = get_reward_from_run_dir(run_dir)
+        score = _read_completed_task_score(run_dir)
         return score
-    reward = get_reward_from_run_dir(run_dir)
+    reward = _read_completed_task_score(run_dir)
     if reward is not None:
         print("Finished marker missing, but reward checkpoint exists. Using checkpoint reward directly.")
         return reward
