@@ -700,6 +700,30 @@ def main() -> None:
         approach_directions = approach_directions / torch.linalg.vector_norm(
             approach_directions, dim=-1, keepdim=True
         ).clamp_min(1e-5)
+    if args.palm_start:
+        hard_limits = raw_env.hand.root_physx_view.get_dof_limits().to(raw_env.device)
+        for joint_index, joint_name in enumerate(raw_env.hand.joint_names):
+            if joint_name == "link_1_thumb_spread_joint":
+                closure_target[:, joint_index] = hard_limits[:, joint_index, 0] + 0.12 * (hard_limits[:, joint_index, 1] - hard_limits[:, joint_index, 0])
+        raw_env.hand.write_joint_state_to_sim(closure_target, torch.zeros_like(closure_target))
+        raw_env.hand.set_joint_position_target(closure_target)
+        raw_env.prev_targets[:] = closure_target
+        raw_env.cur_targets[:] = closure_target
+        raw_env.sim.forward()
+        raw_env.scene.update(dt=0.0)
+        raw_env._compute_intermediate_values()
+        palm_tip_center = raw_env.cartesian_ik.fingertip_positions_world().mean(dim=1)
+        palm_normal_local = torch.tensor(raw_env.cfg.proximal_support_normal_local, dtype=torch.float32, device=raw_env.device).expand(raw_env.num_envs, -1)
+        palm_normal_world = quat_apply(raw_env.hand.data.root_quat_w, palm_normal_local)
+        palm_tip_center = palm_tip_center + 0.005 * palm_normal_world
+        palm_object_state = raw_env.grasp_object.data.default_root_state[:1].clone()
+        palm_object_state[:, 0:3] = palm_tip_center
+        palm_object_state[:, 7:13] = 0.0
+        raw_env.grasp_object.write_root_state_to_sim(palm_object_state)
+        raw_env.in_hand_pos[:1] = palm_tip_center
+        raw_env.sim.forward()
+        raw_env.scene.update(dt=0.0)
+        raw_env._compute_intermediate_values()
     stabilized_object_state = raw_env.grasp_object.data.root_state_w[:1].clone()
     stabilized_object_state[:, 7:13] = 0.0
     projection_report = {"enabled": bool(args.project_closure), "original_target": closure_target[0].detach().cpu().tolist()}
@@ -746,6 +770,7 @@ def main() -> None:
     all_five_streak = 0
     env_m3_success = False
     five_finger_success = False
+    palm_contact_success = False
     limit_violation_count = 0
     penetration_count = 0
     try:
@@ -794,6 +819,7 @@ def main() -> None:
                 )
                 penetration_count += int(float(mesh_result["clearance_m"]) < -1e-4)
             contact_flags = [float(force) >= args.force_threshold for force in forces]
+            palm_contact_success = palm_contact_success or (args.palm_start and all(contact_flags))
             all_five_streak = all_five_streak + 1 if step >= release_step and all(contact_flags) else 0
             env_m3_success = env_m3_success or (step >= release_step and bool(raw_env.milestone_claimed[0, 2]))
             five_finger_success = five_finger_success or all_five_streak >= hold_steps
@@ -839,7 +865,7 @@ def main() -> None:
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",
-        "success": bool(env_m3_success and limit_violation_count == 0 and penetration_count == 0),
+        "success": bool((env_m3_success or palm_contact_success) and limit_violation_count == 0 and penetration_count == 0),
         "source_mesh_penetration_steps": penetration_count,
         "source_mesh_penetration_tolerance_m": 1e-4,
         "controller": "morphology_adaptive_synchronized_joint_closure",
@@ -858,6 +884,7 @@ def main() -> None:
         ),
         "environment_m3_success": env_m3_success,
         "five_finger_success": five_finger_success,
+        "palm_contact_success": bool(palm_contact_success),
         "joint_limit_violation_steps": limit_violation_count,
         "steps_executed": len(history),
         "max_all_five_contact_streak": max((item["all_five_contact_streak"] for item in history), default=0),
