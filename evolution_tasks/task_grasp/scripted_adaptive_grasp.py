@@ -822,7 +822,18 @@ def main() -> None:
             action = torch.zeros((1, 20), device=raw_env.device)
             if args.cartesian_replay:
                 raw_env.scripted_joint_target = None
-                action = _adaptive_action(raw_env, tip_ids, "close", object_anchor, approach_directions)
+                # Use native reset geometry during approach, then follow the
+                # actual free object instead of a stale pre-reset anchor.
+                current_object = raw_env.grasp_object.data.root_pos_w[:, 0:3].clone()
+                current_directions = approach_directions
+                if phase != "approach":
+                    current_directions = raw_env.cartesian_ik.fingertip_positions_world() - current_object.unsqueeze(1)
+                    current_directions = current_directions / torch.linalg.vector_norm(
+                        current_directions, dim=-1, keepdim=True
+                    ).clamp_min(1e-5)
+                action = _adaptive_action(
+                    raw_env, tip_ids, phase, current_object, current_directions
+                )
                 active_contacts = raw_env.full_hand_contact_forces[0] >= args.force_threshold
                 for finger_index in range(NUM_FINGERS):
                     if bool(active_contacts[finger_index]):

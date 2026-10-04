@@ -699,6 +699,7 @@ def _run_scripted_preflight(child, experiment_name):
             # trajectories that penetrate the generated collision solids.
             command.append("--audit_mesh")
             command.append("--cartesian_replay")
+            command.append("--training_scene")
         if task_name != "grasp":
             command.extend(["--min_video_steps", "1"])
         log_path = os.path.join(task_root, "preflight.log")
