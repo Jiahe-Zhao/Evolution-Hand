@@ -232,3 +232,5 @@ stage1 原生场景诊断视频已补录：`outputs/scenealigned_stage1_video/gr
 - v7 的第 0 代脚本预检全部失败，没有 BC 数据。经用户授权停止 v7 主进程和其残留 worker；原 lineage、日志和 checkpoint 保留。
 - v8 实验 `exp_20261004_stage1_verifiedBC_seed15_15g_v8` 从 generation 0 启动。初始种群包含通过双侧碰撞门禁的 `15_0`；其首个子代保留原形态，用于 BC 预检，若 Grasp 轨迹无效则阻断训练。PPO 参数沿用同一启动器：15 代、初始 8 个体、4096 环境、单 worker、horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、top fraction 0.25、Forage/Strike 25/50，并继承既有同任务策略 checkpoint。
 - 本节记录启动状态；是否实际注入 BC，以该子代 Grasp `status.json` 与训练目录 `behavior_cloning.json` 为准。
+
+v8 运行中验证（2026-10-04）：保留种子子代 `83c2e7c8c50355c48ae2ca6c61eafc67` 的 Grasp 预检 `passed=true`，原生 stage1 场景达到环境 M3；135 步轨迹为 159 维观测、20 维指尖动作，全部 `actions_control_fingers=true` 和 `scene_unmodified=true`，关节越限及源网格穿透均为 0。整个 `status.json` 的 `passed=false` 源于其他任务，Grasp 的独立质量门控通过。训练已先从 Branch stage1 开始，并完成该子代 100 次 PPO 迭代；任务队列仍在运行，Grasp BC 是否已执行继续以 `behavior_cloning.json` 验证。
