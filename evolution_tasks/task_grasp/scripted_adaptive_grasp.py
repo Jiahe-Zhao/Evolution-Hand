@@ -830,10 +830,8 @@ def main() -> None:
                 action = _adaptive_action(
                     raw_env, tip_ids, phase, current_object, approach_directions
                 )
-                active_contacts = raw_env.full_hand_contact_forces[0] >= args.force_threshold
-                for finger_index in range(NUM_FINGERS):
-                    if bool(active_contacts[finger_index]):
-                        action[:, 3 * finger_index:3 * finger_index + 3] = 0.0
+                # Continue tracking the target after contact; freezing each finger
+                # makes contact force flicker below the sustained M3 threshold.
             observation_before = raw_env._get_observations()["policy"][0].detach().cpu().numpy().astype(np.float32)
             _, reward, terminated, truncated, _ = env.step(action)
             bc_observations.append(observation_before)

@@ -314,8 +314,10 @@ class EvolutionGraspEnvCfg(DirectRLEnvCfg):
     grasp_object_radius = 0.02
     # Keep the reset sphere outside the evolved palm collision solids. The
     # previous 6 mm clearance was insufficient for the current palm boxes.
-    proximal_support_clearance = 0.045
-    proximal_support_offset_local = (0.012, 0.0, 0.011)
+    # Keep the reset ball close to the first phalanx envelope.  The script
+    # replay uses this same native reset, so training and BC share geometry.
+    proximal_support_clearance = 0.020
+    proximal_support_offset_local = (0.028, -0.025, 0.014)
     # Dynamic distal-finger enclosure: require the ball to be close to at least
     # two terminal phalanges, so a widely open hand cannot obtain a false success.
     distal_region_margin = 0.024

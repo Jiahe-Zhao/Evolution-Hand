@@ -146,6 +146,15 @@ def _load_or_initialize_lineage(
     else:
         raise ValueError(f"Unsupported check_point: {check_point}")
 
+    seed_morphology_path = os.environ.get("EVOLUTION_BC_SEED_MORPHOLOGY_LINEAGE")
+    if seed_morphology_path:
+        seed_individual = os.environ.get("EVOLUTION_BC_SEED_MORPHOLOGY_INDIVIDUAL", "15_0")
+        seed_payload = _load_json(seed_morphology_path) or {}
+        seed_record = seed_payload.get("lineage", {}).get(seed_individual)
+        if seed_record is None or "urdf_info" not in seed_record:
+            raise ValueError(f"BC seed morphology missing: {seed_morphology_path}:{seed_individual}")
+        initial_agent_hand = copy.deepcopy(seed_record["urdf_info"])
+
     initial_audit_root = os.path.join(
         ISAACLAB_OTHER_ROOT,
         f"{os.path.basename(experiment_json_path)}_initial_collision_gate",
@@ -205,6 +214,8 @@ def _load_or_initialize_lineage(
         )
         if passed:
             accepted_reports.append(combined_report)
+        elif seed_morphology_path and index == 0:
+            raise RuntimeError("BC seed morphology failed the initial collision gate")
         else:
             reasons = report.get("reasons", [])
             if generated_report:
@@ -365,22 +376,31 @@ def _build_child_entry(
     deterministic_seed = _make_deterministic_seed(experiment_name, generation, individual, trial)
     random.seed(deterministic_seed)
     np.random.seed(deterministic_seed)
-    link_code, task_code, strength = choose_target(current_urdf, variation_probabilities)
-    print("link_code, task_code, strength:", link_code, task_code, strength)
-    success_tag, new_urdf = variation(
-        current_urdf,
-        link_code,
-        task_code,
-        strength,
-        standard_variation=variation_standard,
-        standard_length=variation_length,
+    preserve_seed = (
+        generation == 0 and individual == 0 and trial == 0
+        and _env_flag("EVOLUTION_BC_PRESERVE_SEED_CHILD", False)
     )
+    if preserve_seed:
+        link_code, task_code, strength = "seed", "identity", 0.0
+        success_tag, new_urdf = True, copy.deepcopy(current_urdf)
+    else:
+        link_code, task_code, strength = choose_target(current_urdf, variation_probabilities)
+        success_tag, new_urdf = variation(
+            current_urdf,
+            link_code,
+            task_code,
+            strength,
+            standard_variation=variation_standard,
+            standard_length=variation_length,
+        )
+    print("link_code, task_code, strength:", link_code, task_code, strength)
     metadata = {
         "trial": trial,
         "seed": deterministic_seed,
         "link_code": link_code,
         "task_code": task_code,
         "strength": strength,
+        "seed_preserved_for_bc": preserve_seed,
     }
     child_id = _make_child_id(experiment_name, generation, individual, trial)
     print("success_tag, new_urdf:", success_tag)
@@ -542,6 +562,8 @@ def _collect_pending_children(
                 passed, preflight = _run_scripted_preflight(child, experiment_name)
                 child["metadata"] = dict(child.get("metadata", {}))
                 child["metadata"]["scripted_preflight"] = preflight
+                if child["metadata"].get("seed_preserved_for_bc") and not preflight.get("tasks", {}).get("grasp", {}).get("passed"):
+                    raise RuntimeError("BC seed Grasp demonstration failed; refusing generation-zero training without verified BC")
                 if not passed:
                     if _env_flag("EVOLUTION_REQUIRE_SCRIPTED_PREFLIGHT_SUCCESS", False):
                         print(f"[WARN] Rejecting child {child['child_id']} before RL: scripted preflight failed.")
@@ -949,6 +971,9 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                     bc_dataset_path = trace_path
                             except Exception:
                                 bc_dataset_path = None
+                    if (current_generation == 0 and batch_task == "Isaac-EvolutionHand-Grasp-v0"
+                        and child.get("metadata", {}).get("seed_preserved_for_bc") and not bc_dataset_path):
+                        raise RuntimeError("Verified BC seed dataset is missing or invalid")
                     try:
                         current_score = evaluation(
                             child["urdf_info"],

@@ -224,3 +224,11 @@ EVOLUTION_REUSE_ISAAC_PROCESS=1
 - 已按原启动器参数从 generation 0 启动新实验 `exp_20261004_stage1_scenealigned_seed15_15g_v7`：15 代、初始种群 8、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、stage2 top fraction 0.25，Forage/Strike 25/50。第 0 代仅在预检通过 BC 门控时注入脚本数据；当前验证形态未通过，仍以旧 `15_0` 同任务策略热启动，不能称为 BC 已启用。
 
 stage1 原生场景诊断视频已补录：`outputs/scenealigned_stage1_video/grasp_15_0.mp4`。视频对应指标为 `success=false`、`environment_m3_success=false`、`joint_limit_violation_steps=33`、`source_mesh_penetration_steps=0`，只能用于诊断，不能用作 BC。
+
+## 17. 2026-10-04 经物理验证的 Grasp BC 与 v8 启动
+
+- 在 `15_0` 形态上，使用 stage1 原生 reset、20 维指尖 IK 动作和真实物理接触录制 `outputs/verified_bc_stage1_15_0/grasp_15_0.mp4`；对应 JSON 和 `.trace.npz` 同目录。球体未被脚本重定位或固定，场景与训练一致。148 步达到环境 M3，关节越限和源网格穿透均为 0；观测/动作分别为 `(148, 159)` / `(148, 20)`，每步均标记指尖动作控制及场景未改写。
+- 将共享 Grasp 近端支撑偏移调为 `(0.028, -0.025, 0.014)` m；接触后继续追踪目标，避免冻结指尖动作使 M3 接触间断。未修改手的 URDF 或结构文件。
+- v7 的第 0 代脚本预检全部失败，没有 BC 数据。经用户授权停止 v7 主进程和其残留 worker；原 lineage、日志和 checkpoint 保留。
+- v8 实验 `exp_20261004_stage1_verifiedBC_seed15_15g_v8` 从 generation 0 启动。初始种群包含通过双侧碰撞门禁的 `15_0`；其首个子代保留原形态，用于 BC 预检，若 Grasp 轨迹无效则阻断训练。PPO 参数沿用同一启动器：15 代、初始 8 个体、4096 环境、单 worker、horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、top fraction 0.25、Forage/Strike 25/50，并继承既有同任务策略 checkpoint。
+- 本节记录启动状态；是否实际注入 BC，以该子代 Grasp `status.json` 与训练目录 `behavior_cloning.json` 为准。
