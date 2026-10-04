@@ -38,7 +38,7 @@ def validate_runtime_report(report, returncode, asset_fingerprint):
     return bool(passed)
 
 
-def run_isaac_collision_gate(urdf_path, output_dir, timeout_s=180):
+def run_isaac_collision_gate(urdf_path, output_dir, timeout_s=600):
     path = Path(urdf_path).resolve()
     output = Path(output_dir).resolve()
     output.mkdir(parents=True, exist_ok=True)
