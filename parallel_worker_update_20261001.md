@@ -184,3 +184,34 @@ EVOLUTION_REUSE_ISAAC_PROCESS=1
 - 碰撞 gate 的 URDF/runtime 临时目录在结果写入缓存后自动删除，避免每个候选长期保留 Isaac 场景文件。
 - Isaac gate 未生成完整报告时，将该候选记录为 `collision_runtime_infrastructure` 并淘汰，不再终止整个进化主循环。
 - 已清理历史 `*_collision_gate`、`*_initial_collision_gate`、预检目录、并行 worker 临时目录和运行日志；代码、资产、lineage 与 checkpoint 保留。
+
+## 14. 2026-10-04 当前 BC 预检结果与未提交修改
+
+本节以远端当前工作树为准，记录本轮实际状态。注意：本节对应的代码修改尚未执行 Git commit。
+
+### 已落地修改
+
+- `evolution_tasks/task_grasp/scripted_adaptive_grasp.py`：训练场景下闭合动作仍实时读取球体位置，但不再每步用“当前指尖到球心”的方向重新计算闭合方向；方向固定为 reset 时的形态自适应方向，避免球被接触推动后目标方向旋转、手指追着球漂移。
+- `evolution_tasks/task_grasp/evolution_grasp_env_cfg.py`：当前工作树将 `proximal_support_clearance` 调整为 `0.020 m`，球体仍由原生 reset 根据实际形态的近端支撑点计算，不在脚本中重新放置或运动学固定。
+- 训练和脚本仍共用 `EvolutionGraspEnv` 的原生 reset 与指尖 IK 接口；`--training_scene` 模式不会写入球体位置，也不会使用脚本关节覆盖。
+
+### 实际验证结果
+
+- 正式实验 `exp_20261004_fingertipIK_scenealigned_BC15g_v5` 已停止，避免在 BC 尚未验证时继续消耗算力；常驻 `train_worker.py` 保留用于后续复用。
+- 该实验的 8 个 Grasp 预检全部为 `passed=false`，因此第 0 代没有实际注入 BC。日志中的正确描述是“继承父代 checkpoint 后进行 PPO”，不能写成“BC 已生效”。
+- 预检轨迹曾出现“仅拇指约 `0.2 N` 接触、其余长指为 `0 N`、M3 连续接触为 `0`”的结果；主要问题是球体与指尖包络/IK 映射仍不匹配，而不是 BC 数据读取失败。
+- 使用父代 `15_0` 的真实训练场景预检时，调整后的 `0.020 m` 配置仍未通过 M3；一次较近的 `0.006 m` 配置还出现源碰撞网格初始穿透，说明不能单纯继续缩小间隙，需要重新校准球体支撑点、碰撞 clearance 和指尖目标。
+- 当前已生成的 `outputs/bc_validation/parent.json`、`parent2.json` 和对应 `.trace.npz` 均标记为失败轨迹，不得作为 BC 数据；本轮没有可证明成功的 BC 视频。
+
+### 后续启动前必须完成
+
+1. 在不修改球体场景的前提下，重新校准父代和变异形态的指尖可达性，使拇指与至少两根长指达到任务 M3 的连续保持条件。
+2. 只有 `status.json` 中 Grasp `passed=true`、轨迹动作由指尖 IK 提交且场景未被脚本修改时，才把 `.trace.npz` 作为第 0 代 BC 数据。
+3. 先用同一形态完成一次带视频的 3 秒成功回放，再启动正式进化；若预检失败，应继续纯 PPO/继承策略或停止排查，不能宣称 BC 热启动已启用。
+
+## 15. 2026-10-04 训练场景回放与新实验
+
+- 使用 `15_0` 形态、原生 Grasp reset、`--training_scene --cartesian_replay --audit_mesh` 录制视频：`outputs/scenealigned_demo_20261004/grasp_15_0.mp4`。脚本只通过任务的 20 维指尖 IK 动作控制手，不重定位或固定球体。
+- 回放结果：`environment_m3_success=false`，五指最大接触力均为 `0 N`，`joint_limit_violation_steps=33`，`source_mesh_penetration_steps=0`。视频是诊断记录，轨迹不得输入 BC。相应数据为同目录 `grasp_15_0.json` 和 `grasp_15_0.trace.npz`。
+- 新实验 `exp_20261004_scenealigned_seed15_15g_v6` 已从 generation 0 启动。配置沿用启动器：15 代、初始种群 8、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5；stage1 100、stage2 250、top fraction 0.25；Forage/Strike 25/50；后代继承同任务父代 checkpoint。第 0 代缺少通过质量门控的脚本轨迹，因此只能从既有 `15_0` 同任务 checkpoint 做权重热启动，不能标记为 BC。
+- 训练与脚本测试共享 `EvolutionGraspEnv` 的原生场景和成功判定。BC 接口已存在，只有脚本成功、动作确实驱动指尖、场景未修改时才注入。下一步应修正指尖轨迹的可达性和关节越限，再录制成功回放；不应降低 M3 判定来制造 BC 数据。
