@@ -222,3 +222,5 @@ EVOLUTION_REUSE_ISAAC_PROCESS=1
 - 主流程启动第 0 代预检时显式设置 `EVOLUTION_CURRICULUM_STAGE=stage1` 和 `EVOLUTION_FORAGE_CURRICULUM_STAGE=stage1`。四任务脚本保留任务配置中的 reset 噪声。Branch 和 Strike 新增 `--training_scene`：使用原生 reset，不执行脚本物体重定位与校准后的关节状态写入。Grasp 继续使用原生 reset 与指尖 IK。预检轨迹记录实际课程阶段、噪声和场景模式。
 - 用父代 `15_0` 对四任务分别运行 stage1 原生场景：Grasp、Branch、Forage、Strike 的 reset 噪声依次为 `0.0/0.0/0.02/0.2`；四个脚本均完成仿真，无脚本成功。Grasp 的轨迹为 `146` 步、零指尖接触、`32` 步关节越限、零源网格穿透，因此不允许输入 BC。Branch/Strike 使用关节目标覆盖，轨迹也不具有有效的指尖策略动作标签。
 - 已按原启动器参数从 generation 0 启动新实验 `exp_20261004_stage1_scenealigned_seed15_15g_v7`：15 代、初始种群 8、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、stage2 top fraction 0.25，Forage/Strike 25/50。第 0 代仅在预检通过 BC 门控时注入脚本数据；当前验证形态未通过，仍以旧 `15_0` 同任务策略热启动，不能称为 BC 已启用。
+
+stage1 原生场景诊断视频已补录：`outputs/scenealigned_stage1_video/grasp_15_0.mp4`。视频对应指标为 `success=false`、`environment_m3_success=false`、`joint_limit_violation_steps=33`、`source_mesh_penetration_steps=0`，只能用于诊断，不能用作 BC。
