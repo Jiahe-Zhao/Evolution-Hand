@@ -178,3 +178,9 @@ EVOLUTION_REUSE_ISAAC_PROCESS=1
 - 指尖 IK replay 在接近阶段使用原生 reset 几何，闭合与保持阶段跟踪实际物体位置，避免球体发生微小位移后继续追踪旧锚点。
 - 形态删除必要指节导致的配置正则匹配失败应视为运动学/形态 gate 失败，不能进入 BC 或 PPO。
 - 旧的 `exp_20261003_fingertipIK_scenealigned_15g` 已停止；新的第 0 代训练必须使用新实验名，并从已验证父代 checkpoint 继承策略权重。
+
+## 13. 2026-10-04 临时文件清理与 gate 稳定性
+
+- 碰撞 gate 的 URDF/runtime 临时目录在结果写入缓存后自动删除，避免每个候选长期保留 Isaac 场景文件。
+- Isaac gate 未生成完整报告时，将该候选记录为 `collision_runtime_infrastructure` 并淘汰，不再终止整个进化主循环。
+- 已清理历史 `*_collision_gate`、`*_initial_collision_gate`、预检目录、并行 worker 临时目录和运行日志；代码、资产、lineage 与 checkpoint 保留。

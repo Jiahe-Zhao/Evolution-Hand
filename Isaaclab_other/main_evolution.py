@@ -107,10 +107,15 @@ def _run_generated_collision_gate(urdf_info, audit_root):
         report = copy.deepcopy(cached["report"])
         report["cache_hit"] = True
         return True, report
-    passed, report = audit_morphology_in_isaac(urdf_info, audit_root)
-    report["cache_hit"] = False
-    _atomic_write_json(cache_path, {"fingerprint": fingerprint, "passed": bool(passed), "report": report})
-    return passed, report
+    try:
+        passed, report = audit_morphology_in_isaac(urdf_info, audit_root)
+        report["cache_hit"] = False
+        _atomic_write_json(cache_path, {"fingerprint": fingerprint, "passed": bool(passed), "report": report})
+        return passed, report
+    finally:
+        # URDF/runtime meshes and Isaac logs are reproducible from the
+        # fingerprint and must not accumulate across generations.
+        shutil.rmtree(audit_root, ignore_errors=True)
 
 
 def _run_lightweight_prefilter(urdf_info):
