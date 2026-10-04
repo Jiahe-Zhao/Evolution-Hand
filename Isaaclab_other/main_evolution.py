@@ -171,8 +171,16 @@ def _load_or_initialize_lineage(
                 generated_passed, generated_report = _run_generated_collision_gate(
                     urdf, candidate_root
                 )
-            except CollisionRuntimeInfrastructureError:
-                raise
+            except CollisionRuntimeInfrastructureError as exc:
+                # A malformed or hanging candidate is not allowed to abort the
+                # whole generation. Treat incomplete Isaac gate output as an
+                # individual-level rejection and preserve the reason.
+                generated_gate_passed = False
+                generated_gate_report = {
+                    "passed": False,
+                    "gate": "generated_urdf_v1",
+                    "reasons": [f"collision_runtime_infrastructure:{exc}"],
+                }
             except Exception as exc:
                 generated_passed = False
                 generated_report = {
