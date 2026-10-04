@@ -24,6 +24,7 @@ def main(task: str) -> None:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--min_video_steps", type=int, default=90, help="Minimum rendered frames; 90 at 30 fps is 3 seconds.")
     parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
+    parser.add_argument("--training_scene", action="store_true", help="Use native task reset without scripted object or hand state writes.")
     parser.add_argument("--replay_actions_json", help="Forage diagnostic: replay recorded policy actions in a fresh task reset.")
     parser.add_argument("--direct_envelope_closure", action=argparse.BooleanOptionalAction, default=True, help="Retain the joint target used to generate the grasp envelope.")
     parser.add_argument("--max_physical_candidates", type=int, default=36)
@@ -629,7 +630,6 @@ def main(task: str) -> None:
     cfg = getattr(cfg_module, cfg_class)()
     cfg.scene.num_envs = 1
     cfg.scene.env_spacing = 2.0
-    cfg.reset_dof_pos_noise = 0.0
     cfg.seed = args.seed
     # Isaac merges each fixed link_*_3 fingertip pad into link_*_2 on import.
     # Sensors and Cartesian targets must therefore use the surviving body names.
@@ -660,7 +660,7 @@ def main(task: str) -> None:
     adaptive_geometry = None
     closure_target = morphology_closure_target(raw)
     physical_pregrasp_target = initial_joint_pos.clone()
-    if task in ("branch", "strike"):
+    if task in ("branch", "strike") and not args.training_scene:
         closure_target, adaptive_object_position, adaptive_geometry = choose_adaptive_pregasp(
             raw, task, initial_joint_pos, cfg
         )
@@ -668,7 +668,7 @@ def main(task: str) -> None:
             env, raw, task, cfg, adaptive_object_position
         )
         adaptive_geometry.update(physical_geometry)
-    if task == "branch":
+    if task == "branch" and not args.training_scene:
         branch_state = raw.branch.data.default_root_state[:1].clone()
         branch_state[:, :3] = adaptive_object_position
         selected_axis = physical_geometry.get("physical_debug", {}).get("axis_world") if physical_geometry else None
@@ -680,7 +680,7 @@ def main(task: str) -> None:
             )
         branch_state[:, 7:] = 0.0
         raw.branch.write_root_state_to_sim(branch_state)
-    elif task == "strike":
+    elif task == "strike" and not args.training_scene:
         # Replay the measured free-tool equilibrium, not the actuator target.
         grasp_debug = physical_geometry["physical_debug"]
         tool_state = raw.cone.data.default_root_state[:1].clone()
@@ -922,9 +922,9 @@ def main(task: str) -> None:
             observations_before_step=np.asarray(bc_observations),
             submitted_actions=np.asarray(bc_actions),
             actions_control_fingers=np.full(len(bc_actions), task == "forage"),
-            scene_unmodified=np.full(len(bc_actions), task == "forage"),
+            scene_unmodified=np.full(len(bc_actions), task == "forage" or args.training_scene),
         )
-    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
+    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps({key: value for key, value in summary.items() if key != "history"}, indent=2))

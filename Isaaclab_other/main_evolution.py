@@ -690,6 +690,8 @@ def _run_scripted_preflight(child, experiment_name):
     timeout = _env_int("EVOLUTION_SCRIPTED_PREFLIGHT_TIMEOUT", 900)
     child_env = os.environ.copy()
     child_env["EVOLUTION_CODE_ROOT"] = EVOLUTION_ROOT
+    child_env["EVOLUTION_CURRICULUM_STAGE"] = "stage1"
+    child_env["EVOLUTION_FORAGE_CURRICULUM_STAGE"] = "stage1"
     for task_name, script_path in scripts.items():
         task_root = os.path.join(root, task_name)
         os.makedirs(task_root, exist_ok=True)
@@ -714,7 +716,7 @@ def _run_scripted_preflight(child, experiment_name):
             command.append("--cartesian_replay")
             command.append("--training_scene")
         if task_name != "grasp":
-            command.extend(["--min_video_steps", "1"])
+            command.extend(["--min_video_steps", "1", "--training_scene"])
         log_path = os.path.join(task_root, "preflight.log")
         try:
             with open(log_path, "w", encoding="utf-8") as log_file:

@@ -597,7 +597,6 @@ def main() -> None:
     cfg.scene.num_envs = 1
     cfg.scene.env_spacing = 2.0
     cfg.seed = args.seed
-    cfg.reset_dof_pos_noise = 0.0
     cfg.fingertip_body_names = tips
     cfg.contact_sensor_cfg.filter_prim_paths_expr = [
         f"/World/envs/env_.*/LeftRobot/{name}" for name in tips
@@ -822,17 +821,14 @@ def main() -> None:
             action = torch.zeros((1, 20), device=raw_env.device)
             if args.cartesian_replay:
                 raw_env.scripted_joint_target = None
-                # Use native reset geometry during approach, then follow the
-                # actual free object instead of a stale pre-reset anchor.
+                # Use native reset geometry during approach and follow the
+                # actual free object afterwards. Keep the reset-derived
+                # directions fixed: recomputing them from the moving tip
+                # makes the closure target rotate away when contact pushes
+                # the object.
                 current_object = raw_env.grasp_object.data.root_pos_w[:, 0:3].clone()
-                current_directions = approach_directions
-                if phase != "approach":
-                    current_directions = raw_env.cartesian_ik.fingertip_positions_world() - current_object.unsqueeze(1)
-                    current_directions = current_directions / torch.linalg.vector_norm(
-                        current_directions, dim=-1, keepdim=True
-                    ).clamp_min(1e-5)
                 action = _adaptive_action(
-                    raw_env, tip_ids, phase, current_object, current_directions
+                    raw_env, tip_ids, phase, current_object, approach_directions
                 )
                 active_contacts = raw_env.full_hand_contact_forces[0] >= args.force_threshold
                 for finger_index in range(NUM_FINGERS):
@@ -907,6 +903,9 @@ def main() -> None:
     summary = {
         "effective_drives": effective_drives,
         "task": "Grasp",
+        "curriculum_stage": cfg.curriculum_stage,
+        "reset_dof_pos_noise": cfg.reset_dof_pos_noise,
+        "training_scene": bool(args.training_scene),
         "success": bool(env_m3_success and limit_violation_count == 0 and penetration_count == 0),
         "source_mesh_penetration_steps": penetration_count,
         "source_mesh_penetration_tolerance_m": 1e-4,

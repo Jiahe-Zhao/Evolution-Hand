@@ -215,3 +215,10 @@ EVOLUTION_REUSE_ISAAC_PROCESS=1
 - 回放结果：`environment_m3_success=false`，五指最大接触力均为 `0 N`，`joint_limit_violation_steps=33`，`source_mesh_penetration_steps=0`。视频是诊断记录，轨迹不得输入 BC。相应数据为同目录 `grasp_15_0.json` 和 `grasp_15_0.trace.npz`。
 - 新实验 `exp_20261004_scenealigned_seed15_15g_v6` 已从 generation 0 启动。配置沿用启动器：15 代、初始种群 8、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5；stage1 100、stage2 250、top fraction 0.25；Forage/Strike 25/50；后代继承同任务父代 checkpoint。第 0 代缺少通过质量门控的脚本轨迹，因此只能从既有 `15_0` 同任务 checkpoint 做权重热启动，不能标记为 BC。
 - 训练与脚本测试共享 `EvolutionGraspEnv` 的原生场景和成功判定。BC 接口已存在，只有脚本成功、动作确实驱动指尖、场景未修改时才注入。下一步应修正指尖轨迹的可达性和关节越限，再录制成功回放；不应降低 M3 判定来制造 BC 数据。
+
+## 16. 2026-10-04 stage1 训练/脚本场景一致性修正
+
+- 发现上一节的 `v6` 在初始形态门控期间，脚本预检仍默认加载 stage2 任务配置，并把全部任务的 `reset_dof_pos_noise` 强制改为零。Branch 和 Strike 预检还会改写树枝/工具的初始位姿；因此 `v6` 在进入 PPO 前已停止，不能把它视为完成场景一致性验证。
+- 主流程启动第 0 代预检时显式设置 `EVOLUTION_CURRICULUM_STAGE=stage1` 和 `EVOLUTION_FORAGE_CURRICULUM_STAGE=stage1`。四任务脚本保留任务配置中的 reset 噪声。Branch 和 Strike 新增 `--training_scene`：使用原生 reset，不执行脚本物体重定位与校准后的关节状态写入。Grasp 继续使用原生 reset 与指尖 IK。预检轨迹记录实际课程阶段、噪声和场景模式。
+- 用父代 `15_0` 对四任务分别运行 stage1 原生场景：Grasp、Branch、Forage、Strike 的 reset 噪声依次为 `0.0/0.0/0.02/0.2`；四个脚本均完成仿真，无脚本成功。Grasp 的轨迹为 `146` 步、零指尖接触、`32` 步关节越限、零源网格穿透，因此不允许输入 BC。Branch/Strike 使用关节目标覆盖，轨迹也不具有有效的指尖策略动作标签。
+- 已按原启动器参数从 generation 0 启动新实验 `exp_20261004_stage1_scenealigned_seed15_15g_v7`：15 代、初始种群 8、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、stage2 top fraction 0.25，Forage/Strike 25/50。第 0 代仅在预检通过 BC 门控时注入脚本数据；当前验证形态未通过，仍以旧 `15_0` 同任务策略热启动，不能称为 BC 已启用。
