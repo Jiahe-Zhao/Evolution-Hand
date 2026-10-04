@@ -180,8 +180,8 @@ def _load_or_initialize_lineage(
                 # A malformed or hanging candidate is not allowed to abort the
                 # whole generation. Treat incomplete Isaac gate output as an
                 # individual-level rejection and preserve the reason.
-                generated_gate_passed = False
-                generated_gate_report = {
+                generated_passed = False
+                generated_report = {
                     "passed": False,
                     "gate": "generated_urdf_v1",
                     "reasons": [f"collision_runtime_infrastructure:{exc}"],
