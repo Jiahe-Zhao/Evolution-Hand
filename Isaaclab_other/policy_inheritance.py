@@ -1,5 +1,6 @@
 """Task-local PPO skill transfer through the existing Cartesian/IK interface."""
 from pathlib import Path
+import os
 import json
 import re
 
@@ -67,8 +68,12 @@ def policy_contract(task, cfg):
     if _field(cfg, 'obs_type', 'full') != 'full':
         raise ValueError('Skill transfer requires the current full observation layout')
     joints = list(_field(cfg, 'actuated_joint_names'))
-    actions = [f'finger{f}.delta.{axis}' for f in range(1, 6) for axis in 'xyz']
-    actions += [f'finger{f}.closure' for f in range(1, 6)]
+    branch_joint_mode = kind == 'branch' and os.environ.get('EVOLUTION_BRANCH_BC_MODE') == '1'
+    if branch_joint_mode:
+        actions = [f'finger{f}.joint{j}.target' for f in range(1, 6) for j in range(4)]
+    else:
+        actions = [f'finger{f}.delta.{axis}' for f in range(1, 6) for axis in 'xyz']
+        actions += [f'finger{f}.closure' for f in range(1, 6)]
     if kind in ('forage', 'strike'):
         actions += [f'wrist.delta.{axis}' for axis in 'xyz']
     obs = [f'q:{j}' for j in joints] + [f'dq:{j}' for j in joints]
@@ -87,7 +92,7 @@ def policy_contract(task, cfg):
     obs += descriptor + ['previous_action:'+a for a in actions]
     if len(actions) != int(_field(cfg, 'action_space')) or len(obs) != int(_field(cfg, 'observation_space')):
         raise ValueError(f'Unrecognized {task} action/observation layout')
-    return {'version':1, 'task':task, 'controller':'cartesian_5finger_ik_v1',
+    return {'version':1, 'task':task, 'controller':'branch_joint_target_v1' if branch_joint_mode else 'cartesian_5finger_ik_v1',
             'actions':actions, 'observations':obs}
 
 def load_contract(checkpoint, task):

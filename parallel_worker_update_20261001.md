@@ -234,3 +234,11 @@ stage1 原生场景诊断视频已补录：`outputs/scenealigned_stage1_video/gr
 - 本节记录启动状态；是否实际注入 BC，以该子代 Grasp `status.json` 与训练目录 `behavior_cloning.json` 为准。
 
 v8 运行中验证（2026-10-04）：保留种子子代 `83c2e7c8c50355c48ae2ca6c61eafc67` 的 Grasp 预检 `passed=true`，原生 stage1 场景达到环境 M3；135 步轨迹为 159 维观测、20 维指尖动作，全部 `actions_control_fingers=true` 和 `scene_unmodified=true`，关节越限及源网格穿透均为 0。整个 `status.json` 的 `passed=false` 源于其他任务，Grasp 的独立质量门控通过。训练已先从 Branch stage1 开始，并完成该子代 100 次 PPO 迭代；任务队列仍在运行，Grasp BC 是否已执行继续以 `behavior_cloning.json` 验证。
+
+## 18. 2026-10-05 Branch 与 Grasp 双 BC 热启动
+
+- 经用户授权停止 v8 主进程及残留 worker；既有 lineage、日志和 checkpoint 保留。v8 的 Branch 未使用 BC，训练分数持续为 0。
+- Branch 脚本新增 20 维关节目标策略动作，示教经 `env.step(action)` 执行，不再写 `scripted_joint_target`。Branch 训练环境在 `EVOLUTION_BRANCH_BC_MODE=1` 下使用相同动作映射、原生 reset 和统一的树枝位置校准；仅将 Branch 中指 MCP spread 初始值改为 -0.1 rad，以避免 reset 时的关节越限。未修改手的 URDF、网格或关节边界。
+- 保留种子形态 `15_0` 的 stage1 正式示教：`outputs/branch_bc_dev/formal.json` 与 `.trace.npz`。149 步达到环境 M3，拇指及至少两根长指连续接触 5 步，关节越限 0；100 维观测、20 维提交动作，轨迹标记 `actions_control_fingers=true`、`scene_unmodified=true`。
+- 主流程对第 0 代 Branch 与 Grasp 分别验证预检成功、轨迹形状、有限数值及真实动作标记后注入 BC。Branch 额外要求零关节越限。Branch 策略契约改为 `branch_joint_target_v1`，禁止继承旧 Cartesian Branch checkpoint；其他第 0 代 Branch 个体可继承完成 BC 的种子策略。Forage、Strike 的动作与训练路径未改。
+- 新实验 `exp_20261005_branchgrasp_BC15g_v9` 已从 generation 0 启动，启动日志 `outputs/training_launch/v9.log`。沿用同一启动器参数：15 代、初始 8 个体、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、top fraction 0.25、Forage/Strike 25/50。当前处于初始形态门控；实际 BC 执行应以对应任务训练目录的 `behavior_cloning.json` 为准。

@@ -4,6 +4,7 @@ from collections.abc import Sequence
 from typing import TYPE_CHECKING
 import xml.etree.ElementTree as ET
 from pathlib import Path
+import os
 
 import torch
 
@@ -116,11 +117,24 @@ class BranchGraspEnv(DirectRLEnv):
         self.finger_action_scores = self.actions[:, 15:20]
 
     def _apply_action(self):
-        targets = (
-            self.cartesian_ik.compute(self.actions)
-            if self.scripted_joint_target is None
-            else self.scripted_joint_target.to(self.device)
-        )
+        if os.environ.get("EVOLUTION_BRANCH_BC_MODE") == "1":
+            # Four policy channels per finger command its available joints.
+            # Long-finger side spread remains neutral as in the task dynamics.
+            targets = self.hand.data.joint_pos.clone()
+            lower, upper = self.hand_dof_lower_limits, self.hand_dof_upper_limits
+            for finger in range(5):
+                joint_ids = self.cartesian_ik.joint_ids[finger].tolist()
+                if finger > 0:
+                    joint_ids = [index for index in joint_ids if "spread" not in self.hand.joint_names[index]]
+                for channel, joint_id in enumerate(joint_ids[:4]):
+                    command = self.actions[:, 4 * finger + channel].clamp(-1.0, 1.0)
+                    targets[:, joint_id] = lower[:, joint_id] + 0.5 * (command + 1.0) * (upper[:, joint_id] - lower[:, joint_id])
+        else:
+            targets = (
+                self.cartesian_ik.compute(self.actions)
+                if self.scripted_joint_target is None
+                else self.scripted_joint_target.to(self.device)
+            )
         targets = self.cfg.act_moving_average * targets + (1.0 - self.cfg.act_moving_average) * self.prev_targets
         targets = saturate(targets, self.hand_dof_lower_limits, self.hand_dof_upper_limits)
         # MCP side-splay belongs to hand opening, not branch closure.  Keep
@@ -453,7 +467,17 @@ class BranchGraspEnv(DirectRLEnv):
         # validate the generated shape's full collision geometry separately.
         opposition = thumb[:, 0] - long_center
         opposition = opposition / torch.linalg.vector_norm(opposition, dim=-1, keepdim=True).clamp_min(1.0e-6)
-        return pinch_center + 0.001 * opposition
+        center = pinch_center + 0.001 * opposition
+        # Calibration is expressed in the hand frame so the native training
+        # reset and scripted demonstration use exactly the same placement.
+        default_offset = "-0.037,-0.046,0.001" if os.environ.get("EVOLUTION_BRANCH_BC_MODE") == "1" else "0,0,0"
+        offset = tuple(float(value) for value in os.environ.get(
+            "EVOLUTION_BRANCH_RESET_OFFSET_LOCAL", default_offset
+        ).split(","))
+        if len(offset) != 3:
+            raise ValueError("EVOLUTION_BRANCH_RESET_OFFSET_LOCAL needs three values")
+        local = torch.tensor(offset, dtype=center.dtype, device=self.device).expand(len(env_ids), -1)
+        return center + quat_apply(self.hand.data.root_quat_w[env_ids], local)
 
     def _branch_axis_orientation(self, env_ids: Sequence[int]) -> torch.Tensor:
         """Align the cylinder along the long-finger row, not along finger reach."""

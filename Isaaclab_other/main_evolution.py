@@ -562,8 +562,11 @@ def _collect_pending_children(
                 passed, preflight = _run_scripted_preflight(child, experiment_name)
                 child["metadata"] = dict(child.get("metadata", {}))
                 child["metadata"]["scripted_preflight"] = preflight
-                if child["metadata"].get("seed_preserved_for_bc") and not preflight.get("tasks", {}).get("grasp", {}).get("passed"):
-                    raise RuntimeError("BC seed Grasp demonstration failed; refusing generation-zero training without verified BC")
+                if child["metadata"].get("seed_preserved_for_bc"):
+                    required_bc_tasks = ["grasp", "branch"] if _env_flag("EVOLUTION_BRANCH_BC_MODE", False) else ["grasp"]
+                    for bc_task in required_bc_tasks:
+                        if not preflight.get("tasks", {}).get(bc_task, {}).get("passed"):
+                            raise RuntimeError(f"BC seed {bc_task} demonstration failed; refusing generation-zero training without verified BC")
                 if not passed:
                     if _env_flag("EVOLUTION_REQUIRE_SCRIPTED_PREFLIGHT_SUCCESS", False):
                         print(f"[WARN] Rejecting child {child['child_id']} before RL: scripted preflight failed.")
@@ -739,6 +742,8 @@ def _run_scripted_preflight(child, experiment_name):
             command.append("--training_scene")
         if task_name != "grasp":
             command.extend(["--min_video_steps", "1", "--training_scene"])
+        if task_name == "branch" and _env_flag("EVOLUTION_BRANCH_BC_MODE", False):
+            command.append("--branch_policy_demo")
         log_path = os.path.join(task_root, "preflight.log")
         try:
             with open(log_path, "w", encoding="utf-8") as log_file:
@@ -942,10 +947,19 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                     parent_state = (_load_json(_evaluation_state_path_for_child(
                         experiment_save_path, parent['id'])) or {}) if parent.get('id') else {}
                     inherited_checkpoint = None
+                    branch_bc_mode = _env_flag("EVOLUTION_BRANCH_BC_MODE", False) and batch_task == "Isaac-EvolutionHand-BranchGrasp-v0"
                     if _env_flag('EVOLUTION_INHERIT_POLICY', True) and stage_name == 'stage1':
                         inherited_checkpoint = select_parent_checkpoint(
                             parent, batch_task, EVOLUTION_LOG_ROOT, parent_state)
-                        if inherited_checkpoint is None and current_generation == 0:
+                        if branch_bc_mode and current_generation == 0:
+                            inherited_checkpoint = None  # Old Branch Cartesian policy has an incompatible action contract.
+                            if not child.get("metadata", {}).get("seed_preserved_for_bc"):
+                                seed_child = next((item for item in stage_children if item.get("metadata", {}).get("seed_preserved_for_bc")), None)
+                                if seed_child is not None:
+                                    seed_state = _load_json(_evaluation_state_path_for_child(experiment_save_path, seed_child["child_id"])) or {}
+                                    inherited_checkpoint = select_parent_checkpoint(
+                                        seed_child, batch_task, EVOLUTION_LOG_ROOT, seed_state)
+                        if inherited_checkpoint is None and current_generation == 0 and not branch_bc_mode:
                             seed_lineage_path = os.environ.get('EVOLUTION_SEED_POLICY_LINEAGE')
                             seed_individual_key = os.environ.get('EVOLUTION_SEED_POLICY_INDIVIDUAL', '15_0')
                             if seed_lineage_path:
@@ -958,22 +972,34 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                 if inherited_checkpoint is None:
                                     raise FileNotFoundError(f'Seed policy checkpoint missing: {batch_task}')
                     bc_dataset_path = None
-                    if current_generation == 0 and batch_task == 'Isaac-EvolutionHand-Grasp-v0':
-                        preflight = child.get('metadata', {}).get('scripted_preflight', {})
-                        metrics_path = preflight.get('tasks', {}).get('grasp', {}).get('metrics_path')
-                        trace_path = os.path.splitext(metrics_path)[0] + '.trace.npz' if metrics_path else None
-                        if trace_path and os.path.isfile(trace_path):
+                    bc_task_name = ("branch" if branch_bc_mode else "grasp")
+                    bc_eligible = current_generation == 0 and batch_task in (
+                        "Isaac-EvolutionHand-Grasp-v0",
+                        "Isaac-EvolutionHand-BranchGrasp-v0" if branch_bc_mode else "",
+                    )
+                    if bc_eligible:
+                        preflight = child.get("metadata", {}).get("scripted_preflight", {})
+                        task_preflight = preflight.get("tasks", {}).get(bc_task_name, {})
+                        metrics_path = task_preflight.get("metrics_path")
+                        trace_path = os.path.splitext(metrics_path)[0] + ".trace.npz" if metrics_path else None
+                        if trace_path and os.path.isfile(trace_path) and task_preflight.get("passed"):
                             try:
                                 trace = np.load(trace_path)
-                                if (trace['actions_control_fingers'].all()
-                                    and trace['scene_unmodified'].all()
-                                    and bool(preflight.get('tasks', {}).get('grasp', {}).get('passed'))):
+                                metrics = _load_json(metrics_path) or {}
+                                valid = (bool(np.asarray(trace["actions_control_fingers"]).all())
+                                    and bool(np.asarray(trace["scene_unmodified"]).all())
+                                    and np.isfinite(trace["observations_before_step"]).all()
+                                    and np.isfinite(trace["submitted_actions"]).all()
+                                    and trace["observations_before_step"].shape[1] == (100 if bc_task_name == "branch" else 159)
+                                    and trace["submitted_actions"].shape[1] == 20)
+                                if bc_task_name == "branch":
+                                    valid = valid and metrics.get("joint_limit_violation_steps") == 0
+                                if valid:
                                     bc_dataset_path = trace_path
                             except Exception:
                                 bc_dataset_path = None
-                    if (current_generation == 0 and batch_task == "Isaac-EvolutionHand-Grasp-v0"
-                        and child.get("metadata", {}).get("seed_preserved_for_bc") and not bc_dataset_path):
-                        raise RuntimeError("Verified BC seed dataset is missing or invalid")
+                    if bc_eligible and child.get("metadata", {}).get("seed_preserved_for_bc") and not bc_dataset_path:
+                        raise RuntimeError(f"Verified BC seed {bc_task_name} dataset is missing or invalid")
                     try:
                         current_score = evaluation(
                             child["urdf_info"],

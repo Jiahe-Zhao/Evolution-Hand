@@ -25,6 +25,7 @@ def main(task: str) -> None:
     parser.add_argument("--min_video_steps", type=int, default=90, help="Minimum rendered frames; 90 at 30 fps is 3 seconds.")
     parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
     parser.add_argument("--training_scene", action="store_true", help="Use native task reset without scripted object or hand state writes.")
+    parser.add_argument("--branch_policy_demo", action="store_true", help="Use the Branch policy's 20 action channels without joint overrides.")
     parser.add_argument("--replay_actions_json", help="Forage diagnostic: replay recorded policy actions in a fresh task reset.")
     parser.add_argument("--direct_envelope_closure", action=argparse.BooleanOptionalAction, default=True, help="Retain the joint target used to generate the grasp envelope.")
     parser.add_argument("--max_physical_candidates", type=int, default=36)
@@ -33,6 +34,8 @@ def main(task: str) -> None:
     args, hydra_args = parser.parse_known_args()
     if bool(args.lineage_json) != bool(args.individual_key):
         parser.error("--lineage_json and --individual_key must be supplied together")
+    if args.branch_policy_demo and (task != "branch" or not args.training_scene or os.environ.get("EVOLUTION_BRANCH_BC_MODE") != "1"):
+        parser.error("--branch_policy_demo requires Branch, --training_scene and EVOLUTION_BRANCH_BC_MODE=1")
     args.enable_cameras = not args.preflight
     sys.argv = [sys.argv[0]] + hydra_args
     app = AppLauncher(args).app
@@ -718,6 +721,7 @@ def main(task: str) -> None:
         replay_history = json.loads(Path(args.replay_actions_json).read_text(encoding="utf-8"))["history"]
         replay_actions = [entry["action"] for entry in replay_history]
     success = False
+    joint_limit_violation_steps = 0
     strike_pinch_action = None
     strike_initial_tool_state = None
     forage_leaf_index = 1
@@ -725,6 +729,28 @@ def main(task: str) -> None:
     forage_clear_frames = 0
     forage_lost_contact_frames = 0
     scripted_joint_target = raw.hand.data.joint_pos.clone()
+    branch_reference_joints = None
+    if task == "branch" and args.branch_policy_demo:
+        # Normalized legal-ROM targets from a physical opposition grasp.
+        # Unknown joints retain the native reset target for evolved hands.
+        fractions = {
+            "link_1_thumb_spread_joint": .23510,
+            "link_0_0_to_link_1_0": .74946, "link_0_0_to_link_2_0": .74300,
+            "link_0_0_to_link_3_0": .74443, "link_0_0_to_link_4_0": .76872,
+            "link_0_0_to_link_5_0": .73966,
+            "link_1_0_to_link_1_1": .72845, "link_2_0_to_link_2_1": .72536,
+            "link_3_0_to_link_3_1": .69317, "link_4_0_to_link_4_1": .61976,
+            "link_5_0_to_link_5_1": .52340,
+            "link_1_1_to_link_1_2": .76646, "link_2_1_to_link_2_2": .72801,
+            "link_3_1_to_link_3_2": .70921, "link_4_1_to_link_4_2": .74595,
+            "link_5_1_to_link_5_2": .74889,
+        }
+        branch_reference_joints = initial_joint_pos.clone()
+        lower, upper = raw.hand_dof_lower_limits, raw.hand_dof_upper_limits
+        for name, fraction in fractions.items():
+            if name in raw.hand.joint_names:
+                joint_id = raw.hand.joint_names.index(name)
+                branch_reference_joints[:, joint_id] = lower[:, joint_id] + fraction * (upper[:, joint_id] - lower[:, joint_id])
     raw._compute_intermediate_values()
     initial_geometry = {
         "fingertips_world_m": raw.cartesian_ik.fingertip_positions_world()[0].detach().cpu().tolist(),
@@ -752,7 +778,22 @@ def main(task: str) -> None:
     try:
         max_steps = int(raw.max_episode_length) - 1 if task == "forage" else (320 if task == "strike" else 240)
         for step in range(max_steps):
-            if task == "branch":
+            if task == "branch" and args.branch_policy_demo:
+                alpha = min(1.0, max(0.0, (step - 10) / 130.0))
+                desired = initial_joint_pos + alpha * (branch_reference_joints - initial_joint_pos)
+                lower, upper = raw.hand_dof_lower_limits, raw.hand_dof_upper_limits
+                action = torch.zeros((1, 20), device=raw.device)
+                for finger in range(5):
+                    joint_ids = raw.cartesian_ik.joint_ids[finger].tolist()
+                    if finger > 0:
+                        joint_ids = [index for index in joint_ids if "spread" not in raw.hand.joint_names[index]]
+                    for channel, joint_id in enumerate(joint_ids[:4]):
+                        action[:, 4 * finger + channel] = (
+                            2.0 * (desired[:, joint_id] - lower[:, joint_id])
+                            / (upper[:, joint_id] - lower[:, joint_id]).clamp_min(1.0e-6) - 1.0
+                        ).clamp(-1.0, 1.0)
+                raw.scripted_joint_target = None
+            elif task == "branch":
                 raw._compute_intermediate_values()
                 approach = min(1.0, max(0.0, (step - 10) / 130.0))
                 raw.scripted_joint_target = initial_joint_pos + approach * (closure_target - initial_joint_pos)
@@ -849,6 +890,10 @@ def main(task: str) -> None:
             _, reward, terminated, truncated, _ = env.step(action)
             bc_observations.append(observation_before)
             bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
+            if task == "branch" and args.branch_policy_demo:
+                joints = raw.hand.data.joint_pos[0]
+                limits = raw.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
+                joint_limit_violation_steps += int(bool(((joints < limits[:, 0] - 0.005) | (joints > limits[:, 1] + 0.005)).any()))
             raw._compute_intermediate_values()
             entry = {"step": step, "reward": float(reward[0].item()),
                      "terminated": bool(terminated[0]), "truncated": bool(truncated[0]),
@@ -921,10 +966,12 @@ def main(task: str) -> None:
             bc_path,
             observations_before_step=np.asarray(bc_observations),
             submitted_actions=np.asarray(bc_actions),
-            actions_control_fingers=np.full(len(bc_actions), task == "forage"),
+            actions_control_fingers=np.full(len(bc_actions), task == "forage" or (task == "branch" and args.branch_policy_demo)),
             scene_unmodified=np.full(len(bc_actions), task == "forage" or args.training_scene),
         )
-    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "initial_geometry": initial_geometry, "history": history}
+    if task == "branch" and args.branch_policy_demo and joint_limit_violation_steps:
+        success = False
+    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "joint_limit_violation_steps": joint_limit_violation_steps if task == "branch" and args.branch_policy_demo else None, "controller": "branch_joint_target_v1" if task == "branch" and args.branch_policy_demo else None, "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps({key: value for key, value in summary.items() if key != "history"}, indent=2))

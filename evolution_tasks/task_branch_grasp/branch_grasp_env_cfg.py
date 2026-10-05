@@ -91,7 +91,7 @@ class BranchGraspEnvCfg(DirectRLEnvCfg):
                 "link_1_thumb_spread_joint": -0.80,
                 "link_0_0_to_link_1_0": 0.30,
                 "link_2_mcp_spread_joint": 0.0,
-                "link_3_mcp_spread_joint": 0.0,
+                "link_3_mcp_spread_joint": -0.1 if os.environ.get("EVOLUTION_BRANCH_BC_MODE") == "1" else 0.0,
                 "link_4_mcp_spread_joint": 0.0,
                 "link_5_mcp_spread_joint": 0.0,
                 "link_0_0_to_link_2_0": 0.55,
