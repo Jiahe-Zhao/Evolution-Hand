@@ -242,3 +242,5 @@ v8 运行中验证（2026-10-04）：保留种子子代 `83c2e7c8c50355c48ae2ca6
 - 保留种子形态 `15_0` 的 stage1 正式示教：`outputs/branch_bc_dev/formal.json` 与 `.trace.npz`。149 步达到环境 M3，拇指及至少两根长指连续接触 5 步，关节越限 0；100 维观测、20 维提交动作，轨迹标记 `actions_control_fingers=true`、`scene_unmodified=true`。
 - 主流程对第 0 代 Branch 与 Grasp 分别验证预检成功、轨迹形状、有限数值及真实动作标记后注入 BC。Branch 额外要求零关节越限。Branch 策略契约改为 `branch_joint_target_v1`，禁止继承旧 Cartesian Branch checkpoint；其他第 0 代 Branch 个体可继承完成 BC 的种子策略。Forage、Strike 的动作与训练路径未改。
 - 新实验 `exp_20261005_branchgrasp_BC15g_v9` 已从 generation 0 启动，启动日志 `outputs/training_launch/v9.log`。沿用同一启动器参数：15 代、初始 8 个体、4096 环境、单 worker、PPO horizon 16、minibatch 4096、mini epochs 5、stage1 100、stage2 250、top fraction 0.25、Forage/Strike 25/50。当前处于初始形态门控；实际 BC 执行应以对应任务训练目录的 `behavior_cloning.json` 为准。
+
+v9 种子预检复核：`evolution_tasks/logs/preflight/exp_20261005_branchgrasp_BC15g_v9_4892fa79/status.json` 中 Grasp、Branch 均 `passed=true`。Grasp 为 `(135,159)` 观测 / `(135,20)` 动作，Branch 为 `(149,100)` / `(149,20)`，两者成功、关节越限 0、真实动作和未改写场景标记均为 true。Forage 预检失败，按原配置继续 PPO。Branch 成功视频为 `outputs/branch_bc_dev/branch_15_0.mp4`，已复制至本地工作区。当前仍在候选生成/预检阶段，BC 优化完成以 `behavior_cloning.json` 为准。
