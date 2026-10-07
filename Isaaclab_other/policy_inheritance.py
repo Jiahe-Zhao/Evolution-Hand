@@ -61,7 +61,7 @@ TASKS = {'Isaac-EvolutionHand-Grasp-v0': 'grasp',
 def _field(cfg, name, default=None):
     return cfg.get(name, default) if isinstance(cfg, dict) else getattr(cfg, name, default)
 
-def policy_contract(task, cfg):
+def policy_contract(task, cfg, actual_joint_names=None):
     kind = TASKS[task]
     if str(_field(cfg, 'asymmetric_obs', False)).lower() == 'true':
         raise ValueError('Asymmetric critic transfer requires a separate observation contract')
@@ -69,8 +69,15 @@ def policy_contract(task, cfg):
         raise ValueError('Skill transfer requires the current full observation layout')
     joints = list(_field(cfg, 'actuated_joint_names'))
     branch_joint_mode = kind == 'branch' and os.environ.get('EVOLUTION_BRANCH_BC_MODE') == '1'
+    strike_joint_mode = kind == 'strike' and os.environ.get('EVOLUTION_STRIKE_BC_MODE') == '1'
     if branch_joint_mode:
         actions = [f'finger{f}.joint{j}.target' for f in range(1, 6) for j in range(4)]
+    elif strike_joint_mode:
+        physical_joints = list(actual_joint_names) if actual_joint_names is not None else list(joints)
+        if len(physical_joints) > 20:
+            raise ValueError('Strike direct BC controller supports at most 20 physical joints')
+        physical_joints += [f'unused_strike_joint_{index}' for index in range(len(physical_joints), 20)]
+        actions = [f'joint:{name}.target' for name in physical_joints]
     else:
         actions = [f'finger{f}.delta.{axis}' for f in range(1, 6) for axis in 'xyz']
         actions += [f'finger{f}.closure' for f in range(1, 6)]
@@ -92,8 +99,15 @@ def policy_contract(task, cfg):
     obs += descriptor + ['previous_action:'+a for a in actions]
     if len(actions) != int(_field(cfg, 'action_space')) or len(obs) != int(_field(cfg, 'observation_space')):
         raise ValueError(f'Unrecognized {task} action/observation layout')
-    return {'version':1, 'task':task, 'controller':'branch_joint_target_v1' if branch_joint_mode else 'cartesian_5finger_ik_v1',
-            'actions':actions, 'observations':obs}
+    controller = 'branch_joint_target_v1' if branch_joint_mode else 'strike_joint_target_v1' if strike_joint_mode else 'cartesian_5finger_ik_v1'
+    contract = {'version':1, 'task':task, 'controller':controller, 'actions':actions, 'observations':obs}
+    if strike_joint_mode:
+        contract['environment'] = {
+            'EVOLUTION_STRIKE_RESET_THUMB_SPREAD': os.environ.get('EVOLUTION_STRIKE_RESET_THUMB_SPREAD', '-0.80'),
+            'EVOLUTION_STRIKE_PREGRASP_ACTION': os.environ.get('EVOLUTION_STRIKE_PREGRASP_ACTION', str(_field(cfg, 'pregrasp_action', 0.45))),
+            'EVOLUTION_STRIKE_RESET_OFFSET_WORLD': os.environ.get('EVOLUTION_STRIKE_RESET_OFFSET_WORLD', '0,0,0'),
+        }
+    return contract
 
 def load_contract(checkpoint, task):
     params = Path(checkpoint).parent.parent/'params'
@@ -151,7 +165,7 @@ def map_model_weights(source, target, parent, child):
                     'mapped_actions':len(ap),'total_actions':len(child['actions'])}
 
 def save_contract(run_dir, task, env):
-    contract = policy_contract(task, env.cfg)
+    contract = policy_contract(task, env.cfg, env.hand.joint_names)
     if not hasattr(env, 'cartesian_ik'):
         raise ValueError('Expected morphology-aware Cartesian IK controller')
     contract['actual_joint_names'] = list(env.hand.joint_names)

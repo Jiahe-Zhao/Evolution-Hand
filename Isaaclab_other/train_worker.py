@@ -210,6 +210,8 @@ def _prune_run_checkpoints(run_dir):
             reverse=True,
         )[:KEEP_BEST_CHECKPOINTS]
     for path in checkpoints:
+        if os.path.basename(path) == "bc_init.pth":
+            continue
         if path not in set(latest) | set(best):
             os.remove(path)
 
@@ -340,6 +342,9 @@ def _run_training(request):
             from policy_inheritance import train_behavior_cloning
             agent = runner.algo_factory.create(runner.algo_name, base_name='run', params=runner.params)
             train_behavior_cloning(agent, bc_dataset, run_dir, epochs=int(os.environ.get('EVOLUTION_BC_EPOCHS', '10')))
+            bc_checkpoint = os.path.join(run_dir, 'nn', 'bc_init')
+            os.makedirs(os.path.dirname(bc_checkpoint), exist_ok=True)
+            agent.save(bc_checkpoint)
             agent.train()
         else:
             runner.run(run_args)

@@ -26,16 +26,23 @@ def main(task: str) -> None:
     parser.add_argument("--preflight", action="store_true", help="Run physical success checks without rendering video.")
     parser.add_argument("--training_scene", action="store_true", help="Use native task reset without scripted object or hand state writes.")
     parser.add_argument("--branch_policy_demo", action="store_true", help="Use the Branch policy's 20 action channels without joint overrides.")
+    parser.add_argument("--strike_policy_demo", action="store_true", help="Use Strike's 20 direct joint action channels without joint overrides.")
     parser.add_argument("--replay_actions_json", help="Forage diagnostic: replay recorded policy actions in a fresh task reset.")
     parser.add_argument("--direct_envelope_closure", action=argparse.BooleanOptionalAction, default=True, help="Retain the joint target used to generate the grasp envelope.")
     parser.add_argument("--max_physical_candidates", type=int, default=36)
     parser.add_argument("--strike_thumb_bias", type=float, default=0.0, help="Diagnostic tool-position bias toward the closed thumb, in metres.")
+    parser.add_argument("--strike_ring_spread_target", type=float, default=0.0, help="Strike ring spread joint target in radians for force and limit tuning.")
+    parser.add_argument("--strike_closure_fraction", type=float, default=0.82, help="Strike flexion target as a fraction of each joint's legal range.")
+    parser.add_argument("--strike_joint_limit_tolerance", type=float, default=0.005, help="Allowed transient physics overshoot beyond a target joint limit in radians.")
+    parser.add_argument("--strike_action_noise_std", type=float, default=0.0, help="Seeded correlated action perturbation for closed-loop Strike demonstrations.")
     AppLauncher.add_app_launcher_args(parser)
     args, hydra_args = parser.parse_known_args()
     if bool(args.lineage_json) != bool(args.individual_key):
         parser.error("--lineage_json and --individual_key must be supplied together")
     if args.branch_policy_demo and (task != "branch" or not args.training_scene or os.environ.get("EVOLUTION_BRANCH_BC_MODE") != "1"):
         parser.error("--branch_policy_demo requires Branch, --training_scene and EVOLUTION_BRANCH_BC_MODE=1")
+    if args.strike_policy_demo and (task != "strike" or not args.training_scene or os.environ.get("EVOLUTION_STRIKE_BC_MODE") != "1"):
+        parser.error("--strike_policy_demo requires Strike, --training_scene and EVOLUTION_STRIKE_BC_MODE=1")
     args.enable_cameras = not args.preflight
     sys.argv = [sys.argv[0]] + hydra_args
     app = AppLauncher(args).app
@@ -130,7 +137,7 @@ def main(task: str) -> None:
                     torch.full_like(target[:, joint_id], thumb_angle), lower[:, joint_id], upper[:, joint_id]
                 )
             elif "mcp_spread_joint" in name:
-                target[:, joint_id] = 0.0
+                target[:, joint_id] = args.strike_ring_spread_target if task == "strike" and name == "link_4_mcp_spread_joint" else 0.0
             elif (
                 name.startswith("link_0_0_to_link_")
                 or "_0_to_link_" in name
@@ -661,7 +668,7 @@ def main(task: str) -> None:
     raw._compute_intermediate_values()
     initial_joint_pos = raw.hand.data.joint_pos.clone()
     adaptive_geometry = None
-    closure_target = morphology_closure_target(raw)
+    closure_target = morphology_closure_target(raw, fraction=args.strike_closure_fraction if task == "strike" else 0.82)
     physical_pregrasp_target = initial_joint_pos.clone()
     if task in ("branch", "strike") and not args.training_scene:
         closure_target, adaptive_object_position, adaptive_geometry = choose_adaptive_pregasp(
@@ -722,7 +729,13 @@ def main(task: str) -> None:
         replay_actions = [entry["action"] for entry in replay_history]
     success = False
     joint_limit_violation_steps = 0
+    max_joint_limit_violation_rad = 0.0
+    joint_limit_violation_names = set()
+    joint_limit_violation_examples = {}
     strike_pinch_action = None
+    strike_noise_generator = torch.Generator(device=raw.device)
+    strike_noise_generator.manual_seed(args.seed)
+    strike_action_noise = torch.zeros((1, 20), device=raw.device)
     strike_initial_tool_state = None
     forage_leaf_index = 1
     forage_stage = "approach"
@@ -873,10 +886,23 @@ def main(task: str) -> None:
                 # we translate the wrist to strike.  No tool pose is written.
                 raw._compute_intermediate_values()
                 grip_alpha = min(1.0, (step + 1) / 60.0)
-                raw.scripted_joint_target = initial_joint_pos + grip_alpha * (
+                desired_joint_target = initial_joint_pos + grip_alpha * (
                     closure_target - initial_joint_pos
                 )
                 action = torch.zeros((1, 23), device=raw.device)
+                if args.strike_policy_demo:
+                    raw.scripted_joint_target = None
+                    for action_id, joint_name in enumerate(raw.strike_action_joint_names):
+                        if joint_name in raw.hand.joint_names:
+                            joint_id = raw.hand.joint_names.index(joint_name)
+                            lower = raw.hand_dof_lower_limits[:, joint_id]
+                            upper = raw.hand_dof_upper_limits[:, joint_id]
+                            action[:, action_id] = torch.clamp(
+                                2.0 * (desired_joint_target[:, joint_id] - lower) / (upper - lower).clamp_min(1.0e-6) - 1.0,
+                                -1.0, 1.0,
+                            )
+                else:
+                    raw.scripted_joint_target = desired_joint_target
                 if bool(raw.tool_was_held[0]):
                     height_error = raw.cone_tip_pos[:, 2] - raw.strike_target_pos[:, 2]
                     # Wrist actions are offsets from reset, not incremental motion.
@@ -886,14 +912,32 @@ def main(task: str) -> None:
                     action[:, 20:23] = torch.clamp(
                         (desired_root - neutral_root) / raw.wrist_action_scale, -1.0, 1.0
                     )
+                if args.strike_policy_demo and args.strike_action_noise_std > 0:
+                    strike_action_noise = (
+                        0.9 * strike_action_noise
+                        + (1.0 - 0.9**2) ** 0.5 * args.strike_action_noise_std
+                        * torch.randn((1, 20), device=raw.device, generator=strike_noise_generator)
+                    )
+                    action[:, :20] = torch.clamp(action[:, :20] + strike_action_noise, -1.0, 1.0)
             observation_before = raw._get_observations()["policy"][0].detach().cpu().numpy().astype(np.float32)
             _, reward, terminated, truncated, _ = env.step(action)
             bc_observations.append(observation_before)
             bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
-            if task == "branch" and args.branch_policy_demo:
+            if (task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo):
                 joints = raw.hand.data.joint_pos[0]
                 limits = raw.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
-                joint_limit_violation_steps += int(bool(((joints < limits[:, 0] - 0.005) | (joints > limits[:, 1] + 0.005)).any()))
+                violation = torch.maximum(limits[:, 0] - joints, joints - limits[:, 1]).clamp_min(0)
+                max_joint_limit_violation_rad = max(max_joint_limit_violation_rad, float(violation.max()))
+                joint_limit_violation_names.update(raw.hand.joint_names[i] for i in torch.where(violation > args.strike_joint_limit_tolerance)[0].tolist())
+                for joint_id in torch.where(violation > args.strike_joint_limit_tolerance)[0].tolist():
+                    name = raw.hand.joint_names[joint_id]
+                    sample = {"step": step, "position_rad": float(joints[joint_id]),
+                              "lower_rad": float(limits[joint_id, 0]), "upper_rad": float(limits[joint_id, 1]),
+                              "target_rad": float(raw.cur_targets[0, joint_id]),
+                              "violation_rad": float(violation[joint_id])}
+                    if name not in joint_limit_violation_examples or sample["violation_rad"] > joint_limit_violation_examples[name]["violation_rad"]:
+                        joint_limit_violation_examples[name] = sample
+                joint_limit_violation_steps += int(bool((violation > args.strike_joint_limit_tolerance).any()))
             raw._compute_intermediate_values()
             entry = {"step": step, "reward": float(reward[0].item()),
                      "terminated": bool(terminated[0]), "truncated": bool(truncated[0]),
@@ -966,12 +1010,14 @@ def main(task: str) -> None:
             bc_path,
             observations_before_step=np.asarray(bc_observations),
             submitted_actions=np.asarray(bc_actions),
-            actions_control_fingers=np.full(len(bc_actions), task == "forage" or (task == "branch" and args.branch_policy_demo)),
+            actions_control_fingers=np.full(len(bc_actions), task == "forage" or (task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo)),
             scene_unmodified=np.full(len(bc_actions), task == "forage" or args.training_scene),
         )
-    if task == "branch" and args.branch_policy_demo and joint_limit_violation_steps:
+    if ((task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo)) and joint_limit_violation_steps:
         success = False
-    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "joint_limit_violation_steps": joint_limit_violation_steps if task == "branch" and args.branch_policy_demo else None, "controller": "branch_joint_target_v1" if task == "branch" and args.branch_policy_demo else None, "initial_geometry": initial_geometry, "history": history}
+    demo_mode = (task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo)
+    controller = "branch_joint_target_v1" if task == "branch" and args.branch_policy_demo else "strike_joint_target_v1" if task == "strike" and args.strike_policy_demo else None
+    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "joint_limit_violation_steps": joint_limit_violation_steps if demo_mode else None, "joint_limit_tolerance_rad": args.strike_joint_limit_tolerance if demo_mode else None, "max_joint_limit_violation_rad": max_joint_limit_violation_rad if demo_mode else None, "joint_limit_violation_names": sorted(joint_limit_violation_names) if demo_mode else None, "joint_limit_violation_examples": joint_limit_violation_examples if demo_mode else None, "controller": controller, "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps({key: value for key, value in summary.items() if key != "history"}, indent=2))

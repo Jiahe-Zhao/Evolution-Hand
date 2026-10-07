@@ -233,7 +233,7 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
             physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=3.0, dynamic_friction=2.5),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 kinematic_enabled=False,
-                disable_gravity=False,
+                disable_gravity=True,
                 enable_gyroscopic_forces=True,
                 solver_position_iteration_count=8,
                 solver_velocity_iteration_count=0,
@@ -263,7 +263,7 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
             activate_contact_sensors=True,
             rigid_props=sim_utils.RigidBodyPropertiesCfg(
                 kinematic_enabled=True, #物体静止
-                disable_gravity=False,
+                disable_gravity=True,
                 enable_gyroscopic_forces=True,
                 solver_position_iteration_count=8,
                 solver_velocity_iteration_count=0,
@@ -328,9 +328,11 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     action_delta_scale = 0.35
     stabilization_steps = 45
     # Cartesian displacement limits for the three wrist action channels.
-    wrist_action_scale = (0.025, 0.025, 0.060)
-    # Cone-root target corresponding to the centre of the strike block's top face.
-    target_position = (-0.05, 0.01, 0.214)
+    wrist_action_scale = (0.025, 0.025, 0.100)
+    # Tool-tip target at the physical top face (including its rest offset).
+    # Place the strike zone below the calibrated grasp envelope of the
+    # reference morphology, so the tool can descend without a lateral slide.
+    target_position = (-0.010, 0.037, 0.201)
     tool_impact_offset = 0.090
     hold_tool_to_hand = False
     tool_finger_contact_force_threshold = 0.1

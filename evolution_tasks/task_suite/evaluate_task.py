@@ -24,6 +24,13 @@ parser.add_argument("--curriculum_stage", choices=("auto", "stage1", "stage2"), 
 parser.add_argument("--output_dir", required=True)
 parser.add_argument("--episodes", type=int, default=1, help="One process evaluates one episode; use run_reproducible_evaluation.sh for N episodes.")
 parser.add_argument("--seed", type=int, default=7, help="First deterministic episode seed.")
+parser.add_argument("--export_success_bc", action="store_true", help="Save policy observations/actions only when the full task succeeds.")
+parser.add_argument("--export_rollout_debug", action="store_true", help="Save policy observations/actions for diagnostics even on failure; never label them as BC.")
+parser.add_argument("--strike_wrist_teacher", action="store_true", help="Probe a policy-action wrist teacher after Strike grasp; report as demonstration, not policy evaluation.")
+parser.add_argument("--strike_wrist_step", type=float, default=0.05)
+parser.add_argument("--strike_keep_policy_fingers", action="store_true")
+parser.add_argument("--strike_fixed_wrist_actions", help="Three comma-separated normalized wrist targets for a slow Strike teacher probe.")
+parser.add_argument("--strike_force_closure", type=float, help="Override five policy closure channels after grasp for a Strike teacher probe.")
 parser.add_argument("--episode_index", type=int, default=0, help="Stable index assigned by the N-episode runner.")
 parser.add_argument("--max_steps", type=int, default=0, help="0 uses the task's episode limit.")
 parser.add_argument("--video_fps", type=int, default=30)
@@ -110,21 +117,30 @@ def _resolve_checkpoint() -> str:
 
 
 def _configure_checkpoint_controller(checkpoint: str) -> str | None:
-    """Use the saved action contract before constructing a Branch environment."""
-    if args.task != "branch":
+    """Restore saved action and reset semantics before constructing an environment."""
+    if args.task not in {"branch", "strike"}:
         return None
     path = Path(checkpoint).parent.parent / "params" / "policy_contract.json"
     if not path.is_file():
-        raise FileNotFoundError(f"Branch checkpoint has no policy contract: {path}")
+        raise FileNotFoundError(f"{args.task} checkpoint has no policy contract: {path}")
     contract = json.loads(path.read_text(encoding="utf-8"))
-    if contract.get("task") != TASKS["branch"][0]:
-        raise ValueError(f"Branch checkpoint task mismatch: {path}")
+    if contract.get("task") != TASKS[args.task][0]:
+        raise ValueError(f"{args.task} checkpoint task mismatch: {path}")
     controller = contract.get("controller")
-    modes = {"branch_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"}
+    modes = ({"branch_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"}
+             if args.task == "branch" else
+             {"strike_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"})
     if controller not in modes:
-        raise ValueError(f"Unknown Branch checkpoint controller: {controller}")
-    os.environ["EVOLUTION_BRANCH_BC_MODE"] = modes[controller]
-    print(f"[EVAL] Branch controller from checkpoint: {controller}", flush=True)
+        raise ValueError(f"Unknown {args.task} checkpoint controller: {controller}")
+    os.environ["EVOLUTION_BRANCH_BC_MODE" if args.task == "branch" else "EVOLUTION_STRIKE_BC_MODE"] = modes[controller]
+    if args.task == "strike" and controller == "strike_joint_target_v1":
+        environment = contract.get("environment")
+        required = {"EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "EVOLUTION_STRIKE_PREGRASP_ACTION", "EVOLUTION_STRIKE_RESET_OFFSET_WORLD"}
+        if not isinstance(environment, dict) or not required.issubset(environment):
+            raise ValueError(f"Strike checkpoint lacks reset contract: {path}")
+        for name in required:
+            os.environ[name] = str(environment[name])
+    print(f"[EVAL] {args.task} controller from checkpoint: {controller}", flush=True)
     return controller
 
 
@@ -343,6 +359,9 @@ def _task_evidence(task: str, raw_env: Any, reward: float) -> tuple[bool, dict[s
             "strike_goal_distance_m": _metric(raw_env, "strike_goal_distance"),
             "strike_contact_force_n": _metric(raw_env, "strike_contact_force"),
             "tool_was_held": bool(raw_env.tool_was_held[0].item()),
+            "thumb_tool_force_n": _as_float(raw_env.tool_fingertip_forces[0, 0]),
+            "long_tool_contact_count": int((raw_env.tool_fingertip_forces[0, 1:] >= raw_env.cfg.tool_finger_contact_force_threshold).sum().item()),
+            "grasp_hold_steps": int(raw_env.tool_grasp_streak[0].item()),
             "tool_attachment_error_m": _as_float(
                 getattr(raw_env, "tool_attachment_error", torch.zeros(1, device=raw_env.device))[0]
             ),
@@ -381,6 +400,11 @@ def main() -> None:
         agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
         print(f"[EVAL] Creating {args.task} environment", flush=True)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
+        if args.task == "strike" and controller == "strike_joint_target_v1":
+            saved_contract = json.loads((Path(resume_path).parent.parent / "params" / "policy_contract.json").read_text(encoding="utf-8"))
+            actual_joints = list(raw_env.unwrapped.hand.joint_names)
+            if actual_joints != saved_contract.get("actual_joint_names"):
+                raise ValueError("Strike checkpoint joint order differs from evaluation morphology")
         print(f"[EVAL] Environment created", flush=True)
         if args.record_video:
             set_camera_view(eye=env_cfg.viewer.eye, target=env_cfg.viewer.lookat, camera_prim_path="/OmniverseKit_Persp")
@@ -423,14 +447,60 @@ def main() -> None:
             temp_video = videos_dir / f".episode_{episode_index:03d}.mp4"
             writer = imageio.get_writer(temp_video, fps=args.video_fps, codec="libx264", quality=8) if args.record_video else None
             steps: list[dict[str, Any]] = []
+            bc_observations = []
+            bc_actions = []
+            strike_grip_action = None
+            strike_teacher_wrist = torch.zeros((1, 3), device=raw_env.unwrapped.device)
             initial_geometry = _initial_geometry(args.task, raw_env.unwrapped)
             episode_success = False
             termination = "max_steps"
             try:
                 for step in range(max_steps):
+                    pre_state = None
+                    if args.task == "strike":
+                        physical = raw_env.unwrapped
+                        pre_state = {
+                            "tool_center_m": _list(physical.cone.data.root_pos_w[0]),
+                            "tool_tip_m": _list(physical.cone_tip_pos[0]),
+                            "hand_root_m": _list(physical.hand.data.root_pos_w[0]),
+                            "target_m": _list(physical.strike_target_pos[0]),
+                        }
+                    if args.export_success_bc or args.export_rollout_debug:
+                        bc_observations.append(raw_env.unwrapped._get_observations()["policy"][0].detach().cpu().numpy().astype("float32"))
                     with torch.inference_mode():
                         actions = agent.get_action(agent.obs_to_torch(obs), is_deterministic=True)
                         if actions.ndim == 1: actions = actions.unsqueeze(0)
+                        if args.strike_wrist_teacher and args.task == "strike" and bool(raw_env.unwrapped.tool_was_held[0]):
+                            physical = raw_env.unwrapped
+                            if strike_grip_action is None:
+                                strike_grip_action = actions[:, :20].clone()
+                            if not args.strike_keep_policy_fingers:
+                                actions[:, :20] = strike_grip_action
+                            if args.strike_force_closure is not None:
+                                actions[:, 15:20] = args.strike_force_closure
+                            neutral = physical.hand.data.default_root_state[:, :3] + physical.scene.env_origins
+                            root = physical.hand.data.root_pos_w
+                            target = physical.strike_target_pos.clone()
+                            target[:, 2] -= 0.012
+                            tip_error = target - physical.cone_tip_pos
+                            scale = physical.wrist_action_scale
+                            desired = ((root + tip_error - neutral) / scale).clamp(-1.0, 1.0)
+                            if args.strike_fixed_wrist_actions:
+                                values = [float(value) for value in args.strike_fixed_wrist_actions.split(",")]
+                                if len(values) != 3:
+                                    raise ValueError("Strike fixed wrist requires three action values")
+                                desired = torch.tensor(values, device=physical.device).view(1, 3).clamp(-1.0, 1.0)
+                            strike_teacher_wrist = torch.maximum(
+                                torch.minimum(desired, strike_teacher_wrist + args.strike_wrist_step),
+                                strike_teacher_wrist - args.strike_wrist_step,
+                            )
+                            actions[:, 20:23] = strike_teacher_wrist
+                        if args.export_success_bc or args.export_rollout_debug:
+                            bc_actions.append(actions[0].detach().cpu().numpy().astype("float32"))
+                        if pre_state is not None:
+                            pre_state["submitted_wrist_action"] = _list(actions[0, -3:])
+                            pre_state["submitted_finger_action_max_abs"] = float(actions[0, :20].abs().max())
+                            pre_state["submitted_closure_actions"] = _list(actions[0, 15:20])
                         obs, reward, dones, _ = env.step(actions)
                     reward_value = _as_float(reward[0])
                     success_event, evidence = _task_evidence(args.task, raw_env.unwrapped, reward_value)
@@ -439,6 +509,7 @@ def main() -> None:
                         frame = raw_env.render()
                         writer.append_data(frame[0] if isinstance(frame, (tuple, list)) else frame)
                     steps.append({
+                        "pre_step_physics": pre_state,
                         "control_step": step,
                         "video_time_seconds": round(step / args.video_fps, 4),
                         "simulation_time_seconds": round((step + 1) * raw_env.unwrapped.step_dt, 4),
@@ -477,6 +548,26 @@ def main() -> None:
                 record["video"] = str(final_video.relative_to(output_dir))
             elif args.record_video:
                 temp_video.unlink(missing_ok=True)
+            if episode_success and args.export_success_bc:
+                import numpy as np
+                dataset_path = output_dir / "successful_policy_trace.npz"
+                np.savez_compressed(
+                    dataset_path,
+                    observations_before_step=np.stack(bc_observations),
+                    submitted_actions=np.stack(bc_actions),
+                    actions_control_fingers=np.ones(len(bc_actions), dtype=bool),
+                    scene_unmodified=np.ones(len(bc_actions), dtype=bool),
+                )
+                record["successful_policy_trace"] = str(dataset_path)
+            if args.export_rollout_debug:
+                import numpy as np
+                debug_path = output_dir / "rollout_debug_trace.npz"
+                np.savez_compressed(debug_path,
+                    observations_before_step=np.stack(bc_observations),
+                    submitted_actions=np.stack(bc_actions),
+                    eligible_for_bc=np.array(False),
+                )
+                record["rollout_debug_trace"] = str(debug_path)
             episode_records.append(record)
 
         successes = sum(record["success"] for record in episode_records)
@@ -484,6 +575,7 @@ def main() -> None:
             "task": args.task,
             "checkpoint": resume_path,
             "controller": controller,
+            "strike_wrist_teacher": bool(args.strike_wrist_teacher),
             "curriculum_stage": curriculum_stage,
             "reset_dof_pos_noise": float(env_cfg.reset_dof_pos_noise),
             "morphology": {"lineage_json": args.lineage_json, "individual_key": args.individual_key},
