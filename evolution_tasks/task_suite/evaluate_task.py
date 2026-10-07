@@ -462,7 +462,7 @@ def main() -> None:
             strike_teacher_wrist = torch.zeros((1, 3), device=raw_env.unwrapped.device)
             initial_geometry = _initial_geometry(args.task, raw_env.unwrapped)
             mesh_auditor = None
-            if args.replay_policy_trace and args.task == "grasp":
+            if (args.replay_policy_trace or args.export_success_bc) and args.task == "grasp":
                 from isaaclab_tasks.evolution_tasks.sphere_mesh_audit import SphereMeshAudit
                 mesh_auditor = SphereMeshAudit(raw_env.unwrapped.hand)
             replay_joint_overshoot_max_rad = 0.0
@@ -521,7 +521,7 @@ def main() -> None:
                         obs, reward, dones, _ = env.step(actions)
                     reward_value = _as_float(reward[0])
                     success_event, evidence = _task_evidence(args.task, raw_env.unwrapped, reward_value)
-                    if args.replay_policy_trace:
+                    if args.replay_policy_trace or args.export_success_bc:
                         physical = raw_env.unwrapped
                         joints = physical.hand.data.joint_pos[0]
                         limits = physical.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
@@ -530,6 +530,12 @@ def main() -> None:
                         replay_joint_overshoot_max_rad = max(replay_joint_overshoot_max_rad, max_overshoot)
                         replay_joint_overshoot_steps += int(max_overshoot > 0.02)
                         evidence["joint_overshoot_max_rad"] = max_overshoot
+                        if max_overshoot > 0.02:
+                            joint_id = int(overshoot.argmax())
+                            evidence["joint_overshoot_name"] = physical.hand.joint_names[joint_id]
+                            evidence["joint_position_rad"] = float(joints[joint_id])
+                            evidence["joint_limits_rad"] = [float(v) for v in limits[joint_id]]
+                            evidence["joint_target_rad"] = float(physical.cur_targets[0, joint_id]) if hasattr(physical, "cur_targets") else None
                         if mesh_auditor is not None:
                             clearance = mesh_auditor.measure(physical.grasp_object.data.root_pos_w[0].detach().cpu().numpy(), float(physical.cfg.grasp_object_cfg.spawn.radius))
                             value = float(clearance["clearance_m"])
@@ -565,8 +571,8 @@ def main() -> None:
                 "termination": termination,
                 "steps": len(steps),
                 "initial_geometry": initial_geometry,
-                "joint_overshoot_max_rad": replay_joint_overshoot_max_rad if args.replay_policy_trace else None,
-                "joint_overshoot_steps": replay_joint_overshoot_steps if args.replay_policy_trace else None,
+                "joint_overshoot_max_rad": replay_joint_overshoot_max_rad if (args.replay_policy_trace or args.export_success_bc) else None,
+                "joint_overshoot_steps": replay_joint_overshoot_steps if (args.replay_policy_trace or args.export_success_bc) else None,
                 "source_mesh_penetration_steps": replay_mesh_penetration_steps if mesh_auditor is not None else None,
                 "source_mesh_min_clearance_m": replay_mesh_min_clearance_m if mesh_auditor is not None else None,
                 "trace": steps,
