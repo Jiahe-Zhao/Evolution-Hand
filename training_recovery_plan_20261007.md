@@ -43,6 +43,8 @@
 
 20 个种子的初始几何完全相同，每个模型的 20 条测试轨迹也逐字节一致；因此表中的 20/20 和 0/20 只是相同 reset 的重复性验证，不是跨场景泛化成功率，也不适合计算独立二项置信区间。PPO 终点曾记录到 398 N 接触力，但当帧拇指接触为 0、仅一个长指接触、抓握连续步数为 0，且目标距离 0.060 m；严格成功判定正确地拒绝该碰撞。
 
+旧 v9 Strike 策略在新 reset 参数下的参考单回合为 0/1、453 步、250 分。旧模型训练时使用不同 reset 参数，因此此结果仅说明它不能直接替代当前策略，不作为严格同分布训练对照。
+
 推荐 checkpoint：`evolution_tasks/logs/evolution_task/strike_bc_stage2_13_14_10diverse_seed17_bcinit/nn/bc_init.pth`。100 轮 PPO checkpoint 作为实验结果保留；不改写 v9 的全局 lineage 选择。下一步若要提升泛化，应先在训练和测试中共同引入可控的 reset 扰动，并用闭环纠错示教或 BC 约束 PPO，避免当前纯 PPO 将完整击打退化成抓握。此项会改变场景分布，需单独记录版本与对照。
 
 成功脚本视频：`outputs/strike_bc_direct/validation/strike_success_bc.mp4`；成功 BC 策略视频：`outputs/strike_bc_direct/eval_bc_policy_video/strike/episodes/episode_000/successful_videos/episode_000_seed_200_success_step_18.mp4`。本地可查看 `/Users/zhaojiahe/Documents/科研/strike_bc_success_13_14.mp4` 和 `/Users/zhaojiahe/Documents/科研/strike_bc_policy_success_13_14_slow.mp4`（后者仅把播放速度放慢四倍，帧内容未改）。
