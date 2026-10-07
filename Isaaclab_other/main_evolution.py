@@ -673,7 +673,7 @@ def _run_scripted_preflight(child, experiment_name):
         "forage": os.path.join(EVOLUTION_ROOT, "evolution_tasks", "task_suite", "scripted_adaptive_task_demo.py"),
         "strike": os.path.join(EVOLUTION_ROOT, "evolution_tasks", "task_suite", "scripted_adaptive_task_demo.py"),
     }
-    signature_sources = set(scripts.values()) | {
+    signature_sources = set(scripts.values()) | {__file__} | {
         os.path.join(ISAACLAB_OTHER_ROOT, name)
         for name in ("code_to_urdf.py", "collision_gate.py", "isaaclab_tool.py")
     } | {
