@@ -563,7 +563,11 @@ def _collect_pending_children(
                 child["metadata"] = dict(child.get("metadata", {}))
                 child["metadata"]["scripted_preflight"] = preflight
                 if child["metadata"].get("seed_preserved_for_bc"):
-                    required_bc_tasks = ["grasp", "branch"] if _env_flag("EVOLUTION_BRANCH_BC_MODE", False) else ["grasp"]
+                    required_bc_tasks = ["grasp"]
+                    if _env_flag("EVOLUTION_BRANCH_BC_MODE", False):
+                        required_bc_tasks.append("branch")
+                    if _env_flag("EVOLUTION_STRIKE_BC_MODE", False):
+                        required_bc_tasks.append("strike")
                     for bc_task in required_bc_tasks:
                         if not preflight.get("tasks", {}).get(bc_task, {}).get("passed"):
                             raise RuntimeError(f"BC seed {bc_task} demonstration failed; refusing generation-zero training without verified BC")
@@ -690,6 +694,13 @@ def _run_scripted_preflight(child, experiment_name):
     }
     digest = hashlib.sha256()
     digest.update(json.dumps(child["urdf_info"], sort_keys=True).encode("utf-8"))
+    preflight_env_keys = (
+        "EVOLUTION_BRANCH_BC_MODE", "EVOLUTION_STRIKE_BC_MODE",
+        "EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "EVOLUTION_STRIKE_PREGRASP_ACTION",
+        "EVOLUTION_STRIKE_RESET_OFFSET_WORLD", "EVOLUTION_STRIKE_BC_CLOSURE_FRACTION",
+        "EVOLUTION_STRIKE_BC_RING_SPREAD_TARGET", "EVOLUTION_STRIKE_BC_JOINT_LIMIT_TOLERANCE",
+    )
+    digest.update(json.dumps({key: os.environ.get(key) for key in preflight_env_keys}, sort_keys=True).encode("utf-8"))
     for source_path in sorted(signature_sources):
         digest.update(source_path.encode("utf-8"))
         with open(source_path, "rb") as source_file:
@@ -744,6 +755,11 @@ def _run_scripted_preflight(child, experiment_name):
             command.extend(["--min_video_steps", "1", "--training_scene"])
         if task_name == "branch" and _env_flag("EVOLUTION_BRANCH_BC_MODE", False):
             command.append("--branch_policy_demo")
+        if task_name == "strike" and _env_flag("EVOLUTION_STRIKE_BC_MODE", False):
+            command.extend(["--strike_policy_demo",
+                "--strike_closure_fraction", os.environ.get("EVOLUTION_STRIKE_BC_CLOSURE_FRACTION", "0.78"),
+                "--strike_ring_spread_target", os.environ.get("EVOLUTION_STRIKE_BC_RING_SPREAD_TARGET", "-0.08"),
+                "--strike_joint_limit_tolerance", os.environ.get("EVOLUTION_STRIKE_BC_JOINT_LIMIT_TOLERANCE", "0.02")])
         log_path = os.path.join(task_root, "preflight.log")
         try:
             with open(log_path, "w", encoding="utf-8") as log_file:
@@ -948,18 +964,20 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                         experiment_save_path, parent['id'])) or {}) if parent.get('id') else {}
                     inherited_checkpoint = None
                     branch_bc_mode = _env_flag("EVOLUTION_BRANCH_BC_MODE", False) and batch_task == "Isaac-EvolutionHand-BranchGrasp-v0"
+                    strike_bc_mode = _env_flag("EVOLUTION_STRIKE_BC_MODE", False) and batch_task == "Isaac-EvolutionHand-Strike-v0"
+                    direct_bc_mode = branch_bc_mode or strike_bc_mode
                     if _env_flag('EVOLUTION_INHERIT_POLICY', True) and stage_name == 'stage1':
                         inherited_checkpoint = select_parent_checkpoint(
                             parent, batch_task, EVOLUTION_LOG_ROOT, parent_state)
-                        if branch_bc_mode and current_generation == 0:
-                            inherited_checkpoint = None  # Old Branch Cartesian policy has an incompatible action contract.
+                        if direct_bc_mode and current_generation == 0:
+                            inherited_checkpoint = None  # Previous Cartesian policies have an incompatible direct-joint action contract.
                             if not child.get("metadata", {}).get("seed_preserved_for_bc"):
                                 seed_child = next((item for item in stage_children if item.get("metadata", {}).get("seed_preserved_for_bc")), None)
                                 if seed_child is not None:
                                     seed_state = _load_json(_evaluation_state_path_for_child(experiment_save_path, seed_child["child_id"])) or {}
                                     inherited_checkpoint = select_parent_checkpoint(
                                         seed_child, batch_task, EVOLUTION_LOG_ROOT, seed_state)
-                        if inherited_checkpoint is None and current_generation == 0 and not branch_bc_mode:
+                        if inherited_checkpoint is None and current_generation == 0 and not direct_bc_mode:
                             seed_lineage_path = os.environ.get('EVOLUTION_SEED_POLICY_LINEAGE')
                             seed_individual_key = os.environ.get('EVOLUTION_SEED_POLICY_INDIVIDUAL', '15_0')
                             if seed_lineage_path:
@@ -972,10 +990,11 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                 if inherited_checkpoint is None:
                                     raise FileNotFoundError(f'Seed policy checkpoint missing: {batch_task}')
                     bc_dataset_path = None
-                    bc_task_name = ("branch" if branch_bc_mode else "grasp")
+                    bc_task_name = "strike" if strike_bc_mode else "branch" if branch_bc_mode else "grasp"
                     bc_eligible = current_generation == 0 and batch_task in (
                         "Isaac-EvolutionHand-Grasp-v0",
                         "Isaac-EvolutionHand-BranchGrasp-v0" if branch_bc_mode else "",
+                        "Isaac-EvolutionHand-Strike-v0" if strike_bc_mode else "",
                     )
                     if bc_eligible:
                         preflight = child.get("metadata", {}).get("scripted_preflight", {})
@@ -990,10 +1009,13 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                     and bool(np.asarray(trace["scene_unmodified"]).all())
                                     and np.isfinite(trace["observations_before_step"]).all()
                                     and np.isfinite(trace["submitted_actions"]).all()
-                                    and trace["observations_before_step"].shape[1] == (100 if bc_task_name == "branch" else 159)
-                                    and trace["submitted_actions"].shape[1] == 20)
-                                if bc_task_name == "branch":
+                                    and trace["observations_before_step"].shape[1] == {"grasp": 159, "branch": 100, "strike": 162}[bc_task_name]
+                                    and trace["submitted_actions"].shape[1] == (23 if bc_task_name == "strike" else 20))
+                                if bc_task_name in ("branch", "strike"):
                                     valid = valid and metrics.get("joint_limit_violation_steps") == 0
+                                if bc_task_name == "strike":
+                                    valid = valid and metrics.get("success") is True and metrics.get("controller") == "strike_joint_target_v1"
+                                    valid = valid and float(metrics.get("max_joint_limit_violation_rad", float("inf"))) <= float(metrics.get("joint_limit_tolerance_rad", 0.02))
                                 if valid:
                                     bc_dataset_path = trace_path
                             except Exception:
