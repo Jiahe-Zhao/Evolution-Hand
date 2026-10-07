@@ -24,7 +24,9 @@ parser.add_argument("--curriculum_stage", choices=("auto", "stage1", "stage2"), 
 parser.add_argument("--output_dir", required=True)
 parser.add_argument("--episodes", type=int, default=1, help="One process evaluates one episode; use run_reproducible_evaluation.sh for N episodes.")
 parser.add_argument("--seed", type=int, default=7, help="First deterministic episode seed.")
+parser.add_argument("--replay_until_step", type=int, default=0, help="Diagnostic: use saved actions through this step, then run the checkpoint policy.")
 parser.add_argument("--replay_policy_trace", help="Replay a saved successful policy action trace with identical seed and scene.")
+parser.add_argument("--audit_physics", action="store_true", help="Audit physical joint limits and Grasp source-mesh clearance.")
 parser.add_argument("--export_success_bc", action="store_true", help="Save policy observations/actions only when the full task succeeds.")
 parser.add_argument("--export_rollout_debug", action="store_true", help="Save policy observations/actions for diagnostics even on failure; never label them as BC.")
 parser.add_argument("--strike_wrist_teacher", action="store_true", help="Probe a policy-action wrist teacher after Strike grasp; report as demonstration, not policy evaluation.")
@@ -141,6 +143,17 @@ def _configure_checkpoint_controller(checkpoint: str) -> str | None:
             raise ValueError(f"Strike checkpoint lacks reset contract: {path}")
         for name in required:
             os.environ[name] = str(environment[name])
+        teacher = contract.get("frozen_bc_teacher")
+        if teacher:
+            import hashlib
+            teacher_path = Path(teacher["checkpoint"])
+            if hashlib.sha256(teacher_path.read_bytes()).hexdigest() != teacher["sha256"]:
+                raise ValueError("Strike frozen BC teacher checkpoint hash mismatch")
+            if teacher.get("phase") != "until_tool_was_held":
+                raise ValueError("Unknown Strike frozen BC teacher phase")
+            os.environ["EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT"] = str(teacher_path)
+        else:
+            os.environ.pop("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT", None)
     print(f"[EVAL] {args.task} controller from checkpoint: {controller}", flush=True)
     return controller
 
@@ -380,6 +393,11 @@ def main() -> None:
     os.environ["EVOLUTION_FORAGE_CURRICULUM_STAGE"] = curriculum_stage
     resume_path = retrieve_file_path(_resolve_checkpoint())
     controller = _configure_checkpoint_controller(resume_path)
+    if os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT"):
+        if args.export_success_bc:
+            raise ValueError("BC export cannot label PPO actions when the environment overrides the grasp phase")
+        if args.replay_policy_trace:
+            raise ValueError("Action replay cannot verify a trace when the environment overrides the grasp phase")
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     print(f"[EVAL] Preparing morphology for {args.task}", flush=True)
@@ -438,7 +456,11 @@ def main() -> None:
                 replay_actions = dataset["submitted_actions"].copy()
             if replay_actions.ndim != 2 or replay_actions.shape[1] != raw_env.action_space.shape[-1]:
                 raise ValueError("Replay action dimensions differ from the training environment")
-            max_steps = min(max_steps, len(replay_actions))
+            if args.replay_until_step:
+                if args.replay_until_step > len(replay_actions):
+                    raise ValueError("Replay prefix exceeds available actions")
+            else:
+                max_steps = min(max_steps, len(replay_actions))
 
         for _ in range(1):
             episode_index = args.episode_index
@@ -458,11 +480,12 @@ def main() -> None:
             steps: list[dict[str, Any]] = []
             bc_observations = []
             bc_actions = []
+            executed_actions = []
             strike_grip_action = None
             strike_teacher_wrist = torch.zeros((1, 3), device=raw_env.unwrapped.device)
             initial_geometry = _initial_geometry(args.task, raw_env.unwrapped)
             mesh_auditor = None
-            if (args.replay_policy_trace or args.export_success_bc) and args.task == "grasp":
+            if (args.replay_policy_trace or args.export_success_bc or args.audit_physics) and args.task == "grasp":
                 from isaaclab_tasks.evolution_tasks.sphere_mesh_audit import SphereMeshAudit
                 mesh_auditor = SphereMeshAudit(raw_env.unwrapped.hand)
             replay_joint_overshoot_max_rad = 0.0
@@ -485,7 +508,7 @@ def main() -> None:
                     if args.export_success_bc or args.export_rollout_debug:
                         bc_observations.append(raw_env.unwrapped._get_observations()["policy"][0].detach().cpu().numpy().astype("float32"))
                     with torch.inference_mode():
-                        actions = (torch.as_tensor(replay_actions[step], device=raw_env.unwrapped.device).unsqueeze(0) if replay_actions is not None else agent.get_action(agent.obs_to_torch(obs), is_deterministic=True))
+                        actions = (torch.as_tensor(replay_actions[step], device=raw_env.unwrapped.device).unsqueeze(0) if replay_actions is not None and (args.replay_until_step == 0 or step < args.replay_until_step) else agent.get_action(agent.obs_to_torch(obs), is_deterministic=True))
                         if actions.ndim == 1: actions = actions.unsqueeze(0)
                         if args.strike_wrist_teacher and args.task == "strike" and bool(raw_env.unwrapped.tool_was_held[0]):
                             physical = raw_env.unwrapped
@@ -519,9 +542,11 @@ def main() -> None:
                             pre_state["submitted_finger_action_max_abs"] = float(actions[0, :20].abs().max())
                             pre_state["submitted_closure_actions"] = _list(actions[0, 15:20])
                         obs, reward, dones, _ = env.step(actions)
+                        if args.export_success_bc or args.export_rollout_debug:
+                            executed_actions.append(raw_env.unwrapped.raw_actions[0].detach().cpu().numpy().astype("float32"))
                     reward_value = _as_float(reward[0])
                     success_event, evidence = _task_evidence(args.task, raw_env.unwrapped, reward_value)
-                    if args.replay_policy_trace or args.export_success_bc:
+                    if args.replay_policy_trace or args.export_success_bc or args.audit_physics:
                         physical = raw_env.unwrapped
                         joints = physical.hand.data.joint_pos[0]
                         limits = physical.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
@@ -571,8 +596,9 @@ def main() -> None:
                 "termination": termination,
                 "steps": len(steps),
                 "initial_geometry": initial_geometry,
-                "joint_overshoot_max_rad": replay_joint_overshoot_max_rad if (args.replay_policy_trace or args.export_success_bc) else None,
-                "joint_overshoot_steps": replay_joint_overshoot_steps if (args.replay_policy_trace or args.export_success_bc) else None,
+                "strike_bc_teacher_checkpoint": os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT") if args.task == "strike" else None,
+                "joint_overshoot_max_rad": replay_joint_overshoot_max_rad if (args.replay_policy_trace or args.export_success_bc or args.audit_physics) else None,
+                "joint_overshoot_steps": replay_joint_overshoot_steps if (args.replay_policy_trace or args.export_success_bc or args.audit_physics) else None,
                 "source_mesh_penetration_steps": replay_mesh_penetration_steps if mesh_auditor is not None else None,
                 "source_mesh_min_clearance_m": replay_mesh_min_clearance_m if mesh_auditor is not None else None,
                 "trace": steps,
@@ -597,6 +623,7 @@ def main() -> None:
                     dataset_path,
                     observations_before_step=np.stack(bc_observations),
                     submitted_actions=np.stack(bc_actions),
+                    executed_actions=np.stack(executed_actions),
                     actions_control_fingers=np.ones(len(bc_actions), dtype=bool),
                     scene_unmodified=np.ones(len(bc_actions), dtype=bool),
                 )
@@ -607,6 +634,7 @@ def main() -> None:
                 np.savez_compressed(debug_path,
                     observations_before_step=np.stack(bc_observations),
                     submitted_actions=np.stack(bc_actions),
+                    executed_actions=np.stack(executed_actions),
                     eligible_for_bc=np.array(False),
                 )
                 record["rollout_debug_trace"] = str(debug_path)
@@ -617,6 +645,8 @@ def main() -> None:
             "task": args.task,
             "checkpoint": resume_path,
             "replay_policy_trace": args.replay_policy_trace,
+            "strike_bc_teacher_checkpoint": os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT") if args.task == "strike" else None,
+            "replay_until_step": args.replay_until_step,
             "controller": controller,
             "strike_wrist_teacher": bool(args.strike_wrist_teacher),
             "curriculum_stage": curriculum_stage,

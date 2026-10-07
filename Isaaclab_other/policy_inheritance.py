@@ -107,6 +107,15 @@ def policy_contract(task, cfg, actual_joint_names=None):
             'EVOLUTION_STRIKE_PREGRASP_ACTION': os.environ.get('EVOLUTION_STRIKE_PREGRASP_ACTION', str(_field(cfg, 'pregrasp_action', 0.45))),
             'EVOLUTION_STRIKE_RESET_OFFSET_WORLD': os.environ.get('EVOLUTION_STRIKE_RESET_OFFSET_WORLD', '0,0,0'),
         }
+        teacher = os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT")
+        if teacher:
+            import hashlib
+            teacher_path = Path(teacher).resolve()
+            contract["frozen_bc_teacher"] = {
+                "checkpoint": str(teacher_path),
+                "sha256": hashlib.sha256(teacher_path.read_bytes()).hexdigest(),
+                "phase": "until_tool_was_held",
+            }
     return contract
 
 def load_contract(checkpoint, task):
@@ -135,6 +144,8 @@ def map_model_weights(source, target, parent, child):
         raise ValueError('Task/controller contract mismatch')
     if parent['controller'] == 'strike_joint_target_v1' and parent.get('environment') != child.get('environment'):
         raise ValueError('Strike reset contract mismatch')
+    if parent.get('frozen_bc_teacher') and parent.get('frozen_bc_teacher') != child.get('frozen_bc_teacher'):
+        raise ValueError('Strike frozen BC teacher contract mismatch')
     op = semantic_pairs(parent['observations'], child['observations'])
     ap = semantic_pairs(parent['actions'], child['actions'])
     if not op or not ap:

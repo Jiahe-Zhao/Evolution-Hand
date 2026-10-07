@@ -71,6 +71,13 @@ class EvolutionStrikeEnv(DirectRLEnv):
         self.strike_action_joint_names = tuple(self.hand.joint_names) + tuple(
             f"unused_strike_joint_{index}" for index in range(len(self.hand.joint_names), 20)
         )
+        self.bc_teacher = None
+        teacher_checkpoint = os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT")
+        if teacher_checkpoint:
+            if not self.strike_bc_mode:
+                raise ValueError("Strike BC teacher requires the direct joint controller")
+            from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import FrozenStrikeBCActor
+            self.bc_teacher = FrozenStrikeBCActor(teacher_checkpoint, self.hand.joint_names, self.device)
         self.cartesian_ik = MorphologyAwareFingertipIK(
             self.hand, self.cfg.fingertip_body_names, num_envs=self.num_envs, device=self.device
         )
@@ -160,6 +167,10 @@ class EvolutionStrikeEnv(DirectRLEnv):
         light_cfg.func("/World/Light", light_cfg)
         
     def _pre_physics_step(self, actions: torch.Tensor) -> None:
+        if self.bc_teacher is not None and bool((~self.tool_was_held).any()):
+            teacher_obs = self._get_observations()["policy"]
+            teacher_actions = self.bc_teacher.actions(teacher_obs)
+            actions = torch.where(self.tool_was_held.unsqueeze(-1), actions, teacher_actions)
         self.raw_actions = actions.clone()
         self.hand_actions = self.raw_actions[:, :20].clone()
         self.wrist_actions = torch.clamp(self.raw_actions[:, 20:], -1.0, 1.0)
