@@ -24,6 +24,7 @@ parser.add_argument("--curriculum_stage", choices=("auto", "stage1", "stage2"), 
 parser.add_argument("--output_dir", required=True)
 parser.add_argument("--episodes", type=int, default=1, help="One process evaluates one episode; use run_reproducible_evaluation.sh for N episodes.")
 parser.add_argument("--seed", type=int, default=7, help="First deterministic episode seed.")
+parser.add_argument("--replay_policy_trace", help="Replay a saved successful policy action trace with identical seed and scene.")
 parser.add_argument("--export_success_bc", action="store_true", help="Save policy observations/actions only when the full task succeeds.")
 parser.add_argument("--export_rollout_debug", action="store_true", help="Save policy observations/actions for diagnostics even on failure; never label them as BC.")
 parser.add_argument("--strike_wrist_teacher", action="store_true", help="Probe a policy-action wrist teacher after Strike grasp; report as demonstration, not policy evaluation.")
@@ -430,6 +431,14 @@ def main() -> None:
         episode_records: list[dict[str, Any]] = []
         started = time.monotonic()
         max_steps = args.max_steps or raw_env.unwrapped.max_episode_length
+        replay_actions = None
+        if args.replay_policy_trace:
+            import numpy as np
+            with np.load(args.replay_policy_trace) as dataset:
+                replay_actions = dataset["submitted_actions"].copy()
+            if replay_actions.ndim != 2 or replay_actions.shape[1] != raw_env.action_space.shape[-1]:
+                raise ValueError("Replay action dimensions differ from the training environment")
+            max_steps = min(max_steps, len(replay_actions))
 
         for _ in range(1):
             episode_index = args.episode_index
@@ -452,6 +461,14 @@ def main() -> None:
             strike_grip_action = None
             strike_teacher_wrist = torch.zeros((1, 3), device=raw_env.unwrapped.device)
             initial_geometry = _initial_geometry(args.task, raw_env.unwrapped)
+            mesh_auditor = None
+            if args.replay_policy_trace and args.task == "grasp":
+                from isaaclab_tasks.evolution_tasks.sphere_mesh_audit import SphereMeshAudit
+                mesh_auditor = SphereMeshAudit(raw_env.unwrapped.hand)
+            replay_joint_overshoot_max_rad = 0.0
+            replay_joint_overshoot_steps = 0
+            replay_mesh_penetration_steps = 0
+            replay_mesh_min_clearance_m = float("inf")
             episode_success = False
             termination = "max_steps"
             try:
@@ -468,7 +485,7 @@ def main() -> None:
                     if args.export_success_bc or args.export_rollout_debug:
                         bc_observations.append(raw_env.unwrapped._get_observations()["policy"][0].detach().cpu().numpy().astype("float32"))
                     with torch.inference_mode():
-                        actions = agent.get_action(agent.obs_to_torch(obs), is_deterministic=True)
+                        actions = (torch.as_tensor(replay_actions[step], device=raw_env.unwrapped.device).unsqueeze(0) if replay_actions is not None else agent.get_action(agent.obs_to_torch(obs), is_deterministic=True))
                         if actions.ndim == 1: actions = actions.unsqueeze(0)
                         if args.strike_wrist_teacher and args.task == "strike" and bool(raw_env.unwrapped.tool_was_held[0]):
                             physical = raw_env.unwrapped
@@ -504,6 +521,21 @@ def main() -> None:
                         obs, reward, dones, _ = env.step(actions)
                     reward_value = _as_float(reward[0])
                     success_event, evidence = _task_evidence(args.task, raw_env.unwrapped, reward_value)
+                    if args.replay_policy_trace:
+                        physical = raw_env.unwrapped
+                        joints = physical.hand.data.joint_pos[0]
+                        limits = physical.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
+                        overshoot = torch.maximum(limits[:, 0] - joints, joints - limits[:, 1]).clamp_min(0)
+                        max_overshoot = float(overshoot.max())
+                        replay_joint_overshoot_max_rad = max(replay_joint_overshoot_max_rad, max_overshoot)
+                        replay_joint_overshoot_steps += int(max_overshoot > 0.02)
+                        evidence["joint_overshoot_max_rad"] = max_overshoot
+                        if mesh_auditor is not None:
+                            clearance = mesh_auditor.measure(physical.grasp_object.data.root_pos_w[0].detach().cpu().numpy(), float(physical.cfg.grasp_object_cfg.spawn.radius))
+                            value = float(clearance["clearance_m"])
+                            replay_mesh_min_clearance_m = min(replay_mesh_min_clearance_m, value)
+                            replay_mesh_penetration_steps += int(value < -1e-4)
+                            evidence["source_mesh_clearance_m"] = value
                     episode_success |= success_event
                     if writer is not None:
                         frame = raw_env.render()
@@ -533,6 +565,10 @@ def main() -> None:
                 "termination": termination,
                 "steps": len(steps),
                 "initial_geometry": initial_geometry,
+                "joint_overshoot_max_rad": replay_joint_overshoot_max_rad if args.replay_policy_trace else None,
+                "joint_overshoot_steps": replay_joint_overshoot_steps if args.replay_policy_trace else None,
+                "source_mesh_penetration_steps": replay_mesh_penetration_steps if mesh_auditor is not None else None,
+                "source_mesh_min_clearance_m": replay_mesh_min_clearance_m if mesh_auditor is not None else None,
                 "trace": steps,
             }
             if episode_success and args.record_video:
@@ -574,6 +610,7 @@ def main() -> None:
         report = {
             "task": args.task,
             "checkpoint": resume_path,
+            "replay_policy_trace": args.replay_policy_trace,
             "controller": controller,
             "strike_wrist_teacher": bool(args.strike_wrist_teacher),
             "curriculum_stage": curriculum_stage,

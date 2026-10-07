@@ -91,3 +91,13 @@
 隔离试验保留原 PPO 参数（4096 环境、horizon 16、minibatch 4096、mini epochs 5）。同一 10 轨迹/1390 样本数据，重新随机拟合 200 epoch 的损失 0.0000655，但 PPO 前闭环只有 250 分；400 epoch 损失进一步降到 0.0000229，PPO 前仍为 500 分、未击打。低监督损失不能替代物理闭环验收。原已验证 BC checkpoint 在固定 reset 上 stage1 10/10、stage2 20/20；映射到隔离训练 slot 后权重逐项完全相同。以它起步，一轮 PPO 后 0/1、250 分；每轮重放 5 批或 50 批示教也未恢复完整击打，95% actor 锚定乃至仅保留约 0.1% actor 更新的离线诊断仍失败。上述 BC replay/锚定试验代码已撤回，输出保存在 `outputs/strike_bc_replay_smoke/`。
 
 进一步用原生脚本测试 `13_14` 工具 reset 在 x/y/z 方向各 ±0.2 mm：六条均未通过既定 BC 门槛；部分物理击打成功但关节超限 0.053–1.800 rad，全部排除，见 `outputs/strike_bc_reset_diversity/`。目前 Strike BC 仅能保证固定 reset 的已验证 checkpoint，不具备小扰动泛化，不能用这六条扩充训练数据。训练 worker 新增受保护路径：当 Strike 从已验证 checkpoint 继承且 `EVOLUTION_BC_EPOCHS=0` 时，要求关节形态和 reset 契约完全一致、跳过随机重拟合，并在 PPO 前保存 `bc_init.pth`；该文件须单独闭环验证且不得因 PPO 退化被覆盖。新一轮四任务训练仍未启动。
+
+### 2026-10-08：成功策略动作导出、原样回放与物理审计
+
+对固定形态 `13_14`、stage1 训练场景、种子 200，使用评测器现有 `--export_success_bc` 导出 Grasp/Branch/Forage 成功回合的完整逐步动作；新增 `--replay_policy_trace` 在相同种子、形态及 checkpoint 控制契约下逐步提交原动作，并审计物理关节硬限，Grasp 额外用生成的源网格审计球体穿透。动作回放不是新训练策略，也没有修改手结构或场景。审计输出在 `outputs/admission_13_14_replay_policy_traces_audited/`，原轨迹在 `outputs/admission_13_14_exported_policy_traces/`。
+
+- Grasp：46 步完整成功，M3 拇指加两长指连续 10 步；源网格穿透 0 步，最小间隙 0.709 mm；关节超限 0。
+- Branch：75 步完整成功，关节峰值超限 0.01725 rad，超过 0.02 rad 的步数 0。
+- Forage：98 步完整成功，但第 96 步关节超限 0.5572 rad，因此这条动作不能作为合格形态脚本或 BC。
+
+继续筛选 Forage 同场景已成功的种子 202–209：8 条均可原样回放完成全任务，但每条都有超过 0.02 rad 的物理硬限超越；峰值分别为 1.4373、2.5091、0.1710、1.0373、0.0497、0.1504、0.0514、0.0315 rad（按 202、203、204、205、206、207、208、209 顺序）。输出在 `outputs/forage_quality_seed_*_{export,replay}/`。这不影响先前纯 PPO 成功率的统计，却说明成功事件不足以作为严格物理质量证明。没有将这些轨迹加入 BC，仍未启动新 15 代训练。Grasp/Branch 的成功轨迹可以作为固定形态示教候选；下一步须使 Forage 在原场景成功且不超物理硬限，并解决 Strike BC 在 PPO 后遗忘的问题。
