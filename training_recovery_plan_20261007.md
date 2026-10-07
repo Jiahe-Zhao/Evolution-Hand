@@ -85,3 +85,9 @@
 这组对照证明已有策略在当前 stage1 测试场景的表现，但不自动使失败的 Grasp/Branch/Forage 脚本预检通过。Strike reset 几何对这些种子固定，其 10/10 是重复可执行性而非独立泛化。原项目说明中的“共同形态四任务脚本验证”门槛和“可用同场景成功策略评测替代部分脚本”的解释目前存在分歧，已向用户请求准入标准澄清；在此之前没有启动新的 15 代训练，也没有修改手结构文件。
 
 同一 `13_14` 形态 stage2 补测（种子 200–209）：Grasp v9 stage2 checkpoint 10/10，Branch v9 stage2 direct-joint checkpoint 9/10，记录在 `outputs/admission_13_14_stage2_policy/`。已有 Forage v9 stage2 在种子 200–219 为 11/20、在 100–119 为 14/20；Strike BC 初始模型在 200–219 为 20/20，但 reset 几何只有一种，不视为独立扰动泛化。至此四任务 stage1/stage2 的固定形态策略证据齐备；共同脚本预检仍未全部通过，等待准入标准澄清。
+
+### 2026-10-08：Strike BC 初始化稳定性与 PPO 遗忘
+
+隔离试验保留原 PPO 参数（4096 环境、horizon 16、minibatch 4096、mini epochs 5）。同一 10 轨迹/1390 样本数据，重新随机拟合 200 epoch 的损失 0.0000655，但 PPO 前闭环只有 250 分；400 epoch 损失进一步降到 0.0000229，PPO 前仍为 500 分、未击打。低监督损失不能替代物理闭环验收。原已验证 BC checkpoint 在固定 reset 上 stage1 10/10、stage2 20/20；映射到隔离训练 slot 后权重逐项完全相同。以它起步，一轮 PPO 后 0/1、250 分；每轮重放 5 批或 50 批示教也未恢复完整击打，95% actor 锚定乃至仅保留约 0.1% actor 更新的离线诊断仍失败。上述 BC replay/锚定试验代码已撤回，输出保存在 `outputs/strike_bc_replay_smoke/`。
+
+进一步用原生脚本测试 `13_14` 工具 reset 在 x/y/z 方向各 ±0.2 mm：六条均未通过既定 BC 门槛；部分物理击打成功但关节超限 0.053–1.800 rad，全部排除，见 `outputs/strike_bc_reset_diversity/`。目前 Strike BC 仅能保证固定 reset 的已验证 checkpoint，不具备小扰动泛化，不能用这六条扩充训练数据。训练 worker 新增受保护路径：当 Strike 从已验证 checkpoint 继承且 `EVOLUTION_BC_EPOCHS=0` 时，要求关节形态和 reset 契约完全一致、跳过随机重拟合，并在 PPO 前保存 `bc_init.pth`；该文件须单独闭环验证且不得因 PPO 退化被覆盖。新一轮四任务训练仍未启动。

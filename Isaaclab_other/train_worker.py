@@ -334,7 +334,20 @@ def _run_training(request):
                 if not os.path.isfile(bc_dataset):
                     raise FileNotFoundError(f'BC dataset missing: {bc_dataset}')
                 from policy_inheritance import train_behavior_cloning
-                train_behavior_cloning(agent, bc_dataset, run_dir, epochs=int(os.environ.get('EVOLUTION_BC_EPOCHS', '10')))
+                bc_epochs = int(os.environ.get('EVOLUTION_BC_EPOCHS', '10'))
+                if bc_epochs > 0:
+                    train_behavior_cloning(agent, bc_dataset, run_dir, epochs=bc_epochs)
+                else:
+                    if task_name != "Isaac-EvolutionHand-Strike-v0":
+                        raise ValueError("Skipping BC refit is supported only for verified Strike initialization")
+                    from policy_inheritance import load_contract
+                    source_contract = load_contract(request['inherited_checkpoint_path'], task_name)
+                    if source_contract.get('actual_joint_names') != contract.get('actual_joint_names'):
+                        raise ValueError("Strike BC checkpoint morphology differs from training morphology")
+                    print("[BC] Preserving the inherited, independently verified Strike BC checkpoint", flush=True)
+                bc_checkpoint = os.path.join(run_dir, 'nn', 'bc_init')
+                os.makedirs(os.path.dirname(bc_checkpoint), exist_ok=True)
+                agent.save(bc_checkpoint)
                 agent.train()
         elif bc_dataset:
             if not os.path.isfile(bc_dataset):

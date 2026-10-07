@@ -133,6 +133,8 @@ def map_model_weights(source, target, parent, child):
     """Remap input columns, action rows, and normalization by semantic names."""
     if parent['task'] != child['task'] or parent['controller'] != child['controller']:
         raise ValueError('Task/controller contract mismatch')
+    if parent['controller'] == 'strike_joint_target_v1' and parent.get('environment') != child.get('environment'):
+        raise ValueError('Strike reset contract mismatch')
     op = semantic_pairs(parent['observations'], child['observations'])
     ap = semantic_pairs(parent['actions'], child['actions'])
     if not op or not ap:
