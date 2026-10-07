@@ -77,3 +77,9 @@
 在 v9 的 120 个 preflight 目录中，只有 `15_3` 和 `1_4` 的 Grasp、Branch、Forage 三任务同时显示成功。对这两个形态使用新 Strike 23 维原生动作、stage1、相同 reset 重新验证：`15_3` 320 步 0 分、无超限，未建立抓握；`1_4` 完成抓握和真实击打，1500 分，但中/环/小指展开关节超限 102 步，最大 0.3240 rad，不得进入 BC。`1_4` 闭合比例 0.70、0.74、0.76 的有限试验均未改善。将 `15_0` 的 Strike actuator damping 从 0.2 提到 1.0 也使击打退化到 500 分、超限增至 0.5376 rad，诊断性阻尼改动已撤回。`main_evolution.py` 本身现纳入 preflight 缓存签名，修改预检调用逻辑时会强制重新验证。上述历史三任务结果需要在新入口下复测才可作为新训练准入；目前没有四任务共同合格候选。
 
 `15_0` Strike 腕部击打速度诊断：每步下降 0.25 mm 时物理击打仍发生，但超限 194 步、峰值 0.1368 rad；1 mm 时击打仍发生、超限 20 步、峰值 0.1000 rad；2 mm 为 31 步/0.1834 rad，4 mm 为 25 步/0.2113 rad。都超过 0.02 rad，且更快速度不能保证稳定单次击打。速度参数的试验性代码已撤回，轨迹未入 BC；记录在 `outputs/strike_bc_seed_search/seed15_*`。
+
+### 2026-10-08：13_14 同场景 stage1 策略准入对照
+
+使用固定形态 `13_14`、原生 stage1 环境、未见种子 200–209，逐回合完整任务成功事件复测：Grasp v9 stage1 checkpoint 10/10；Branch v9 stage1 direct-joint checkpoint 10/10；Forage v9 stage1 checkpoint 1/10，但同一形态的纯 PPO stage2 checkpoint 在同一 stage1 场景为 9/10；Strike 10 条合格示教的 BC 初始 checkpoint 在同一 stage1 场景为 10/10。结果在 `outputs/admission_13_14_stage1_policy/`。四个所选 checkpoint 文件均存在，策略契约匹配：Grasp/Forage 使用 Cartesian 控制，Branch 使用 `branch_joint_target_v1`，Strike 使用 `strike_joint_target_v1`，Strike 契约包含拇指 reset -2.0 rad、预抓握 0.55、工具偏移 0。Forage 采用纯 PPO 策略，不加 BC。
+
+这组对照证明已有策略在当前 stage1 测试场景的表现，但不自动使失败的 Grasp/Branch/Forage 脚本预检通过。Strike reset 几何对这些种子固定，其 10/10 是重复可执行性而非独立泛化。原项目说明中的“共同形态四任务脚本验证”门槛和“可用同场景成功策略评测替代部分脚本”的解释目前存在分歧，已向用户请求准入标准澄清；在此之前没有启动新的 15 代训练，也没有修改手结构文件。
