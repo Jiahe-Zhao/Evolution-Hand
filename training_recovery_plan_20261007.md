@@ -57,3 +57,5 @@
 本次复核区分单形态可复现成功与可启动跨形态 15 代训练。`15_0` 的旧脚本目录有 Grasp、Branch、Forage、Strike 各自成功记录，其中 Grasp `grasp_margin.json` 的网格穿透步数为 0；但旧 Strike 成功轨迹使用关节目标覆盖，不能作为策略 BC。新 Strike 10 轨迹 BC 在 `13_14` 原生 stage2 场景固定几何下达到 20/20，`13_13` 单回合为 0/1；PPO 后为 0/20。它证明固定形态动作可执行，但尚不能证明跨形态或随机 reset 的完整击打能力。
 
 当前 `main_evolution.py` 的第 0 代 BC 数据接入仅覆盖 Grasp/Branch，Strike 不在 `bc_eligible` 内；旧 `run_local_evolution_4090_15g_fast_multitask.sh` 还默认从旧场景 checkpoint 继承，并允许脚本预检失败后继续纯 PPO。按“Strike BC 可用且四任务通过训练门槛再启动”的条件，本轮**没有启动新的 15 代训练**。下一步需要给 Strike 添加经过逐形态、逐阶段闭环物理验证的原生策略动作示教及代际 BC 接入，并在与训练相同的 reset 分布中复测；PPO 阶段须保护成功 BC 行为，不能只以 250 分抓握奖励替代击打成功。Forage 保持已验证的纯 PPO 路线。
+
+相邻形态 `13_13` 的 Strike 原生 stage2 脚本补测：沿用 `13_14` 的 0.78 闭合、环指展开 -0.08 rad 时，320 步未成功、奖励 500、260 步物理超限，最大超限 0.5636 rad（中/环/小指展开关节）；改为保守的 0.65 闭合、环指展开 0 时，仍未成功、奖励 250、245 步超限，最大 0.3301 rad。两条都不得进入 BC。没有修改手结构文件。记录在 `outputs/strike_bc_direct/validation/strike_13_13*.json`。
