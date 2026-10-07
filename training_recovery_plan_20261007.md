@@ -45,6 +45,8 @@
 
 旧 v9 Strike 策略在新 reset 参数下的参考单回合为 0/1、453 步、250 分。旧模型训练时使用不同 reset 参数，因此此结果仅说明它不能直接替代当前策略，不作为严格同分布训练对照。
 
+跨形态诊断：同一 BC checkpoint 在另一已有形态 `13_13` 的 stage2 单回合为 0/1、87 步、250 分；关节顺序契约通过，但仅完成抓握。当前推荐仅适用于训练形态 `13_14`，尚不具备跨形态可迁移性。该测试只生成输出目录中的临时形态资产，没有修改源手结构文件。
+
 推荐 checkpoint：`evolution_tasks/logs/evolution_task/strike_bc_stage2_13_14_10diverse_seed17_bcinit/nn/bc_init.pth`。100 轮 PPO checkpoint 作为实验结果保留；不改写 v9 的全局 lineage 选择。下一步若要提升泛化，应先在训练和测试中共同引入可控的 reset 扰动，并用闭环纠错示教或 BC 约束 PPO，避免当前纯 PPO 将完整击打退化成抓握。此项会改变场景分布，需单独记录版本与对照。
 
 成功脚本视频：`outputs/strike_bc_direct/validation/strike_success_bc.mp4`；成功 BC 策略视频：`outputs/strike_bc_direct/eval_bc_policy_video/strike/episodes/episode_000/successful_videos/episode_000_seed_200_success_step_18.mp4`。本地可查看 `/Users/zhaojiahe/Documents/科研/strike_bc_success_13_14.mp4` 和 `/Users/zhaojiahe/Documents/科研/strike_bc_policy_success_13_14_slow.mp4`（后者仅把播放速度放慢四倍，帧内容未改）。
