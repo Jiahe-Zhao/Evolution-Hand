@@ -109,6 +109,25 @@ def _resolve_checkpoint() -> str:
     return str(candidates[0])
 
 
+def _configure_checkpoint_controller(checkpoint: str) -> str | None:
+    """Use the saved action contract before constructing a Branch environment."""
+    if args.task != "branch":
+        return None
+    path = Path(checkpoint).parent.parent / "params" / "policy_contract.json"
+    if not path.is_file():
+        raise FileNotFoundError(f"Branch checkpoint has no policy contract: {path}")
+    contract = json.loads(path.read_text(encoding="utf-8"))
+    if contract.get("task") != TASKS["branch"][0]:
+        raise ValueError(f"Branch checkpoint task mismatch: {path}")
+    controller = contract.get("controller")
+    modes = {"branch_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"}
+    if controller not in modes:
+        raise ValueError(f"Unknown Branch checkpoint controller: {controller}")
+    os.environ["EVOLUTION_BRANCH_BC_MODE"] = modes[controller]
+    print(f"[EVAL] Branch controller from checkpoint: {controller}", flush=True)
+    return controller
+
+
 def _selected_curriculum_stage() -> str:
     if args.curriculum_stage != "auto":
         return args.curriculum_stage
@@ -339,6 +358,8 @@ def main() -> None:
     curriculum_stage = _selected_curriculum_stage()
     os.environ["EVOLUTION_CURRICULUM_STAGE"] = curriculum_stage
     os.environ["EVOLUTION_FORAGE_CURRICULUM_STAGE"] = curriculum_stage
+    resume_path = retrieve_file_path(_resolve_checkpoint())
+    controller = _configure_checkpoint_controller(resume_path)
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     print(f"[EVAL] Preparing morphology for {args.task}", flush=True)
@@ -358,7 +379,6 @@ def main() -> None:
         env_cfg.viewer.eye, env_cfg.viewer.lookat = CAMERA_VIEWS[args.task]
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
         agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
-        resume_path = retrieve_file_path(_resolve_checkpoint())
         print(f"[EVAL] Creating {args.task} environment", flush=True)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         print(f"[EVAL] Environment created", flush=True)
@@ -463,6 +483,7 @@ def main() -> None:
         report = {
             "task": args.task,
             "checkpoint": resume_path,
+            "controller": controller,
             "curriculum_stage": curriculum_stage,
             "reset_dof_pos_noise": float(env_cfg.reset_dof_pos_noise),
             "morphology": {"lineage_json": args.lineage_json, "individual_key": args.individual_key},
