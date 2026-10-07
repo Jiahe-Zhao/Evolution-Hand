@@ -83,3 +83,5 @@
 使用固定形态 `13_14`、原生 stage1 环境、未见种子 200–209，逐回合完整任务成功事件复测：Grasp v9 stage1 checkpoint 10/10；Branch v9 stage1 direct-joint checkpoint 10/10；Forage v9 stage1 checkpoint 1/10，但同一形态的纯 PPO stage2 checkpoint 在同一 stage1 场景为 9/10；Strike 10 条合格示教的 BC 初始 checkpoint 在同一 stage1 场景为 10/10。结果在 `outputs/admission_13_14_stage1_policy/`。四个所选 checkpoint 文件均存在，策略契约匹配：Grasp/Forage 使用 Cartesian 控制，Branch 使用 `branch_joint_target_v1`，Strike 使用 `strike_joint_target_v1`，Strike 契约包含拇指 reset -2.0 rad、预抓握 0.55、工具偏移 0。Forage 采用纯 PPO 策略，不加 BC。
 
 这组对照证明已有策略在当前 stage1 测试场景的表现，但不自动使失败的 Grasp/Branch/Forage 脚本预检通过。Strike reset 几何对这些种子固定，其 10/10 是重复可执行性而非独立泛化。原项目说明中的“共同形态四任务脚本验证”门槛和“可用同场景成功策略评测替代部分脚本”的解释目前存在分歧，已向用户请求准入标准澄清；在此之前没有启动新的 15 代训练，也没有修改手结构文件。
+
+同一 `13_14` 形态 stage2 补测（种子 200–209）：Grasp v9 stage2 checkpoint 10/10，Branch v9 stage2 direct-joint checkpoint 9/10，记录在 `outputs/admission_13_14_stage2_policy/`。已有 Forage v9 stage2 在种子 200–219 为 11/20、在 100–119 为 14/20；Strike BC 初始模型在 200–219 为 20/20，但 reset 几何只有一种，不视为独立扰动泛化。至此四任务 stage1/stage2 的固定形态策略证据齐备；共同脚本预检仍未全部通过，等待准入标准澄清。
