@@ -144,7 +144,7 @@ def map_model_weights(source, target, parent, child):
         raise ValueError('Task/controller contract mismatch')
     if parent['controller'] == 'strike_joint_target_v1' and parent.get('environment') != child.get('environment'):
         raise ValueError('Strike reset contract mismatch')
-    if parent.get('frozen_bc_teacher') and parent.get('frozen_bc_teacher') != child.get('frozen_bc_teacher'):
+    if parent.get('frozen_bc_teacher') and child.get('frozen_bc_teacher') and parent.get('frozen_bc_teacher') != child.get('frozen_bc_teacher'):
         raise ValueError('Strike frozen BC teacher contract mismatch')
     op = semantic_pairs(parent['observations'], child['observations'])
     ap = semantic_pairs(parent['actions'], child['actions'])
@@ -183,6 +183,8 @@ def save_contract(run_dir, task, env):
         raise ValueError('Expected morphology-aware Cartesian IK controller')
     contract['actual_joint_names'] = list(env.hand.joint_names)
     contract['fingertip_bodies'] = list(env.cartesian_ik.finger_names)
+    if getattr(env, 'bc_teacher', None) is not None:
+        contract['frozen_bc_teacher']['morphology_sha256'] = env.bc_teacher.morphology_sha256
     path = Path(run_dir)/'params/policy_contract.json'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(contract,indent=2))

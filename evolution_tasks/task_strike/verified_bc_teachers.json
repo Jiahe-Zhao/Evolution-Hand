@@ -1,0 +1,8 @@
+{
+  "c167ddc70328bc2253e126d0aef9368a795e811e6c6e4966911120282d4085cd": {
+    "checkpoint_sha256": "c167ddc70328bc2253e126d0aef9368a795e811e6c6e4966911120282d4085cd",
+    "morphology_sha256": "a20cf85a2852fecddb0d6f9e5476f1026712ce9d277b46571e46dafcbbb77d57",
+    "verified_morphology": "13_14",
+    "evidence": "outputs/strike_bc_replay_smoke/eval_phase_teacher_trained_20/strike/evaluation.json"
+  }
+}

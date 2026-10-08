@@ -27,6 +27,7 @@ parser.add_argument("--seed", type=int, default=7, help="First deterministic epi
 parser.add_argument("--replay_until_step", type=int, default=0, help="Diagnostic: use saved actions through this step, then run the checkpoint policy.")
 parser.add_argument("--replay_policy_trace", help="Replay a saved successful policy action trace with identical seed and scene.")
 parser.add_argument("--audit_physics", action="store_true", help="Audit physical joint limits and Grasp source-mesh clearance.")
+parser.add_argument("--forage_solver_iterations", type=int, help="Diagnostic Forage articulation solver accuracy; changes physics contract.")
 parser.add_argument("--export_success_bc", action="store_true", help="Save policy observations/actions only when the full task succeeds.")
 parser.add_argument("--export_rollout_debug", action="store_true", help="Save policy observations/actions for diagnostics even on failure; never label them as BC.")
 parser.add_argument("--strike_wrist_teacher", action="store_true", help="Probe a policy-action wrist teacher after Strike grasp; report as demonstration, not policy evaluation.")
@@ -121,8 +122,6 @@ def _resolve_checkpoint() -> str:
 
 def _configure_checkpoint_controller(checkpoint: str) -> str | None:
     """Restore saved action and reset semantics before constructing an environment."""
-    if args.task not in {"branch", "strike"}:
-        return None
     path = Path(checkpoint).parent.parent / "params" / "policy_contract.json"
     if not path.is_file():
         raise FileNotFoundError(f"{args.task} checkpoint has no policy contract: {path}")
@@ -132,10 +131,12 @@ def _configure_checkpoint_controller(checkpoint: str) -> str | None:
     controller = contract.get("controller")
     modes = ({"branch_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"}
              if args.task == "branch" else
-             {"strike_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"})
+             {"strike_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"} if args.task == "strike" else
+             {"cartesian_5finger_ik_v1": "0"})
     if controller not in modes:
         raise ValueError(f"Unknown {args.task} checkpoint controller: {controller}")
-    os.environ["EVOLUTION_BRANCH_BC_MODE" if args.task == "branch" else "EVOLUTION_STRIKE_BC_MODE"] = modes[controller]
+    if args.task in {"branch", "strike"}:
+        os.environ["EVOLUTION_BRANCH_BC_MODE" if args.task == "branch" else "EVOLUTION_STRIKE_BC_MODE"] = modes[controller]
     if args.task == "strike" and controller == "strike_joint_target_v1":
         environment = contract.get("environment")
         required = {"EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "EVOLUTION_STRIKE_PREGRASP_ACTION", "EVOLUTION_STRIKE_RESET_OFFSET_WORLD"}
@@ -413,6 +414,11 @@ def main() -> None:
             _reload_task_modules(args.task)
         env_cfg = parse_env_cfg(env_id, device=args.device, num_envs=1)
         _configure_structure_adaptive_evaluation(args.task, env_cfg, backup)
+        if args.forage_solver_iterations is not None:
+            if args.task != "forage" or not 8 <= args.forage_solver_iterations <= 255:
+                raise ValueError("Forage solver diagnostic requires 8..255 iterations")
+            env_cfg.robot_cfg.spawn.articulation_props.solver_position_iteration_count = args.forage_solver_iterations
+            env_cfg.robot_cfg.spawn.articulation_props.solver_velocity_iteration_count = min(args.forage_solver_iterations, 32)
         env_cfg.seed = args.seed
         env_cfg.viewer.eye, env_cfg.viewer.lookat = CAMERA_VIEWS[args.task]
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
@@ -543,7 +549,9 @@ def main() -> None:
                             pre_state["submitted_closure_actions"] = _list(actions[0, 15:20])
                         obs, reward, dones, _ = env.step(actions)
                         if args.export_success_bc or args.export_rollout_debug:
-                            executed_actions.append(raw_env.unwrapped.raw_actions[0].detach().cpu().numpy().astype("float32"))
+                            physical = raw_env.unwrapped
+                            actual_actions = physical.raw_actions if hasattr(physical, "raw_actions") else physical.actions
+                            executed_actions.append(actual_actions[0].detach().cpu().numpy().astype("float32"))
                     reward_value = _as_float(reward[0])
                     success_event, evidence = _task_evidence(args.task, raw_env.unwrapped, reward_value)
                     if args.replay_policy_trace or args.export_success_bc or args.audit_physics:
@@ -644,6 +652,7 @@ def main() -> None:
         report = {
             "task": args.task,
             "checkpoint": resume_path,
+            "forage_solver_iterations_diagnostic": args.forage_solver_iterations,
             "replay_policy_trace": args.replay_policy_trace,
             "strike_bc_teacher_checkpoint": os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT") if args.task == "strike" else None,
             "replay_until_step": args.replay_until_step,

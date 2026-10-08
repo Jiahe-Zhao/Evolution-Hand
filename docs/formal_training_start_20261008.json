@@ -1,0 +1,319 @@
+{
+  "launch": {
+    "experiment": "exp_20261008_strikephaseBC15g_v10",
+    "pid": 1227735,
+    "log": "/home/zjh/Evolution_PC/runtime_logs/exp_20261008_strikephaseBC15g_v10.log",
+    "started_at_unix": 1791423023.3034835,
+    "generations": 15,
+    "population": 8,
+    "num_envs": 4096,
+    "horizon_length": 16,
+    "minibatch_size": 4096,
+    "mini_epochs": 5,
+    "stage1_iterations": 100,
+    "stage2_iterations": 250,
+    "forage_strike_iterations": [
+      25,
+      50
+    ],
+    "forage_bc": false,
+    "forage_quality_role": "monitor during training; final checkpoint acceptance",
+    "teacher_scope": "matching verified 13_14 physical geometry only"
+  },
+  "forage_baselines": {
+    "stage1": {
+      "episodes": 20,
+      "successes": 16,
+      "physics_qualified_successes": 2,
+      "records": [
+        {
+          "seed": 220,
+          "success": true,
+          "steps": 107,
+          "joint_overshoot_max_rad": 0.08049178123474121,
+          "joint_overshoot_steps": 5
+        },
+        {
+          "seed": 221,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.11394312977790833,
+          "joint_overshoot_steps": 13
+        },
+        {
+          "seed": 222,
+          "success": true,
+          "steps": 99,
+          "joint_overshoot_max_rad": 4.722048307925775e-10,
+          "joint_overshoot_steps": 0
+        },
+        {
+          "seed": 223,
+          "success": true,
+          "steps": 133,
+          "joint_overshoot_max_rad": 0.22725877165794373,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 224,
+          "success": true,
+          "steps": 133,
+          "joint_overshoot_max_rad": 0.18440620601177216,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 225,
+          "success": true,
+          "steps": 98,
+          "joint_overshoot_max_rad": 0.22327163815498352,
+          "joint_overshoot_steps": 6
+        },
+        {
+          "seed": 226,
+          "success": true,
+          "steps": 104,
+          "joint_overshoot_max_rad": 0.20981095731258392,
+          "joint_overshoot_steps": 1
+        },
+        {
+          "seed": 227,
+          "success": true,
+          "steps": 102,
+          "joint_overshoot_max_rad": 0.10066192597150803,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 228,
+          "success": true,
+          "steps": 90,
+          "joint_overshoot_max_rad": 1.6578905582427979,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 229,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.2913402318954468,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 230,
+          "success": true,
+          "steps": 108,
+          "joint_overshoot_max_rad": 0.29663360118865967,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 231,
+          "success": true,
+          "steps": 101,
+          "joint_overshoot_max_rad": 0.055451229214668274,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 232,
+          "success": true,
+          "steps": 101,
+          "joint_overshoot_max_rad": 0.08464950323104858,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 233,
+          "success": true,
+          "steps": 112,
+          "joint_overshoot_max_rad": 0.0412057489156723,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 234,
+          "success": true,
+          "steps": 113,
+          "joint_overshoot_max_rad": 0.08361760526895523,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 235,
+          "success": true,
+          "steps": 114,
+          "joint_overshoot_max_rad": 0.23899002373218536,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 236,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.6865780353546143,
+          "joint_overshoot_steps": 7
+        },
+        {
+          "seed": 237,
+          "success": true,
+          "steps": 130,
+          "joint_overshoot_max_rad": 5.160556981742559e-10,
+          "joint_overshoot_steps": 0
+        },
+        {
+          "seed": 238,
+          "success": true,
+          "steps": 94,
+          "joint_overshoot_max_rad": 0.11449000239372253,
+          "joint_overshoot_steps": 1
+        },
+        {
+          "seed": 239,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 1.0869752168655396,
+          "joint_overshoot_steps": 15
+        }
+      ]
+    },
+    "stage2": {
+      "episodes": 20,
+      "successes": 11,
+      "physics_qualified_successes": 0,
+      "records": [
+        {
+          "seed": 220,
+          "success": true,
+          "steps": 164,
+          "joint_overshoot_max_rad": 0.09926575422286987,
+          "joint_overshoot_steps": 12
+        },
+        {
+          "seed": 221,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.11394312977790833,
+          "joint_overshoot_steps": 13
+        },
+        {
+          "seed": 222,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.09088488668203354,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 223,
+          "success": true,
+          "steps": 143,
+          "joint_overshoot_max_rad": 0.22725877165794373,
+          "joint_overshoot_steps": 5
+        },
+        {
+          "seed": 224,
+          "success": true,
+          "steps": 159,
+          "joint_overshoot_max_rad": 0.18440620601177216,
+          "joint_overshoot_steps": 5
+        },
+        {
+          "seed": 225,
+          "success": true,
+          "steps": 109,
+          "joint_overshoot_max_rad": 0.6530120372772217,
+          "joint_overshoot_steps": 8
+        },
+        {
+          "seed": 226,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.20981095731258392,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 227,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 1.8693500757217407,
+          "joint_overshoot_steps": 33
+        },
+        {
+          "seed": 228,
+          "success": true,
+          "steps": 103,
+          "joint_overshoot_max_rad": 1.6578905582427979,
+          "joint_overshoot_steps": 7
+        },
+        {
+          "seed": 229,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.2913402318954468,
+          "joint_overshoot_steps": 3
+        },
+        {
+          "seed": 230,
+          "success": true,
+          "steps": 139,
+          "joint_overshoot_max_rad": 0.29663360118865967,
+          "joint_overshoot_steps": 4
+        },
+        {
+          "seed": 231,
+          "success": true,
+          "steps": 131,
+          "joint_overshoot_max_rad": 0.1062617301940918,
+          "joint_overshoot_steps": 8
+        },
+        {
+          "seed": 232,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 1.0168097019195557,
+          "joint_overshoot_steps": 53
+        },
+        {
+          "seed": 233,
+          "success": true,
+          "steps": 189,
+          "joint_overshoot_max_rad": 0.0580386221408844,
+          "joint_overshoot_steps": 7
+        },
+        {
+          "seed": 234,
+          "success": true,
+          "steps": 344,
+          "joint_overshoot_max_rad": 0.8512591123580933,
+          "joint_overshoot_steps": 10
+        },
+        {
+          "seed": 235,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 2.513739585876465,
+          "joint_overshoot_steps": 29
+        },
+        {
+          "seed": 236,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 0.6865780353546143,
+          "joint_overshoot_steps": 7
+        },
+        {
+          "seed": 237,
+          "success": true,
+          "steps": 194,
+          "joint_overshoot_max_rad": 4.031787395477295,
+          "joint_overshoot_steps": 7
+        },
+        {
+          "seed": 238,
+          "success": true,
+          "steps": 139,
+          "joint_overshoot_max_rad": 0.11449000239372253,
+          "joint_overshoot_steps": 2
+        },
+        {
+          "seed": 239,
+          "success": false,
+          "steps": 359,
+          "joint_overshoot_max_rad": 1.0869752168655396,
+          "joint_overshoot_steps": 15
+        }
+      ]
+    }
+  }
+}

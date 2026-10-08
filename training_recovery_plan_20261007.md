@@ -113,3 +113,33 @@ Forage 扩展筛选种子 210–219：10/10 完整成功，但按同一 0.02 rad
 隔离冒烟训练使用原 PPO 设置（4096 环境、horizon 16、minibatch 4096、mini epochs 5），从已验证的 `13_14` BC checkpoint 继承，`EVOLUTION_BC_EPOCHS=0`，运行 1 轮，训练均分 256.84976。输出 `outputs/strike_bc_replay_smoke/strike_phase_teacher_1iter_v5_strike_p_EvolutionHand-Strike_stage2/`。该训练后的 checkpoint 在 stage2 未见种子 200–219 完整成功 20/20，20/20 无超过 0.02 rad 的关节超限；stage1 未见种子 200–209 自动按契约恢复教师后完整成功 10/10，10/10 无越限。证据在 `outputs/strike_bc_replay_smoke/eval_phase_teacher_trained_20/` 和 `eval_phase_teacher_stage1_auto_10/`。这证实固定形态下阶段 BC 保护能避免首轮 PPO 遗忘；跨形态与随机工具 reset 尚未验证，因此此处只是隔离训练试验，未启动新 15 代正式训练。
 
 Forage 纯 PPO 的完整成功率仍成立，但按 0.02 rad 严格物理门槛，其已检查的 19 条成功轨迹都超限；若保留该门槛，需要在不修改手结构的前提下找到合格轨迹或调整训练与测试共同使用的控制/场景。四任务正式准入仍未全部满足。
+
+### 2026-10-08：授权更新、严格教师绑定与正式 15 代启动
+
+用户最新授权以“Strike BC 轨迹与必要验证完成”作为本次正式训练启动条件。Forage 的 0.02 rad 越限改为训练期间监测和最终 checkpoint 验收指标，不再阻挡 PPO 启动；Forage 不加 BC。此授权覆盖前文尚待四任务共同脚本预检的启动限制。手的源 URDF、网格、关节结构和限位没有在本轮修改。
+
+实时核查远端起点为 `f3940bc`，启动前没有 `main_evolution.py` 正式训练进程。已有历史未提交文件（包括手资产与配置）保留，未混入本次提交。
+
+本次修复：
+
+- Strike 冻结教师除了检查关节名称和 reset 契约，还检查包含 URDF 几何、惯性、关节信息和网格内容的物理形态 SHA256。已验证教师注册表随代码保存；同名关节但不同几何的教师会被拒绝。历史 20 次回放的物理形态哈希一致。新增注册表不改变 actor 权重。
+- worker 按请求的实际几何启用教师：匹配 13_14 时启用抓稳前的冻结 BC；变异形态禁用该固定教师，允许映射策略权重后继续 PPO 探索。固定形态的完整成功不能被解释为跨形态能力。跳过 Strike BC 重拟合时也验证 checkpoint 身份、几何和 reset；Grasp/Branch 仍保留 10 epoch BC，Strike 已验证初始化采用 0 epoch，避免随机重拟合破坏成功策略。
+- `verified_seed_bc_13_14.json` 以形态和数据 SHA256 绑定 Grasp/Branch 已物理审计成功的原样轨迹、Strike 10 条/1390 样本原生动作轨迹及对应起始 checkpoint。第 0 代第一个子代保留 13_14，避免已验证 BC 被用于新几何。
+- 四任务评测都读取 checkpoint 的任务/控制器契约；修复 Forage 实际执行动作字段与 Strike 不同导致导出失败的问题。脚本预检新增通用关节审计；若使用严格预检，完整奖励但越限或缺失质量证据不能通过。本次正式脚本依最新授权不使用共同脚本成功作为启动阻断。
+- Forage worker 增加只读关节质量监测，TensorBoard 指标为 `physics/joint_overshoot_max_rad` 和 `physics/joint_overshoot_env_fraction`；任务结束写 `physics_quality_training.json`。监测不修改动作、奖励、reset 或成功阈值；最终 checkpoint 仍须独立物理审计。
+
+本次必要验证：Strike 使用阶段教师的 PPO checkpoint，在绑定几何后 stage2 种子 200 原生环境 17 步完整击打，最大关节超限 0，超过 0.02 rad 的步数 0。证据为 `outputs/strike_bc_geometry_binding/stage2_seed200/evaluation.json`。匹配几何接受、同关节异几何拒绝；准入边界/缺失值/NaN/网格证据检查共 6 项通过；修改文件语法与差异检查通过；Forage 监测单独验证奖励值保持不变。
+
+Forage 基线补测：stage1 原生纯 PPO 种子 220–239 完整成功 16/20，其中严格物理合格 2/20（222、237）。两条原样回放均完整成功且无超过 0.02 rad 越限；222 为 99 步，237 为 130 步。stage2 相同 20 种子完整成功 11/20，物理合格数见下方机器汇总。这些轨迹仅作为审计证据，没有接入 Forage BC。32 次求解迭代诊断仍越限，1 mm/步腕部诊断失去成功；无效腕部修改已撤回，默认任务物理保持原状。
+
+正式运行：
+
+- 实验：`exp_20261008_strikephaseBC15g_v10`；独立 lineage，15 代、种群 8、单槽 GPU 0。
+- PID：`1227735`；启动后已核实进程存活，正在初始形态碰撞审计，不能把初始化阶段写成已完成 PPO 更新。
+- 日志：`/home/zjh/Evolution_PC/runtime_logs/exp_20261008_strikephaseBC15g_v10.log`。
+- 启动脚本：`/home/zjh/Evolution_PC/Isaaclab_other/run_formal_strikephase_bc_15g_20261008.sh`。
+- 启动记录：`runtime_logs/exp_20261008_strikephaseBC15g_v10_launch.json`；PID 文件在 `Isaaclab_other/exp_20261008_strikephaseBC15g_v10.pid`。
+- 原 PPO 参数：4096 env，horizon 16，minibatch 4096，mini epochs 5；通用 stage1/stage2 为 100/250 迭代，Forage/Strike 为 25/50，stage2 top fraction 0.25；学习率等 PPO YAML 参数沿用原配置。
+- 后续验收必须区分任务完整成功、物理质量、固定 reset 重复性及跨形态表现。Forage 最终 checkpoint 保留 0.02 rad 物理验收指标。训练启动不等于训练完成或最终验收通过。
+
+Forage stage2 机器汇总：{"episodes": 20, "successes": 11, "physics_qualified_successes": 0}。完整机器记录：`docs/formal_training_start_20261008.json`。

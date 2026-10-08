@@ -690,6 +690,8 @@ def _run_scripted_preflight(child, experiment_name):
             ("task_forage", "forage_env_cfg.py"),
             ("task_strike", "evolution_strike_env.py"),
             ("task_strike", "evolution_strike_env_cfg.py"),
+            ("task_strike", "strike_bc_teacher.py"),
+            ("task_strike", "verified_bc_teachers.json"),
         )
     }
     digest = hashlib.sha256()
@@ -697,6 +699,7 @@ def _run_scripted_preflight(child, experiment_name):
     preflight_env_keys = (
         "EVOLUTION_BRANCH_BC_MODE", "EVOLUTION_STRIKE_BC_MODE",
         "EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "EVOLUTION_STRIKE_PREGRASP_ACTION",
+        "EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT",
         "EVOLUTION_STRIKE_RESET_OFFSET_WORLD", "EVOLUTION_STRIKE_BC_CLOSURE_FRACTION",
         "EVOLUTION_STRIKE_BC_RING_SPREAD_TARGET", "EVOLUTION_STRIKE_BC_JOINT_LIMIT_TOLERANCE",
     )
@@ -752,7 +755,7 @@ def _run_scripted_preflight(child, experiment_name):
             command.append("--cartesian_replay")
             command.append("--training_scene")
         if task_name != "grasp":
-            command.extend(["--min_video_steps", "1", "--training_scene"])
+            command.extend(["--min_video_steps", "1", "--training_scene", "--strike_joint_limit_tolerance", "0.02"])
         if task_name == "branch" and _env_flag("EVOLUTION_BRANCH_BC_MODE", False):
             command.append("--branch_policy_demo")
         if task_name == "strike" and _env_flag("EVOLUTION_STRIKE_BC_MODE", False):
@@ -778,10 +781,21 @@ def _run_scripted_preflight(child, experiment_name):
                 metrics.get("environment_m3_success", False)
                 or metrics.get("calibration_sustained_success", False),
             )
-            passed = result.returncode == 0 and bool(physical_success)
+            # Full task success alone is insufficient for formal admission.
+            peak = metrics.get("max_joint_limit_violation_rad")
+            violation_steps = metrics.get("joint_limit_violation_steps")
+            joint_quality = (
+                isinstance(peak, (int, float)) and not isinstance(peak, bool)
+                and math.isfinite(peak) and 0 <= peak <= 0.02
+            ) if peak is not None else violation_steps == 0
+            mesh_quality = task_name != "grasp" or metrics.get("source_mesh_penetration_steps") == 0
+            passed = result.returncode == 0 and bool(physical_success) and joint_quality and mesh_quality
             task_results[task_name] = {
                 "passed": passed,
                 "returncode": result.returncode,
+                "joint_quality_passed": bool(joint_quality),
+                "mesh_quality_passed": bool(mesh_quality),
+                "joint_limit_tolerance_rad": 0.02,
                 "metrics_path": metrics_path,
                 "log_path": log_path,
             }
@@ -1020,6 +1034,22 @@ for current_generation in range(runtime_state["current_generation"], max_generat
                                     bc_dataset_path = trace_path
                             except Exception:
                                 bc_dataset_path = None
+                    if bc_eligible and child.get("metadata", {}).get("seed_preserved_for_bc") and os.environ.get("EVOLUTION_VERIFIED_SEED_BC_MANIFEST"):
+                        manifest = _load_json(os.environ["EVOLUTION_VERIFIED_SEED_BC_MANIFEST"])
+                        physical_hand = dict(child["urdf_info"])
+                        physical_hand.pop("evolution_id", None)
+                        hand_sha = hashlib.sha256(json.dumps(physical_hand, sort_keys=True).encode()).hexdigest()
+                        if hand_sha != manifest["hand_sha256"]:
+                            raise ValueError("Verified seed BC morphology differs from candidate")
+                        entry = manifest["tasks"][bc_task_name]
+                        with open(entry["dataset"], "rb") as stream:
+                            dataset_sha = hashlib.sha256(stream.read()).hexdigest()
+                        if dataset_sha != entry["dataset_sha256"]:
+                            raise ValueError("Verified seed BC dataset hash mismatch")
+                        bc_dataset_path = entry["dataset"]
+                        if stage_name == "stage1":
+                            inherited_checkpoint = entry["checkpoint"]
+                        print(f"[VERIFIED_BC] {bc_task_name}: {bc_dataset_path}", flush=True)
                     if bc_eligible and child.get("metadata", {}).get("seed_preserved_for_bc") and not bc_dataset_path:
                         raise RuntimeError(f"Verified BC seed {bc_task_name} dataset is missing or invalid")
                     try:

@@ -1,0 +1,23 @@
+{
+  "hand_sha256": "771b76e9327e2f7389329b0a6ae17451d602c6f6eda62fed8d93cc21fe6c35e7",
+  "tasks": {
+    "grasp": {
+      "dataset": "/home/zjh/Evolution_PC/outputs/admission_13_14_exported_policy_traces/grasp/episodes/episode_000/successful_policy_trace.npz",
+      "dataset_sha256": "ead6899d5ff5592a09019c15c5284649aa261f91ba0c8c448716200a246c8979",
+      "checkpoint": "/home/zjh/Evolution_PC/evolution_tasks/logs/evolution_task/exp_20261005_branchgrasp_BC15g_v9_b8d49d60_EvolutionHand-Grasp_stage1/nn/evolution_task.pth",
+      "evidence": "/home/zjh/Evolution_PC/outputs/admission_13_14_replay_policy_traces_audited/grasp/episodes/episode_000/evaluation.json"
+    },
+    "branch": {
+      "dataset": "/home/zjh/Evolution_PC/outputs/admission_13_14_exported_policy_traces/branch/episodes/episode_000/successful_policy_trace.npz",
+      "dataset_sha256": "fbaef7eb8487ae75140d3fc7625f576ba1b0914c753a8861c6f8a63e80f63d40",
+      "checkpoint": "/home/zjh/Evolution_PC/evolution_tasks/logs/evolution_task/exp_20261005_branchgrasp_BC15g_v9_b8d49d60_EvolutionHand-BranchGrasp_stage1/nn/evolution_task.pth",
+      "evidence": "/home/zjh/Evolution_PC/outputs/admission_13_14_replay_policy_traces_audited/branch/episodes/episode_000/evaluation.json"
+    },
+    "strike": {
+      "dataset": "/home/zjh/Evolution_PC/outputs/strike_bc_direct/strike_bc_10diverse.npz",
+      "dataset_sha256": "7bdaaaced8e4056c0bd825419f2126c0fe2ec48a1460d845f8e2509be7d93aa2",
+      "checkpoint": "/home/zjh/Evolution_PC/evolution_tasks/logs/evolution_task/strike_bc_stage2_13_14_10diverse_seed17_bcinit/nn/bc_init.pth",
+      "evidence": "/home/zjh/Evolution_PC/outputs/strike_bc_geometry_binding/stage2_seed200/evaluation.json"
+    }
+  }
+}

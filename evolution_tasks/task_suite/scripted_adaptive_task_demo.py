@@ -923,7 +923,7 @@ def main(task: str) -> None:
             _, reward, terminated, truncated, _ = env.step(action)
             bc_observations.append(observation_before)
             bc_actions.append(action[0].detach().cpu().numpy().astype(np.float32))
-            if (task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo):
+            if hasattr(raw, "hand"):
                 joints = raw.hand.data.joint_pos[0]
                 limits = raw.hand.root_physx_view.get_dof_limits()[0].to(joints.device)
                 violation = torch.maximum(limits[:, 0] - joints, joints - limits[:, 1]).clamp_min(0)
@@ -1017,7 +1017,7 @@ def main(task: str) -> None:
         success = False
     demo_mode = (task == "branch" and args.branch_policy_demo) or (task == "strike" and args.strike_policy_demo)
     controller = "branch_joint_target_v1" if task == "branch" and args.branch_policy_demo else "strike_joint_target_v1" if task == "strike" and args.strike_policy_demo else None
-    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "joint_limit_violation_steps": joint_limit_violation_steps if demo_mode else None, "joint_limit_tolerance_rad": args.strike_joint_limit_tolerance if demo_mode else None, "max_joint_limit_violation_rad": max_joint_limit_violation_rad if demo_mode else None, "joint_limit_violation_names": sorted(joint_limit_violation_names) if demo_mode else None, "joint_limit_violation_examples": joint_limit_violation_examples if demo_mode else None, "controller": controller, "initial_geometry": initial_geometry, "history": history}
+    summary = {"task": task, "morphology": args.individual_key or "human_hand", "success": success, "curriculum_stage": cfg.curriculum_stage, "reset_dof_pos_noise": cfg.reset_dof_pos_noise, "training_scene": bool(args.training_scene), "effective_drives": effective_drives, "steps_executed": len(history), "scripted_trace": str(bc_path), "joint_limit_violation_steps": joint_limit_violation_steps, "joint_limit_tolerance_rad": args.strike_joint_limit_tolerance, "max_joint_limit_violation_rad": max_joint_limit_violation_rad, "joint_limit_violation_names": sorted(joint_limit_violation_names), "joint_limit_violation_examples": joint_limit_violation_examples, "controller": controller, "initial_geometry": initial_geometry, "history": history}
     Path(args.metrics).parent.mkdir(parents=True, exist_ok=True)
     Path(args.metrics).write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(json.dumps({key: value for key, value in summary.items() if key != "history"}, indent=2))

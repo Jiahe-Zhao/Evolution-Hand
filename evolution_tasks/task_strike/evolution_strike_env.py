@@ -77,7 +77,7 @@ class EvolutionStrikeEnv(DirectRLEnv):
             if not self.strike_bc_mode:
                 raise ValueError("Strike BC teacher requires the direct joint controller")
             from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import FrozenStrikeBCActor
-            self.bc_teacher = FrozenStrikeBCActor(teacher_checkpoint, self.hand.joint_names, self.device)
+            self.bc_teacher = FrozenStrikeBCActor(teacher_checkpoint, self.hand.joint_names, self.device, self.cfg.robot_cfg.spawn.asset_path)
         self.cartesian_ik = MorphologyAwareFingertipIK(
             self.hand, self.cfg.fingertip_body_names, num_envs=self.num_envs, device=self.device
         )

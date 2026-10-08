@@ -240,6 +240,21 @@ def _run_training(request):
         f"resolved_tips={resolved_tips}",
         flush=True,
     )
+    # A fixed-shape teacher must never control a mutated morphology.
+    teacher = os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_DEFAULT_CHECKPOINT") or os.environ.get("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT")
+    os.environ.pop("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT", None)
+    if task_name == "Isaac-EvolutionHand-Strike-v0" and teacher:
+        from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import morphology_sha256
+        from pathlib import Path
+        import hashlib
+        teacher_module = importlib.import_module("isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher")
+        registry = json.loads(Path(teacher_module.__file__).with_name("verified_bc_teachers.json").read_text())
+        entry = registry.get(hashlib.sha256(Path(teacher).read_bytes()).hexdigest(), {})
+        if entry.get("morphology_sha256") == morphology_sha256(env_cfg.robot_cfg.spawn.asset_path):
+            os.environ["EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT"] = teacher
+            print("[BC_TEACHER] Matching physical morphology: teacher enabled", flush=True)
+        else:
+            print("[BC_TEACHER] Different physical morphology: fixed teacher disabled; PPO explores", flush=True)
     agent_cfg = load_cfg_from_registry(task_name, "rl_games_cfg_entry_point")
     agent_cfg = copy.deepcopy(agent_cfg.to_dict() if hasattr(agent_cfg, "to_dict") else agent_cfg)
     env_cfg.scene.num_envs = int(request["num_envs"])
@@ -311,6 +326,9 @@ def _run_training(request):
             )
             if isinstance(env.unwrapped, DirectMARLEnv):
                 env = multi_agent_to_single_agent(env)
+            if task_name == "Isaac-EvolutionHand-Forage-v0":
+                from training_quality_monitor import attach_joint_quality_monitor
+                attach_joint_quality_monitor(env.unwrapped)
             env = RlGamesVecEnvWrapper(env, rl_device, clip_obs, clip_actions)
             vecenv.register(
                 "IsaacRlgWrapper", lambda config_name, num_actors, **kwargs: RlGamesGpuEnv(config_name, num_actors, **kwargs)
@@ -334,7 +352,7 @@ def _run_training(request):
                 if not os.path.isfile(bc_dataset):
                     raise FileNotFoundError(f'BC dataset missing: {bc_dataset}')
                 from policy_inheritance import train_behavior_cloning
-                bc_epochs = int(os.environ.get('EVOLUTION_BC_EPOCHS', '10'))
+                bc_epochs = int(os.environ.get('EVOLUTION_STRIKE_BC_EPOCHS', os.environ.get('EVOLUTION_BC_EPOCHS', '10')) if task_name == 'Isaac-EvolutionHand-Strike-v0' else os.environ.get('EVOLUTION_BC_EPOCHS', '10'))
                 if bc_epochs > 0:
                     train_behavior_cloning(agent, bc_dataset, run_dir, epochs=bc_epochs)
                 else:
@@ -344,6 +362,12 @@ def _run_training(request):
                     source_contract = load_contract(request['inherited_checkpoint_path'], task_name)
                     if source_contract.get('actual_joint_names') != contract.get('actual_joint_names'):
                         raise ValueError("Strike BC checkpoint morphology differs from training morphology")
+                    from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import FrozenStrikeBCActor
+                    verified_actor = FrozenStrikeBCActor(
+                        request["inherited_checkpoint_path"], list(env.unwrapped.hand.joint_names),
+                        env.unwrapped.device, env.unwrapped.cfg.robot_cfg.spawn.asset_path,
+                    )
+                    del verified_actor
                     print("[BC] Preserving the inherited, independently verified Strike BC checkpoint", flush=True)
                 bc_checkpoint = os.path.join(run_dir, 'nn', 'bc_init')
                 os.makedirs(os.path.dirname(bc_checkpoint), exist_ok=True)
@@ -361,6 +385,9 @@ def _run_training(request):
             agent.train()
         else:
             runner.run(run_args)
+        if task_name == "Isaac-EvolutionHand-Forage-v0":
+            from training_quality_monitor import monitor_summary
+            _atomic_write_json(os.path.join(run_dir, "physics_quality_training.json"), monitor_summary(env.unwrapped))
         os.makedirs(os.path.join(run_dir, "finished"), exist_ok=True)
         _prune_run_checkpoints(run_dir)
         return {"run_dir": run_dir}
