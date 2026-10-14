@@ -207,7 +207,7 @@ CURRENT_HAND_CFG = ArticulationCfg(
             damping={cfg["damping"]},
             # Numerical rotor inertia stabilizes tiny intermediate CMC/MCP
             # bodies; this is a simulation regularizer, not fossil anatomy.
-            armature=1.0e-5,
+            armature=1.0e-3,
         ),"""
 
     articulation_cfg += """
