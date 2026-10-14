@@ -271,10 +271,12 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
         inertia.set("iyz", "0.0")
         inertia.set("izz", str(izz))
 
-    def add_visual_or_collision(link_tag, tag_name, mesh_filename, origin_z, visual_color=None, material_name=None):
+    def add_visual_or_collision(link_tag, tag_name, mesh_filename, origin_z, visual_color=None, material_name=None, collision_scale=None):
         tag = ET.SubElement(link_tag, tag_name)
         add_origin(tag, [0, 0, origin_z], [0, 0, 0])
         add_mesh_geometry(tag, mesh_filename)
+        if collision_scale is not None and tag_name == "collision":
+            tag.find("geometry/mesh").set("scale", "{0} {0} {0}".format(collision_scale))
         if tag_name == "visual" and visual_color is not None:
             material = ET.SubElement(tag, "material")
             material.set("name", material_name or f"{link_tag.get('name')}_material")
@@ -462,7 +464,8 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
         link_tag.set("name", link_data["name_code"])
         add_inertial(link_tag, link_data)
         add_visual_or_collision(link_tag, "visual", mesh_filename, origin_z, link_data.get("visual_color"))
-        add_visual_or_collision(link_tag, "collision", collision_filename, origin_z)
+        base_collision_scale = 0.65 if link_data.get("name_code") in {f"link_{i}_0" for i in range(1, 6)} else None
+        add_visual_or_collision(link_tag, "collision", collision_filename, origin_z, collision_scale=base_collision_scale)
 
         # Extra root-link geometries are retained by IsaacLab's URDF importer,
         # unlike visuals attached through a merged fixed child joint.  This is
