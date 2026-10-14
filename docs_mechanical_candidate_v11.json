@@ -1,0 +1,17 @@
+{
+  "candidate": "15_15",
+  "static_gate": true,
+  "dynamic_gate": true,
+  "links": 25,
+  "joints": 24,
+  "actuated_joints": 20,
+  "collision_links": 20,
+  "total_mass_kg": 0.19366892570171143,
+  "samples": 49,
+  "peak_limit_error_rad": 0.0,
+  "peak_speed_rad_s": 3.347111940383911,
+  "dynamic_overlap_events": 0,
+  "effort_limits_match_urdf": true,
+  "self_collision_enabled": true,
+  "runtime_report": "Isaaclab_other/mechanical_candidate_v11/runtime/runtime.json"
+}\n
