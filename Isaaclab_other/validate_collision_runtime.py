@@ -184,7 +184,7 @@ def main():
     passed = (bool(colliders) and all(c["enabled"] for c in colliders) and not missing_filters
               and not unexpected_filters and peak_limit_error <= 0.005
               and not dynamic_overlap_events and actual_self_collision and effort_limits_match)
-    report = {"passed": passed, "isolated_joint": args.isolate_joint, "scope": f"One coordinated close/open sweep, source-solid witness checks at {len(samples)} poses; not exhaustive continuous ROM or a reconstruction of cooked convex hulls.",
+    report = {"passed": passed, "isolated_joint": args.isolate_joint, "joint_names": list(hand.joint_names), "scope": f"One coordinated close/open sweep, source-solid witness checks at {len(samples)} poses; not exhaustive continuous ROM or a reconstruction of cooked convex hulls.",
               "colliders": colliders, "approximation_modes": modes, "expected_filters": sorted(expected_filters),
               "missing_filters": sorted(missing_filters), "unexpected_filters": sorted(unexpected_filters),
               "self_collision_enabled": actual_self_collision,
