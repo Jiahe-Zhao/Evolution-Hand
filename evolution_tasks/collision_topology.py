@@ -101,4 +101,13 @@ def collision_exclusions(urdf_path, runtime_body_names):
             a, b = bodies[child], bodies[parent]
             if a != b:
                 pairs.add(tuple(sorted((a, b))))
+    # Generated spread frames sit between the palm body and first phalanx.
+    # Filter those four/five expected mechanical interfaces by runtime body names.
+    palm = "link_palm" if "link_palm" in runtime else "link_0_0"
+    for digit in range(1, 6):
+        base = f"link_{digit}_0"
+        if palm in runtime and base in runtime:
+            pairs.add(tuple(sorted((palm, base))))
+        if "link_0_0" in runtime and base in runtime:
+            pairs.add(tuple(sorted(("link_0_0", base))))
     return sorted(pairs)
