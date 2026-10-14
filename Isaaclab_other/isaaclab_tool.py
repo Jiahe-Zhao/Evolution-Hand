@@ -1,7 +1,71 @@
+import hashlib
 import xml.etree.ElementTree as ET
 import os
 import shutil
+import math
+import re
 
+
+def _build_morphology_contract(root, joints, links):
+    """Describe the generated hand without imposing a fixed phalanx count."""
+    limits = {}
+    axes = {}
+    for joint in root.findall("joint"):
+        if joint.get("type") == "fixed":
+            continue
+        limit = joint.find("limit")
+        if limit is None:
+            continue
+        axis = joint.find("axis")
+        if axis is not None:
+            axes[joint.get("name")] = tuple(float(value) for value in axis.get("xyz", "0 0 0").split())
+        limits[joint.get("name")] = {
+            "lower": float(limit.get("lower", "0")),
+            "upper": float(limit.get("upper", "0")),
+        }
+
+    long_fingers = {}
+    for digit in range(2, 6):
+        digit_joints = [name for name in joints if f"link_{digit}_" in name]
+        flexion_joints = [name for name in digit_joints if "mcp_spread" not in name]
+        if not flexion_joints:
+            raise ValueError(f"Morphology has no flexion chain for long finger {digit}.")
+        invalid = [name for name in flexion_joints if limits[name]["lower"] < -1.0e-6]
+        if invalid:
+            raise ValueError(f"Long-finger flexion must have lower limit 0, found {invalid}.")
+        wrong_axis = [name for name in flexion_joints if axes.get(name) != (1.0, 0.0, 0.0)]
+        if wrong_axis:
+            raise ValueError(f"Long-finger flexion axis must be +X, found {wrong_axis}.")
+        long_fingers[str(digit)] = {"joints": flexion_joints, "tip_candidates": [name for name in links if name.startswith(f"link_{digit}_")]}
+
+    thumb_cmc = "link_1_thumb_spread_joint"
+    if thumb_cmc not in limits:
+        raise ValueError("Morphology has no thumb CMC opposition joint.")
+    cmc_limit = limits[thumb_cmc]
+    opposition_lower = -2.0943951023931953
+    limit_tolerance = 1.0e-6
+    if (
+        cmc_limit["lower"] > opposition_lower + limit_tolerance
+        or cmc_limit["upper"] < -limit_tolerance
+    ):
+        raise ValueError("Thumb CMC must cover the -120 to 0 degree opposition interval.")
+    if axes.get(thumb_cmc) not in {(0.0, -1.0, 0.0), (0.0, 1.0, 0.0)}:
+        raise ValueError("Thumb CMC opposition axis must be +/-Y.")
+    thumb_flexion = [name for name in joints if "link_1_" in name and name != thumb_cmc]
+    if not thumb_flexion:
+        raise ValueError("Morphology has no thumb flexion chain.")
+    if any(limits[name]["lower"] < -1.0e-6 for name in thumb_flexion):
+        raise ValueError("Thumb flexion must not extend behind the hand.")
+    wrong_thumb_axis = [name for name in thumb_flexion if axes.get(name) != (1.0, 0.0, 0.0)]
+    if wrong_thumb_axis:
+        raise ValueError(f"Thumb flexion axis must be +X, found {wrong_thumb_axis}.")
+    return {
+        "version": 2,
+        "all_actuated_joints": joints,
+        "joint_limits_rad": limits,
+        "thumb": {"opposition_joint": thumb_cmc, "flexion_joints": thumb_flexion},
+        "long_fingers": long_fingers,
+    }
 
 def parse_urdf_and_generate_articulation_cfg(urdf_path, asset_path, output_py_file):
     """
@@ -21,6 +85,7 @@ def parse_urdf_and_generate_articulation_cfg(urdf_path, asset_path, output_py_fi
     links = []
     joints = []
     effort_limits = {}
+    velocity_limits = {}
     for link in root.findall('link'):
         link_name = link.get('name')
         links.append(link_name)
@@ -30,11 +95,17 @@ def parse_urdf_and_generate_articulation_cfg(urdf_path, asset_path, output_py_fi
         joint_type = joint.get('type')  # Can be "revolute", "continuous", etc.
         if joint_type == "fixed":
             continue
-        effort = joint.find('limit').get('effort') if joint.find('limit') is not None else None
-
+        limit = joint.find('limit')
+        if limit is None:
+            raise ValueError(f"Actuated joint {joint_name} has no URDF limit.")
+        effort = float(limit.get('effort', 'nan'))
+        velocity = float(limit.get('velocity', 'nan'))
+        if not all(math.isfinite(v) and v > 0 for v in (effort, velocity)):
+            raise ValueError(f"Joint {joint_name} needs finite positive effort and velocity limits.")
         joints.append(joint_name)
-        if effort:
-            effort_limits[joint_name] = float(effort)
+        effort_limits[re.escape(joint_name)] = effort
+        velocity_limits[re.escape(joint_name)] = min(0.45, velocity)
+    morphology_contract = _build_morphology_contract(root, joints, links)
 
     # 动态生成 ArticulationCfg 配置 要改
     evolution_root = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution"))
@@ -45,42 +116,60 @@ def parse_urdf_and_generate_articulation_cfg(urdf_path, asset_path, output_py_fi
 
     articulation_cfg = f"""
 import os
+import hashlib
 
 import isaaclab.sim as sim_utils
 from isaaclab.actuators.actuator_cfg import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 from isaaclab.sim.converters import UrdfConverterCfg
+from isaaclab_tasks.evolution_tasks.hand_collision import spawn_hand_with_collision_filters
+from isaaclab_tasks.evolution_tasks.collision_topology import collision_asset_fingerprint
 
 EVOLUTION_ROOT = os.environ.get("EVOLUTION_ROOT", os.path.join(os.path.expanduser("~"), "Evolution"))
 ASSET_PATH = os.path.join(EVOLUTION_ROOT, {asset_rel_path!r})
-# Keep converted USD files next to this slot-specific URDF.  The default
-# /tmp/IsaacLab location is shared by concurrent workers and can make one
-# morphology resolve another worker's current_agent.usd during scene cloning.
-USD_DIR = os.path.join(os.path.dirname(ASSET_PATH), "usd_cache")
+MORPHOLOGY_CONTRACT = {morphology_contract!r}
+# Cache conversions by URDF content.  A slot reuses the current_agent path
+# for multiple morphologies, so one shared USD would retain stale topology.
+URDF_CACHE_KEY = collision_asset_fingerprint(ASSET_PATH)
+# Bump the cache when drive/solver parameters change; otherwise Isaac may reuse
+# a USD converted with the old unstable actuator settings.
+USD_DIR = os.path.join(os.path.dirname(ASSET_PATH), "usd_cache_" + URDF_CACHE_KEY + "_contact_v10_runtime_gate")
 os.makedirs(USD_DIR, exist_ok=True)
 
 # Configuration based on URDF file {urdf_path}
 CURRENT_HAND_CFG = ArticulationCfg(
     spawn=sim_utils.UrdfFileCfg(
+        func=spawn_hand_with_collision_filters,
         asset_path=ASSET_PATH,
         usd_dir=USD_DIR,
-        activate_contact_sensors=False,  # 禁用接触传感器模拟
+        collider_type="convex_decomposition",
+        self_collision=True,
+        # Grasp/Branch success uses fingertip contact sensors.  Do not reuse a
+        # USD converted without contact reporting enabled.
+        activate_contact_sensors=True,
         fix_base=True, #True
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=True,  # 禁用重力
             retain_accelerations=True,  # 保留加速度
-            max_depenetration_velocity=1000.0,
+            # A 0.02 m/s recovery cap allowed driven fingers to remain deeply
+            # interpenetrating. Validated by the separate close/open audit.
+            max_depenetration_velocity=1.0,
+        ),
+        collision_props=sim_utils.CollisionPropertiesCfg(
+            collision_enabled=True, contact_offset=0.003, rest_offset=0.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
-            enabled_self_collisions=True,  # 启用自碰撞
-            solver_position_iteration_count=8,
-            solver_velocity_iteration_count=0,
+            # Adjacent attachment overlaps are filtered by the spawn wrapper;
+            # nonadjacent and cross-finger self-collisions remain enabled.
+            enabled_self_collisions=True,
+            solver_position_iteration_count=64,
+            solver_velocity_iteration_count=16,
             sleep_threshold=0.005,
             stabilization_threshold=0.0005,
         ),
         joint_drive=UrdfConverterCfg.JointDriveCfg(drive_type="force",
-                                                   gains=UrdfConverterCfg.JointDriveCfg.PDGainsCfg(stiffness=30.1,damping=0.1)),
+                                                   gains=UrdfConverterCfg.JointDriveCfg.PDGainsCfg(stiffness=3.0,damping=0.2)),
         joint_drive_props=sim_utils.JointDrivePropertiesCfg(drive_type="force"),  # 将驱动器类型设置为“强制”
         # fixed_tendons_props=sim_utils.FixedTendonPropertiesCfg(limit_stiffness=30.0, damping=0.1),  # 配置具有刚度和阻尼的肌腱
     ),
@@ -95,18 +184,17 @@ CURRENT_HAND_CFG = ArticulationCfg(
     # 根据关节信息生成执行器配置
     actuator_cfgs = {}
 
+    # Fixed links may be folded, but actuated joint names must survive.
+    # Set limits explicitly rather than relying on the cached USD defaults.
+    # Velocity is bounded by both the URDF and our conservative control cap.
     actuator_cfgs["hand"] = {
-        "joint_names_expr": [],
-        "effort_limit_sim": {},
-        "stiffness": {},
-        "damping": {},
+        "joint_names_expr": [".*"],
+        # Preserve the per-joint URDF torque limits after topology changes.
+        "effort_limit_sim": effort_limits,
+        "velocity_limit_sim": velocity_limits,
+        "stiffness": {".*": 1.5},
+        "damping": {".*": 1.0},
     }
-
-    for joint in joints:
-        actuator_cfgs["hand"]["joint_names_expr"].append(joint)
-        actuator_cfgs["hand"]["effort_limit_sim"][joint] = effort_limits.get(joint, 4.785)
-        actuator_cfgs["hand"]["stiffness"][joint] = 1.0
-        actuator_cfgs["hand"]["damping"][joint] = 0.1
 
     # Now generate the configuration for each actuator group (e.g., "fingers")
     for finger, cfg in actuator_cfgs.items():
@@ -114,13 +202,19 @@ CURRENT_HAND_CFG = ArticulationCfg(
         "{finger}": ImplicitActuatorCfg(
             joint_names_expr={cfg["joint_names_expr"]},
             effort_limit_sim={cfg["effort_limit_sim"]},
+            velocity_limit_sim={cfg["velocity_limit_sim"]},
             stiffness={cfg["stiffness"]},
             damping={cfg["damping"]},
+            # Numerical rotor inertia stabilizes tiny intermediate CMC/MCP
+            # bodies; this is a simulation regularizer, not fossil anatomy.
+            armature=1.0e-5,
         ),"""
 
     articulation_cfg += """
     },
-    soft_joint_pos_limit_factor=1.0,
+    # Keep a five-percent learning/diagnostic margin inside the URDF hard ROM.
+    # Runtime target projection preserves the exact zero-extension convention.
+    soft_joint_pos_limit_factor=0.95,
 )
 """
 
