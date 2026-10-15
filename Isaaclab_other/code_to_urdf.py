@@ -12,8 +12,8 @@ import trimesh
 # true human thumb uses several coupled CMC axes; allowing a single hinge to
 # sweep to 150 degrees makes it pass behind the palm while remaining legal in
 # the URDF.
-THUMB_OPPOSITION_LOWER_RAD = -1.7453292519943295  # -100 degrees; avoid sweeping behind the palm
-THUMB_OPPOSITION_UPPER_RAD = 0.0
+THUMB_OPPOSITION_LOWER_RAD = 0.0
+THUMB_OPPOSITION_UPPER_RAD = 1.7453292519943295  # +100 degrees toward the finger row
 FLEXION_AXIS = [1, 0, 0]
 # Keep the fixed palm physically active, but hide its box-like helper mesh by default.
 # Set EVOLUTION_HIDE_PALM_VISUAL=0 to show it for collision/debug inspection.
@@ -547,7 +547,7 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
         # The hand plane is X-Z and Y is its normal. A CMC opposition sweep
         # therefore rotates in the palm plane. Mirrored hands use the opposite
         # signed axis so both hands travel toward their own ulnar side.
-        axis.set("xyz", "0 1 0" if not is_mirrored else "0 -1 0")
+        axis.set("xyz", "0 -1 0" if not is_mirrored else "0 1 0")
         limit = ET.SubElement(spread_joint, "limit")
         limit.set("lower", str(THUMB_OPPOSITION_LOWER_RAD))
         limit.set("upper", str(THUMB_OPPOSITION_UPPER_RAD))

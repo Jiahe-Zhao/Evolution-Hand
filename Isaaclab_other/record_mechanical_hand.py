@@ -169,11 +169,11 @@ def opposition_pose(dof_names: list[str], limits: dict[str, tuple[float, float]]
 def thumb_workspace_pose(dof_names: list[str], limits: dict[str, tuple[float, float]], frame: int, frames: int) -> tuple[np.ndarray, str]:
     """Move the radial-base thumb through abduction, opposition, then flexion."""
     keyframes = (
-        ("open", -0.10, 0.08, 0.05, 0.05),
-        ("abduct", -0.40, 0.08, 0.05, 0.05),
-        ("opposition", -1.18, 0.08, 0.05, 0.05),
-        ("pinch", -1.18, 0.42, 0.50, 0.40),
-        ("open", -0.10, 0.08, 0.05, 0.05),
+        ("open", 0.10, 0.08, 0.05, 0.05),
+        ("abduct", 0.40, 0.08, 0.05, 0.05),
+        ("opposition", 1.18, 0.08, 0.05, 0.05),
+        ("pinch", 1.18, 0.42, 0.50, 0.40),
+        ("open", 0.10, 0.08, 0.05, 0.05),
     )
     progress = frame / max(1, frames - 1) * (len(keyframes) - 1)
     left = min(int(progress), len(keyframes) - 2)
