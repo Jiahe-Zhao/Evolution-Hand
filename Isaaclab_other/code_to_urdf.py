@@ -547,7 +547,7 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
         # The hand plane is X-Z and Y is its normal. A CMC opposition sweep
         # therefore rotates in the palm plane. Mirrored hands use the opposite
         # signed axis so both hands travel toward their own ulnar side.
-        axis.set("xyz", "0 -1 0" if not is_mirrored else "0 1 0")
+        axis.set("xyz", "0 1 0" if not is_mirrored else "0 -1 0")
         limit = ET.SubElement(spread_joint, "limit")
         limit.set("lower", str(THUMB_OPPOSITION_LOWER_RAD))
         limit.set("upper", str(THUMB_OPPOSITION_UPPER_RAD))
