@@ -1,0 +1,1052 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="arboreal_comparative_prior_v1">
+  <link name="link_0_0">
+    <inertial>
+      <origin xyz="0 0 0.0175" rpy="0 0 0" />
+      <mass value="0.012906709818498067" />
+      <inertia ixx="2.887876321888943e-06" ixy="0.0" ixz="0.0" iyy="2.887876321888943e-06" iyz="0.0" izz="6.097307741842191e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0175" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_0_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_chassis">
+        <color rgba="0.10 0.16 0.19 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0175" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_0_0_capsule.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link_1_0">
+    <inertial>
+      <origin xyz="0 0 0.015732508727049097" rpy="0 0 0" />
+      <mass value="0.0020083418543900386" />
+      <inertia ixx="2.465920035874123e-07" ixy="0.0" ixz="0.0" iyy="2.465920035874123e-07" iyz="0.0" izz="1.9527248408830385e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.015732508727049097" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.015732508727049097" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_capsule.stl" scale="0.65 0.65 0.65" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00318426 0 0.0163618" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00155752 0.00190363 0.0213962" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00318426 0 0.0163618" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00155752 0.00190363 0.0213962" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0025172" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00283814" length="0.00830676" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_1_1">
+    <inertial>
+      <origin xyz="0.0 -0.0003526250158026831 0.008652879799877004" rpy="0 0 0" />
+      <mass value="0.0009605218314898875" />
+      <inertia ixx="4.5530935496369203e-08" ixy="-9.154993758724915e-26" ixz="1.8596081072409987e-26" iyy="4.5462924149724386e-08" iyz="7.666707998875453e-26" izz="7.341597842223546e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.008652879799877004" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.008652879799877004" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00184 0 0.00899899" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0117679" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00184 0 0.00899899" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0117679" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00138446" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00164" length="0.0048" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_1_2">
+    <inertial>
+      <origin xyz="0 0 0.005899690772643412" rpy="0 0 0" />
+      <mass value="0.0003797094406036046" />
+      <inertia ixx="8.896340487294407e-09" ixy="0.0" ixz="0.0" iyy="8.896340487294407e-09" iyz="0.0" izz="1.6221730210363576e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.005899690772643412" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_capsule.stl" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.005899690772643412" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0016 0.00802358" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0032 0.0024 0.0056637" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_2_0">
+    <inertial>
+      <origin xyz="-2.608544445900679e-19 -0.0011108044824685067 0.02376507418459268" rpy="0 0 0" />
+      <mass value="0.003593848524860925" />
+      <inertia ixx="9.07558331280624e-07" ixy="-5.725186118071527e-26" ixz="-2.474709250405329e-25" iyy="9.05924898626901e-07" iyz="-2.064762340245583e-25" izz="4.516599189752184e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.02376507418459268" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.02376507418459268" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_capsule.stl" scale="0.65 0.65 0.65" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0046 0 0.0247157" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00225 0.00275 0.0323205" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.0046 0 0.0247157" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00225 0.00275 0.0323205" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00380241" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0041" length="0.012" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_2_1">
+    <inertial>
+      <origin xyz="0.0 -0.000626828968224943 0.014" rpy="0 0 0" />
+      <mass value="0.0014145100255101364" />
+      <inertia ixx="1.378070203621326e-07" ixy="-2.7464981276174747e-25" ixz="2.9038495828455593e-25" iyy="1.3756887550542983e-07" iyz="-1.3622402121828815e-25" izz="1.1120374888847925e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0028336 0 0.01456" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001386 0.001694 0.01904" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.0028336 0 0.01456" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001386 0.001694 0.01904" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00224" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0025256" length="0.007392" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_2_2">
+    <inertial>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <mass value="0.0010823833889168034" />
+      <inertia ixx="6.298331972560095e-08" ixy="0.0" ixz="0.0" iyy="6.298331972560095e-08" iyz="0.0" izz="8.29447481190982e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.002024 0 0.0104" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00099 0.00121 0.0136" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.002024 0 0.0104" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00099 0.00121 0.0136" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0016" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.001804" length="0.00528" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_2_3">
+    <inertial>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <mass value="0.00030597803449025586" />
+      <inertia ixx="9.135878245717583e-09" ixy="0.0" ixz="0.0" iyy="9.135878245717583e-09" iyz="0.0" izz="9.214111265899751e-10" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_capsule.stl" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0016 0.0102" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0032 0.0024 0.0072" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_3_0">
+    <inertial>
+      <origin xyz="0.0 -0.0011511521556135586 0.024" rpy="0 0 0" />
+      <mass value="0.0022635431069243264" />
+      <inertia ixx="5.481183302366434e-07" ixy="-1.3732490638087374e-25" ixz="-4.420145424134373e-25" iyy="5.471181446155528e-07" iyz="-7.778534806624648e-25" izz="1.863117648431534e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.024" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.024" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_capsule.stl" scale="0.65 0.65 0.65" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0046 0 0.02496" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00225 0.00275 0.03264" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.0046 0 0.02496" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00225 0.00275 0.03264" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00384" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0041" length="0.012" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_3_1">
+    <inertial>
+      <origin xyz="-2.4129101352629594e-19 -0.0006528101412533046 0.0145" rpy="0 0 0" />
+      <mass value="0.001456961679580846" />
+      <inertia ixx="1.501770626095863e-07" ixy="-4.515325843958425e-26" ixz="-2.417490539413299e-25" iyy="1.499158988419118e-07" iyz="3.297030312692896e-26" izz="1.1480831841373652e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0145" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0145" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0029348 0 0.01508" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0014355 0.0017545 0.01972" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.0029348 0 0.01508" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0014355 0.0017545 0.01972" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00232" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0026158" length="0.007656" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_3_2">
+    <inertial>
+      <origin xyz="0 0 0.008440002745240932" rpy="0 0 0" />
+      <mass value="0.0007048311522023154" />
+      <inertia ixx="2.980648339646829e-08" ixy="0.0" ixz="0.0" iyy="2.980648339646829e-08" iyz="0.0" izz="4.130088159032719e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.008440002745240932" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.008440002745240932" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00184 0 0.0087776" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0114784" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00184 0 0.0087776" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0114784" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0013504" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00164" length="0.0048" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_3_3">
+    <inertial>
+      <origin xyz="0 0 0.007417883601076094" rpy="0 0 0" />
+      <mass value="0.0003684279672706745" />
+      <inertia ixx="1.1295462327663738e-08" ixy="0.0" ixz="0.0" iyy="1.1295462327663738e-08" iyz="0.0" izz="1.3211603221937696e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.007417883601076094" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_capsule.stl" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.007417883601076094" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0016 0.0100883" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0032 0.0024 0.00712117" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_4_0">
+    <inertial>
+      <origin xyz="-1.6733412937948033e-19 -0.0009689620826032735 0.02" rpy="0 0 0" />
+      <mass value="0.0010504484698927966" />
+      <inertia ixx="1.725463686452921e-07" ixy="3.299525653766828e-26" ixz="3.0290155131406262e-25" iyy="1.7223062854199293e-07" iyz="-3.5955276907231547e-25" izz="4.926726901753814e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.02" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.02" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_capsule.stl" scale="0.65 0.65 0.65" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.004048 0 0.0208" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00198 0.00242 0.0272" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.004048 0 0.0208" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00198 0.00242 0.0272" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0032" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.003608" length="0.01056" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_4_1">
+    <inertial>
+      <origin xyz="-2.4129101352629594e-19 -0.0006528101412533046 0.0145" rpy="0 0 0" />
+      <mass value="0.001456961679580846" />
+      <inertia ixx="1.501770626095863e-07" ixy="-4.515325843958425e-26" ixz="-2.417490539413299e-25" iyy="1.499158988419118e-07" iyz="3.297030312692896e-26" izz="1.1480831841373652e-08" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0145" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0145" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.0029348 0 0.01508" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0014355 0.0017545 0.01972" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.0029348 0 0.01508" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0014355 0.0017545 0.01972" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00232" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0026158" length="0.007656" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_4_2">
+    <inertial>
+      <origin xyz="0 0 0.011083734789568842" rpy="0 0 0" />
+      <mass value="0.0008777937971367546" />
+      <inertia ixx="5.585801539093855e-08" ixy="0.0" ixz="0.0" iyy="5.585801539093855e-08" iyz="0.0" izz="5.189484359256159e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.011083734789568842" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.011083734789568842" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00224335 0 0.0115271" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00109729 0.00134113 0.0150739" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00224335 0 0.0115271" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00109729 0.00134113 0.0150739" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0017734" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00199951" length="0.00585221" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_5_0">
+    <inertial>
+      <origin xyz="-5.153101887252235e-20 -0.001064814704827529 0.021812773840855722" rpy="0 0 0" />
+      <mass value="0.0011370231238932902" />
+      <inertia ixx="2.182983236185122e-07" ixy="-1.7716614736717937e-26" ixz="1.0943078477225876e-25" iyy="2.1789843047025192e-07" iyz="6.366458365880442e-25" izz="5.3979706281659626e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.021812773840855722" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.021812773840855722" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_capsule.stl" scale="0.65 0.65 0.65" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00441491 0 0.0226853" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00215946 0.00263935 0.0296654" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00441491 0 0.0226853" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00215946 0.00263935 0.0296654" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00349004" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00393502" length="0.0115171" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_5_1">
+    <inertial>
+      <origin xyz="-4.985357034822167e-20 -0.0004602258249655351 0.010309333823254233" rpy="0 0 0" />
+      <mass value="0.0005876405606116182" />
+      <inertia ixx="3.1274532357080315e-08" ixy="-3.2292202217101385e-26" ixz="-1.707620906168417e-26" iyy="3.122067493284606e-08" iyz="1.2736787409658749e-26" izz="2.595547717229593e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.010309333823254233" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.010309333823254233" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00208661 0 0.0107217" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00102062 0.00124743 0.0140207" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00208661 0 0.0107217" rpy="0 0 0" />
+      <geometry>
+        <box size="0.00102062 0.00124743 0.0140207" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.00164949" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.0018598" length="0.00544333" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_5_2">
+    <inertial>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <mass value="0.0004566304921992764" />
+      <inertia ixx="1.4946237005196315e-08" ixy="0.0" ixz="0.0" iyy="1.4946237005196315e-08" iyz="0.0" izz="1.968317753216881e-09" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_capsule.stl" />
+      </geometry>
+      <material name="mechanical_shell">
+        <color rgba="0.35 0.44 0.47 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0075" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.00184 0 0.0078" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0102" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.00184 0 0.0078" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0009 0.0011 0.0102" />
+      </geometry>
+      <material name="mechanical_rail">
+        <color rgba="0.72 0.78 0.76 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.0012" rpy="0 1.57079632679 0" />
+      <geometry>
+        <cylinder radius="0.00164" length="0.0048" />
+      </geometry>
+      <material name="mechanical_hinge">
+        <color rgba="0.88 0.43 0.16 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_5_3">
+    <inertial>
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <mass value="0.00015666075365901102" />
+      <inertia ixx="2.993644583556738e-09" ixy="0.0" ixz="0.0" iyy="2.993644583556738e-09" iyz="0.0" izz="3.019279979610031e-10" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_capsule.stl" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.006" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_capsule.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.0016 0.00816" rpy="0 0 0" />
+      <geometry>
+        <box size="0.0032 0.0024 0.00576" />
+      </geometry>
+      <material name="mechanical_pad">
+        <color rgba="0.08 0.61 0.53 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="link_palm">
+    <inertial>
+      <origin xyz="0 0 0.029" rpy="0 0 0" />
+      <mass value="0.16" />
+      <inertia ixx="5.018666666666667e-05" ixy="0.0" ixz="0.0" iyy="6.618666666666669e-05" iyz="0.0" izz="2.666666666666667e-05" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0.029" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_box.stl" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0.029" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_box.stl" />
+      </geometry>
+      <material name="mechanical_chassis">
+        <color rgba="0.10 0.16 0.19 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="link_0_0_to_link_palm" type="fixed">
+    <parent link="link_0_0" />
+    <child link="link_palm" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+  <link name="link_1_thumb_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_1_thumb_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_1_thumb_spread" />
+    <origin xyz="-0.018 0 -0.018" rpy="3.141592653589793 1.5612308196666898 3.141592653589793" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.7453292519943295" upper="0.0" effort="15.0" velocity="2.0" />
+  </joint>
+  <link name="link_2_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_2_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_2_mcp_spread" />
+    <origin xyz="0.015 0.0 0.01" rpy="3.141592653589793 1.462027146461586 3.141592653589793" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.35" upper="0.35" effort="8.0" velocity="1.5" />
+  </joint>
+  <link name="link_3_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_3_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_3_mcp_spread" />
+    <origin xyz="0.015 0.0 0.02" rpy="3.141592653589793 1.562027146461586 3.141592653589793" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.17" upper="0.17" effort="8.0" velocity="1.5" />
+  </joint>
+  <link name="link_4_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_4_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_4_mcp_spread" />
+    <origin xyz="0.01577226457771071 0.0007722645777107107 0.030772264577710706" rpy="0.0 1.479565507128207 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.26" upper="0.26" effort="8.0" velocity="1.5" />
+  </joint>
+  <link name="link_5_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_5_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_5_mcp_spread" />
+    <origin xyz="0.015 0.0 0.04" rpy="0.0 1.3604344928717933 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.35" upper="0.35" effort="8.0" velocity="1.5" />
+  </joint>
+  <joint name="link_0_0_to_link_1_0" type="revolute">
+    <parent link="link_1_thumb_spread" />
+    <child link="link_1_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.05" effort="15.0" velocity="2.0" />
+  </joint>
+  <joint name="link_1_0_to_link_1_1" type="revolute">
+    <parent link="link_1_0" />
+    <child link="link_1_1" />
+    <origin xyz="0 0 0.03594690990652059" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.05" effort="10.0" velocity="1.5" />
+  </joint>
+  <joint name="link_1_1_to_link_1_2" type="revolute">
+    <parent link="link_1_1" />
+    <child link="link_1_2" />
+    <origin xyz="0 0 0.021305759599754007" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.55" effort="5.0" velocity="1.5" />
+  </joint>
+  <joint name="link_0_0_to_link_2_0" type="revolute">
+    <parent link="link_2_mcp_spread" />
+    <child link="link_2_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.18" effort="15.0" velocity="2.0" />
+  </joint>
+  <joint name="link_2_0_to_link_2_1" type="revolute">
+    <parent link="link_2_0" />
+    <child link="link_2_1" />
+    <origin xyz="0 0 0.052530148369185355" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="10.0" velocity="1.5" />
+  </joint>
+  <joint name="link_2_1_to_link_2_2" type="revolute">
+    <parent link="link_2_1" />
+    <child link="link_2_2" />
+    <origin xyz="0 0 0.032" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="5.0" velocity="1.5" />
+  </joint>
+  <joint name="link_2_2_to_link_2_3" type="fixed">
+    <parent link="link_2_2" />
+    <child link="link_2_3" />
+    <origin xyz="0 0 0.024" rpy="0 0 0" />
+  </joint>
+  <joint name="link_0_0_to_link_3_0" type="revolute">
+    <parent link="link_3_mcp_spread" />
+    <child link="link_3_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.4" effort="15.0" velocity="2.0" />
+  </joint>
+  <joint name="link_3_0_to_link_3_1" type="revolute">
+    <parent link="link_3_0" />
+    <child link="link_3_1" />
+    <origin xyz="0 0 0.052000000000000005" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="10.0" velocity="1.5" />
+  </joint>
+  <joint name="link_3_1_to_link_3_2" type="revolute">
+    <parent link="link_3_1" />
+    <child link="link_3_2" />
+    <origin xyz="0 0 0.033" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="5.0" velocity="1.5" />
+  </joint>
+  <joint name="link_3_2_to_link_3_3" type="fixed">
+    <parent link="link_3_2" />
+    <child link="link_3_3" />
+    <origin xyz="0 0 0.020380005490481863" rpy="0 0 0" />
+  </joint>
+  <joint name="link_0_0_to_link_4_0" type="revolute">
+    <parent link="link_4_mcp_spread" />
+    <child link="link_4_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.46" effort="15.0" velocity="2.0" />
+  </joint>
+  <joint name="link_4_0_to_link_4_1" type="revolute">
+    <parent link="link_4_0" />
+    <child link="link_4_1" />
+    <origin xyz="0 0 0.043000000000000003" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="10.0" velocity="1.5" />
+  </joint>
+  <joint name="link_4_1_to_link_4_2" type="revolute">
+    <parent link="link_4_1" />
+    <child link="link_4_2" />
+    <origin xyz="0 0 0.033" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="5.0" velocity="1.5" />
+  </joint>
+  <joint name="link_0_0_to_link_5_0" type="revolute">
+    <parent link="link_5_mcp_spread" />
+    <child link="link_5_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.59" effort="15.0" velocity="2.0" />
+  </joint>
+  <joint name="link_5_0_to_link_5_1" type="revolute">
+    <parent link="link_5_0" />
+    <child link="link_5_1" />
+    <origin xyz="0 0 0.04662554768171145" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="10.0" velocity="1.5" />
+  </joint>
+  <joint name="link_5_1_to_link_5_2" type="revolute">
+    <parent link="link_5_1" />
+    <child link="link_5_2" />
+    <origin xyz="0 0 0.023618667646508464" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="5.0" velocity="1.5" />
+  </joint>
+  <joint name="link_5_2_to_link_5_3" type="fixed">
+    <parent link="link_5_2" />
+    <child link="link_5_3" />
+    <origin xyz="0 0 0.018" rpy="-0.008696539976832103 -0.008696539976832103 0.008696539976832103" />
+  </joint>
+</robot>

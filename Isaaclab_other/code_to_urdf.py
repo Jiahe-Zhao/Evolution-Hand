@@ -12,7 +12,7 @@ import trimesh
 # true human thumb uses several coupled CMC axes; allowing a single hinge to
 # sweep to 150 degrees makes it pass behind the palm while remaining legal in
 # the URDF.
-THUMB_OPPOSITION_LOWER_RAD = -2.0943951023931953  # -120 degrees
+THUMB_OPPOSITION_LOWER_RAD = -1.7453292519943295  # -100 degrees; avoid sweeping behind the palm
 THUMB_OPPOSITION_UPPER_RAD = 0.0
 FLEXION_AXIS = [1, 0, 0]
 # Keep the fixed palm physically active, but hide its box-like helper mesh by default.
@@ -410,7 +410,7 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
         # Fixed thumb-root contact point on the radial/proximal palm edge.
         # Radial CMC anchor: the straight thumb must not intersect index/middle
         # rays. Negative opposition then swings toward the finger row.
-        1: ([0.0, 0.0, -0.006], [0.0, math.pi / 2.0, 0.0]),
+        1: ([-0.018, 0.0, -0.018], [0.0, math.pi / 2.0, 0.0]),
         2: ([0.015, 0.0, 0.010], [0.0, 1.67, 0.0]),
         3: ([0.015, 0.0, 0.020], [0.0, 1.57, 0.0]),
         4: ([0.015, 0.0, 0.030], [0.0, 1.47, 0.0]),
