@@ -336,10 +336,11 @@ def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: Mo
             joint_pos={name: value for name, value in requested_joint_pos.items() if name == ".*" or name in available_joints}
         )
     )
-    right_cfg_path = backup.override_task_root / "current_right_hand" / "current_right_hand_cfg.py"
-    spec = importlib.util.spec_from_file_location("evaluation_bound_hand_cfg", right_cfg_path)
+    side = "left" if "LeftRobot" in env_cfg.robot_cfg.prim_path else "right"
+    bound_cfg_path = backup.override_task_root / f"current_{side}_hand" / f"current_{side}_hand_cfg.py"
+    spec = importlib.util.spec_from_file_location("evaluation_bound_hand_cfg", bound_cfg_path)
     if spec is None or spec.loader is None:
-        raise RuntimeError(f"Cannot load generated morphology config: {right_cfg_path}")
+        raise RuntimeError(f"Cannot load generated morphology config: {bound_cfg_path}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     env_cfg.robot_cfg = module.CURRENT_HAND_CFG.replace(prim_path=env_cfg.robot_cfg.prim_path).replace(

@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--urdf', required=True)
 parser.add_argument('--palm_assets', required=True)
 parser.add_argument('--output_dir', required=True)
+parser.add_argument('--full_motion', action='store_true', help='Command a 12-second coordinated sweep to physical upper joint limits')
 parser.add_argument('--palm_coordination', action='store_true')
 parser.add_argument('--contact_probe', action='store_true', help='Indent the central palm web with a physical kinematic sphere')
 AppLauncher.add_app_launcher_args(parser)
@@ -73,11 +74,17 @@ def main():
         q=x[tet]
         return torch.stack([q[:,1]-q[:,0],q[:,2]-q[:,0],q[:,3]-q[:,0]],dim=-1)
     inverse = torch.linalg.inv(edges(points))
-    limits=hand.data.soft_joint_pos_limits
+    limits=hand.root_physx_view.get_dof_limits().to(hand.device) if args.full_motion else hand.data.soft_joint_pos_limits
     q0=torch.zeros_like(hand.data.joint_pos).clamp(limits[...,0],limits[...,1])
     target=q0.clone()
     for d,angle in zip(range(2,6),[0.25,0.30,0.40,0.50]):
         target[:,hand.joint_names.index(f'link_0_0_to_link_{d}_0')]=angle
+    if args.full_motion:
+        target = limits[...,1].clone()
+    from mechanical_collision_audit import MechanicalCollisionAudit
+    collision_auditor = MechanicalCollisionAudit(hand, source)
+    collision_samples = []
+    peak_limit_error = 0.
     hand.write_joint_state_to_sim(q0,torch.zeros_like(q0))
     max_stretch, min_jacobian, max_tracking = 1., 1., 0.
     from isaaclab.utils.math import quat_apply
@@ -86,8 +93,17 @@ def main():
     recorded_nodes, recorded_joints = [], []
     samples=[]
     probe_samples=[]
-    for step in range(1441):
-        phase=(1-np.cos(2*np.pi*step/1440))/2
+    motion_steps = 2880 if args.full_motion else 1440
+    if args.full_motion:
+        import xml.etree.ElementTree as ET
+        velocity_by_name = {j.get('name'):float(j.find('limit').get('velocity')) for j in ET.parse(source).getroot().findall('joint') if j.get('type') != 'fixed'}
+        velocity = torch.tensor([velocity_by_name[n] for n in hand.joint_names],device=hand.device)
+        # A cosine out-and-back sweep has peak speed pi*amplitude/duration.
+        # Leave acceleration/tracking margin rather than exceeding URDF speed.
+        duration = max(12.,float((np.pi*(target-q0).abs()/velocity).max())/0.6)
+        motion_steps = int(np.ceil(duration/sim.get_physics_dt()))
+    for step in range(motion_steps+1):
+        phase=(1-np.cos(2*np.pi*step/motion_steps))/2
         command=q0 if args.contact_probe else q0+phase*(target-q0)
         if probe is not None:
             probe_position = probe_surface + probe_normal*(probe_radius+0.004-phase*0.005)
@@ -102,6 +118,10 @@ def main():
         if not torch.isfinite(x).all():
             raise ValueError('Nonfinite deformable state')
         max_tracking=max(max_tracking,float((hand.data.joint_pos-command).abs().max()))
+        joint_pos=hand.data.joint_pos
+        peak_limit_error=max(peak_limit_error,float(torch.maximum(limits[...,0]-joint_pos,joint_pos-limits[...,1]).clamp_min(0).max()))
+        if step%120==0:
+            collision_samples.append(dict(step=step, **collision_auditor.sample()))
         if step%60==0:
             if probe is not None:
                 center = torch.as_tensor(probe_position, device=hand.device, dtype=torch.float32)
@@ -143,6 +163,14 @@ def main():
             'passed':bool(peak['central_depression_m']-baseline > 0.0002 and abs(peak['minimum_node_gap_m']) < 0.0003 and abs(recovery-baseline) < 0.0002 and min(v['minimum_node_gap_m'] for v in probe_samples) > -0.0007),
             'scope':'Kinematic spherical indentation, nodal separation and central deflection; not a contact-force or task-success test'}
         report['integrity_passed'] = report['integrity_passed'] and report['contact_probe']['passed']
+    report['motion_duration_seconds'] = motion_steps*sim.get_physics_dt()
+    report['full_motion_requested'] = args.full_motion
+    report['palm_coordination'] = args.palm_coordination
+    report['max_joint_limit_violation_rad'] = peak_limit_error
+    report['collision_samples'] = collision_samples
+    severe = [v for sample in collision_samples for v in sample['overlaps'] if v.get('severe')]
+    report['source_solid_severe_overlap_count'] = len(severe)
+    report['integrity_passed'] = report['integrity_passed'] and not severe and peak_limit_error <= 0.02
     report['integrity_thresholds'] = {'anchor_drift_m': 0.0015, 'tracking_rad': 0.10, 'minimum_volume_ratio': 0.0}
     (out/'dynamic_integrity.json').write_text(json.dumps(report,indent=2))
     print('[PALM_RESULT]',json.dumps({k:v for k,v in report.items() if k!='samples'}),flush=True)
