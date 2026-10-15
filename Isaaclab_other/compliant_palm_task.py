@@ -61,11 +61,11 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
             def coordinated_target(target, joint_ids=None, env_ids=None):
                 if joint_ids is not None:
                     raise ValueError('Coordinated palm requires full joint target writes')
-                return original_target(coordinate_palm_joints(target,list(self.hand.joint_names)), env_ids=env_ids)
+                return original_target(coordinate_palm_joints(target,list(self.hand.joint_names),self.hand.root_physx_view.get_dof_limits().to(self.device)), env_ids=env_ids)
             def coordinated_state(joint_pos, joint_vel, joint_ids=None, env_ids=None):
                 if joint_ids is not None:
                     raise ValueError('Coordinated palm requires full reset state writes')
-                return original_state(coordinate_palm_joints(joint_pos,list(self.hand.joint_names)), joint_vel, env_ids=env_ids)
+                return original_state(coordinate_palm_joints(joint_pos,list(self.hand.joint_names),self.hand.root_physx_view.get_dof_limits().to(self.device)), joint_vel, env_ids=env_ids)
             self.hand.set_joint_position_target = coordinated_target
             self.hand.write_joint_state_to_sim = coordinated_state
         self._palm_reset_count = 0

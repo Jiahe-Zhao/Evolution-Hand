@@ -111,7 +111,7 @@ def main():
             probe.write_root_pose_to_sim(pose)
         if args.palm_coordination:
             from palm_coordination import coordinate_palm_joints
-            command = coordinate_palm_joints(command,list(hand.joint_names))
+            command = coordinate_palm_joints(command,list(hand.joint_names),limits)
         hand.set_joint_position_target(command);hand.write_data_to_sim()
         sim.step(render=False);hand.update(sim.get_physics_dt());palm.update(sim.get_physics_dt())
         x=palm.data.nodal_pos_w[0]
