@@ -1,0 +1,28 @@
+--- a/evolution_tasks/task_strike/evolution_strike_env.py
++++ b/evolution_tasks/task_strike/evolution_strike_env.py
+@@ -28,0 +29,19 @@
++
++def _legacy_thumb_angle_for_hand(angle: float) -> float:
++    """Convert reset and placement-probe angles under an explicit transfer contract."""
++    reset_path = os.environ.get("EVOLUTION_MECHANICAL_RESET_TRANSFER")
++    if reset_path:
++        transfer = json.loads(Path(reset_path).read_text())
++        lower, upper = float(transfer['source_lower']), float(transfer['target_upper'])
++        if not np.isfinite([lower,upper]).all() or lower >= 0 or upper <= 0:
++            raise ValueError('Invalid mechanical reset angle contract')
++        if not lower <= angle <= 0:
++            raise ValueError('Legacy reset angle is outside its declared source limits')
++        return angle*upper/lower
++    transfer_path = os.environ.get("EVOLUTION_STRIKE_MECHANICAL_TRANSFER")
++    if not transfer_path:
++        return angle
++    from isaaclab_tasks.evolution_tasks.mechanical_policy_transfer import ThumbTransfer
++    mapping = json.loads(Path(transfer_path).read_text())["mapping"]
++    return float(ThumbTransfer(**mapping).source_angle_to_target(angle))
++
+@@ -464 +483 @@
+-                torch.full((len(env_ids),), float(os.environ.get("EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "-0.80")), device=self.device),
++                torch.full((len(env_ids),), _legacy_thumb_angle_for_hand(float(os.environ.get("EVOLUTION_STRIKE_RESET_THUMB_SPREAD", "-0.80"))), device=self.device),
+@@ -505 +524 @@
+-                torch.full((len(env_ids),), -1.1, device=self.device),
++                torch.full((len(env_ids),), _legacy_thumb_angle_for_hand(-1.1), device=self.device),

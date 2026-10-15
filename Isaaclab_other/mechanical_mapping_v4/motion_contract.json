@@ -1,0 +1,620 @@
+{
+  "physical_dofs": 20,
+  "mirror_contract_verified": true,
+  "zero_pose": "All joint coordinates zero",
+  "joint_order_note": "Rows are URDF order; action mapping must use controller/runtime joint names",
+  "thumb_transfer": "Legacy negative excursion mapped to positive normalized excursion; not Cartesian trajectory equivalence",
+  "joints": [
+    {
+      "name": "link_1_thumb_spread_joint",
+      "zero_rad": 0.0,
+      "right_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "left_axis": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.7453292519943295,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": -2.0943951023931953,
+        "upper": 0.0
+      }
+    },
+    {
+      "name": "link_2_mcp_spread_joint",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": -0.35,
+        "upper": 0.35
+      }
+    },
+    {
+      "name": "link_3_mcp_spread_joint",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": -0.17,
+        "upper": 0.17,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": -0.17,
+        "upper": 0.17
+      }
+    },
+    {
+      "name": "link_4_mcp_spread_joint",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": -0.26,
+        "upper": 0.26,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": -0.26,
+        "upper": 0.26
+      }
+    },
+    {
+      "name": "link_5_mcp_spread_joint",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": -0.35,
+        "upper": 0.35,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": -0.35,
+        "upper": 0.35
+      }
+    },
+    {
+      "name": "link_0_0_to_link_1_0",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.05,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.05
+      }
+    },
+    {
+      "name": "link_1_0_to_link_1_1",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.05,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.05
+      }
+    },
+    {
+      "name": "link_1_1_to_link_1_2",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.55,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.55
+      }
+    },
+    {
+      "name": "link_0_0_to_link_2_0",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.18,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.18
+      }
+    },
+    {
+      "name": "link_2_0_to_link_2_1",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.75,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.75
+      }
+    },
+    {
+      "name": "link_2_1_to_link_2_2",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.57,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.57
+      }
+    },
+    {
+      "name": "link_0_0_to_link_3_0",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.4,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.4
+      }
+    },
+    {
+      "name": "link_3_0_to_link_3_1",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.75,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.75
+      }
+    },
+    {
+      "name": "link_3_1_to_link_3_2",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.57,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.57
+      }
+    },
+    {
+      "name": "link_0_0_to_link_4_0",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.46,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.46
+      }
+    },
+    {
+      "name": "link_4_0_to_link_4_1",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.75,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.75
+      }
+    },
+    {
+      "name": "link_4_1_to_link_4_2",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.57,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.57
+      }
+    },
+    {
+      "name": "link_0_0_to_link_5_0",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.59,
+        "effort": 0.5,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.59
+      }
+    },
+    {
+      "name": "link_5_0_to_link_5_1",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.75,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.75
+      }
+    },
+    {
+      "name": "link_5_1_to_link_5_2",
+      "zero_rad": 0.0,
+      "right_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "left_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "lower": 0.0,
+        "upper": 1.57,
+        "effort": 0.3,
+        "velocity": 0.45
+      },
+      "legacy_limits": {
+        "lower": 0.0,
+        "upper": 1.57
+      }
+    }
+  ],
+  "asset_sha256": {
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_candidate_v11/urdf/current_agent.urdf": "855cbf09a68bb890c6b03f8e9f19215a80184047c02bd373966489e500cc3bf1",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm/compliant_palm.json": "fbed051411e716711660687b0a4f446e4155e3f09874cf73111492df7bd3ab62",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm/continuous_palm.stl": "c6a1ce75dae20277091f62bb56e15bc17c0af5e7bd0140a47fdbbd421f722eda",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm/palm_tetrahedra.npz": "43f5400ddb8e1b7859e819bf7b37bde5365579d231d8e42355aeb6de5b3900fb",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm_left/compliant_palm.json": "48c62287ffdfc02ab0bd06aa140dce0ceeddebbfebdfc200a0fa9e08f88141b1",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm_left/continuous_palm.stl": "a255989148d09e41df98e5062ca7f83a414a999551a0e7adc669e97408b29567",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/compliant_palm_left/palm_tetrahedra.npz": "809e487e309be60072b3ae7c6e849062e9c04e9a21cc9dfa1cfb40021e0d6a69",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_000_link_0_0_wrist_mount.stl": "c814d13cbcb73a738838421c6e14c49d63819eddfc6db0cad4452a3cd3dab563",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_001_link_0_0_thumb_brace_0.stl": "a47f893fd88c66bb4503d89e548832d9e1e2b2441252ef02efa25490cb39d4c7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_002_link_0_0_thumb_cheek_0.stl": "df6fdb274f6a82e09eb4de3e082842c7e039c46afb1daae092971b09ad3af0fe",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_003_link_0_0_thumb_brace_2.stl": "00cb60335e92ce044ecbe2bba78f4cc2dc31ccada7edba8eee437ad13aebfb74",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_004_link_0_0_thumb_cheek_2.stl": "8f5476ac1d985d0fd61e860d31a574bff43d23de2527025e373124fc951024d7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_005_link_1_0_rigid_link.stl": "ca5adc4d6fc6da40f8512f8308349dd82f2821def7cd935612f064005dc06f0c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_006_link_1_0_proximal_bearing.stl": "debedaa502c13536758221ad0c0b6e437fcedfa32fbe4a1ce3e74b616bc17cc9",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_007_link_1_0_distal_bearing.stl": "eef80d6019c1596e5667d47cbb5f6ad1cd3aca778b924f3eaab377b4e55d7e48",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_008_link_1_1_rigid_link.stl": "d38ae9dc556fcea9e90eefbf74b17cb64828403355bc4e3f75dd31352228c9bc",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_009_link_1_1_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_010_link_1_1_distal_bearing.stl": "132467fdf147a91c92e98ab3209611d6d4b248f54ba0c8651f3fd96bb4a5fc39",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_011_link_1_2_finger_pad.stl": "a9fe74ec20c428cd048b2765d539757ae64e3fb2ee467a6d1b3805839eca4110",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_012_link_1_2_proximal_bearing.stl": "598197852ab3f476a71f88c6ecc8822917bd7d93230ca929c78a365c85d25392",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_013_link_1_2_distal_bearing.stl": "95ab4f3bb01de6f127ece3246741527f9f03ccd7cd87e0b4167f3fdf3d0d2503",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_014_link_2_0_rigid_link.stl": "3472dad0c0526bb3092247584395aedd09151dad366b4c2f96c706b7f610b4b6",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_015_link_2_0_proximal_bearing.stl": "c7dd5cb68f18070613a21fab02e52b8927a53e15e20f2d45bca67ae9d32094ec",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_016_link_2_0_distal_bearing.stl": "211581ad5022c92c54376ac55b1fc6f15cc69c2dbe8c9809164281e810a5f15f",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_017_link_2_1_rigid_link.stl": "0f77e5f00b352860d5c655bf8bd503bd9be8823e855f1e4fdbacd2ef04b515ae",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_018_link_2_1_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_019_link_2_1_distal_bearing.stl": "da992e6d2d82b9af7a5fe8e10cb18e3ccc8c2f9aaae0a583ffe1d4582485faae",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_020_link_2_2_rigid_link.stl": "5ee161b0ebc277559d95bae5bda27917553c0a047c970875853425e7aaf13f27",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_021_link_2_2_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_022_link_2_2_distal_bearing.stl": "de7d38603cd4f16f163bea37a9a46678b024e03fd687a530b8602aae8cec1f23",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_023_link_2_3_finger_pad.stl": "d315c5cd9eb7030bd90d4b4650ac76b6172f669e8efa68d6ac3aa8f4740b38bc",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_024_link_2_3_proximal_bearing.stl": "961a4af3625ffc76928b6b77b98aae83bab877d272c69d6539d2ecbaeccab48d",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_025_link_2_3_distal_bearing.stl": "61b7600d5a1f30689d1557455197809f080539fbe78a17e096718d55abff3c5a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_026_link_3_0_rigid_link.stl": "138490b7424a2983b2644ffc2ae044b83e2bfe3fe7531505923e46614f923590",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_027_link_3_0_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_028_link_3_0_distal_bearing.stl": "d977683920f01fc9ff92a86be6e03af28b3fe7bbd22b99b737f8081879f8322d",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_029_link_3_1_rigid_link.stl": "b27de9d92d4eeccb321de6d188e1f279c4024611c569ef1e5c71873a477d1967",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_030_link_3_1_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_031_link_3_1_distal_bearing.stl": "6c4dfb4972fe5291976994fdc969d9f1f9e6d385ffd7c2514594ea6083d52769",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_032_link_3_2_rigid_link.stl": "e186eb1db9a0e79249f7edc7a98677b03b1523a407ba90e9bf32551ece714cd7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_033_link_3_2_proximal_bearing.stl": "a5a9788d1b69ba0b8ac22849324fd03142a4382903daa7616815d9d04208ea0c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_034_link_3_2_distal_bearing.stl": "512c984185735ac4f8c77a5b02e51c78d923f07bbca8c67882b7806b5dbe396e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_035_link_3_3_finger_pad.stl": "ecb50ee1af4892af499c8888a95be7fd38c685598bde75d83bfb1176d52b2930",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_036_link_3_3_proximal_bearing.stl": "ff270493011da4c7132dc549b9d9d4f132269afe26adaecabfbf889e86253561",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_037_link_3_3_distal_bearing.stl": "d6989149e6a3501d6816a56b8970a1ae1f1968215611c9b598fbff9a442d8d29",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_038_link_4_0_rigid_link.stl": "8978d2f4f85c20e9a31626c73dc9c32e37e99cca1346749de652494f7540f83b",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_039_link_4_0_proximal_bearing.stl": "598197852ab3f476a71f88c6ecc8822917bd7d93230ca929c78a365c85d25392",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_040_link_4_0_distal_bearing.stl": "bb7abda4d7de08ea4e000fbc85dfa462e9b1cb151464e7ae7e29e0d3f001cc91",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_041_link_4_1_rigid_link.stl": "b27de9d92d4eeccb321de6d188e1f279c4024611c569ef1e5c71873a477d1967",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_042_link_4_1_proximal_bearing.stl": "2d87ff195b509155bc90d64c2fe9226e37b3fab5fbf5f2bb5c950364db4c9e04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_043_link_4_1_distal_bearing.stl": "6c4dfb4972fe5291976994fdc969d9f1f9e6d385ffd7c2514594ea6083d52769",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_044_link_4_2_finger_pad.stl": "5d288fb7757fcb3c2a34dcf03e9569b088c17658d0646154cf1d0dd3c0672c7f",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_045_link_4_2_proximal_bearing.stl": "a5a9788d1b69ba0b8ac22849324fd03142a4382903daa7616815d9d04208ea0c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_046_link_4_2_distal_bearing.stl": "1f91817a1be6acd09bdc6ddcbc4f03416cbaa304e001dbda48834ad5c937a05a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_047_link_5_0_rigid_link.stl": "c05dea6b06bfb54a7332a66d2b7f1b447db1e62387b1190e7b719108bfda1ea3",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_048_link_5_0_proximal_bearing.stl": "598197852ab3f476a71f88c6ecc8822917bd7d93230ca929c78a365c85d25392",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_049_link_5_0_distal_bearing.stl": "bdddf16a7ec8958fd40eafb70c44baefce8d23f0be24641b13e6f9ff63e6167b",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_050_link_5_1_rigid_link.stl": "3a8631281f5076a8cb0f6884a2ca85c7dd47a68514accb050b6f4901761ee32b",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_051_link_5_1_proximal_bearing.stl": "598197852ab3f476a71f88c6ecc8822917bd7d93230ca929c78a365c85d25392",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_052_link_5_1_distal_bearing.stl": "9d4997bba74fbbf1e676bcd9fc38f8c08ac93572aa267f011329ac27a3e86a03",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_053_link_5_2_rigid_link.stl": "41a6402e4a483d7c076719f3b096e16bf03ec7c5575758201ea2e1a0c9244e7a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_054_link_5_2_proximal_bearing.stl": "598197852ab3f476a71f88c6ecc8822917bd7d93230ca929c78a365c85d25392",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_055_link_5_2_distal_bearing.stl": "c5fe1087627a971c1e3005a64a7ef5a276ac9cacb8163d3919d5ae4858438b7e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_056_link_5_3_finger_pad.stl": "017c0c7965bf4ceb043d3467cb79b3364e3b003cb335a2501fd34a2c124434b0",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_057_link_5_3_proximal_bearing.stl": "7f89543765169454e4d55dba936d79af4a5fcc3603da4de1377553a7e7b3d2cb",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_058_link_5_3_distal_bearing.stl": "1d20b502918429104dba96b4279e3dd2ac7cab1322572470f79ed4f2b303c4fd",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/meshes/mirror_059_link_1_thumb_spread_opposition_shaft.stl": "c8294aa54f52621fe5ba59bd88ffe05106eceb570e983d6ff1c4e2ac917bcfa1",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/left/urdf/current_agent.urdf": "d000160db1f51522f35772b0da252d5c0701408c6526a10699e7f3ffa3c61210",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_0_0_thumb_brace_0.stl": "03bdc4f1bf006f5379896825995537a697cc9bbf92af871046800413dea647d8",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_0_0_thumb_brace_2.stl": "103d68a095ad5d665ff2ec6839c85aa222f78d2f71e8f64bc09b341ed3f042e4",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_0_0_thumb_cheek_0.stl": "d942c48e4910a2cef6328b7b764b2e85580be34415a42682a67d3004427bc42d",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_0_0_thumb_cheek_2.stl": "ba678fea4ba1db90b4137b175c77e5c3fb7b65342e34e768b668ad689563dda7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_0_0_wrist_mount.stl": "d611e5b52fb86832c387e3a78035f06f1b49dcf19a7c2c346203a59de5c490ee",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_0_distal_bearing.stl": "84b68c4c39cf663fd9bb0aea0d7a7dcbae20a2463c6378908297682d0e3f1d06",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_0_proximal_bearing.stl": "e7b2e8e9a49f834a1cdf40179228aec12f912e9319f5995ed295b4a8b0a28c04",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_0_rigid_link.stl": "14c7602a66b5bdf7cadc3740f267be1e34ad896e2857c2516e2d812625009a1f",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_1_distal_bearing.stl": "40c610cc9ce19cd91bf7d4f16f99da5fb69f107084fa24d7f54eb143b59a567c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_1_rigid_link.stl": "429bdbefa598ea87b8e0226f2e444ab0619e2563644b4e07e7c83f292e853c76",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_2_distal_bearing.stl": "e1429c2f63dddaa65d07918efdc8342a385738de328b476edd129c8894d5116a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_2_finger_pad.stl": "195916529c2226b2cd83329c540554e47871716e57b1c9930a2827421fc6338c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_2_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_1_thumb_spread_opposition_shaft.stl": "7a69f08306369c7380d439786beb7c4e5cf7521eb6a114aeba1e3e25ffe43d1e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_0_distal_bearing.stl": "032dd8dac1a1247f75277dcb120166ff0e3aff15150041719c06120fa5028a51",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_0_proximal_bearing.stl": "39aa0d5c5f94442df7cc4fa28ef302bfdb42ad3436504eee4a03a5ecdd2d6bf1",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_0_rigid_link.stl": "752be77bf5770deca935905d9875a5f0b5e1864e294f1a62881cf3c69315cfea",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_1_distal_bearing.stl": "cfa2c2087c98282615d9be0227ef028b7b28fd243fa1f283fa531bf2ac52b4b9",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_1_rigid_link.stl": "d37a4b6035a0aa3dc417958747526fde99061940e00374b47dd3f1b53b1adad3",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_2_distal_bearing.stl": "84a1ae3650da6b14f1228bff80f611289e3a132a46d4483ff9596f3e45ccaf68",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_2_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_2_rigid_link.stl": "b2c98df7308b418a9db736f456b090f31bd7507b3e86cdff6e504c23f4876c23",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_3_distal_bearing.stl": "7ff23f2e02956d820e6938d825a5f1636f246db7712a33f31327212ff76890a9",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_3_finger_pad.stl": "eedafb41bd7a8b326e888489dbf7899580f025694130b8aa9c93394c24920908",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_2_3_proximal_bearing.stl": "dba07bed53098cc99406280e27b76476f493766f1c75432422c6a8e91ffee3c7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_0_distal_bearing.stl": "d5b913222b2ae971605543149d2bf6eabb89cdc20c7b6cc021e91d18ac3fd01f",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_0_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_0_rigid_link.stl": "0bf955b18a16ff1e71a4d2d99134586f59ce0acccc65cd65021d793484f1189b",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_1_distal_bearing.stl": "78ba171542e543677a9b3ce8cca1d6a9f045c028bf4eac0f8658630c3758a71a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_1_rigid_link.stl": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_2_distal_bearing.stl": "8c85f6676daaf1c4aa38fee4b6da79e8f1f7876b713a0fbb68d3a541b412d29a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_2_proximal_bearing.stl": "fe216d69f891e19fee1552eccc34c0d55c04d522b03a8212717e2db0995ca448",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_2_rigid_link.stl": "070caf9e372f634e9a7e77a2396ad9a09b90e216deb088791d021e131571b0e3",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_3_distal_bearing.stl": "e53ac78466c0a4a28abb8bd90630315a9cbb20af96a52c430cb4b9410f8cc892",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_3_finger_pad.stl": "6583793ab61d20b05c75c860754bd011e18f5be4b8dabdef74e115e1c3453bbd",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_3_3_proximal_bearing.stl": "a9b1f3c76855ad05c5ff85913ceabdbb93c2348076abeaeca073f7010b93117e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_0_distal_bearing.stl": "df7c589cb0caa81c20c4da3245d2c45c46fa5e416ddeff2bee9999fd6c0663d4",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_0_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_0_rigid_link.stl": "416d71a92a77dc6ea5cb6b96d36cf124f46fe02bf4e3e9d905d1a2792896f41c",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_1_distal_bearing.stl": "78ba171542e543677a9b3ce8cca1d6a9f045c028bf4eac0f8658630c3758a71a",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_1_rigid_link.stl": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_2_distal_bearing.stl": "993427d7a85f4f234858cd1a6f0c2b4995b572aa22551804cc827b088c33e9db",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_2_finger_pad.stl": "eb64ad50e88c85fde523d55726d511dd3bfdc3f259e8ddcea094f72d0dfaf1ee",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_4_2_proximal_bearing.stl": "fe216d69f891e19fee1552eccc34c0d55c04d522b03a8212717e2db0995ca448",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_0_distal_bearing.stl": "eae981472762f6426f2915dad7ed3c93f633a2cdc15bf1a5c5f52d6bb80b6948",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_0_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_0_rigid_link.stl": "a0caef5e0ba1011868dd76c5dc9604fb059ee2a051520a0d5fdbfccf50001526",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_1_distal_bearing.stl": "742432eb22c3ed1f71090b06ef1880e177fddc1f446e49e233fc1efa92e81bec",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_1_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_1_rigid_link.stl": "c8eaab40dc7de43705708115212f35b9219484cdfaf5d06694da54db062991e7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_2_distal_bearing.stl": "168d4bb892f4d8abe74b7e47baf9262b75173ac8e4e87fe59343f3820625e522",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_2_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_2_rigid_link.stl": "9646b12d4f8c71a5f84a2f73691040a3b798fb499638df5104ea1f9b8594fdc7",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_3_distal_bearing.stl": "374eddd97b46a6510f8e72604b3b1b8166ea810a98852b262b05023873172b3d",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_3_finger_pad.stl": "434f45483584b7b9420025625e4b56ba8e597a825a7418585be6d10c61b5c998",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/meshes/link_5_3_proximal_bearing.stl": "74ac683903683832aed0cbe98ad0732b8d90be3f248dd9395d81a0962cf54e89",
+    "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/urdf/current_agent.urdf": "89837698d5e15aaadc5df033e239f15ff2e3564bf1ac2b0fd07dfca777820077"
+  }
+}

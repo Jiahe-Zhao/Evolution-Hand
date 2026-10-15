@@ -24,6 +24,10 @@ from task_registry import TASKS
 
 
 parser = argparse.ArgumentParser(description="Evaluate one fixed morphology and policy over fixed seeds.")
+parser.add_argument("--train_iterations", type=int, default=0)
+parser.add_argument("--train_num_envs", type=int, default=4096)
+parser.add_argument("--train_smoke", action="store_true")
+parser.add_argument("--physics_batch_probe_envs", type=int, default=0, help="Run a separate batched physics/reset probe, not a policy-success evaluation")
 parser.add_argument("--palm_coordination", action="store_true", help="Coordinate four palm supports; retain independent distal commands")
 parser.add_argument("--mechanical_wrist_speed", type=float, help="Diagnostic physical wrist speed cap in m/s; changes controller contract")
 parser.add_argument("--compliant_palm", action="store_true", help="Include the physical FEM palm in the task scene")
@@ -441,7 +445,7 @@ def main() -> None:
         importlib.import_module(module_name)
         if backup is not None:
             _reload_task_modules(args.task)
-        env_cfg = parse_env_cfg(env_id, device=args.device, num_envs=1)
+        env_cfg = parse_env_cfg(env_id, device=args.device, num_envs=args.physics_batch_probe_envs or (args.train_num_envs if args.train_iterations else 1))
         _configure_structure_adaptive_evaluation(args.task, env_cfg, backup)
         if args.forage_solver_iterations is not None:
             if args.task != "forage" or not 8 <= args.forage_solver_iterations <= 255:
@@ -453,6 +457,17 @@ def main() -> None:
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
         agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
         print(f"[EVAL] Creating {args.task} environment", flush=True)
+        if args.task == 'strike':
+            import hashlib
+            reset_contract = output_dir.resolve()/'mechanical_reset_transfer.json'
+            reset_contract.write_text(json.dumps({'source_lower':mechanical_source_lower,
+                'target_upper':mechanical_target_upper,
+                'source_urdf_sha256':hashlib.sha256(Path(args.legacy_source_urdf).read_bytes()).hexdigest(),
+                'target_urdf_sha256':hashlib.sha256(Path(env_cfg.robot_cfg.spawn.asset_path).read_bytes()).hexdigest(),
+                'scope':'Physical reset and tool-placement probe; independent of BC teacher'},indent=2))
+            os.environ['EVOLUTION_MECHANICAL_RESET_TRANSFER'] = str(reset_contract)
+        else:
+            os.environ.pop('EVOLUTION_MECHANICAL_RESET_TRANSFER',None)
         if os.environ.get('EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT'):
             import hashlib
             from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import morphology_sha256
@@ -477,9 +492,37 @@ def main() -> None:
         else:
             os.environ.pop('EVOLUTION_STRIKE_MECHANICAL_TRANSFER', None)
         if args.compliant_palm:
+            env_cfg.scene.replicate_physics = False
             from compliant_palm_task import install_palm_hooks
             install_palm_hooks(env_id, args.mechanical_asset_dir, output_dir, args.mechanical_wrist_speed, args.palm_coordination)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
+        if args.physics_batch_probe_envs:
+            if not args.compliant_palm or args.physics_batch_probe_envs < 2:
+                raise ValueError('Batch probe requires FEM palm and at least two environments')
+            physical = raw_env.unwrapped
+            raw_env.reset(seed=args.seed)
+            assert physical.mechanical_palm.data.nodal_pos_w.shape[0] == args.physics_batch_probe_envs
+            actions = torch.zeros(raw_env.action_space.shape, device=physical.device)
+            for step_index in range(300):
+                _, reward, _, _, _ = raw_env.step(actions)
+                if not bool(torch.isfinite(reward).all()):
+                    raise RuntimeError('Nonfinite batch reward')
+                if step_index == 100:
+                    before = physical.mechanical_palm.data.nodal_pos_w.clone()
+                    physical._reset_idx(torch.tensor([1], device=physical.device))
+                    physical.mechanical_palm.update(0.)
+                    after = physical.mechanical_palm.data.nodal_pos_w
+                    untouched = torch.arange(physical.num_envs,device=physical.device) != 1
+                    reset_leak = float((after[untouched]-before[untouched]).abs().max())
+                    if reset_leak > 1e-6:
+                        raise RuntimeError(f'Partial reset changed unrelated palms: {reset_leak}')
+            report = {'probe_only':True,'task':args.task,'num_envs':physical.num_envs,
+                      'steps':300,'partial_reset_other_env_delta_m':reset_leak,
+                      'palm_integrity':physical._palm_metrics,'passed':True}
+            (output_dir/'physics_batch_probe.json').write_text(json.dumps(report,indent=2))
+            print('[PALM_BATCH_PROBE]',json.dumps(report),flush=True)
+            raw_env.close()
+            return
         if args.task == "strike" and controller == "strike_joint_target_v1":
             saved_contract = json.loads((Path(resume_path).parent.parent / "params" / "policy_contract.json").read_text(encoding="utf-8"))
             actual_joints = list(raw_env.unwrapped.hand.joint_names)
@@ -502,6 +545,18 @@ def main() -> None:
         transfer = ThumbTransfer(mechanical_source_lower, mechanical_target_upper,
                                  (canonical.index(thumb) if thumb in canonical else None), len(canonical), action_dim, action_index)
         import hashlib
+        saved_policy_contract = json.loads((Path(resume_path).parent.parent/'params/policy_contract.json').read_text())
+        trained_adapter = saved_policy_contract.get('mechanical_adapter')
+        if trained_adapter:
+            from palm_coordination import contract as coordination_contract
+            expected_adapter = {
+                'observation_convention':'legacy_semantic_after_physical_clip',
+                'mapping':transfer.__dict__,
+                'palm_coordination':coordination_contract() if args.palm_coordination else None,
+                'wrist_speed_m_s':args.mechanical_wrist_speed,
+                'target_urdf_sha256':hashlib.sha256(Path(physical.hand.cfg.spawn.asset_path).read_bytes()).hexdigest()}
+            if not args.compliant_palm or trained_adapter != expected_adapter:
+                raise ValueError('Mechanical checkpoint and evaluation physics/control contract differ')
         (output_dir / 'mechanical_transfer.json').write_text(json.dumps({
             'legacy_urdf_sha256': hashlib.sha256(Path(args.legacy_source_urdf).read_bytes()).hexdigest(),
             'checkpoint_sha256': hashlib.sha256(Path(resume_path).read_bytes()).hexdigest(),
@@ -509,6 +564,12 @@ def main() -> None:
             'controller': controller, 'mapping': transfer.__dict__,
             'semantics': 'normalized excursion transfer; does not preserve Cartesian thumb trajectories'
         }, indent=2))
+        if args.train_iterations:
+            if not args.compliant_palm or not args.palm_coordination or args.physics_batch_probe_envs:
+                raise ValueError('Mechanical training requires coordinated FEM palm, outside probe mode')
+            from mechanical_ppo import train_mechanical
+            train_mechanical(raw_env, transfer, resume_path, output_dir, args.train_iterations, args.train_smoke)
+            return
         if args.replay_policy_trace:
             raise ValueError('Mechanical replay requires a separately converted trace contract')
         print(f"[EVAL] Environment created", flush=True)

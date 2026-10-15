@@ -1,0 +1,635 @@
+{
+  "baseline_bone_to_component_mapping": {
+    "version": 1,
+    "source": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_candidate_v11/mechanical_preview/urdf/mechanical_agent.urdf",
+    "urdf": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v2/right/urdf/current_agent.urdf",
+    "parts": [
+      {
+        "link": "link_0_0",
+        "section_m": [
+          0.019999999552965164,
+          0.019999999552965164,
+          0.054999999701976776
+        ],
+        "contact_pad": false,
+        "mass_kg": 0.016584660957464963
+      },
+      {
+        "link": "link_1_0",
+        "bone_shaft_m": 0.031465017454098194,
+        "hinge_span_m": 0.03594690990652059,
+        "section_m": [
+          0.007619217364117503,
+          0.0071710281074047096
+        ],
+        "bearing_radius_m": 0.004033703310415149,
+        "contact_pad": false,
+        "mass_kg": 0.003877068331846501
+      },
+      {
+        "link": "link_1_1",
+        "bone_shaft_m": 0.017305759599754007,
+        "hinge_span_m": 0.021305759599754007,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.002240250987665135
+      },
+      {
+        "link": "link_1_2",
+        "bone_shaft_m": 0.011799381545286824,
+        "hinge_span_m": 0.011799381545286824,
+        "section_m": [
+          0.005100000044330954,
+          0.004800000041723252
+        ],
+        "bearing_radius_m": 0.002700000023469329,
+        "contact_pad": true,
+        "mass_kg": 0.000832548415512002
+      },
+      {
+        "link": "link_2_0",
+        "bone_shaft_m": 0.04753014836918536,
+        "hinge_span_m": 0.052530148369185355,
+        "section_m": [
+          0.008499999810010194,
+          0.007999999821186066
+        ],
+        "bearing_radius_m": 0.0044999998994171625,
+        "contact_pad": false,
+        "mass_kg": 0.006312655921395928
+      },
+      {
+        "link": "link_2_1",
+        "bone_shaft_m": 0.028,
+        "hinge_span_m": 0.032,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.002752205712738797
+      },
+      {
+        "link": "link_2_2",
+        "bone_shaft_m": 0.02,
+        "hinge_span_m": 0.024,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.0023692296763580282
+      },
+      {
+        "link": "link_2_3",
+        "bone_shaft_m": 0.015,
+        "hinge_span_m": 0.015,
+        "section_m": [
+          0.004249999905005097,
+          0.003999999910593033
+        ],
+        "bearing_radius_m": 0.0022499999497085812,
+        "contact_pad": true,
+        "mass_kg": 0.0005784251123397044
+      },
+      {
+        "link": "link_3_0",
+        "bone_shaft_m": 0.048,
+        "hinge_span_m": 0.052000000000000005,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.0037096458036907187
+      },
+      {
+        "link": "link_3_1",
+        "bone_shaft_m": 0.029,
+        "hinge_span_m": 0.033,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.0028000777172863933
+      },
+      {
+        "link": "link_3_2",
+        "bone_shaft_m": 0.016880005490481863,
+        "hinge_span_m": 0.020380005490481863,
+        "section_m": [
+          0.0059500001836568115,
+          0.00560000017285347
+        ],
+        "bearing_radius_m": 0.003150000097230077,
+        "contact_pad": false,
+        "mass_kg": 0.0015644746805373237
+      },
+      {
+        "link": "link_3_3",
+        "bone_shaft_m": 0.014835767202152189,
+        "hinge_span_m": 0.014835767202152189,
+        "section_m": [
+          0.004645165242254734,
+          0.004371920228004456
+        ],
+        "bearing_radius_m": 0.002459205128252506,
+        "contact_pad": true,
+        "mass_kg": 0.0007204128682212631
+      },
+      {
+        "link": "link_4_0",
+        "bone_shaft_m": 0.04,
+        "hinge_span_m": 0.043000000000000003,
+        "section_m": [
+          0.005100000044330954,
+          0.004800000041723252
+        ],
+        "bearing_radius_m": 0.002700000023469329,
+        "contact_pad": false,
+        "mass_kg": 0.0016727186838666167
+      },
+      {
+        "link": "link_4_1",
+        "bone_shaft_m": 0.029,
+        "hinge_span_m": 0.033,
+        "section_m": [
+          0.006800000322982669,
+          0.006400000303983688
+        ],
+        "bearing_radius_m": 0.0036000001709908247,
+        "contact_pad": false,
+        "mass_kg": 0.0028000777172863933
+      },
+      {
+        "link": "link_4_2",
+        "bone_shaft_m": 0.022167469579137684,
+        "hinge_span_m": 0.022167469579137684,
+        "section_m": [
+          0.0059500001836568115,
+          0.00560000017285347
+        ],
+        "bearing_radius_m": 0.003150000097230077,
+        "contact_pad": true,
+        "mass_kg": 0.0016299888183591458
+      },
+      {
+        "link": "link_5_0",
+        "bone_shaft_m": 0.043625547681711445,
+        "hinge_span_m": 0.04662554768171145,
+        "section_m": [
+          0.005100000044330954,
+          0.004800000041723252
+        ],
+        "bearing_radius_m": 0.002700000023469329,
+        "contact_pad": false,
+        "mass_kg": 0.0017703474335369874
+      },
+      {
+        "link": "link_5_1",
+        "bone_shaft_m": 0.020618667646508465,
+        "hinge_span_m": 0.023618667646508464,
+        "section_m": [
+          0.005100000044330954,
+          0.004800000041723252
+        ],
+        "bearing_radius_m": 0.002700000023469329,
+        "contact_pad": false,
+        "mass_kg": 0.0011508181571787185
+      },
+      {
+        "link": "link_5_2",
+        "bone_shaft_m": 0.015,
+        "hinge_span_m": 0.018,
+        "section_m": [
+          0.005100000044330954,
+          0.004800000041723252
+        ],
+        "bearing_radius_m": 0.002700000023469329,
+        "contact_pad": false,
+        "mass_kg": 0.0009995186721632444
+      },
+      {
+        "link": "link_5_3",
+        "bone_shaft_m": 0.012,
+        "hinge_span_m": 0.012,
+        "section_m": [
+          0.0034000001614913344,
+          0.003200000151991844
+        ],
+        "bearing_radius_m": 0.0018000000854954123,
+        "contact_pad": true,
+        "mass_kg": 0.00029615370954475353
+      },
+      {
+        "link": "link_palm",
+        "section_m": [
+          0.03999999910593033,
+          0.019999999552965164,
+          0.057999998331069946
+        ],
+        "contact_pad": false,
+        "mass_kg": 0.05103999624967584
+      }
+    ],
+    "joint_mapping": [
+      {
+        "joint": "link_1_thumb_spread_joint",
+        "child": "link_1_thumb_spread",
+        "axis": "0 1 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.7453292519943295
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 1,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_2_mcp_spread_joint",
+        "child": "link_2_mcp_spread",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          -0.35,
+          0.35
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 2,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_3_mcp_spread_joint",
+        "child": "link_3_mcp_spread",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          -0.17,
+          0.17
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 3,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_4_mcp_spread_joint",
+        "child": "link_4_mcp_spread",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          -0.26,
+          0.26
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 4,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_5_mcp_spread_joint",
+        "child": "link_5_mcp_spread",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          -0.35,
+          0.35
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 5,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_0_0_to_link_1_0",
+        "child": "link_1_0",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.05
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 1,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_1_0_to_link_1_1",
+        "child": "link_1_1",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.05
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 1,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_1_1_to_link_1_2",
+        "child": "link_1_2",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.55
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 1,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_0_0_to_link_2_0",
+        "child": "link_2_0",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.18
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 2,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_2_0_to_link_2_1",
+        "child": "link_2_1",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.75
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 2,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_2_1_to_link_2_2",
+        "child": "link_2_2",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.57
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 2,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_0_0_to_link_3_0",
+        "child": "link_3_0",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.4
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 3,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_3_0_to_link_3_1",
+        "child": "link_3_1",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.75
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 3,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_3_1_to_link_3_2",
+        "child": "link_3_2",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.57
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 3,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_0_0_to_link_4_0",
+        "child": "link_4_0",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.46
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 4,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_4_0_to_link_4_1",
+        "child": "link_4_1",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.75
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 4,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_4_1_to_link_4_2",
+        "child": "link_4_2",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.57
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 4,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_0_0_to_link_5_0",
+        "child": "link_5_0",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.59
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 5,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.5,
+        "tendon_differential_force_at_limit_n": 166.66666666666666
+      },
+      {
+        "joint": "link_5_0_to_link_5_1",
+        "child": "link_5_1",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.75
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 5,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      },
+      {
+        "joint": "link_5_1_to_link_5_2",
+        "child": "link_5_2",
+        "axis": "1 0 0",
+        "zero_rad": 0.0,
+        "limits_rad": [
+          0.0,
+          1.57
+        ],
+        "transmission": "remote_antagonistic_tendon_proxy",
+        "digit": 5,
+        "actuator_mount": "forearm_rack",
+        "tendon_routing": "through_palm_to_joint_pulley",
+        "pulley_radius_m": 0.003,
+        "actuator_sizing_status": "unselected",
+        "effort_limit_nm": 0.3,
+        "tendon_differential_force_at_limit_n": 100.0
+      }
+    ],
+    "actuated_joint_count": 20,
+    "mass_kg": 0.10570127562666846,
+    "scope": "Rigid mechanical simulation proxies. Tendon routing is a packaging plan, not elastic cable dynamics. Motor sizing is pending."
+  },
+  "final_right_urdf_sha256": "89837698d5e15aaadc5df033e239f15ff2e3564bf1ac2b0fd07dfca777820077",
+  "changes_from_baseline": [
+    "Rigid palm filler replaced by continuous tetrahedral FEM palm; fixed palm frame retained.",
+    "Root target coordination preserves physical joint axes and limits.",
+    "Thumb support bracket and shaft added with proxy mass/inertia."
+  ],
+  "thumb_mount": {
+    "source": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v3/right/urdf/current_agent.urdf",
+    "joint_coordinates_unchanged": true,
+    "added_mass_kg": 0.0022085578055474823,
+    "thumb_axis_center_m": [
+      -0.018,
+      0.0,
+      -0.018
+    ],
+    "thumb_axis_direction": [
+      5.602650660610601e-21,
+      1.0,
+      1.1714189045585272e-18
+    ],
+    "yoke_inner_gap_m": 0.012,
+    "shaft_diameter_m": 0.0036,
+    "status": "candidate_requires_collision_and_motion_validation"
+  },
+  "scope": "Simulation component mapping and transmission packaging concept; not manufacturing certification."
+}

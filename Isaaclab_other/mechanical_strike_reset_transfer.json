@@ -1,0 +1,7 @@
+{
+  "path": "evolution_tasks/task_strike/evolution_strike_env.py",
+  "base_worktree_sha256": "abf7cd1f713941ae039e97822b8b399def2f918a728308448fe60dded22505db",
+  "tested_worktree_sha256": "f241c16bfd525055ef1347b3028f71222f922890bc1ebc92cd32f756b3ad1ac9",
+  "scope": "Isolated patch against pre-existing dirty Strike source; unrelated changes remain unstaged.",
+  "apply_after_matching_base_hash": "git apply --unidiff-zero Isaaclab_other/mechanical_strike_reset_transfer.patch"
+}

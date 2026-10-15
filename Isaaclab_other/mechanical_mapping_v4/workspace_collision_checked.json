@@ -1,0 +1,781 @@
+{
+  "coordinated_operating_envelope": true,
+  "sample_count": 1001,
+  "joint_count": 20,
+  "mirror_max_transform_error": 5.551115123125783e-16,
+  "mirror_passed": true,
+  "collision_sample_count": 129,
+  "collision_free_sample_count": 129,
+  "collision_samples": [
+    {
+      "sample": 0,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 1,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 2,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 3,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 4,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 5,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 6,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 7,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 8,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 9,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 10,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 11,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 12,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 13,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 14,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 15,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 16,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 17,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 18,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 19,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 20,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 21,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 22,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 23,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 24,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 25,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 26,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 27,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 28,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 29,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 30,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 31,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 32,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 33,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 34,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 35,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 36,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 37,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 38,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 39,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 40,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 41,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 42,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 43,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 44,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 45,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 46,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 47,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 48,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 49,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 50,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 51,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 52,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 53,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 54,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 55,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 56,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 57,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 58,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 59,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 60,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 61,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 62,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 63,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 64,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 65,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 66,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 67,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 68,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 69,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 70,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 71,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 72,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 73,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 74,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 75,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 76,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 77,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 78,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 79,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 80,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 81,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 82,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 83,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 84,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 85,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 86,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 87,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 88,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 89,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 90,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 91,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 92,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 93,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 94,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 95,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 96,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 97,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 98,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 99,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 100,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 101,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 102,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 103,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 104,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 105,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 106,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 107,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 108,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 109,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 110,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 111,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 112,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 113,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 114,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 115,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 116,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 117,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 118,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 119,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 120,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 121,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 122,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 123,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 124,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 125,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 126,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 127,
+      "passed": true,
+      "overlaps": []
+    },
+    {
+      "sample": 128,
+      "passed": true,
+      "overlaps": []
+    }
+  ],
+  "sampled_collision_free_fingertip_workspace_m": {
+    "link_1_2": {
+      "min": [
+        -0.029185989375528753,
+        -0.06566471613389607,
+        -0.08524090466847341
+      ],
+      "max": [
+        0.053748768098071636,
+        3.3105664649552463e-19,
+        -0.016945585718896344
+      ]
+    },
+    "link_2_3": {
+      "min": [
+        -0.024738095324848365,
+        -0.12102376539304698,
+        -0.0036540434924076607
+      ],
+      "max": [
+        0.1400368454151577,
+        3.665738255417318e-19,
+        0.014339406357137234
+      ]
+    },
+    "link_3_3": {
+      "min": [
+        -0.023329057057118796,
+        -0.11780947155640203,
+        0.018924254777375114
+      ],
+      "max": [
+        0.13767026189332557,
+        3.017433924744735e-19,
+        0.02033612302917204
+      ]
+    },
+    "link_4_2": {
+      "min": [
+        -0.014894974265504506,
+        -0.0966451904415546,
+        0.02796667923140732
+      ],
+      "max": [
+        0.1166683907363359,
+        0.0007722645777107111,
+        0.040002723651532505
+      ]
+    },
+    "link_5_3": {
+      "min": [
+        -0.019436967153628252,
+        -0.09530636316818501,
+        0.03277076696944848
+      ],
+      "max": [
+        0.11476839700469048,
+        0.00011896257382752985,
+        0.06142639637527786
+      ]
+    }
+  },
+  "scope": "Distal collision-surface cap points; uniform joint-space sampling including zero. All-sample bounds are not collision-filtered; separate bounds use 129 source-solid collision audits. Neither bounds certify continuous or dynamic reachability.",
+  "fingertip_workspace_m": {
+    "link_1_2": {
+      "min": [
+        -0.02956109043949573,
+        -0.066345831099706,
+        -0.08914516649554596
+      ],
+      "max": [
+        0.053748768098071636,
+        3.3105664649552463e-19,
+        -0.014011337875650018
+      ]
+    },
+    "link_2_3": {
+      "min": [
+        -0.031986760859939185,
+        -0.12102376539304698,
+        -0.0036540434924076607
+      ],
+      "max": [
+        0.1400368454151577,
+        3.665738255417318e-19,
+        0.015130961791452827
+      ]
+    },
+    "link_3_3": {
+      "min": [
+        -0.036008797308475296,
+        -0.11827342413657901,
+        0.018924254777375114
+      ],
+      "max": [
+        0.13767026189332557,
+        3.017433924744735e-19,
+        0.020447316808242823
+      ]
+    },
+    "link_4_2": {
+      "min": [
+        -0.029635074258299282,
+        -0.0966451904415546,
+        0.026618184547740002
+      ],
+      "max": [
+        0.1166683907363359,
+        0.0007722645777107111,
+        0.040002723651532505
+      ]
+    },
+    "link_5_3": {
+      "min": [
+        -0.022772923853905065,
+        -0.09837746386181141,
+        0.03205847100783359
+      ],
+      "max": [
+        0.11476839700469048,
+        0.00011896257382752985,
+        0.06142639637527786
+      ]
+    }
+  }
+}

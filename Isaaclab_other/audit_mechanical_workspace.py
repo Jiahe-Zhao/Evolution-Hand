@@ -43,7 +43,7 @@ def fk(nodes, base, angles):
     return poses
 
 
-def main(right, left, output):
+def main(right, left, output, coordinated=False):
     right_nodes, right_root = graph(right)
     left_nodes, left_root = graph(left)
     moving = [j for j in right_nodes if j.get('type') != 'fixed']
@@ -84,6 +84,13 @@ def main(right, left, output):
         offsets[leaf] = vertices[vertices[:, 2] >= vertices[:, 2].max() - 1e-6].mean(axis=0)
     for sample in range(1001):
         angles = {j.get('name'): (0. if sample == 0 else rng.uniform(float(j.find('limit').get('lower')), float(j.find('limit').get('upper')))) for j in moving}
+        if coordinated:
+            import torch
+            from palm_coordination import coordinate_palm_joints
+            names = [j.get('name') for j in moving]
+            limits = torch.tensor([[float(j.find('limit').get(b)) for b in ('lower','upper')] for j in moving], dtype=torch.float64)
+            values = coordinate_palm_joints(torch.tensor([angles[n] for n in names],dtype=torch.float64),names,limits)
+            angles = dict(zip(names,values.tolist()))
         r, l = fk(right_nodes, right_root, angles), fk(left_nodes, left_root, angles)
         for link in r:
             peak = max(peak, float(np.abs(l[link] - reflection @ r[link] @ reflection).max()))
@@ -96,7 +103,7 @@ def main(right, left, output):
             if collision_free:
                 collision_free_endpoints.setdefault(leaf, []).append(r[leaf][:3, :3] @ offsets[leaf] + r[leaf][:3, 3])
             endpoints.setdefault(leaf, []).append(r[leaf][:3, :3] @ offsets[leaf] + r[leaf][:3, 3])
-    report = {'sample_count': 1001, 'joint_count': len(moving), 'mirror_max_transform_error': peak,
+    report = {'coordinated_operating_envelope':coordinated, 'sample_count': 1001, 'joint_count': len(moving), 'mirror_max_transform_error': peak,
               'mirror_passed': peak < 1e-9,
               'collision_sample_count': len(collision_results),
               'collision_free_sample_count': sum(x['passed'] for x in collision_results),
@@ -111,4 +118,5 @@ def main(right, left, output):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('right'); parser.add_argument('left'); parser.add_argument('output')
-    args = parser.parse_args(); main(args.right, args.left, args.output)
+    parser.add_argument('--coordinated',action='store_true')
+    args = parser.parse_args(); main(args.right, args.left, args.output, args.coordinated)

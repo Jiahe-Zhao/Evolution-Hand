@@ -1,4 +1,4 @@
-"""Single-environment task integration for the experimental FEM palm.
+"""Batched task integration for the experimental FEM palm.
 
 Scene registration keeps physics stepping identical to the task. Reset skinning
 initializes nodal coordinates only; subsequent motion is entirely dynamic FEM.
@@ -26,21 +26,30 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
         cls = entry
     original_setup, original_reset, original_step = cls._setup_scene, cls._reset_idx, cls.step
     original_apply = cls._apply_action
+    original_dones = cls._get_dones
     asset_root = Path(asset_root).resolve()
     output_dir = Path(output_dir).resolve()
 
     def setup(self):
-        if self.cfg.scene.num_envs != 1:
-            raise ValueError('Experimental palm integration requires one environment; replication not validated')
+        if self.cfg.scene.replicate_physics:
+            raise ValueError('Native FEM attachments require scene.replicate_physics=False')
         original_setup(self)
         urdf = Path(self.cfg.robot_cfg.spawn.asset_path).resolve()
         side = 'left' if urdf.parent.parent.name == 'left' else 'right'
         assets = asset_root/('compliant_palm_left' if side == 'left' else 'compliant_palm')
-        hand_path = self.cfg.robot_cfg.prim_path.replace('env_.*', 'env_0')
-        palm_path = hand_path.rsplit('/', 1)[0]+'/CompliantPalm'
-        binding = spawn_compliant_palm(self.sim.stage, assets, hand_path, palm_path,
-            tuple(self.cfg.robot_cfg.init_state.pos), tuple(self.cfg.robot_cfg.init_state.rot))
-        self.mechanical_palm = DeformableObject(DeformableObjectCfg(prim_path=palm_path, spawn=None))
+        bindings = []
+        for env_index in range(self.cfg.scene.num_envs):
+            hand_path = self.cfg.robot_cfg.prim_path.replace('env_.*', f'env_{env_index}')
+            # Cloned env prims inherit env_0 descendants. Author each soft body
+            # outside that inheritance tree, at its matching world-space origin.
+            palm_path = f'/World/MechanicalPalms/env_{env_index}/CompliantPalm'
+            root_position = (self.scene.env_origins[env_index].cpu().numpy()
+                             + np.asarray(self.cfg.robot_cfg.init_state.pos))
+            bindings.append(spawn_compliant_palm(self.sim.stage, assets, hand_path, palm_path,
+                tuple(root_position), tuple(self.cfg.robot_cfg.init_state.rot)))
+        binding = bindings[0] if len(bindings) == 1 else bindings
+        palm_pattern = '/World/MechanicalPalms/env_.*/CompliantPalm'
+        self.mechanical_palm = DeformableObject(DeformableObjectCfg(prim_path=palm_pattern, spawn=None))
         self.scene.deformable_objects['mechanical_palm'] = self.mechanical_palm
         data = np.load(assets/'palm_tetrahedra.npz')
         points = data['points']
@@ -59,25 +68,28 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
             from palm_coordination import coordinate_palm_joints
             original_target = self.hand.set_joint_position_target
             original_state = self.hand.write_joint_state_to_sim
+            def selected_limits(env_ids):
+                limits = self.hand.root_physx_view.get_dof_limits().to(self.device)
+                return limits if env_ids is None else limits[env_ids]
             def coordinated_target(target, joint_ids=None, env_ids=None):
                 if joint_ids is not None:
                     raise ValueError('Coordinated palm requires full joint target writes')
-                return original_target(coordinate_palm_joints(target,list(self.hand.joint_names),self.hand.root_physx_view.get_dof_limits().to(self.device)), env_ids=env_ids)
+                return original_target(coordinate_palm_joints(target,list(self.hand.joint_names),selected_limits(env_ids)), env_ids=env_ids)
             def coordinated_state(joint_pos, joint_vel, joint_ids=None, env_ids=None):
                 if joint_ids is not None:
                     raise ValueError('Coordinated palm requires full reset state writes')
-                return original_state(coordinate_palm_joints(joint_pos,list(self.hand.joint_names),self.hand.root_physx_view.get_dof_limits().to(self.device)), joint_vel, env_ids=env_ids)
+                return original_state(coordinate_palm_joints(joint_pos,list(self.hand.joint_names),selected_limits(env_ids)), joint_vel, env_ids=env_ids)
             self.hand.set_joint_position_target = coordinated_target
             self.hand.write_joint_state_to_sim = coordinated_state
         self._palm_reset_count = 0
         self._palm_tets = torch.tensor(data['tetrahedra'],device=self.device,dtype=torch.long)
         q = torch.tensor(points,device=self.device,dtype=torch.float32)[self._palm_tets]
-        self._palm_rest_inverse = torch.linalg.inv(torch.stack([q[:,1]-q[:,0],q[:,2]-q[:,0],q[:,3]-q[:,0]],dim=-1))
+        self._palm_rest_inverse = torch.linalg.inv(torch.stack([q[...,1,:]-q[...,0,:],q[...,2,:]-q[...,0,:],q[...,3,:]-q[...,0,:]],dim=-1))
         self._palm_metrics = {'steps':0,'minimum_volume_ratio':1.,'finite':True,'inversion_detected':False}
         files = [urdf, assets/'palm_tetrahedra.npz', assets/'continuous_palm.stl', assets/'compliant_palm.json', Path(__file__), Path(__file__).with_name('compliant_palm_runtime.py'),Path(__file__).with_name('palm_coordination.py'),Path(inspect.getfile(cls))]
         from palm_coordination import contract as coordination_contract
         contract = {'palm_coordination':coordination_contract() if coordinate_roots else None, 'mechanical_wrist_speed_m_s':wrist_speed, 'side':side,'binding':binding,'files':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
-                    'scope':'Experimental full FEM task evaluation; not a verified training configuration'}
+                    'num_envs':self.cfg.scene.num_envs, 'scope':'Shared FEM task physics; runtime and optimizer validation recorded separately'}
         (output_dir/'palm_assembly_contract.json').write_text(json.dumps(contract,indent=2))
 
     def reset(self, env_ids):
@@ -97,8 +109,8 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
             world = quat_apply(q, local)+self.hand.data.body_pos_w[ids,b].unsqueeze(1)
             positions += world*self._palm_weights[i][None,:,None]
         state = torch.cat((positions,torch.zeros_like(positions)),dim=-1)
-        q = positions[0][self._palm_tets]
-        reset_deformation = torch.stack([q[:,1]-q[:,0],q[:,2]-q[:,0],q[:,3]-q[:,0]],dim=-1)@self._palm_rest_inverse
+        q = positions[:,self._palm_tets]
+        reset_deformation = torch.stack([q[...,1,:]-q[...,0,:],q[...,2,:]-q[...,0,:],q[...,3,:]-q[...,0,:]],dim=-1)@self._palm_rest_inverse
         reset_minimum = float(torch.linalg.det(reset_deformation).min())
         np.savez_compressed(output_dir/'palm_last_reset.npz', nodes=positions.detach().cpu().numpy(), joint_names=np.asarray(self.hand.joint_names), joint_positions=self.hand.data.joint_pos.detach().cpu().numpy(), minimum_volume_ratio=reset_minimum)
         print('[PALM_RESET_VOLUME]',reset_minimum,flush=True)
@@ -119,18 +131,20 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
             actual = before+delta*torch.clamp(allowed/distance.clamp_min(1e-12),max=1.)
             pose = torch.cat((actual,self.hand.data.root_quat_w.clone()),dim=-1)
             self.hand.write_root_pose_to_sim(pose)
-            if hasattr(self,'wrist_offsets'):
-                self.wrist_offsets[:] = actual-self.hand.data.default_root_state[:,:3]-self.scene.env_origins
+            for offset_name in ('wrist_offsets', 'wrist_offset'):
+                if hasattr(self, offset_name):
+                    getattr(self, offset_name)[:] = actual-self.hand.data.default_root_state[:,:3]-self.scene.env_origins
 
-    def step(self, actions):
-        result = original_step(self, actions)
+    def checked_dones(self):
+        # DirectRLEnv calls this after physics and before automatic reset.
+        # Inspect the terminal physical state before reset can hide a failure.
         self.mechanical_palm.update(0.)
-        x = self.mechanical_palm.data.nodal_pos_w[0]
+        x = self.mechanical_palm.data.nodal_pos_w
         finite = bool(torch.isfinite(x).all())
         minimum = None
         if finite:
-            q = x[self._palm_tets]
-            deformation = torch.stack([q[:,1]-q[:,0],q[:,2]-q[:,0],q[:,3]-q[:,0]],dim=-1)@self._palm_rest_inverse
+            q = x[:,self._palm_tets]
+            deformation = torch.stack([q[...,1,:]-q[...,0,:],q[...,2,:]-q[...,0,:],q[...,3,:]-q[...,0,:]],dim=-1)@self._palm_rest_inverse
             minimum = float(torch.linalg.det(deformation).min())
         metrics = self._palm_metrics
         metrics['steps'] += 1
@@ -141,5 +155,5 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
         if metrics['inversion_detected']:
             np.savez_compressed(output_dir/'palm_failure.npz',nodes=x.detach().cpu().numpy(),joint_names=np.asarray(self.hand.joint_names),joint_positions=self.hand.data.joint_pos.detach().cpu().numpy(),tetrahedra=self._palm_tets.cpu().numpy())
             raise RuntimeError(f'Physical palm failed during task: {metrics}')
-        return result
-    cls._setup_scene, cls._reset_idx, cls.step, cls._apply_action = setup, reset, step, apply
+        return original_dones(self)
+    cls._setup_scene, cls._reset_idx, cls._get_dones, cls._apply_action = setup, reset, checked_dones, apply

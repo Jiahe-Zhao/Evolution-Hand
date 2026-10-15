@@ -68,3 +68,42 @@ Forage 和 Strike 使用 0.1 m/s 腕部限速；同一限速也用于本轮 Gras
 另修正 Strike 物理重置独立读取旧负角的问题：实际拇指初角从 0 恢复映射为 1.6667 rad；v3 诊断回合运行 92 步，未抓稳工具、成功 0/1。该修复不等于策略迁移成功。
 
 v4 四任务单种子复测完成：Grasp/Branch/Forage/Strike 分别运行 599/299/359/93 步，均为 0/1 成功，控制步采样均未检出单元翻转。最小体积比分别为 0.5932/0.5359/0.7763/0.4744。短回合不是长时稳定性证明。训练尚未启动：当前柔性掌部任务挂接只支持单环境，批量训练和新机械结构策略尚待接入验证。
+
+## 最终交付验收（2026-10-15）
+
+本次交付范围：骨结构到机械结构的仿真映射、连续柔性掌部、运动与碰撞验证、四任务复测，以及可运行的 PPO 接入。不是实机制造验收或四任务策略收敛验收。
+
+- 运动合同：20 物理关节，零位、轴向、左右镜像和限位已核验。旧拇指负向行程按归一化行程映射为新正向行程；不宣称笛卡尔轨迹相同。
+- 机械件：连杆、轴承代理件、指腹、掌部支撑及拇指支座已生成。v4 传动布局含 20 路、4×5 外置执行器包络，最小间距 4 mm；电机选型、预紧及运动中绳路避碰仍属于后续硬件设计。
+- 单关节基线：v2 刚性结构 20/20 通过。v4 保留关节几何，新增支座和连续掌部使用协同运动包络验证，不能将刚性基线结果冒充完整柔性手的独立根段行程验收。
+- v4 可达域：1001 个协同姿态左右镜像最大变换误差 5.55e-16；129 个源网格碰撞采样全部通过。结果为采样范围，不是连续空间的无碰撞证明。
+- 多环境：关闭 `replicate_physics`，独立建立原生 FEM 绑定；4 环境 300 步通过，单独重置环境 1 对其他环境的节点变化为 0。
+- 训练和测试共用环境构造、机械资产、根段投影、腕部限速与拇指转换。观测先按物理量裁剪，再转换到旧策略语义；新 checkpoint 保存并校验此合同。
+- FEM 完整性检查移到自动重置之前，避免终止状态被重置覆盖。
+
+| PPO 接入测试 | 环境数 | 迭代 | 物理控制步 | 最小采样体积比 | 模型更新 |
+| --- | --- | --- | --- | --- | --- |
+| Grasp | 4 | 20 | 320 | 0.5848 | 有限、11 个状态张量改变 |
+| Branch | 4 | 20 | 320 | 0.5064 | 有限、19 个状态张量改变 |
+| Forage | 4 | 20 | 320 | 0.7465 | 有限、19 个状态张量改变 |
+| Strike | 4 | 20 | 320 | 0.3399 | 有限、19 个状态张量改变 |
+
+四项均完成且未检出单元翻转。以上为小规模接入测试，明确将环境数改为 4、minibatch 改为 64；正式大规模训练尚未启动，不宣称维持了原 4096 环境训练规模。其余 PPO 超参数读取原 checkpoint 的 `params/agent.yaml`；重置优化器和迭代计数，保留模型权重及归一化统计。
+
+保存→重新加载→Branch 单回合复测已完成，成功 0/1。四任务成功率提升尚未验证，不能将接入测试视为任务学会。
+
+### 主要远端文件
+
+根目录 `/home/zjh/Evolution_PC/Isaaclab_other/`：
+
+- `mechanical_mapping_v4/motion_contract.json`：运动与资产哈希。
+- `mechanical_mapping_v4/right`、`left`、`compliant_palm*`：源 URDF、网格、FEM 材料与四面体。
+- `mechanical_mapping_v4/transmission/`：传动布局 JSON/GLB。
+- `mechanical_mapping_v4/workspace_collision_checked.json`：可达域及采样碰撞。
+- `mechanical_mapping_v4/runtime_full_right`、`runtime_full_left`：实测屈伸结果。
+- `mechanical_mapping_v4/task_evaluation/`：v4 四任务复测。
+- `mechanical_mapping_v4/ppo_integration/`：四任务 20 轮接入测试。
+- `mechanical_mapping_v4/ppo_reload_check/`：checkpoint 重新加载闭环。
+- `mechanical_strike_reset_transfer.patch`：针对已有未提交 Strike 代码的独立补丁；JSON 记录补丁前后哈希，原有无关改动未混入提交。
+
+本地视频：`remote_artifacts/mechanical_mapping_v2/coordinated_palm_v4.mp4`，约 20.37 秒，深色背景，回放实际仿真关节和 FEM 节点。

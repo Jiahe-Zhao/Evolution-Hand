@@ -1,0 +1,18 @@
+{
+  "source": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v3/right/urdf/current_agent.urdf",
+  "joint_coordinates_unchanged": true,
+  "added_mass_kg": 0.0022085578055474823,
+  "thumb_axis_center_m": [
+    -0.018,
+    0.0,
+    -0.018
+  ],
+  "thumb_axis_direction": [
+    5.602650660610601e-21,
+    1.0,
+    1.1714189045585272e-18
+  ],
+  "yoke_inner_gap_m": 0.012,
+  "shaft_diameter_m": 0.0036,
+  "status": "candidate_requires_collision_and_motion_validation"
+}

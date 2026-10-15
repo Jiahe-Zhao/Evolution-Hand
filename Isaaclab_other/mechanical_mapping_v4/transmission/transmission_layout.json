@@ -1,0 +1,995 @@
+{
+  "version": 1,
+  "source_urdf": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_mapping_v4/right/urdf/current_agent.urdf",
+  "joint_count": 20,
+  "actuator_envelope_min_clearance_m": 0.003999999999999997,
+  "channels": [
+    {
+      "joint": "link_1_thumb_spread_joint",
+      "actuator_center_root_m": [
+        -0.16,
+        -0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.16,
+            -0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.042,
+            -0.01
+          ],
+          [
+            -0.018,
+            -0.002,
+            -0.018
+          ]
+        ],
+        [
+          [
+            -0.16,
+            -0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.038,
+            -0.01
+          ],
+          [
+            -0.018,
+            0.002,
+            -0.018
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.005235987755982989,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_2_mcp_spread_joint",
+      "actuator_center_root_m": [
+        -0.135,
+        -0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.135,
+            -0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.042,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.01
+          ]
+        ],
+        [
+          [
+            -0.135,
+            -0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.038,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.01
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0021,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_3_mcp_spread_joint",
+      "actuator_center_root_m": [
+        -0.11,
+        -0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.11,
+            -0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.042,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.02
+          ]
+        ],
+        [
+          [
+            -0.11,
+            -0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.038,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.02
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00102,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_4_mcp_spread_joint",
+      "actuator_center_root_m": [
+        -0.08499999999999999,
+        -0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.08499999999999999,
+            -0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.042,
+            -0.01
+          ],
+          [
+            0.01577226457771071,
+            -0.0012277354222892892,
+            0.030772264577710706
+          ]
+        ],
+        [
+          [
+            -0.08499999999999999,
+            -0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.038,
+            -0.01
+          ],
+          [
+            0.01577226457771071,
+            0.002772264577710711,
+            0.030772264577710706
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0015600000000000002,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_5_mcp_spread_joint",
+      "actuator_center_root_m": [
+        -0.16,
+        -0.02,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.16,
+            -0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.022,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.04
+          ]
+        ],
+        [
+          [
+            -0.16,
+            -0.018000000000000002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.018000000000000002,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.04
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0021,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_0_0_to_link_1_0",
+      "actuator_center_root_m": [
+        -0.135,
+        -0.02,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.135,
+            -0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.022,
+            -0.01
+          ],
+          [
+            -0.018,
+            -0.002,
+            -0.018
+          ]
+        ],
+        [
+          [
+            -0.135,
+            -0.018000000000000002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.018000000000000002,
+            -0.01
+          ],
+          [
+            -0.018,
+            0.002,
+            -0.018
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00315,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_1_0_to_link_1_1",
+      "actuator_center_root_m": [
+        -0.11,
+        -0.02,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.11,
+            -0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.022,
+            -0.01
+          ],
+          [
+            0.017945265367224236,
+            -0.002,
+            -0.01834384517931438
+          ]
+        ],
+        [
+          [
+            -0.11,
+            -0.018000000000000002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.018000000000000002,
+            -0.01
+          ],
+          [
+            0.017945265367224236,
+            0.002,
+            -0.01834384517931438
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00315,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_1_1_to_link_1_2",
+      "actuator_center_root_m": [
+        -0.08499999999999999,
+        -0.02,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.08499999999999999,
+            -0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.022,
+            -0.01
+          ],
+          [
+            0.03925005024734333,
+            -0.002,
+            -0.018547642466732336
+          ]
+        ],
+        [
+          [
+            -0.08499999999999999,
+            -0.018000000000000002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.018000000000000002,
+            -0.01
+          ],
+          [
+            0.03925005024734333,
+            0.002,
+            -0.018547642466732336
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0046500000000000005,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_0_0_to_link_2_0",
+      "actuator_center_root_m": [
+        -0.16,
+        0.0,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.16,
+            -0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.002,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.01
+          ]
+        ],
+        [
+          [
+            -0.16,
+            0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.002,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.01
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0035399999999999997,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_2_0_to_link_2_1",
+      "actuator_center_root_m": [
+        -0.135,
+        0.0,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.135,
+            -0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.002,
+            -0.01
+          ],
+          [
+            0.06721971947878669,
+            -0.002,
+            0.004297598291469328
+          ]
+        ],
+        [
+          [
+            -0.135,
+            0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.002,
+            -0.01
+          ],
+          [
+            0.06721971947878669,
+            0.002,
+            0.004297598291469328
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00525,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_2_1_to_link_2_2",
+      "actuator_center_root_m": [
+        -0.11,
+        0.0,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.11,
+            -0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.002,
+            -0.01
+          ],
+          [
+            0.09903061427346835,
+            -0.002,
+            0.0008238434984974502
+          ]
+        ],
+        [
+          [
+            -0.11,
+            0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.002,
+            -0.01
+          ],
+          [
+            0.09903061427346835,
+            0.002,
+            0.0008238434984974502
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.004710000000000001,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_0_0_to_link_3_0",
+      "actuator_center_root_m": [
+        -0.08499999999999999,
+        0.0,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.08499999999999999,
+            -0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            -0.002,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.02
+          ]
+        ],
+        [
+          [
+            -0.08499999999999999,
+            0.002,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.002,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.02
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.0042,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_3_0_to_link_3_1",
+      "actuator_center_root_m": [
+        -0.16,
+        0.019999999999999997,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.16,
+            0.017999999999999995,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.017999999999999995,
+            -0.01
+          ],
+          [
+            0.06699800065119563,
+            -0.002,
+            0.019544008466899566
+          ]
+        ],
+        [
+          [
+            -0.16,
+            0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.022,
+            -0.01
+          ],
+          [
+            0.06699800065119563,
+            0.002,
+            0.019544008466899566
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00525,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_3_1_to_link_3_2",
+      "actuator_center_root_m": [
+        -0.135,
+        0.019999999999999997,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.135,
+            0.017999999999999995,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.017999999999999995,
+            -0.01
+          ],
+          [
+            0.09999673183368515,
+            -0.002,
+            0.019254629224739674
+          ]
+        ],
+        [
+          [
+            -0.135,
+            0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.022,
+            -0.01
+          ],
+          [
+            0.09999673183368515,
+            0.002,
+            0.019254629224739674
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.004710000000000001,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_0_0_to_link_4_0",
+      "actuator_center_root_m": [
+        -0.11,
+        0.019999999999999997,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.11,
+            0.017999999999999995,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.017999999999999995,
+            -0.01
+          ],
+          [
+            0.01577226457771071,
+            -0.0012277354222892892,
+            0.030772264577710706
+          ]
+        ],
+        [
+          [
+            -0.11,
+            0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.022,
+            -0.01
+          ],
+          [
+            0.01577226457771071,
+            0.002772264577710711,
+            0.030772264577710706
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00438,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_4_0_to_link_4_1",
+      "actuator_center_root_m": [
+        -0.08499999999999999,
+        0.019999999999999997,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.08499999999999999,
+            0.017999999999999995,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.017999999999999995,
+            -0.01
+          ],
+          [
+            0.058593442815240815,
+            -0.0012277354222892892,
+            0.03468975029557601
+          ]
+        ],
+        [
+          [
+            -0.08499999999999999,
+            0.022,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.022,
+            -0.01
+          ],
+          [
+            0.058593442815240815,
+            0.002772264577710711,
+            0.03468975029557601
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00525,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_4_1_to_link_4_2",
+      "actuator_center_root_m": [
+        -0.16,
+        0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.16,
+            0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.038,
+            -0.01
+          ],
+          [
+            0.09145620750915925,
+            -0.0012277354222892892,
+            0.037696192823240084
+          ]
+        ],
+        [
+          [
+            -0.16,
+            0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.042,
+            -0.01
+          ],
+          [
+            0.09145620750915925,
+            0.002772264577710711,
+            0.037696192823240084
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.004710000000000001,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_0_0_to_link_5_0",
+      "actuator_center_root_m": [
+        -0.135,
+        0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.135,
+            0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.038,
+            -0.01
+          ],
+          [
+            0.015,
+            -0.002,
+            0.04
+          ]
+        ],
+        [
+          [
+            -0.135,
+            0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.042,
+            -0.01
+          ],
+          [
+            0.015,
+            0.002,
+            0.04
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00477,
+      "differential_tension_limit_n": 166.66666666666666
+    },
+    {
+      "joint": "link_5_0_to_link_5_1",
+      "actuator_center_root_m": [
+        -0.11,
+        0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.11,
+            0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.038,
+            -0.01
+          ],
+          [
+            0.060597707198152585,
+            -0.002,
+            0.0497360564342598
+          ]
+        ],
+        [
+          [
+            -0.11,
+            0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.042,
+            -0.01
+          ],
+          [
+            0.060597707198152585,
+            0.002,
+            0.0497360564342598
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.00525,
+      "differential_tension_limit_n": 100.0
+    },
+    {
+      "joint": "link_5_1_to_link_5_2",
+      "actuator_center_root_m": [
+        -0.08499999999999999,
+        0.04,
+        -0.025
+      ],
+      "actuator_envelope_radius_m": 0.008,
+      "actuator_envelope_length_m": 0.02,
+      "paired_tendon_waypoints_root_m": [
+        [
+          [
+            -0.08499999999999999,
+            0.038,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.038,
+            -0.01
+          ],
+          [
+            0.08369571130327974,
+            -0.002,
+            0.05466795949045983
+          ]
+        ],
+        [
+          [
+            -0.08499999999999999,
+            0.042,
+            -0.013000000000000001
+          ],
+          [
+            -0.045,
+            0.042,
+            -0.01
+          ],
+          [
+            0.08369571130327974,
+            0.002,
+            0.05466795949045983
+          ]
+        ]
+      ],
+      "joint_pulley_radius_m": 0.003,
+      "single_tendon_travel_m": 0.004710000000000001,
+      "differential_tension_limit_n": 100.0
+    }
+  ],
+  "status": "packaging_concept",
+  "limitations": [
+    "Motor and gearbox models unselected; envelopes are design constraints.",
+    "Cable travel assumes ideal constant-radius joint pulleys.",
+    "Cable guides, pretension, friction and moving cable collision need hardware design.",
+    "External rack mass is not included in the fixed-base hand simulation."
+  ]
+}
