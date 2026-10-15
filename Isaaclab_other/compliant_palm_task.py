@@ -12,6 +12,7 @@ import numpy as np
 
 def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordinate_roots=False):
     import gymnasium as gym
+    import inspect
     import torch
     from isaaclab.assets import DeformableObject, DeformableObjectCfg
     from isaaclab.utils.math import quat_apply
@@ -73,7 +74,7 @@ def install_palm_hooks(env_id, asset_root, output_dir, wrist_speed=None, coordin
         q = torch.tensor(points,device=self.device,dtype=torch.float32)[self._palm_tets]
         self._palm_rest_inverse = torch.linalg.inv(torch.stack([q[:,1]-q[:,0],q[:,2]-q[:,0],q[:,3]-q[:,0]],dim=-1))
         self._palm_metrics = {'steps':0,'minimum_volume_ratio':1.,'finite':True,'inversion_detected':False}
-        files = [urdf, assets/'palm_tetrahedra.npz', assets/'continuous_palm.stl', assets/'compliant_palm.json', Path(__file__), Path(__file__).with_name('compliant_palm_runtime.py'),Path(__file__).with_name('palm_coordination.py')]
+        files = [urdf, assets/'palm_tetrahedra.npz', assets/'continuous_palm.stl', assets/'compliant_palm.json', Path(__file__), Path(__file__).with_name('compliant_palm_runtime.py'),Path(__file__).with_name('palm_coordination.py'),Path(inspect.getfile(cls))]
         from palm_coordination import contract as coordination_contract
         contract = {'palm_coordination':coordination_contract() if coordinate_roots else None, 'mechanical_wrist_speed_m_s':wrist_speed, 'side':side,'binding':binding,'files':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
                     'scope':'Experimental full FEM task evaluation; not a verified training configuration'}
