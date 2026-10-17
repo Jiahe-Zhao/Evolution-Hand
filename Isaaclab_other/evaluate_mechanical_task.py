@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib
 import json
 import math
@@ -14,6 +15,7 @@ faulthandler.dump_traceback_later(90, repeat=True)
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+import xml.etree.ElementTree as ET
 
 from isaaclab.app import AppLauncher
 
@@ -24,10 +26,16 @@ from task_registry import TASKS
 
 
 parser = argparse.ArgumentParser(description="Evaluate one fixed morphology and policy over fixed seeds.")
+parser.add_argument("--mechanical_joint_actions", action="store_true")
+parser.add_argument("--bc_manifest")
+parser.add_argument("--bc_only", action="store_true")
 parser.add_argument("--train_iterations", type=int, default=0)
 parser.add_argument("--train_num_envs", type=int, default=4096)
 parser.add_argument("--train_smoke", action="store_true")
+parser.add_argument("--train_from_scratch", action="store_true", help="Initialize PPO weights when morphology joints differ from the reference checkpoint")
+parser.add_argument("--train_auto_inherit", action="store_true", help="Inherit common observation/action channels by semantic joint names")
 parser.add_argument("--physics_batch_probe_envs", type=int, default=0, help="Run a separate batched physics/reset probe, not a policy-success evaluation")
+parser.add_argument("--physics_batch_probe_zero_actions", action="store_true", help="Diagnostic: hold zero actions for the full batch probe")
 parser.add_argument("--palm_coordination", action="store_true", help="Coordinate four palm supports; retain independent distal commands")
 parser.add_argument("--mechanical_wrist_speed", type=float, help="Diagnostic physical wrist speed cap in m/s; changes controller contract")
 parser.add_argument("--compliant_palm", action="store_true", help="Include the physical FEM palm in the task scene")
@@ -148,7 +156,7 @@ def _configure_checkpoint_controller(checkpoint: str) -> str | None:
     modes = ({"branch_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"}
              if args.task == "branch" else
              {"strike_joint_target_v1": "1", "cartesian_5finger_ik_v1": "0"} if args.task == "strike" else
-             {"cartesian_5finger_ik_v1": "0"})
+             {"cartesian_5finger_ik_v1": "0", f"{args.task}_joint_target_v1":"1"})
     if controller not in modes:
         raise ValueError(f"Unknown {args.task} checkpoint controller: {controller}")
     if args.task in {"branch", "strike"}:
@@ -171,6 +179,13 @@ def _configure_checkpoint_controller(checkpoint: str) -> str | None:
             os.environ["EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT"] = str(teacher_path)
         else:
             os.environ.pop("EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT", None)
+    if controller in ('grasp_joint_target_v1','forage_joint_target_v1'):
+        args.mechanical_joint_actions=True
+    if args.task in ('grasp','forage') and args.mechanical_joint_actions:
+        target_controller=f'{args.task}_joint_target_v1'
+        if controller != target_controller and not (args.train_from_scratch or args.physics_batch_probe_envs):
+            raise ValueError('New joint action interface requires BC/scratch initialization, not an old Cartesian policy')
+        controller=target_controller
     print(f"[EVAL] {args.task} controller from checkpoint: {controller}", flush=True)
     return controller
 
@@ -273,12 +288,24 @@ def _prepare_morphology(output_dir: Path) -> MorphologyContext | None:
         raise ValueError('Expected mechanical thumb range [0, positive]')
 
     override_task_root = morphology_dir / "python_overrides" / "isaaclab_tasks" / "evolution_tasks"
+    from isaaclab_tasks.evolution_tasks.mechanical_hand_interface import discover
+    source_contract = discover(morphology_dir / "right" / "urdf" / "current_agent.urdf")
+    mechanical_right = Path(args.mechanical_asset_dir).resolve() / "right/urdf/current_agent.urdf"
+    mechanical_left = Path(args.mechanical_asset_dir).resolve() / "left/urdf/current_agent.urdf"
+    for mechanical_urdf in (mechanical_right, mechanical_left):
+        if not mechanical_urdf.is_file():
+            raise FileNotFoundError(f"Missing mechanical phenotype: {mechanical_urdf}")
+        target_contract = discover(mechanical_urdf)
+        if (target_contract["canonical_joint_names"] != source_contract["canonical_joint_names"]
+                or target_contract["tip_links"] != source_contract["tip_links"]):
+            raise ValueError(f"Mechanical phenotype does not match bone genotype: {mechanical_urdf}")
+
     right_cfg = override_task_root / "current_right_hand" / "current_right_hand_cfg.py"
     left_cfg = override_task_root / "current_left_hand" / "current_left_hand_cfg.py"
     right_cfg.parent.mkdir(parents=True, exist_ok=True)
     left_cfg.parent.mkdir(parents=True, exist_ok=True)
-    parse_urdf_and_generate_articulation_cfg(str(right_urdf), str(right_urdf), str(right_cfg))
-    parse_urdf_and_generate_articulation_cfg(str(left_urdf), str(left_urdf), str(left_cfg))
+    parse_urdf_and_generate_articulation_cfg(str(mechanical_right), str(mechanical_right), str(right_cfg))
+    parse_urdf_and_generate_articulation_cfg(str(mechanical_left), str(mechanical_left), str(left_cfg))
     import isaaclab_tasks.evolution_tasks as evolution_tasks
     override_root = str(override_task_root)
     if override_root not in evolution_tasks.__path__:
@@ -340,7 +367,7 @@ def _configure_structure_adaptive_evaluation(task: str, env_cfg: Any, backup: Mo
             joint_pos={name: value for name, value in requested_joint_pos.items() if name == ".*" or name in available_joints}
         )
     )
-    side = "left" if "LeftRobot" in env_cfg.robot_cfg.prim_path else "right"
+    side = "right" if args.task == "grasp" and args.mechanical_joint_actions else ("left" if "LeftRobot" in env_cfg.robot_cfg.prim_path else "right")
     bound_cfg_path = backup.override_task_root / f"current_{side}_hand" / f"current_{side}_hand_cfg.py"
     spec = importlib.util.spec_from_file_location("evaluation_bound_hand_cfg", bound_cfg_path)
     if spec is None or spec.loader is None:
@@ -452,13 +479,16 @@ def main() -> None:
                 raise ValueError("Forage solver diagnostic requires 8..255 iterations")
             env_cfg.robot_cfg.spawn.articulation_props.solver_position_iteration_count = args.forage_solver_iterations
             env_cfg.robot_cfg.spawn.articulation_props.solver_velocity_iteration_count = min(args.forage_solver_iterations, 32)
+        from mechanical_scene_contract import apply_mechanical_scene
+        apply_mechanical_scene(env_cfg,args.task,output_dir)
         env_cfg.seed = args.seed
         env_cfg.viewer.eye, env_cfg.viewer.lookat = CAMERA_VIEWS[args.task]
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
-        agent_cfg = load_cfg_from_registry(env_id, "rl_games_cfg_entry_point")
+        import yaml
+        saved_agent_config=Path(resume_path).parent.parent/"params/agent.yaml"
+        agent_cfg = yaml.safe_load(saved_agent_config.read_text())
         print(f"[EVAL] Creating {args.task} environment", flush=True)
         if args.task == 'strike':
-            import hashlib
             reset_contract = output_dir.resolve()/'mechanical_reset_transfer.json'
             reset_contract.write_text(json.dumps({'source_lower':mechanical_source_lower,
                 'target_upper':mechanical_target_upper,
@@ -469,7 +499,6 @@ def main() -> None:
         else:
             os.environ.pop('EVOLUTION_MECHANICAL_RESET_TRANSFER',None)
         if os.environ.get('EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT'):
-            import hashlib
             from isaaclab_tasks.evolution_tasks.task_strike.strike_bc_teacher import morphology_sha256
             from isaaclab_tasks.evolution_tasks.mechanical_policy_transfer import ThumbTransfer
             if not args.legacy_teacher_urdf:
@@ -495,35 +524,77 @@ def main() -> None:
             env_cfg.scene.replicate_physics = False
             from compliant_palm_task import install_palm_hooks
             install_palm_hooks(env_id, args.mechanical_asset_dir, output_dir, args.mechanical_wrist_speed, args.palm_coordination)
+        mechanical_urdf = Path(env_cfg.robot_cfg.spawn.asset_path).resolve()
+        mechanical_root = ET.parse(mechanical_urdf).getroot()
+        rigid_palm = mechanical_root.find("link[@name='link_palm_chassis']")
+        if rigid_palm is None or not rigid_palm.findall("collision"):
+            raise ValueError("Mechanical hand URDF must include a collidable link_palm_chassis")
+        palm_contract = {
+            "mode": "rigid_morphology_adaptive_palm_v1",
+            "urdf": str(mechanical_urdf),
+            "collision_count": len(rigid_palm.findall("collision")),
+            "fixed_to_wrist_and_parent_of_digit_roots": True,
+            "mechanical_wrist_speed_m_s": args.mechanical_wrist_speed,
+            "sha256": hashlib.sha256(mechanical_urdf.read_bytes()).hexdigest(),
+        }
+        (output_dir / "palm_assembly_contract.json").write_text(json.dumps(palm_contract, indent=2))
+        if controller in ('grasp_joint_target_v1','forage_joint_target_v1'):
+            from mechanical_joint_control import install
+            install(env_id,args.task)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         if args.physics_batch_probe_envs:
-            if not args.compliant_palm or args.physics_batch_probe_envs < 2:
-                raise ValueError('Batch probe requires FEM palm and at least two environments')
+            if args.physics_batch_probe_envs < 2:
+                raise ValueError('Batch probe requires at least two environments')
             physical = raw_env.unwrapped
             raw_env.reset(seed=args.seed)
-            assert physical.mechanical_palm.data.nodal_pos_w.shape[0] == args.physics_batch_probe_envs
+            assert physical.hand.data.joint_pos.shape[0] == args.physics_batch_probe_envs
             actions = torch.zeros(raw_env.action_space.shape, device=physical.device)
+            reset_leak = 0.0
             for step_index in range(300):
+                if step_index >= 100 and not args.physics_batch_probe_zero_actions:
+                    phase = (step_index - 100) / 24.0
+                    actions[:, :20] = 0.35 * torch.sin(
+                        torch.arange(20, device=physical.device).float() * 0.31 + phase
+                    )
+                    if actions.shape[1] > 20:
+                        actions[:, 20:] = 0.15 * torch.sin(
+                            torch.arange(actions.shape[1] - 20, device=physical.device).float() + phase
+                        )
                 _, reward, _, _, _ = raw_env.step(actions)
                 if not bool(torch.isfinite(reward).all()):
                     raise RuntimeError('Nonfinite batch reward')
                 if step_index == 100:
-                    before = physical.mechanical_palm.data.nodal_pos_w.clone()
+                    before = {
+                        "joint_pos": physical.hand.data.joint_pos.clone(),
+                        "root_pos": physical.hand.data.root_pos_w.clone(),
+                    }
                     physical._reset_idx(torch.tensor([1], device=physical.device))
-                    physical.mechanical_palm.update(0.)
-                    after = physical.mechanical_palm.data.nodal_pos_w
+                    physical.sim.forward()
+                    physical.hand.update(0.)
+                    after = {
+                        "joint_pos": physical.hand.data.joint_pos,
+                        "root_pos": physical.hand.data.root_pos_w,
+                    }
                     untouched = torch.arange(physical.num_envs,device=physical.device) != 1
-                    reset_leak = float((after[untouched]-before[untouched]).abs().max())
+                    reset_leak = max(float((after[key][untouched]-before[key][untouched]).abs().max())
+                                      for key in before)
                     if reset_leak > 1e-6:
-                        raise RuntimeError(f'Partial reset changed unrelated palms: {reset_leak}')
+                        raise RuntimeError(f'Partial reset changed unrelated mechanical hands: {reset_leak}')
+                for name in ("joint_pos", "joint_vel", "root_pos_w", "root_quat_w"):
+                    value = getattr(physical.hand.data, name)
+                    if not bool(torch.isfinite(value).all()):
+                        raise RuntimeError(f'Nonfinite mechanical hand state: {name}')
+            passed = True
             report = {'probe_only':True,'task':args.task,'num_envs':physical.num_envs,
-                      'steps':300,'partial_reset_other_env_delta_m':reset_leak,
-                      'palm_integrity':physical._palm_metrics,'passed':True}
+                      'steps':300,'motion_probe':('zero_actions_v1' if args.physics_batch_probe_zero_actions else 'bounded_sinusoidal_v1'),
+                      'partial_reset_other_env_delta_m':reset_leak,
+                      'rigid_palm':palm_contract,'all_hand_states_finite':True,'passed':passed}
             (output_dir/'physics_batch_probe.json').write_text(json.dumps(report,indent=2))
-            print('[PALM_BATCH_PROBE]',json.dumps(report),flush=True)
+            print('[MECHANICAL_BATCH_PROBE]',json.dumps(report),flush=True)
             raw_env.close()
             return
-        if args.task == "strike" and controller == "strike_joint_target_v1":
+        if (args.task == "strike" and controller == "strike_joint_target_v1"
+                and not (args.train_iterations and (args.train_from_scratch or args.train_auto_inherit))):
             saved_contract = json.loads((Path(resume_path).parent.parent / "params" / "policy_contract.json").read_text(encoding="utf-8"))
             actual_joints = list(raw_env.unwrapped.hand.joint_names)
             if actual_joints != saved_contract.get("actual_joint_names"):
@@ -537,25 +608,32 @@ def main() -> None:
             action_index = None
         elif controller == 'strike_joint_target_v1':
             action_index = list(physical.hand.joint_names).index(thumb)
-        elif controller == 'branch_joint_target_v1':
+        elif controller in ('branch_joint_target_v1','grasp_joint_target_v1','forage_joint_target_v1'):
             thumb_ids = physical.cartesian_ik.joint_ids[0].tolist()
             action_index = thumb_ids.index(list(physical.hand.joint_names).index(thumb))
         else:
             raise ValueError('Unbound mechanical controller')
         transfer = ThumbTransfer(mechanical_source_lower, mechanical_target_upper,
                                  (canonical.index(thumb) if thumb in canonical else None), len(canonical), action_dim, action_index)
-        import hashlib
         saved_policy_contract = json.loads((Path(resume_path).parent.parent/'params/policy_contract.json').read_text())
+        saved_scene=saved_policy_contract.get('mechanical_scene')
+        if saved_scene and not args.train_auto_inherit and not args.train_from_scratch:
+            actual_scene=json.loads((output_dir/'mechanical_scene_contract.json').read_text())
+            for field in ('version','task','effective_settings','curriculum_stage','implementation_sha256'):
+                if saved_scene.get(field) != actual_scene.get(field):
+                    raise ValueError('Saved training scene differs from evaluation scene: '+field)
         trained_adapter = saved_policy_contract.get('mechanical_adapter')
+        adapter_compatible = True
         if trained_adapter:
-            from palm_coordination import contract as coordination_contract
             expected_adapter = {
                 'observation_convention':'legacy_semantic_after_physical_clip',
                 'mapping':transfer.__dict__,
-                'palm_coordination':coordination_contract() if args.palm_coordination else None,
+                'rigid_palm_mode':palm_contract['mode'],
                 'wrist_speed_m_s':args.mechanical_wrist_speed,
                 'target_urdf_sha256':hashlib.sha256(Path(physical.hand.cfg.spawn.asset_path).read_bytes()).hexdigest()}
-            if not args.compliant_palm or trained_adapter != expected_adapter:
+            adapter_compatible = ({k: v for k, v in trained_adapter.items() if k != 'target_urdf_sha256'}
+                                  == {k: v for k, v in expected_adapter.items() if k != 'target_urdf_sha256'})
+            if not args.train_auto_inherit and not args.train_from_scratch and trained_adapter != expected_adapter:
                 raise ValueError('Mechanical checkpoint and evaluation physics/control contract differ')
         (output_dir / 'mechanical_transfer.json').write_text(json.dumps({
             'legacy_urdf_sha256': hashlib.sha256(Path(args.legacy_source_urdf).read_bytes()).hexdigest(),
@@ -565,10 +643,19 @@ def main() -> None:
             'semantics': 'normalized excursion transfer; does not preserve Cartesian thumb trajectories'
         }, indent=2))
         if args.train_iterations:
-            if not args.compliant_palm or not args.palm_coordination or args.physics_batch_probe_envs:
-                raise ValueError('Mechanical training requires coordinated FEM palm, outside probe mode')
+            if args.physics_batch_probe_envs:
+                raise ValueError('Batch physics probe cannot train PPO')
+            reference_joints = saved_policy_contract.get('actual_joint_names')
+            target_joints = list(physical.hand.joint_names)
+            if not args.train_from_scratch and not args.train_auto_inherit and reference_joints != target_joints:
+                raise ValueError('PPO inheritance requires identical ordered joint names; use --train_from_scratch for changed topology')
+            inherit_weights = not args.train_from_scratch
+            if args.train_auto_inherit and saved_policy_contract.get('controller') != controller:
+                raise ValueError('Inherited policy controller differs from child controller')
             from mechanical_ppo import train_mechanical
-            train_mechanical(raw_env, transfer, resume_path, output_dir, args.train_iterations, args.train_smoke)
+            train_mechanical(raw_env, transfer, resume_path, output_dir, args.train_iterations,
+                             args.train_smoke, inherit_weights=inherit_weights,
+                             bc_manifest=args.bc_manifest,bc_only=args.bc_only,task=args.task)
             return
         if args.replay_policy_trace:
             raise ValueError('Mechanical replay requires a separately converted trace contract')
