@@ -1,0 +1,119 @@
+{
+  "verified_at_utc": "2026-10-17T17:15:57.736017+00:00",
+  "experiment": "exp_20261018_mechanical_fourtaskBC15g_v1",
+  "training_report": "/home/zjh/Evolution_PC/Isaaclab_other/outputs/mechanical_evolution/exp_20261018_mechanical_fourtaskBC15g_v1/individuals/18c4c404bb1958debcb6c9374eab8009/stage1/branch/train/mechanical_training.json",
+  "last_epoch": [
+    "79",
+    "100"
+  ],
+  "configuration": {
+    "num_actors": 4096,
+    "horizon_length": 16,
+    "minibatch_size": 4096,
+    "mini_epochs": 5,
+    "learning_rate": "5e-4"
+  },
+  "weight_inheritance": true,
+  "source_checkpoint": "/home/zjh/Evolution_PC/outputs/mechanical_bc_20261018/bc_seeds/branch/ppo/nn/mechanical_final.pth",
+  "named_inheritance": {
+    "mapped_observations": 100,
+    "total_observations": 100,
+    "mapped_actions": 20,
+    "total_actions": 20
+  },
+  "training_status": "started",
+  "all_latest_tensorboard_scalars_finite": true,
+  "scalar_count": 32,
+  "task_script_results": {
+    "grasp": {
+      "success": true,
+      "steps_executed": 174,
+      "joint_limit_violation_steps": 0,
+      "max_joint_limit_violation_rad": null,
+      "environment_m3_success": true,
+      "source_mesh_penetration_steps": 0
+    },
+    "branch": {
+      "success": true,
+      "steps_executed": 158,
+      "joint_limit_violation_steps": 0,
+      "max_joint_limit_violation_rad": 0.0,
+      "environment_m3_success": null,
+      "source_mesh_penetration_steps": null
+    },
+    "forage": {
+      "success": true,
+      "steps_executed": 1156,
+      "joint_limit_violation_steps": 0,
+      "max_joint_limit_violation_rad": 3.743171691894531e-05,
+      "environment_m3_success": null,
+      "source_mesh_penetration_steps": null
+    },
+    "strike": {
+      "success": true,
+      "steps_executed": 933,
+      "joint_limit_violation_steps": 0,
+      "max_joint_limit_violation_rad": 0.0,
+      "environment_m3_success": null,
+      "source_mesh_penetration_steps": null
+    }
+  },
+  "bc_results": {
+    "grasp": {
+      "epoch": 0,
+      "checkpoint_sha256": "66b63911da36f913ae89c82d73656024e5731c28a6e9410b442c222cd9db0ead",
+      "cloning": {
+        "task": "grasp",
+        "samples": 174,
+        "epochs": 200,
+        "first_loss": 0.17774318158626556,
+        "final_loss": 6.60264486214146e-05,
+        "manifest_sha256": "19f92cff26738ac75984360ddcde527a1ca84f2325fc661749adad61d652eacd",
+        "input_convention": "physical_clip_then_legacy_semantic",
+        "mode": "verified_script_BC"
+      }
+    },
+    "branch": {
+      "epoch": 0,
+      "checkpoint_sha256": "002a14e47333d2e30786cfe118e0600fd52bf0b0b9cbec9b680f7d356950bb53",
+      "cloning": {
+        "task": "branch",
+        "samples": 158,
+        "epochs": 200,
+        "first_loss": 0.12726640701293945,
+        "final_loss": 0.00011729474499588832,
+        "manifest_sha256": "19f92cff26738ac75984360ddcde527a1ca84f2325fc661749adad61d652eacd",
+        "input_convention": "physical_clip_then_legacy_semantic",
+        "mode": "verified_script_BC"
+      }
+    },
+    "forage": {
+      "epoch": 0,
+      "checkpoint_sha256": "aa7f5bbc39edcb529f915a946eb5879144924fce753253f91b0d837b2bcdf48f",
+      "cloning": {
+        "task": "forage",
+        "samples": 1156,
+        "epochs": 200,
+        "first_loss": 0.5240169763565063,
+        "final_loss": 4.6459565055556595e-05,
+        "manifest_sha256": "19f92cff26738ac75984360ddcde527a1ca84f2325fc661749adad61d652eacd",
+        "input_convention": "physical_clip_then_legacy_semantic",
+        "mode": "verified_script_BC"
+      }
+    },
+    "strike": {
+      "epoch": 0,
+      "checkpoint_sha256": "8a9a6c42601777ac3e37c6679be7195abea4be578857ba3455dbda16b7873381",
+      "cloning": {
+        "task": "strike",
+        "samples": 933,
+        "epochs": 200,
+        "first_loss": 0.31728458404541016,
+        "final_loss": 4.037784310639836e-05,
+        "manifest_sha256": "19f92cff26738ac75984360ddcde527a1ca84f2325fc661749adad61d652eacd",
+        "input_convention": "physical_clip_then_legacy_semantic",
+        "mode": "verified_script_BC"
+      }
+    }
+  }
+}

@@ -48,4 +48,10 @@
 
 ## 运行记录
 
-正式启动命令已提交，主进程 PID 3212794，日志 `/tmp/formal_mechanical_fourtaskBC_20261018.log`。当前进行初始种群机械形态门禁；PPO 迭代仍待实际日志确认。
+正式训练已正常启动，主进程 PID 3212794，日志 `/tmp/formal_mechanical_fourtaskBC_20261018.log`。
+
+启动验收时首个 Branch 已执行到 79/100 epoch。训练报告确认继承本次 Branch BC checkpoint，100/100 个观测通道、20/20 个动作通道完成具名映射。实际参数为 4096 环境、horizon=16、minibatch=4096、mini_epochs=5、learning_rate=5e-4。TensorBoard 最近 32 项标量全部有限。
+
+机器可读证据：`Isaaclab_other/MECHANICAL_BC_START_EVIDENCE.json`。本目标按“正常启动即可完成”验收，不表示 15 代训练结束或四项学习策略均已收敛。
+
+代码提交：`1f6ac8c`；启动证据另作后续提交。
