@@ -51,8 +51,18 @@ def apply_mechanical_scene(cfg, task, output_dir):
         changes['episode_length_s']={'before':cfg.episode_length_s,'after':40.0}
         cfg.episode_length_s=40.0
     if task == 'strike':
+        preset=os.environ.get('EVOLUTION_STRIKE_SCENE_PRESET','clearance_v3')
+        if preset not in ('clearance_v3','open_grasp_v4'):raise ValueError('Unknown Strike scene preset: '+preset)
+        if preset=='open_grasp_v4':
+            changes['scene_preset']=preset
+            width=float(os.environ.get('EVOLUTION_STRIKE_V4_TOOL_WIDTH_M','0.025'))
+            pregrasp=float(os.environ.get('EVOLUTION_STRIKE_V4_PREGRASP','-0.20'))
+            if not 0.012<=width<=0.03 or not -0.5<=pregrasp<=0.45:raise ValueError('Strike v4 scene parameters outside supported range')
+            old_size=tuple(cfg.Cone_cfg.spawn.size)
+            cfg.Cone_cfg.spawn.size=(width,width,old_size[2])
+            changes['tool_size_m']={'before':old_size,'after':cfg.Cone_cfg.spawn.size}
         reset={'EVOLUTION_STRIKE_RESET_THUMB_SPREAD':'-0.80',
-               'EVOLUTION_STRIKE_PREGRASP_ACTION':'0.45',
+               'EVOLUTION_STRIKE_PREGRASP_ACTION':(str(pregrasp) if preset=='open_grasp_v4' else '0.45'),
                'EVOLUTION_STRIKE_RESET_OFFSET_WORLD':'0,0,0'}
         os.environ.update(reset)
         os.environ.pop('EVOLUTION_STRIKE_BC_TEACHER_CHECKPOINT',None)
@@ -62,10 +72,18 @@ def apply_mechanical_scene(cfg, task, output_dir):
         old = cfg.wrist_max_step_m
         cfg.wrist_max_step_m = 0.00005
         changes['wrist_max_step_m']={'before':old,'after':cfg.wrist_max_step_m}
+        cfg.tool_grasp_loss_grace_steps = 2
+        cfg.joint_target_speed_limit_rad_s = 0.45
+        cfg.tool_reset_clearance_enabled = True
+        changes['tool_grasp_loss_grace_steps'] = 2
+        changes['joint_target_speed_limit_rad_s'] = 0.45
+        changes['tool_reset_clearance'] = {'enabled': True, 'margin_m': 0.001,
+            'search_xy_half_extent_m': 0.030, 'grid_m': 0.001,
+            'geometry': 'imported_collision_mesh_convex_hulls', 'failure': 'reject_reset'}
     effective={k:(v['after'] if isinstance(v,dict) and 'after' in v else v) for k,v in changes.items()}
     if 'food_support' in effective:
         effective['food_support']={k:v for k,v in effective['food_support'].items() if not k.startswith('before')}
-    contract={'version':2,'effective_settings':effective,'curriculum_stage':cfg.curriculum_stage,'task':task,'changes':changes,
+    contract={'version':(4 if task=='strike' and preset=='open_grasp_v4' else 3),'effective_settings':effective,'curriculum_stage':cfg.curriculum_stage,'task':task,'changes':changes,
               'mechanical_urdf_sha256':hashlib.sha256(urdf.read_bytes()).hexdigest(),
               'implementation_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               'success_thresholds_unchanged':True}

@@ -329,6 +329,7 @@ class EvolutionStrikeEnvCfg(DirectRLEnvCfg):
     stabilization_steps = 45
     # Cartesian displacement limits for the three wrist action channels.
     wrist_action_scale = (0.025, 0.025, 0.100)
+    wrist_max_step_m = 0.0001
     # Tool-tip target at the physical top face (including its rest offset).
     # Place the strike zone below the calibrated grasp envelope of the
     # reference morphology, so the tool can descend without a lateral slide.

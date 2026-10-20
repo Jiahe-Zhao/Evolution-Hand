@@ -78,7 +78,8 @@ AppLauncher.add_app_launcher_args(parser)
 args, hydra_args = parser.parse_known_args()
 args.enable_cameras = args.record_video
 sys.argv = [sys.argv[0]] + hydra_args
-app = AppLauncher(args).app
+_worker_mode = os.environ.get("EVOLUTION_ISAAC_WORKER_MODE") == "1"
+app = None if _worker_mode else AppLauncher(args).app
 
 import gymnasium as gym
 import imageio.v2 as imageio
@@ -542,6 +543,10 @@ def main() -> None:
             from mechanical_joint_control import install
             install(env_id,args.task)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
+        if os.environ.get("EVOLUTION_DIAG_SCENE_START_ONLY") == "1":
+            print("[MECHANICAL_SCENE_START] passed", flush=True)
+            raw_env.close()
+            return
         if args.physics_batch_probe_envs:
             if args.physics_batch_probe_envs < 2:
                 raise ValueError('Batch probe requires at least two environments')
@@ -902,6 +907,8 @@ def main() -> None:
         with (output_dir / "evaluation.json").open("w", encoding="utf-8") as file:
             json.dump(report, file, ensure_ascii=False, indent=2)
         print('[MECHANICAL_EVAL_RESULT]', json.dumps({'task': args.task, 'successes': successes, 'report': str(output_dir / 'evaluation.json')}), flush=True)
+        if _worker_mode:
+            return
         os._exit(0)
     except BaseException:
         import traceback
@@ -909,6 +916,8 @@ def main() -> None:
         sys.stdout.flush(); sys.stderr.flush()
         # This is a dedicated per-episode process. Kit teardown can deadlock
         # and swallow the original exception; preserve the real exit status.
+        if _worker_mode:
+            raise
         os._exit(1)
 
 

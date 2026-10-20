@@ -974,14 +974,14 @@ def main(task: str) -> None:
                 away = leaf[:, :2] - raw.food.data.root_pos_w[:, :2]
                 away /= torch.linalg.vector_norm(away, dim=-1, keepdim=True).clamp_min(1e-5)
                 tip = raw.cartesian_ik.fingertip_positions_world()[:, forage_push_finger]
-                sensor = raw.leaf_two_contact if forage_leaf_index == 1 else raw.leaf_one_contact
-                finger_id = forage_push_finger+1
-                filter_ids = [index for index, path in enumerate(sensor.cfg.filter_prim_paths_expr)
-                              if path.rsplit("/", 1)[-1].startswith(f"link_{finger_id}_")]
-                if not filter_ids:
-                    raise RuntimeError(f"No contact channels for Forage pushing finger {finger_id}")
+                sensor = raw.leaf_contact
+                finger_id = forage_push_finger + 1
+                body_ids = [index for index, name in enumerate(sensor.body_names)
+                            if name.startswith(f"link_{finger_id}_")]
+                if not body_ids:
+                    raise RuntimeError(f"No contact bodies for Forage pushing finger {finger_id}")
                 selected_force = float(torch.linalg.vector_norm(
-                    sensor.data.force_matrix_w[0, 0, filter_ids], dim=-1
+                    sensor.data.force_matrix_w[0, body_ids, forage_leaf_index], dim=-1
                 ).sum())
                 contact = selected_force >= cfg.minimum_leaf_contact_force
                 distance = float(raw._leaf_distances()[0, forage_leaf_index])
