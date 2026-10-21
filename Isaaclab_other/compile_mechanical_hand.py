@@ -23,10 +23,76 @@ def origin(node):
     return t
 
 
+def palm_chassis(root, source, parent_link, original_root):
+    roots = []
+    long_roots = []
+    radii = []
+    original_links = {link.get("name"): link for link in original_root.findall("link")}
+    joints = root.findall("joint")
+    parents = {joint.find("child").get("link"): joint for joint in joints}
+    poses = {parent_link: np.eye(4)}
+    pending = list(joints)
+    while pending:
+        ready = [joint for joint in pending if joint.find("parent").get("link") in poses]
+        if not ready:
+            raise ValueError("Cannot resolve bone hand kinematics for palm generation")
+        for joint in ready:
+            transform = origin(joint.find("origin"))
+            if joint.get("type") != "fixed":
+                axis = np.fromstring(joint.find("axis").get("xyz"), sep=" ")
+                transform[:3, :3] = transform[:3, :3] @ Rotation.from_rotvec(
+                    axis * float(np.clip(0., float(joint.find("limit").get("lower")),
+                                         float(joint.find("limit").get("upper"))))
+                ).as_matrix()
+            child = joint.find("child").get("link")
+            poses[child] = poses[joint.find("parent").get("link")] @ transform
+            pending.remove(joint)
+    for child_name in original_links:
+        if not re.fullmatch(r"link_[1-5]_0", child_name):
+            continue
+        parent_joint = parents.get(child_name)
+        if parent_joint is None:
+            raise ValueError(f"Missing root joint for finger {child_name}")
+        xyz = poses[child_name][:3, 3]
+        roots.append(xyz)
+        if int(re.fullmatch(r"link_([1-5])_0", child_name).group(1)) >= 2:
+            long_roots.append(xyz)
+        original_link = original_links.get(child_name)
+        collision = original_link.find("collision") if original_link is not None else None
+        node = collision.find("geometry/mesh") if collision is not None else None
+        if node is None:
+            raise ValueError(f"Missing source collision geometry for {child_name}")
+        source_mesh = trimesh.load(source.parent / node.get("filename"), force="mesh")
+        scale = np.fromstring(node.get("scale", "1 1 1"), sep=" ")
+        radii.append(max(0.0015, min(source_mesh.extents[:2] * scale[:2]) / 2.))
+    if len(roots) < 2:
+        raise ValueError("Rigid palm chassis requires at least two surviving finger roots")
+    roots = np.asarray(roots)
+    long_roots = np.asarray(long_roots)
+    if len(long_roots) == 0:
+        raise ValueError("Rigid palm chassis requires at least one long-finger root")
+    radius = float(np.median(radii))
+    back_margin, side_margin = max(0.006, radius), max(0.004, radius)
+    low, high = roots.min(axis=0), roots.max(axis=0)
+    low[0] = min(-0.025, long_roots[:, 0].min() - 0.04)
+    high[0] = long_roots[:, 0].min() - 0.8 * radius
+    low[2] = min(0.0, low[2] - side_margin)
+    high[2] = max(0.058, high[2] + side_margin)
+    thickness = max(0.006, 1.2 * radius)
+    center = np.array([(low[0] + high[0]) / 2, 0., (low[2] + high[2]) / 2])
+    extents = np.array([high[0] - low[0], thickness, high[2] - low[2]])
+    mesh = trimesh.creation.box(extents=extents)
+    mesh.apply_translation(center)
+    return mesh, {"root_link": parent_link, "root_joint_count": len(roots), "root_joint_positions_m": roots.tolist(),
+                  "center_m": center.tolist(), "dimensions_m": extents.tolist(),
+                  "construction": "morphology_adaptive_rigid_mcp_chassis"}
+
+
 def compile_hand(source, destination):
     source, destination = Path(source).resolve(), Path(destination).resolve()
     tree = ET.parse(source)
     root = tree.getroot()
+    original_root = ET.parse(source).getroot()
     root.set("name", "mechanical_v2_" + root.get("name", "hand"))
     mesh_dir = destination.parent.parent / "meshes"
     mesh_dir.mkdir(parents=True, exist_ok=True)
@@ -36,21 +102,48 @@ def compile_hand(source, destination):
     for joint in root.findall("joint"):
         outgoing.setdefault(joint.find("parent").get("link"), []).append(joint)
         incoming[joint.find("child").get("link")] = joint
-    parts, joints = [], []
+    links_by_name = {link.get("name"): link for link in root.findall("link")}
+    child_links = {joint.find("child").get("link") for joint in root.findall("joint")}
+    root_links = sorted(set(links_by_name) - child_links)
+    if len(root_links) != 1:
+        raise ValueError(f"Mechanical source needs one tree root, got {root_links}")
+    palm_link_name = "link_palm_chassis"
+    palm_link = ET.Element("link", name=palm_link_name)
+    root.append(palm_link)
+    palm_joint = ET.Element("joint", name="root_to_palm_chassis", type="fixed")
+    ET.SubElement(palm_joint, "parent", link=root_links[0])
+    ET.SubElement(palm_joint, "child", link=palm_link_name)
+    ET.SubElement(palm_joint, "origin", xyz="0 0 0", rpy="0 0 0")
+    root.append(palm_joint)
+    for joint in root.findall("joint"):
+        parent = joint.find("parent")
+        child = joint.find("child").get("link")
+        if parent.get("link") != root_links[0]:
+            continue
+        if re.fullmatch(r"link_[1-5]_(?:thumb_spread|mcp_spread|0)", child):
+            parent.set("link", palm_link_name)
+    outgoing = {}
+    for joint in root.findall("joint"):
+        outgoing.setdefault(joint.find("parent").get("link"), []).append(joint)
+    parts, joints, palm_manifest = [], [], None
     for link in root.findall("link"):
         name = link.get("name")
         collisions = link.findall("collision")
-        if not collisions:
+        if not collisions and name != palm_link_name:
             continue  # A mass-only coordinate frame carries no manufactured skin.
-        original = collisions[0]
-        node = original.find("geometry/mesh")
-        source_mesh = trimesh.load(source.parent / node.get("filename"), force="mesh")
-        source_mesh.apply_scale(np.fromstring(node.get("scale", "1 1 1"), sep=" "))
-        source_mesh.apply_transform(origin(original.find("origin")))
         is_finger = re.fullmatch(r"link_[1-5]_\d+", name) is not None
         is_tip = is_finger and not outgoing.get(name)
         modules = []
-        if is_finger:
+        if name == palm_link_name:
+            chassis, palm_manifest = palm_chassis(root, source, root_links[0], original_root)
+            modules.append(("rigid_palm_chassis", chassis, 1100.0, [0.12, 0.17, 0.22, 1]))
+            parts.append({"link": name, "contact_pad": True, "role": "load_bearing_palm"})
+        elif is_finger:
+            original = collisions[0]
+            node = original.find("geometry/mesh")
+            source_mesh = trimesh.load(source.parent / node.get("filename"), force="mesh")
+            source_mesh.apply_scale(np.fromstring(node.get("scale", "1 1 1"), sep=" "))
+            source_mesh.apply_transform(origin(original.find("origin")))
             visual = link.find("visual")
             shaft = 2 * float(visual.find("origin").get("xyz").split()[2])
             # Restore the bone's nominal radial size, rather than copying the old
@@ -74,6 +167,11 @@ def compile_hand(source, destination):
                           "section_m": [1.7 * radius, 1.6 * radius], "bearing_radius_m": hinge_radius,
                           "contact_pad": is_tip})
         else:
+            original = collisions[0]
+            node = original.find("geometry/mesh")
+            source_mesh = trimesh.load(source.parent / node.get("filename"), force="mesh")
+            source_mesh.apply_scale(np.fromstring(node.get("scale", "1 1 1"), sep=" "))
+            source_mesh.apply_transform(origin(original.find("origin")))
             modules.append(("palm_chassis" if name == "link_palm" else "wrist_mount", source_mesh.convex_hull, 1100.0, [0.12, 0.17, 0.22, 1]))
             parts.append({"link": name, "section_m": source_mesh.extents.tolist(), "contact_pad": False})
         masses, centers, tensors = [], [], []
@@ -126,11 +224,13 @@ def compile_hand(source, destination):
                        "tendon_differential_force_at_limit_n": float(limit.get("effort")) / 0.003})
     ET.indent(tree, space="  ")
     tree.write(destination, encoding="unicode", xml_declaration=True)
-    manifest = {"version": 1, "source": str(source), "urdf": str(destination), "parts": parts, "joint_mapping": joints,
+    manifest = {"version": 2, "source": str(source), "urdf": str(destination), "parts": parts, "joint_mapping": joints,
                 "actuated_joint_count": len(joints), "mass_kg": sum(p["mass_kg"] for p in parts),
+                "rigid_palm": palm_manifest,
                 "scope": "Rigid mechanical simulation proxies. Tendon routing is a packaging plan, not elastic cable dynamics. Motor sizing is pending."}
     destination.with_suffix(".mapping.json").write_text(json.dumps(manifest, indent=2))
-    return manifest
+    from mechanical_contact_model import upgrade_contact_model
+    return upgrade_contact_model(source, destination, manifest)
 
 
 if __name__ == "__main__":

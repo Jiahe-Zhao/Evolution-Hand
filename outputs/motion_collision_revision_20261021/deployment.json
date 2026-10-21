@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/code_to_urdf.py",
+      "sha256": "22b325944ca78e70366a81613c2ef38b072d865f763874430fa0c131ced82fc2"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/compile_mechanical_hand.py",
+      "sha256": "e869f8a9cb96b92b02aacf73a56a897d53ba9538c79603605973493f341d3152"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_evolution_gate.py",
+      "sha256": "dce853a6fe5c1e6fdcbbe4993cc962c9cff0d9c96ca3399a3e1dfabad4db9137"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_contact_model.py",
+      "sha256": "f1456c363651c447cf57713fb2b904f9bc96e28561bc1a51a69fa5068a6058fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/mechanical_contact_materials.py",
+      "sha256": "5320f4d35ded4730a048b9ae29a8b325f951070f102b6cb65ce2e18602f8b7f3"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/evolution_tasks/hand_collision.py",
+      "sha256": "b27f8bfe6f637e90c24d5c65ecf6bce7130da944fb5fd46dc847c03ed5433162"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/evolution_tasks/mechanical_contact_materials.py",
+      "sha256": "5320f4d35ded4730a048b9ae29a8b325f951070f102b6cb65ce2e18602f8b7f3"
+    }
+  ],
+  "backup": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/pre_revision_backup",
+  "training_resumed": false
+}

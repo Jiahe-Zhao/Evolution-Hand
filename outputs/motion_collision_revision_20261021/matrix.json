@@ -1,0 +1,563 @@
+[
+  {
+    "name": "baseline",
+    "operation": "baseline",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545030859
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13203489522052336,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "53830a02f0631ded68857f1c3838c5695ce61c1e2b708ce802221177c91c7ba6",
+    "urdf_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760"
+  },
+  {
+    "name": "change_link_length_minus",
+    "operation": "change_link_length",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0719860854525796
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13183383280142344,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_length_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_length_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "08d5fd367b8b4f3028cbc129c4edbfdc095444238a397f4e6dc2df130343df82",
+    "urdf_sha256": "ba88e8c7c085ebcc5a4b91b6abbcac283af7e73e4abeaa2ec0b29e81c94a6ba2"
+  },
+  {
+    "name": "change_link_length_plus",
+    "operation": "change_link_length",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0767733654489429
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13223595763962326,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_length_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_length_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "6e237bbce8fd5ad2ba0f46478840a82abd5c3aafd1bb128c350d3fe8e85ad228",
+    "urdf_sha256": "488f8525b15168ce71515ce44ccef5fd585010fe9d48393d1223127ceb83b223"
+  },
+  {
+    "name": "change_link_radius_minus",
+    "operation": "change_link_radius",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07403777687980628
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.1311151188467118,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_radius_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_radius_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "464fe467f058378f686da51f0f3ce7f8478c1ebeb07ff47ed2e8f8906efe2bf5",
+    "urdf_sha256": "fa2ac3943964cdc0137eec5be6bf8b862b98b2279a038ea20c07c2e9cb50b3e3"
+  },
+  {
+    "name": "change_link_radius_plus",
+    "operation": "change_link_radius",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07472167402140237
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13320664382745992,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_radius_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_link_radius_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "29476adfcb1417c38afe39fd3a3ad2fdc79eaa5e8c78c2486d4bc5b1ee2fb140",
+    "urdf_sha256": "a6daedec5c1f3bfcb888bb8ecd1c0d45a286b17bcb5232301bd38927e94fd261"
+  },
+  {
+    "name": "change_thumb_length_minus",
+    "operation": "change_thumb_length",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545030859
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13126658838601016,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_thumb_length_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_thumb_length_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "2635af50f9aac90fca491c1ca0021fa5d36221b2baa4f7a80aaba1d9592f3549",
+    "urdf_sha256": "b8a0f2363d443baa1a53a76e45dd4abbb8ed2bb090ee4a433264a24d790666be"
+  },
+  {
+    "name": "change_thumb_length_plus",
+    "operation": "change_thumb_length",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545030859
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13280320205503654,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_thumb_length_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_thumb_length_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "ac947156b1990055266e7f95aef6b54b3f51da14eb06c9fe2f88ec5cb8949d6f",
+    "urdf_sha256": "629fb67ff27f8bda41ce101867e6cf1c4879d0db14f03627fc3f357e47ab4978"
+  },
+  {
+    "name": "change_palm_curvature_minus",
+    "operation": "change_palm_curvature",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 4.440892098500626e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0743797254507985
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369676858
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592775865
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.007530851077274673
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13203489522052336,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_palm_curvature_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_palm_curvature_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "158a0a509a4a39812783a213fb76cbc3526f04fc840aac7a607b95080aa74b52",
+    "urdf_sha256": "e444cacb4b2c48ee55e31e6f675fd2f29822eaf935fca55b30076652a48054a4"
+  },
+  {
+    "name": "change_palm_curvature_plus",
+    "operation": "change_palm_curvature",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 3.3306690738754696e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545065784
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369635532
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592810985
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510769015406
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13203489522052336,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_palm_curvature_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_palm_curvature_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "8c55181c1d607428b4fd5b63457059551d0e7af7441a918151112ccc98e338ea",
+    "urdf_sha256": "2fc12a34814cad2abac404ebb7f9f1d9aa12eb66ebe8218c5d7d9dcae2f428ae"
+  },
+  {
+    "name": "change_joint_origin_translation_minus",
+    "operation": "change_joint_origin_translation",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0837158008688238
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13219478502206236,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_translation_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_translation_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "a4d7e7f4f7ab33eb2f3c3c436fd4f9d337a84ab0ac2b531fd72bb0509b4765fc",
+    "urdf_sha256": "73db56b5c65415881287a4fce53426e31c4770cb6508dc3a201e3acca6ee3feb"
+  },
+  {
+    "name": "change_joint_origin_translation_plus",
+    "operation": "change_joint_origin_translation",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07671290557856256
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13219478502206236,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_translation_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_translation_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "c42020b63e0c05a2f231bbb695126c954d84b337ae4b4b49168b711116a919ff",
+    "urdf_sha256": "8f59371027e019f10a344b2025a910a2914f8fcbaf91845939bdcf6a6220ee63"
+  },
+  {
+    "name": "change_joint_origin_rpy_minus",
+    "operation": "change_joint_origin_rpy",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07452053800196703
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13203489522052336,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_rpy_minus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_rpy_minus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "1cbad7ba0e0f8470ace29b4ddecefa2ebb18bfede1c94a7b6d0bbe347907b913",
+    "urdf_sha256": "79297a69299d10fb9b6e638d8860ef2e1044bef98b2c93a61f09d8da5a669b99"
+  },
+  {
+    "name": "change_joint_origin_rpy_plus",
+    "operation": "change_joint_origin_rpy",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 3.0531133177191805e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07422842436823827
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 21
+    },
+    "mass_kg": 0.13203489522052336,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_rpy_plus/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/change_joint_origin_rpy_plus/left/urdf/current_agent.urdf",
+    "collision_count": 102,
+    "source_sha256": "74cedaf699de53c32e64e6e34c1b1d723c2c8d6a28c7e11e69b94c42f83af8dc",
+    "urdf_sha256": "c7742686d08380443e9b706f00b55f174fc256062dde0fade363793a6c6bca27"
+  },
+  {
+    "name": "add_link_link_1_3",
+    "operation": "add_link",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545030859
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 22
+    },
+    "mass_kg": 0.13303773361572566,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/add_link_link_1_3/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/add_link_link_1_3/left/urdf/current_agent.urdf",
+    "collision_count": 108,
+    "source_sha256": "a47ce77992215d2355ca85bb500b7c3d317343e367acb044142343c066dcf90f",
+    "urdf_sha256": "72d2363d38cb7c480650d2d0c86574bd0f283316e34b82d3e200aad3053a7f71"
+  },
+  {
+    "name": "add_link_link_2_3",
+    "operation": "add_link",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 3.0531133177191805e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07715702465172483
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.09105309369712734
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.01580822592764964
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0075308510760552635
+        }
+      ],
+      "actuated_count": 22
+    },
+    "mass_kg": 0.13266199146661223,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/add_link_link_2_3/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/add_link_link_2_3/left/urdf/current_agent.urdf",
+    "collision_count": 108,
+    "source_sha256": "448a0a98e9e4e0ea9af2ad14494f91d03a29e83a81103c1491bc5ae65ef58311",
+    "urdf_sha256": "1af9a0affd042de31a94c8b39575d6dd575b46c4ea66336308ec531b96b3279f"
+  },
+  {
+    "name": "remove_link_link_2_1",
+    "operation": "remove_link",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.449293598294706e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.004960233415938379
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.058177305396042316
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.05934893614259663
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0322999761092429
+        }
+      ],
+      "actuated_count": 19
+    },
+    "mass_kg": 0.12855428099620972,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/remove_link_link_2_1/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/remove_link_link_2_1/left/urdf/current_agent.urdf",
+    "collision_count": 84,
+    "source_sha256": "7dbfdd49025016359f64286c5cba918ab8273060e8e613f35b04ce64e52bdba9",
+    "urdf_sha256": "ca6595ad03784a6f5356706a70c5f40055105d007189c1243cb4ee539f3d8898"
+  },
+  {
+    "name": "remove_link_link_3_1",
+    "operation": "remove_link",
+    "status": "passed",
+    "motion": {
+      "mirror_max_error": 2.7755575615628914e-16,
+      "spread_motion": [
+        {
+          "joint": "link_2_mcp_spread_joint",
+          "tip_speed_per_rad": 0.07437972545030859
+        },
+        {
+          "joint": "link_3_mcp_spread_joint",
+          "tip_speed_per_rad": 0.004679478221114949
+        },
+        {
+          "joint": "link_4_mcp_spread_joint",
+          "tip_speed_per_rad": 0.05934893614259663
+        },
+        {
+          "joint": "link_5_mcp_spread_joint",
+          "tip_speed_per_rad": 0.0322999761092429
+        }
+      ],
+      "actuated_count": 19
+    },
+    "mass_kg": 0.12832778295335567,
+    "right": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/remove_link_link_3_1/right/urdf/current_agent.urdf",
+    "left": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/remove_link_link_3_1/left/urdf/current_agent.urdf",
+    "collision_count": 84,
+    "source_sha256": "ece023b98857192d8d196647450702b601a78c0c9287f8ee087e73be3080a133",
+    "urdf_sha256": "fd4f79ec4bf0c8f27d1241a13600506aaa84f1d06c15e0062ae9dd3eb656e12c"
+  }
+]

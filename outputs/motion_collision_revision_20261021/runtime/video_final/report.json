@@ -1,0 +1,1083 @@
+{
+  "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+  "dt": 0.004166666666666667,
+  "joint_names": [
+    "link_1_thumb_spread_joint",
+    "link_2_mcp_spread_joint",
+    "link_3_mcp_spread_joint",
+    "link_4_mcp_spread_joint",
+    "link_5_mcp_spread_joint",
+    "link_0_0_to_link_1_0",
+    "link_0_0_to_link_2_0",
+    "link_0_0_to_link_3_0",
+    "link_0_0_to_link_4_0",
+    "link_0_0_to_link_5_0",
+    "link_1_0_to_link_1_1",
+    "link_2_0_to_link_2_1",
+    "link_3_0_to_link_3_1",
+    "link_4_0_to_link_4_1",
+    "link_5_0_to_link_5_1",
+    "link_1_1_to_link_1_2",
+    "link_2_1_to_link_2_2",
+    "link_3_1_to_link_3_2",
+    "link_4_1_to_link_4_2",
+    "link_5_1_to_link_5_2",
+    "link_1_2_to_link_1_3"
+  ],
+  "peak_limit_excess_rad": 1.0743170332932507e-16,
+  "peak_joint_velocity_rad_s": 0.3702678680419922,
+  "peak_target_velocity_rad_s": 0.37500858306884766,
+  "peak_tracking_error_rad": 0.061360836029052734,
+  "self_collision_enabled": true,
+  "target_interpolation": "quintic, continuous position/velocity/acceleration",
+  "materials": [
+    {
+      "path": "/World/Hand/link_0_0/collisions/wrist_mount/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_0_0/collisions/palm_chassis/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_0_0/collisions/rigid_palm_chassis/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 3000.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 3000.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 3000.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 3000.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 3000.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    }
+  ],
+  "masses": [
+    [
+      0.08764641731977463,
+      9.999999747378752e-05,
+      0.0005786280962638557,
+      0.0002962576400022954,
+      0.00012498367868829519,
+      0.00012498367868829519,
+      0.005764769855886698,
+      0.006138770375400782,
+      0.0037175146862864494,
+      0.0016760382568463683,
+      0.0016491104615852237,
+      0.002472842577844858,
+      0.0027600747998803854,
+      0.0028079466428607702,
+      0.0028079466428607702,
+      0.0011374783935025334,
+      0.0010028383694589138,
+      0.0032367908861488104,
+      0.002617096761241555,
+      0.0025804447941482067,
+      0.0014430009759962559,
+      0.0013509603450074792
+    ]
+  ],
+  "passed": true,
+  "scope": "motion and contact stability only; not grasp/Strike success"
+}

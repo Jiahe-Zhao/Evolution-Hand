@@ -1,0 +1,44 @@
+[
+  {
+    "label": "baseline_final",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/baseline_final/report.json"
+  },
+  {
+    "label": "added",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/added/report.json"
+  },
+  {
+    "label": "removed",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/removed/report.json"
+  },
+  {
+    "label": "left",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/left/report.json"
+  },
+  {
+    "label": "half_dt",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/half_dt/report.json"
+  },
+  {
+    "label": "pad_press",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/pad_press/report.json"
+  },
+  {
+    "label": "pad_hold",
+    "exit_code": 0,
+    "passed": true,
+    "report": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/pad_hold/report.json"
+  }
+]

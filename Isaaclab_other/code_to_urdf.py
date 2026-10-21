@@ -580,9 +580,9 @@ def generate_urdf_from_dict(agent_dict, output_dir="generated_meshes", output_ur
             origin_translation = (np.asarray(origin_translation) - palm_joint_translation).tolist()
         add_origin(spread_joint, origin_translation, origin_rpy)
         axis = ET.SubElement(spread_joint, "axis")
-        # X is the proximal-distal direction at the MCP roots. Rotating around
-        # X splays the fingers in the transverse palm direction.
-        axis.set("xyz", "1 0 0" if not is_mirrored else "-1 0 0")
+        # Local Z follows the phalanx; local X is flexion. Local Y provides
+        # independent ab/adduction. Preserve flexion signs and evolved root poses.
+        axis.set("xyz", "0 1 0" if not is_mirrored else "0 -1 0")
         limit = ET.SubElement(spread_joint, "limit")
         limit.set("lower", str(spec["lower"]))
         limit.set("upper", str(spec["upper"]))

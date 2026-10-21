@@ -1,0 +1,8 @@
+{
+  "protected_flexion_origin_rpy_unchanged": true,
+  "rotation_matrix_test_target": "link_2_3",
+  "flexion_positive_direction": "unchanged",
+  "spread_axis": "independent local Y",
+  "limits": "original generated limits retained",
+  "old_checkpoints": "require retraining or explicit revalidation after axis change"
+}

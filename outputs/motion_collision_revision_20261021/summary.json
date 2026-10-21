@@ -1,0 +1,75 @@
+{
+  "tests": [
+    {
+      "test": "baseline_final",
+      "passed": true,
+      "peak_limit_excess_rad": 1.0743170332932507e-16,
+      "peak_joint_velocity_rad_s": 0.3702678680419922,
+      "peak_tracking_error_rad": 0.061360836029052734
+    },
+    {
+      "test": "added",
+      "passed": true,
+      "peak_limit_excess_rad": 9.488647040110904e-17,
+      "peak_joint_velocity_rad_s": 0.27299317717552185,
+      "peak_tracking_error_rad": 0.04523204267024994
+    },
+    {
+      "test": "removed",
+      "passed": true,
+      "peak_limit_excess_rad": 9.488647040110904e-17,
+      "peak_joint_velocity_rad_s": 0.27299317717552185,
+      "peak_tracking_error_rad": 0.04523204267024994
+    },
+    {
+      "test": "left",
+      "passed": true,
+      "peak_limit_excess_rad": 9.488647040110904e-17,
+      "peak_joint_velocity_rad_s": 0.2729932367801666,
+      "peak_tracking_error_rad": 0.04523205757141113
+    },
+    {
+      "test": "half_dt",
+      "passed": true,
+      "peak_limit_excess_rad": 5.482439610821425e-17,
+      "peak_joint_velocity_rad_s": 0.3719957172870636,
+      "peak_tracking_error_rad": 0.061738669872283936
+    },
+    {
+      "test": "pad_press",
+      "passed": true,
+      "held_seconds": 0.0,
+      "max_slip_m": 0.0,
+      "final_force_N": {
+        "left": 2.0220255851745605,
+        "right": 0.0
+      },
+      "first_contact": {
+        "step": 1415,
+        "t_s": 5.9,
+        "collider": "/World/Hand/left/collisions/finger_pad/mesh",
+        "force_N": 0.012280564696993679
+      }
+    },
+    {
+      "test": "pad_hold",
+      "passed": true,
+      "held_seconds": 3.0,
+      "max_slip_m": 4.461306476549221e-06,
+      "final_force_N": {
+        "left": 1.5376063585281372,
+        "right": 1.5410659313201904
+      },
+      "first_contact": {
+        "step": 1415,
+        "t_s": 5.9,
+        "collider": "/World/Hand/right/collisions/finger_pad/mesh",
+        "force_N": 0.012187866086608346
+      }
+    }
+  ],
+  "half_dt_max_q_difference_rad": 0.0003845691680908203,
+  "mutation_cases": 17,
+  "mutation_cases_passed": 17,
+  "distinct_generated_urdfs": 17
+}
