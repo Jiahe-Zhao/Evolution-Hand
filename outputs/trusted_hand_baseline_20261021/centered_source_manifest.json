@@ -1,0 +1,12 @@
+{
+  "four_tasks/plan_centered_opposition.py": "3494cbc3bd6284b48412e5635b6dfba0199599dd18aec6a29c032d7fe36d3b0b",
+  "four_tasks/plan_centered_pad_faces.py": "171fb797a0de902a901d2933094db60df0fcc487ce0b25d41671b6a7f6186ba1",
+  "four_tasks/centered_opposition.py": "318680d7d61563e4503a1eed90a24ba950115d8e66ce0dd52a4aeeb118030463",
+  "four_tasks/centered_opposition_rollout.py": "4c0a7fc142a40297d1a71374a00b2e8d34562fddc6154b2047466c93063c6fff",
+  "four_tasks/verify_centered_opposition.py": "563567d6c22e583b8ba518d9bb3a2d799944730d59ea97a935180aa3f2d4db7a",
+  "four_tasks/run_centered_opposition.py": "1dd2f61e297d3ab31602e89d9b22f96ae1db424ef953785ae08ec06a7a526dab",
+  "four_tasks/centered_contact_audit.py": "46bd37742164e6c9131daa0755e3867679ac7714f7cc60cc6583e9ddd2f55852",
+  "four_tasks/audit_opposition_axes.py": "d554e5cbed2f022585e9d6c7ebd8553e30458980f5f04439681ad8b1b03653f8",
+  "centered_plans_inward.json": "c604e07c2e2a3b764f8d57461bc9802160bae94eea1224153167919532489568",
+  "candidate/right/urdf/current_agent.urdf": "f312af1cda83d45945ffc669c2df26876bfb777a295c4016b658c8f3eb9c4bc8"
+}

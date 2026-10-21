@@ -1,0 +1,78 @@
+[
+  {
+    "finger": 1,
+    "joints": [
+      "link_1_thumb_spread_joint",
+      "link_0_0_to_link_1_0",
+      "link_1_0_to_link_1_1",
+      "link_1_1_to_link_1_2",
+      "link_1_2_to_link_1_3"
+    ],
+    "singular_values_m_per_rad": [
+      0.07390794859016422,
+      0.0360649544356116,
+      0.01619862244220633
+    ],
+    "pad_normal_jacobian_norm_m_per_rad": 0.01623253750435332
+  },
+  {
+    "finger": 2,
+    "joints": [
+      "link_2_mcp_spread_joint",
+      "link_0_0_to_link_2_0",
+      "link_2_0_to_link_2_1",
+      "link_2_1_to_link_2_2"
+    ],
+    "singular_values_m_per_rad": [
+      0.12066829255841541,
+      0.04313679267259797,
+      1.263046381574403e-11
+    ],
+    "pad_normal_jacobian_norm_m_per_rad": 1.0901963279555596e-10
+  },
+  {
+    "finger": 3,
+    "joints": [
+      "link_3_mcp_spread_joint",
+      "link_0_0_to_link_3_0",
+      "link_3_0_to_link_3_1",
+      "link_3_1_to_link_3_2"
+    ],
+    "singular_values_m_per_rad": [
+      0.11857174503602169,
+      0.04651781077674457,
+      1.2941572893857687e-12
+    ],
+    "pad_normal_jacobian_norm_m_per_rad": 7.075757087800965e-11
+  },
+  {
+    "finger": 4,
+    "joints": [
+      "link_4_mcp_spread_joint",
+      "link_0_0_to_link_4_0",
+      "link_4_0_to_link_4_1",
+      "link_4_1_to_link_4_2"
+    ],
+    "singular_values_m_per_rad": [
+      0.1255045606141719,
+      0.036034358700896815,
+      7.386466536238332e-12
+    ],
+    "pad_normal_jacobian_norm_m_per_rad": 5.967599180323191e-11
+  },
+  {
+    "finger": 5,
+    "joints": [
+      "link_5_mcp_spread_joint",
+      "link_0_0_to_link_5_0",
+      "link_5_0_to_link_5_1",
+      "link_5_1_to_link_5_2"
+    ],
+    "singular_values_m_per_rad": [
+      0.12488644222318558,
+      0.01900562576326036,
+      6.6189371520424116e-12
+    ],
+    "pad_normal_jacobian_norm_m_per_rad": 7.068699837153915e-11
+  }
+]
