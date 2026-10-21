@@ -1,0 +1,1321 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="mechanical_v2_arboreal_comparative_prior_v1">
+  <link name="link_0_0">
+    <visual name="wrist_mount">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_0_0_wrist_mount.stl" />
+      </geometry>
+      <material name="wrist_mount">
+        <color rgba="0.12 0.17 0.22 1" />
+      </material>
+    </visual>
+    <collision name="wrist_mount">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_0_0_wrist_mount.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 1.5544763013660075e-19 0.0175" rpy="0 0 0" />
+      <mass value="0.016584660957464963" />
+      <inertia ixx="3.7047370331850545e-06" ixy="-9.478111185503441e-25" ixz="7.582488948402753e-24" iyy="3.7047370331850545e-06" iyz="2.9950831346190885e-23" izz="7.782522108814911e-07" />
+    </inertial>
+  </link>
+  <link name="link_1_0">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_0_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-3.2371310111563244e-20 -5.528254741952758e-20 0.0225" rpy="0 0 0" />
+      <mass value="0.005749400848560328" />
+      <inertia ixx="1.8831847967307126e-06" ixy="9.108814092636974e-25" ixz="1.4060454826267578e-23" iyy="1.8903698655155673e-06" iyz="1.5976705250132526e-23" izz="6.650483953012015e-08" />
+    </inertial>
+  </link>
+  <link name="link_1_1">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_1_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 -1.8263108980066584e-20 0.013000000000000003" rpy="0 0 0" />
+      <mass value="0.0024649736854532203" />
+      <inertia ixx="3.0408730260457636e-07" ixy="-1.9171451024105338e-25" ixz="6.702956598675119e-24" iyy="3.0623106987327876e-07" iyz="-1.6803002338471706e-24" izz="1.831361322577824e-08" />
+    </inertial>
+  </link>
+  <link name="link_1_2">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_2_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.3275657950144108e-20 -3.790249964049346e-21 0.008999999999999996" rpy="0 0 0" />
+      <mass value="0.0009995186721632444" />
+      <inertia ixx="6.099777113558106e-08" ixy="-3.4624770525230905e-26" ixz="-2.2301160899470416e-25" iyy="6.149650004334294e-08" iyz="3.9173570375827065e-26" izz="4.180803197870544e-09" />
+    </inertial>
+  </link>
+  <link name="link_2_0">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_0_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 -2.1511883810547292e-20 0.024999999999999998" rpy="0 0 0" />
+      <mass value="0.006123400831841225" />
+      <inertia ixx="2.386935988404336e-06" ixy="1.2076014130809157e-24" ixz="-1.8975070887568965e-23" iyy="2.394378182166202e-06" iyz="9.102445104291796e-24" izz="7.075129748379052e-08" />
+    </inertial>
+  </link>
+  <link name="link_2_1">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_1_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-6.762417393546587e-20 5.126708157058237e-20 0.016" rpy="0 0 0" />
+      <mass value="0.002752205712738797" />
+      <inertia ixx="4.7556244288311276e-07" ixy="-1.4184309772793388e-25" ixz="2.3543818427613317e-25" iyy="4.778325922558266e-07" iyz="-8.595125500700544e-25" izz="2.040083282232864e-08" />
+    </inertial>
+  </link>
+  <link name="link_2_2">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_2_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-5.891650343621208e-20 4.97347729609235e-20 0.012" rpy="0 0 0" />
+      <mass value="0.0023692296763580282" />
+      <inertia ixx="2.5704413461113135e-07" ixy="-1.6169422785151725e-25" ixz="-3.1146432965636293e-24" iyy="2.5914577451183e-07" iyz="-3.950004519461824e-24" izz="1.7617873360261445e-08" />
+    </inertial>
+  </link>
+  <link name="link_2_3">
+    <visual name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_finger_pad.stl" />
+      </geometry>
+      <material name="finger_pad">
+        <color rgba="0.12 0.52 0.43 1" />
+      </material>
+    </visual>
+    <collision name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_finger_pad.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_2_3_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.590269708208128e-20 7.920288585802198e-21 0.0074999997249453445" rpy="0 0 0" />
+      <mass value="0.0007314625502823559" />
+      <inertia ixx="2.6538610453055846e-08" ixy="2.5494736694606468e-27" ixz="2.751294433916201e-25" iyy="2.670529072653001e-08" iyz="8.576495602212828e-26" izz="2.884318049755334e-09" />
+    </inertial>
+  </link>
+  <link name="link_3_0">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_0_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.2542682487318947e-20 -1.9300910087297694e-20 0.026" rpy="0 0 0" />
+      <mass value="0.0037096458036907187" />
+      <inertia ixx="1.4339753358931532e-06" ixy="-4.734408925471579e-26" ixz="3.1667594800109246e-24" iyy="1.4366667589459044e-06" iyz="-3.420124756158698e-24" izz="2.7358231477496636e-08" />
+    </inertial>
+  </link>
+  <link name="link_3_1">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_1_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-9.970203863027024e-20 5.869908841721109e-20 0.016499999999999997" rpy="0 0 0" />
+      <mass value="0.0028000777172863933" />
+      <inertia ixx="5.088183662468976e-07" ixy="-1.4184309772793385e-25" ixz="-7.209187328701115e-24" iyy="5.111095793036133e-07" iyz="-5.396507206929384e-24" izz="2.074870275508704e-08" />
+    </inertial>
+  </link>
+  <link name="link_3_2">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_2_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.3277792440018942e-20 -9.212116834972125e-20 0.012750000000000001" rpy="0 0 0" />
+      <mass value="0.001752132730884948" />
+      <inertia ixx="1.9903249706521768e-07" ixy="-8.437296651607441e-26" ixz="8.347940669214967e-25" iyy="2.0016600901237452e-07" iyz="-1.2569110129503583e-25" izz="9.953981286165034e-09" />
+    </inertial>
+  </link>
+  <link name="link_3_3">
+    <visual name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_finger_pad.stl" />
+      </geometry>
+      <material name="finger_pad">
+        <color rgba="0.12 0.52 0.43 1" />
+      </material>
+    </visual>
+    <collision name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_finger_pad.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_3_3_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.590269708208128e-20 7.920288585802198e-21 0.0074999997249453445" rpy="0 0 0" />
+      <mass value="0.0007314625502823559" />
+      <inertia ixx="2.6538610453055846e-08" ixy="2.5494736694606468e-27" ixz="2.751294433916201e-25" iyy="2.670529072653001e-08" iyz="8.576495602212828e-26" izz="2.884318049755334e-09" />
+    </inertial>
+  </link>
+  <link name="link_4_0">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_0_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.7816338697522453e-20 -1.1239267711035075e-20 0.021500000000000002" rpy="0 0 0" />
+      <mass value="0.0016727186838666167" />
+      <inertia ixx="4.2879773677497143e-07" ixy="-8.896570727675566e-27" ixz="2.475665139459549e-24" iyy="4.294630826885265e-07" iyz="-6.853528881251525e-25" izz="6.93250829354561e-09" />
+    </inertial>
+  </link>
+  <link name="link_4_1">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_1_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-9.970203863027024e-20 5.869908841721109e-20 0.016499999999999997" rpy="0 0 0" />
+      <mass value="0.0028000777172863933" />
+      <inertia ixx="5.088183662468976e-07" ixy="-1.4184309772793385e-25" ixz="-7.209187328701115e-24" iyy="5.111095793036133e-07" iyz="-5.396507206929384e-24" izz="2.074870275508704e-08" />
+    </inertial>
+  </link>
+  <link name="link_4_2">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_2_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.71229566615273e-20 -1.950124691606394e-20 0.012250000000000002" rpy="0 0 0" />
+      <mass value="0.0017154807286222959" />
+      <inertia ixx="1.8262656129339443e-07" ixy="-8.437296651607442e-26" ixz="-2.017464433448431e-26" iyy="1.8374772609652681e-07" iyz="-1.3696976120134324e-24" izz="9.750066331821649e-09" />
+    </inertial>
+  </link>
+  <link name="link_4_3">
+    <visual name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_finger_pad.stl" />
+      </geometry>
+      <material name="finger_pad">
+        <color rgba="0.12 0.52 0.43 1" />
+      </material>
+    </visual>
+    <collision name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_finger_pad.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_4_3_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-1.590269708208128e-20 7.920288585802198e-21 0.0074999997249453445" rpy="0 0 0" />
+      <mass value="0.0007314625502823559" />
+      <inertia ixx="2.6538610453055846e-08" ixy="2.5494736694606468e-27" ixz="2.751294433916201e-25" iyy="2.670529072653001e-08" iyz="8.576495602212828e-26" izz="2.884318049755334e-09" />
+    </inertial>
+  </link>
+  <link name="link_5_0">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_0_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.827146241952698e-20 -1.1423161695389931e-20 0.020999999999999998" rpy="0 0 0" />
+      <mass value="0.0016457906833984817" />
+      <inertia ixx="4.0544968207053924e-07" ixy="-8.896570727675566e-27" ixz="-5.0620181924299164e-24" iyy="4.061083633038626e-07" iyz="-4.283136062115588e-25" izz="6.8224400897186085e-09" />
+    </inertial>
+  </link>
+  <link name="link_5_1">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_1_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-4.10250439396935e-20 3.6402715380570325e-20 0.011500000000000002" rpy="0 0 0" />
+      <mass value="0.0011341586745039186" />
+      <inertia ixx="1.0283779734234418e-07" ixy="-5.393922208843445e-26" ixz="-1.1303253433888065e-24" iyy="1.0336984965126472e-07" iyz="-1.2370970358217459e-24" izz="4.731144217005557e-09" />
+    </inertial>
+  </link>
+  <link name="link_5_2">
+    <visual name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_rigid_link.stl" />
+      </geometry>
+      <material name="rigid_link">
+        <color rgba="0.35 0.43 0.48 1" />
+      </material>
+    </visual>
+    <collision name="rigid_link">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_rigid_link.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_2_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-2.3275657950144108e-20 -3.790249964049346e-21 0.008999999999999996" rpy="0 0 0" />
+      <mass value="0.0009995186721632444" />
+      <inertia ixx="6.099777113558106e-08" ixy="-3.4624770525230905e-26" ixz="-2.2301160899470416e-25" iyy="6.149650004334294e-08" iyz="3.9173570375827065e-26" izz="4.180803197870544e-09" />
+    </inertial>
+  </link>
+  <link name="link_5_3">
+    <visual name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_finger_pad.stl" />
+      </geometry>
+      <material name="finger_pad">
+        <color rgba="0.12 0.52 0.43 1" />
+      </material>
+    </visual>
+    <collision name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_finger_pad.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_5_3_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 -7.244216513660836e-21 0.006000000132460559" rpy="0 0 0" />
+      <mass value="0.0003911409163599735" />
+      <inertia ixx="8.850131516428977e-09" ixy="-2.1373086517721857e-28" ixz="3.691869036434335e-26" iyy="8.904749325894726e-09" iyz="-3.2275458829494936e-27" izz="1.0574551701273494e-09" />
+    </inertial>
+  </link>
+  <link name="link_1_3">
+    <visual name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_finger_pad.stl" />
+      </geometry>
+      <material name="finger_pad">
+        <color rgba="0.12 0.52 0.43 1" />
+      </material>
+    </visual>
+    <collision name="finger_pad">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_finger_pad.stl" />
+      </geometry>
+    </collision>
+    <visual name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_proximal_bearing.stl" />
+      </geometry>
+      <material name="proximal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="proximal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_proximal_bearing.stl" />
+      </geometry>
+    </collision>
+    <visual name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_distal_bearing.stl" />
+      </geometry>
+      <material name="distal_bearing">
+        <color rgba="0.8 0.43 0.18 1" />
+      </material>
+    </visual>
+    <collision name="distal_bearing">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_1_3_distal_bearing.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 6.278757341535516e-21 0.007499999715735242" rpy="0 0 0" />
+      <mass value="0.001092763461945213" />
+      <inertia ixx="4.4315177814000896e-08" ixy="2.3299883658810034e-29" ixz="-4.430242843721202e-25" iyy="4.4729931832355804e-08" iyz="1.3722393023460903e-25" izz="5.7467339775245644e-09" />
+    </inertial>
+  </link>
+  <link name="link_palm">
+    <visual name="palm_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_palm_chassis.stl" />
+      </geometry>
+      <material name="palm_chassis">
+        <color rgba="0.12 0.17 0.22 1" />
+      </material>
+    </visual>
+    <collision name="palm_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_palm_chassis.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0.0 0.0 0.028999999999999998" rpy="0 0 0" />
+      <mass value="0.05103999624967584" />
+      <inertia ixx="1.600954459083169e-05" ixy="0.0" ixz="0.0" iyy="2.1113543987632717e-05" iyz="-2.426396463488881e-22" izz="8.50666566133504e-06" />
+    </inertial>
+  </link>
+  <joint name="link_0_0_to_link_palm" type="fixed">
+    <parent link="link_0_0" />
+    <child link="link_palm" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+  <link name="link_1_thumb_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_1_thumb_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_1_thumb_spread" />
+    <origin xyz="-0.018 0.0 -0.018" rpy="-0.0 1.5707963267948966 0.0" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="1.7453292519943295" effort="0.5" velocity="0.45" />
+  </joint>
+  <link name="link_2_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_2_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_2_mcp_spread" />
+    <origin xyz="0.015 0.0 0.01" rpy="3.141592653589793 1.4715926535897932 3.141592653589793" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.35" upper="0.35" effort="0.5" velocity="0.45" />
+  </joint>
+  <link name="link_3_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_3_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_3_mcp_spread" />
+    <origin xyz="0.015 0.0 0.02" rpy="0.0 1.5700000000000003 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.17" upper="0.17" effort="0.5" velocity="0.45" />
+  </joint>
+  <link name="link_4_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_4_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_4_mcp_spread" />
+    <origin xyz="0.015 0.0 0.03" rpy="0.0 1.4700000000000002 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.26" upper="0.26" effort="0.5" velocity="0.45" />
+  </joint>
+  <link name="link_5_mcp_spread">
+    <inertial>
+      <origin xyz="0 0 0.001" rpy="0 0 0" />
+      <mass value="0.0001" />
+      <inertia ixx="6.666666666666668e-11" ixy="0.0" ixz="0.0" iyy="6.666666666666668e-11" iyz="0.0" izz="6.666666666666668e-11" />
+    </inertial>
+  </link>
+  <joint name="link_5_mcp_spread_joint" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_5_mcp_spread" />
+    <origin xyz="0.015 0.0 0.04" rpy="0.0 1.37 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.35" upper="0.35" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_0_0_to_link_1_0" type="revolute">
+    <parent link="link_1_thumb_spread" />
+    <child link="link_1_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.05" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_1_0_to_link_1_1" type="revolute">
+    <parent link="link_1_0" />
+    <child link="link_1_1" />
+    <origin xyz="0 0 0.045" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.05" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_1_1_to_link_1_2" type="revolute">
+    <parent link="link_1_1" />
+    <child link="link_1_2" />
+    <origin xyz="0 0 0.026" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.55" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_0_0_to_link_2_0" type="revolute">
+    <parent link="link_2_mcp_spread" />
+    <child link="link_2_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.18" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_2_0_to_link_2_1" type="revolute">
+    <parent link="link_2_0" />
+    <child link="link_2_1" />
+    <origin xyz="0 0 0.049999999999999996" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_2_1_to_link_2_2" type="revolute">
+    <parent link="link_2_1" />
+    <child link="link_2_2" />
+    <origin xyz="0 0 0.032" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_2_2_to_link_2_3" type="fixed">
+    <parent link="link_2_2" />
+    <child link="link_2_3" />
+    <origin xyz="0 0 0.024" rpy="0 0 0" />
+  </joint>
+  <joint name="link_0_0_to_link_3_0" type="revolute">
+    <parent link="link_3_mcp_spread" />
+    <child link="link_3_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.4" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_3_0_to_link_3_1" type="revolute">
+    <parent link="link_3_0" />
+    <child link="link_3_1" />
+    <origin xyz="0 0 0.052000000000000005" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_3_1_to_link_3_2" type="revolute">
+    <parent link="link_3_1" />
+    <child link="link_3_2" />
+    <origin xyz="0 0 0.033" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_3_2_to_link_3_3" type="fixed">
+    <parent link="link_3_2" />
+    <child link="link_3_3" />
+    <origin xyz="0 0 0.0255" rpy="0 0 0" />
+  </joint>
+  <joint name="link_0_0_to_link_4_0" type="revolute">
+    <parent link="link_4_mcp_spread" />
+    <child link="link_4_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.46" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_4_0_to_link_4_1" type="revolute">
+    <parent link="link_4_0" />
+    <child link="link_4_1" />
+    <origin xyz="0 0 0.043000000000000003" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_4_1_to_link_4_2" type="revolute">
+    <parent link="link_4_1" />
+    <child link="link_4_2" />
+    <origin xyz="0 0 0.033" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_4_2_to_link_4_3" type="fixed">
+    <parent link="link_4_2" />
+    <child link="link_4_3" />
+    <origin xyz="0 0 0.0245" rpy="0 0 0" />
+  </joint>
+  <joint name="link_0_0_to_link_5_0" type="revolute">
+    <parent link="link_5_mcp_spread" />
+    <child link="link_5_0" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.59" effort="0.5" velocity="0.45" />
+  </joint>
+  <joint name="link_5_0_to_link_5_1" type="revolute">
+    <parent link="link_5_0" />
+    <child link="link_5_1" />
+    <origin xyz="0 0 0.042" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.75" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_5_1_to_link_5_2" type="revolute">
+    <parent link="link_5_1" />
+    <child link="link_5_2" />
+    <origin xyz="0 0 0.023" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="0.3" velocity="0.45" />
+  </joint>
+  <joint name="link_5_2_to_link_5_3" type="fixed">
+    <parent link="link_5_2" />
+    <child link="link_5_3" />
+    <origin xyz="0 0 0.018" rpy="0 0 0" />
+  </joint>
+  <joint name="link_1_2_to_link_1_3" type="revolute">
+    <parent link="link_1_2" />
+    <child link="link_1_3" />
+    <origin xyz="0.0 0.0 0.018" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0.0" upper="1.57" effort="0.3" velocity="0.45" />
+  </joint>
+  <link name="link_palm_chassis">
+    <visual name="rigid_palm_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_chassis_rigid_palm_chassis.stl" />
+      </geometry>
+      <material name="rigid_palm_chassis">
+        <color rgba="0.12 0.17 0.22 1" />
+      </material>
+    </visual>
+    <collision name="rigid_palm_chassis">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="../meshes/link_palm_chassis_rigid_palm_chassis.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="-0.006040000049397352 0.0 0.017999999999999995" rpy="0 0 0" />
+      <mass value="0.0200217599478364" />
+      <inertia ixx="1.0738337252022922e-05" ixy="0.0" ixz="9.098986738083304e-22" iyy="1.3077423393299562e-05" iyz="0.0" izz="2.4592167009636547e-06" />
+    </inertial>
+  </link>
+  <joint name="root_to_palm_chassis" type="fixed">
+    <parent link="link_0_0" />
+    <child link="link_palm_chassis" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+</robot>

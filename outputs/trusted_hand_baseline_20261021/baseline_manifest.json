@@ -1,0 +1,849 @@
+{
+  "source": "/home/zjh/Evolution_PC/Isaaclab_other/outputs/mechanical_evolution/exp_20261020_free_tool_v4_BC15g_v2/phenotypes/490138b7c5b1f0407c6d10edb72590f845a7be3958b40de7a0e449214d53964d/assets/right/urdf/current_agent.urdf",
+  "frozen_urdf": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/frozen/right/urdf/current_agent.urdf",
+  "source_sha256": "5f2d4006d383cc5cd4cb5818cd6578888bbefa97368bbdd24ef0067094840b65",
+  "joints": [
+    {
+      "name": "link_0_0_to_link_palm",
+      "type": "fixed",
+      "parent": "link_0_0",
+      "child": "link_palm",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_1_thumb_spread_joint",
+      "type": "revolute",
+      "parent": "link_palm",
+      "child": "link_1_thumb_spread",
+      "origin": {
+        "xyz": "-0.018 0.0 -0.018",
+        "rpy": "-0.0 1.5707963267948966 0.0"
+      },
+      "axis": {
+        "xyz": "0 1 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.7453292519943295",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_2_mcp_spread_joint",
+      "type": "revolute",
+      "parent": "link_palm",
+      "child": "link_2_mcp_spread",
+      "origin": {
+        "xyz": "0.015 0.0 0.01",
+        "rpy": "3.141592653589793 1.4715926535897932 3.141592653589793"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "-0.35",
+        "upper": "0.35",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_3_mcp_spread_joint",
+      "type": "revolute",
+      "parent": "link_palm",
+      "child": "link_3_mcp_spread",
+      "origin": {
+        "xyz": "0.015 0.0 0.02",
+        "rpy": "0.0 1.5700000000000003 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "-0.17",
+        "upper": "0.17",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_4_mcp_spread_joint",
+      "type": "revolute",
+      "parent": "link_palm",
+      "child": "link_4_mcp_spread",
+      "origin": {
+        "xyz": "0.015 0.0 0.03",
+        "rpy": "0.0 1.4700000000000002 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "-0.26",
+        "upper": "0.26",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_5_mcp_spread_joint",
+      "type": "revolute",
+      "parent": "link_palm",
+      "child": "link_5_mcp_spread",
+      "origin": {
+        "xyz": "0.015 0.0 0.04",
+        "rpy": "0.0 1.37 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "-0.35",
+        "upper": "0.35",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_0_0_to_link_1_0",
+      "type": "revolute",
+      "parent": "link_1_thumb_spread",
+      "child": "link_1_0",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.05",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_1_0_to_link_1_1",
+      "type": "revolute",
+      "parent": "link_1_0",
+      "child": "link_1_1",
+      "origin": {
+        "xyz": "0 0 0.045",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.05",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_1_1_to_link_1_2",
+      "type": "revolute",
+      "parent": "link_1_1",
+      "child": "link_1_2",
+      "origin": {
+        "xyz": "0 0 0.026",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.55",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_0_0_to_link_2_0",
+      "type": "revolute",
+      "parent": "link_2_mcp_spread",
+      "child": "link_2_0",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.18",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_2_0_to_link_2_1",
+      "type": "revolute",
+      "parent": "link_2_0",
+      "child": "link_2_1",
+      "origin": {
+        "xyz": "0 0 0.049999999999999996",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.75",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_2_1_to_link_2_2",
+      "type": "revolute",
+      "parent": "link_2_1",
+      "child": "link_2_2",
+      "origin": {
+        "xyz": "0 0 0.032",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.57",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_2_2_to_link_2_3",
+      "type": "fixed",
+      "parent": "link_2_2",
+      "child": "link_2_3",
+      "origin": {
+        "xyz": "0 0 0.024",
+        "rpy": "0 0 0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_0_0_to_link_3_0",
+      "type": "revolute",
+      "parent": "link_3_mcp_spread",
+      "child": "link_3_0",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.4",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_3_0_to_link_3_1",
+      "type": "revolute",
+      "parent": "link_3_0",
+      "child": "link_3_1",
+      "origin": {
+        "xyz": "0 0 0.052000000000000005",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.75",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_3_1_to_link_3_2",
+      "type": "revolute",
+      "parent": "link_3_1",
+      "child": "link_3_2",
+      "origin": {
+        "xyz": "0 0 0.033",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.57",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_3_2_to_link_3_3",
+      "type": "fixed",
+      "parent": "link_3_2",
+      "child": "link_3_3",
+      "origin": {
+        "xyz": "0 0 0.0255",
+        "rpy": "0 0 0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_0_0_to_link_4_0",
+      "type": "revolute",
+      "parent": "link_4_mcp_spread",
+      "child": "link_4_0",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.46",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_4_0_to_link_4_1",
+      "type": "revolute",
+      "parent": "link_4_0",
+      "child": "link_4_1",
+      "origin": {
+        "xyz": "0 0 0.043000000000000003",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.75",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_4_1_to_link_4_2",
+      "type": "revolute",
+      "parent": "link_4_1",
+      "child": "link_4_2",
+      "origin": {
+        "xyz": "0 0 0.033",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.57",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_4_2_to_link_4_3",
+      "type": "fixed",
+      "parent": "link_4_2",
+      "child": "link_4_3",
+      "origin": {
+        "xyz": "0 0 0.0245",
+        "rpy": "0 0 0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_0_0_to_link_5_0",
+      "type": "revolute",
+      "parent": "link_5_mcp_spread",
+      "child": "link_5_0",
+      "origin": {
+        "xyz": "0.0 0.0 0.0",
+        "rpy": "0.0 0.0 0.0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.59",
+        "effort": "0.5",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_5_0_to_link_5_1",
+      "type": "revolute",
+      "parent": "link_5_0",
+      "child": "link_5_1",
+      "origin": {
+        "xyz": "0 0 0.042",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.75",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_5_1_to_link_5_2",
+      "type": "revolute",
+      "parent": "link_5_1",
+      "child": "link_5_2",
+      "origin": {
+        "xyz": "0 0 0.023",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.57",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_5_2_to_link_5_3",
+      "type": "fixed",
+      "parent": "link_5_2",
+      "child": "link_5_3",
+      "origin": {
+        "xyz": "0 0 0.018",
+        "rpy": "0 0 0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "link_1_2_to_link_1_3",
+      "type": "revolute",
+      "parent": "link_1_2",
+      "child": "link_1_3",
+      "origin": {
+        "xyz": "0.0 0.0 0.018",
+        "rpy": "0 0 0"
+      },
+      "axis": {
+        "xyz": "1 0 0"
+      },
+      "limit": {
+        "lower": "0.0",
+        "upper": "1.57",
+        "effort": "0.3",
+        "velocity": "0.45"
+      },
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    },
+    {
+      "name": "root_to_palm_chassis",
+      "type": "fixed",
+      "parent": "link_0_0",
+      "child": "link_palm_chassis",
+      "origin": {
+        "xyz": "0 0 0",
+        "rpy": "0 0 0"
+      },
+      "axis": {},
+      "limit": {},
+      "transmission_status": "independent ideal joint actuator; hardware selection pending"
+    }
+  ],
+  "bodies": [
+    {
+      "name": "link_0_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0.0 1.5544763013660075e-19 0.0175\" rpy=\"0 0 0\" />\n      <mass value=\"0.016584660957464963\" />\n      <inertia ixx=\"3.7047370331850545e-06\" ixy=\"-9.478111185503441e-25\" ixz=\"7.582488948402753e-24\" iyy=\"3.7047370331850545e-06\" iyz=\"2.9950831346190885e-23\" izz=\"7.782522108814911e-07\" />\n    </inertial>\n  ",
+      "mass_kg": 0.016584660957464963,
+      "collision_roles": [
+        "wrist_mount"
+      ]
+    },
+    {
+      "name": "link_1_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-3.2371310111563244e-20 -5.528254741952758e-20 0.0225\" rpy=\"0 0 0\" />\n      <mass value=\"0.005749400848560328\" />\n      <inertia ixx=\"1.8831847967307126e-06\" ixy=\"9.108814092636974e-25\" ixz=\"1.4060454826267578e-23\" iyy=\"1.8903698655155673e-06\" iyz=\"1.5976705250132526e-23\" izz=\"6.650483953012015e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.005749400848560328,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_1_1",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0.0 -1.8263108980066584e-20 0.013000000000000003\" rpy=\"0 0 0\" />\n      <mass value=\"0.0024649736854532203\" />\n      <inertia ixx=\"3.0408730260457636e-07\" ixy=\"-1.9171451024105338e-25\" ixz=\"6.702956598675119e-24\" iyy=\"3.0623106987327876e-07\" iyz=\"-1.6803002338471706e-24\" izz=\"1.831361322577824e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0024649736854532203,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_1_2",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.3275657950144108e-20 -3.790249964049346e-21 0.008999999999999996\" rpy=\"0 0 0\" />\n      <mass value=\"0.0009995186721632444\" />\n      <inertia ixx=\"6.099777113558106e-08\" ixy=\"-3.4624770525230905e-26\" ixz=\"-2.2301160899470416e-25\" iyy=\"6.149650004334294e-08\" iyz=\"3.9173570375827065e-26\" izz=\"4.180803197870544e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0009995186721632444,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_2_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0.0 -2.1511883810547292e-20 0.024999999999999998\" rpy=\"0 0 0\" />\n      <mass value=\"0.006123400831841225\" />\n      <inertia ixx=\"2.386935988404336e-06\" ixy=\"1.2076014130809157e-24\" ixz=\"-1.8975070887568965e-23\" iyy=\"2.394378182166202e-06\" iyz=\"9.102445104291796e-24\" izz=\"7.075129748379052e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.006123400831841225,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_2_1",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-6.762417393546587e-20 5.126708157058237e-20 0.016\" rpy=\"0 0 0\" />\n      <mass value=\"0.002752205712738797\" />\n      <inertia ixx=\"4.7556244288311276e-07\" ixy=\"-1.4184309772793388e-25\" ixz=\"2.3543818427613317e-25\" iyy=\"4.778325922558266e-07\" iyz=\"-8.595125500700544e-25\" izz=\"2.040083282232864e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.002752205712738797,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_2_2",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-5.891650343621208e-20 4.97347729609235e-20 0.012\" rpy=\"0 0 0\" />\n      <mass value=\"0.0023692296763580282\" />\n      <inertia ixx=\"2.5704413461113135e-07\" ixy=\"-1.6169422785151725e-25\" ixz=\"-3.1146432965636293e-24\" iyy=\"2.5914577451183e-07\" iyz=\"-3.950004519461824e-24\" izz=\"1.7617873360261445e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0023692296763580282,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_2_3",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.011017003908267e-20 -2.4916775622154434e-20 0.007499999999999999\" rpy=\"0 0 0\" />\n      <mass value=\"0.0005784251123397044\" />\n      <inertia ixx=\"2.451363394336915e-08\" ixy=\"2.750175287761935e-27\" ixz=\"4.6801539784952206e-26\" iyy=\"2.471406187630108e-08\" iyz=\"1.957755551532246e-25\" izz=\"1.680170802159656e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0005784251123397044,
+      "collision_roles": [
+        "finger_pad",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_3_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-1.2542682487318947e-20 -1.9300910087297694e-20 0.026\" rpy=\"0 0 0\" />\n      <mass value=\"0.0037096458036907187\" />\n      <inertia ixx=\"1.4339753358931532e-06\" ixy=\"-4.734408925471579e-26\" ixz=\"3.1667594800109246e-24\" iyy=\"1.4366667589459044e-06\" iyz=\"-3.420124756158698e-24\" izz=\"2.7358231477496636e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0037096458036907187,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_3_1",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-9.970203863027024e-20 5.869908841721109e-20 0.016499999999999997\" rpy=\"0 0 0\" />\n      <mass value=\"0.0028000777172863933\" />\n      <inertia ixx=\"5.088183662468976e-07\" ixy=\"-1.4184309772793385e-25\" ixz=\"-7.209187328701115e-24\" iyy=\"5.111095793036133e-07\" iyz=\"-5.396507206929384e-24\" izz=\"2.074870275508704e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0028000777172863933,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_3_2",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-1.3277792440018942e-20 -9.212116834972125e-20 0.012750000000000001\" rpy=\"0 0 0\" />\n      <mass value=\"0.001752132730884948\" />\n      <inertia ixx=\"1.9903249706521768e-07\" ixy=\"-8.437296651607441e-26\" ixz=\"8.347940669214967e-25\" iyy=\"2.0016600901237452e-07\" iyz=\"-1.2569110129503583e-25\" izz=\"9.953981286165034e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.001752132730884948,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_3_3",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.011017003908267e-20 -2.4916775622154434e-20 0.007499999999999999\" rpy=\"0 0 0\" />\n      <mass value=\"0.0005784251123397044\" />\n      <inertia ixx=\"2.451363394336915e-08\" ixy=\"2.750175287761935e-27\" ixz=\"4.6801539784952206e-26\" iyy=\"2.471406187630108e-08\" iyz=\"1.957755551532246e-25\" izz=\"1.680170802159656e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0005784251123397044,
+      "collision_roles": [
+        "finger_pad",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_4_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.7816338697522453e-20 -1.1239267711035075e-20 0.021500000000000002\" rpy=\"0 0 0\" />\n      <mass value=\"0.0016727186838666167\" />\n      <inertia ixx=\"4.2879773677497143e-07\" ixy=\"-8.896570727675566e-27\" ixz=\"2.475665139459549e-24\" iyy=\"4.294630826885265e-07\" iyz=\"-6.853528881251525e-25\" izz=\"6.93250829354561e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0016727186838666167,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_4_1",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-9.970203863027024e-20 5.869908841721109e-20 0.016499999999999997\" rpy=\"0 0 0\" />\n      <mass value=\"0.0028000777172863933\" />\n      <inertia ixx=\"5.088183662468976e-07\" ixy=\"-1.4184309772793385e-25\" ixz=\"-7.209187328701115e-24\" iyy=\"5.111095793036133e-07\" iyz=\"-5.396507206929384e-24\" izz=\"2.074870275508704e-08\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0028000777172863933,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_4_2",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.71229566615273e-20 -1.950124691606394e-20 0.012250000000000002\" rpy=\"0 0 0\" />\n      <mass value=\"0.0017154807286222959\" />\n      <inertia ixx=\"1.8262656129339443e-07\" ixy=\"-8.437296651607442e-26\" ixz=\"-2.017464433448431e-26\" iyy=\"1.8374772609652681e-07\" iyz=\"-1.3696976120134324e-24\" izz=\"9.750066331821649e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0017154807286222959,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_4_3",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.011017003908267e-20 -2.4916775622154434e-20 0.007499999999999999\" rpy=\"0 0 0\" />\n      <mass value=\"0.0005784251123397044\" />\n      <inertia ixx=\"2.451363394336915e-08\" ixy=\"2.750175287761935e-27\" ixz=\"4.6801539784952206e-26\" iyy=\"2.471406187630108e-08\" iyz=\"1.957755551532246e-25\" izz=\"1.680170802159656e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0005784251123397044,
+      "collision_roles": [
+        "finger_pad",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_5_0",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.827146241952698e-20 -1.1423161695389931e-20 0.020999999999999998\" rpy=\"0 0 0\" />\n      <mass value=\"0.0016457906833984817\" />\n      <inertia ixx=\"4.0544968207053924e-07\" ixy=\"-8.896570727675566e-27\" ixz=\"-5.0620181924299164e-24\" iyy=\"4.061083633038626e-07\" iyz=\"-4.283136062115588e-25\" izz=\"6.8224400897186085e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0016457906833984817,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_5_1",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-4.10250439396935e-20 3.6402715380570325e-20 0.011500000000000002\" rpy=\"0 0 0\" />\n      <mass value=\"0.0011341586745039186\" />\n      <inertia ixx=\"1.0283779734234418e-07\" ixy=\"-5.393922208843445e-26\" ixz=\"-1.1303253433888065e-24\" iyy=\"1.0336984965126472e-07\" iyz=\"-1.2370970358217459e-24\" izz=\"4.731144217005557e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0011341586745039186,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_5_2",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.3275657950144108e-20 -3.790249964049346e-21 0.008999999999999996\" rpy=\"0 0 0\" />\n      <mass value=\"0.0009995186721632444\" />\n      <inertia ixx=\"6.099777113558106e-08\" ixy=\"-3.4624770525230905e-26\" ixz=\"-2.2301160899470416e-25\" iyy=\"6.149650004334294e-08\" iyz=\"3.9173570375827065e-26\" izz=\"4.180803197870544e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0009995186721632444,
+      "collision_roles": [
+        "rigid_link",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_5_3",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-2.945825171810604e-20 2.486738648046175e-20 0.006\" rpy=\"0 0 0\" />\n      <mass value=\"0.00029615370954475353\" />\n      <inertia ixx=\"8.032629206597855e-09\" ixy=\"-5.052944620359914e-27\" ixz=\"-9.733260301761341e-26\" iyy=\"8.098305453494687e-09\" iyz=\"-1.23437641233182e-25\" izz=\"5.505585425081701e-10\" />\n    </inertial>\n  ",
+      "mass_kg": 0.00029615370954475353,
+      "collision_roles": [
+        "finger_pad",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_1_3",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0.0 3.7896866223712786e-21 0.0075000000000000015\" rpy=\"0 0 0\" />\n      <mass value=\"0.0009187346707588395\" />\n      <inertia ixx=\"4.199857944637507e-08\" ixy=\"-2.5553321781309388e-26\" ixz=\"-5.952428846435666e-25\" iyy=\"4.2477314313441794e-08\" iyz=\"-1.4371310199135351e-25\" izz=\"3.850598586389535e-09\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0009187346707588395,
+      "collision_roles": [
+        "finger_pad",
+        "proximal_bearing",
+        "distal_bearing"
+      ]
+    },
+    {
+      "name": "link_palm",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0.0 0.0 0.028999999999999998\" rpy=\"0 0 0\" />\n      <mass value=\"0.05103999624967584\" />\n      <inertia ixx=\"1.600954459083169e-05\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"2.1113543987632717e-05\" iyz=\"-2.426396463488881e-22\" izz=\"8.50666566133504e-06\" />\n    </inertial>\n  ",
+      "mass_kg": 0.05103999624967584,
+      "collision_roles": [
+        "palm_chassis"
+      ]
+    },
+    {
+      "name": "link_1_thumb_spread",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0 0 0.001\" rpy=\"0 0 0\" />\n      <mass value=\"0.0001\" />\n      <inertia ixx=\"6.666666666666668e-11\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"6.666666666666668e-11\" iyz=\"0.0\" izz=\"6.666666666666668e-11\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0001,
+      "collision_roles": []
+    },
+    {
+      "name": "link_2_mcp_spread",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0 0 0.001\" rpy=\"0 0 0\" />\n      <mass value=\"0.0001\" />\n      <inertia ixx=\"6.666666666666668e-11\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"6.666666666666668e-11\" iyz=\"0.0\" izz=\"6.666666666666668e-11\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0001,
+      "collision_roles": []
+    },
+    {
+      "name": "link_3_mcp_spread",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0 0 0.001\" rpy=\"0 0 0\" />\n      <mass value=\"0.0001\" />\n      <inertia ixx=\"6.666666666666668e-11\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"6.666666666666668e-11\" iyz=\"0.0\" izz=\"6.666666666666668e-11\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0001,
+      "collision_roles": []
+    },
+    {
+      "name": "link_4_mcp_spread",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0 0 0.001\" rpy=\"0 0 0\" />\n      <mass value=\"0.0001\" />\n      <inertia ixx=\"6.666666666666668e-11\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"6.666666666666668e-11\" iyz=\"0.0\" izz=\"6.666666666666668e-11\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0001,
+      "collision_roles": []
+    },
+    {
+      "name": "link_5_mcp_spread",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"0 0 0.001\" rpy=\"0 0 0\" />\n      <mass value=\"0.0001\" />\n      <inertia ixx=\"6.666666666666668e-11\" ixy=\"0.0\" ixz=\"0.0\" iyy=\"6.666666666666668e-11\" iyz=\"0.0\" izz=\"6.666666666666668e-11\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0001,
+      "collision_roles": []
+    },
+    {
+      "name": "link_palm_chassis",
+      "inertial_xml": "<inertial>\n      <origin xyz=\"-0.006040000049397352 0.0 0.017999999999999995\" rpy=\"0 0 0\" />\n      <mass value=\"0.0200217599478364\" />\n      <inertia ixx=\"1.0738337252022922e-05\" ixy=\"0.0\" ixz=\"9.098986738083304e-22\" iyy=\"1.3077423393299562e-05\" iyz=\"0.0\" izz=\"2.4592167009636547e-06\" />\n    </inertial>\n  ",
+      "mass_kg": 0.0200217599478364,
+      "collision_roles": [
+        "rigid_palm_chassis"
+      ]
+    }
+  ],
+  "total_mass_kg": 0.1297849117111178,
+  "files_sha256": {
+    "urdf/current_agent.urdf": "5f2d4006d383cc5cd4cb5818cd6578888bbefa97368bbdd24ef0067094840b65",
+    "urdf/current_agent.mapping.json": "04afdcba17d2deba8d6c85f279420d5c66b6db5dd6fc2195e280616d27136e72",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/current_agent.usd": "94361ae26de6be350791648716d500267625a269728a1c3324ac72ad0f1a6a8c",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/.asset_hash": "45a1a232563650289f506c3f97f2e4c9a43385ed713e6d338ac0bba7212f7f99",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/config.yaml": "25b22c4cca5c8550ffe165a81405c983a8695f60ac75369d3882c4efb1dac5e2",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/configuration/current_agent_base.usd": "5a03d516319f0740f91967f2795a070f3ee20dd195d2110be3d32c98e0482d31",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/configuration/current_agent_sensor.usd": "5934f8150303216b0aabbe055dd8d865d8d22eef224239afe964a193d5443261",
+    "urdf/usd_cache_61f3cf251f4c6b824aef1147_contact_v10_runtime_gate/configuration/current_agent_physics.usd": "529d145b8571f17476dce082c7cd6885d7faa5a1c22334ed0096cc36668734b1",
+    "meshes/link_3_3_proximal_bearing.stl": "dba07bed53098cc99406280e27b76476f493766f1c75432422c6a8e91ffee3c7",
+    "meshes/link_5_3_proximal_bearing.stl": "74ac683903683832aed0cbe98ad0732b8d90be3f248dd9395d81a0962cf54e89",
+    "meshes/link_1_2_distal_bearing.stl": "168d4bb892f4d8abe74b7e47baf9262b75173ac8e4e87fe59343f3820625e522",
+    "meshes/link_0_0_wrist_mount.stl": "d611e5b52fb86832c387e3a78035f06f1b49dcf19a7c2c346203a59de5c490ee",
+    "meshes/link_2_1_rigid_link.stl": "d37a4b6035a0aa3dc417958747526fde99061940e00374b47dd3f1b53b1adad3",
+    "meshes/link_2_0_proximal_bearing.stl": "39aa0d5c5f94442df7cc4fa28ef302bfdb42ad3436504eee4a03a5ecdd2d6bf1",
+    "meshes/link_5_1_distal_bearing.stl": "48bcd2a8b5e64ad5ac90412d911158542e1a7845091109eee4cc5332c51eda9e",
+    "meshes/link_5_0_rigid_link.stl": "1f036c6ba6c9f1e149a8496c681d503400f48d418c06fd2010afcc8fcca2a18a",
+    "meshes/link_5_2_distal_bearing.stl": "168d4bb892f4d8abe74b7e47baf9262b75173ac8e4e87fe59343f3820625e522",
+    "meshes/link_1_2_rigid_link.stl": "9646b12d4f8c71a5f84a2f73691040a3b798fb499638df5104ea1f9b8594fdc7",
+    "meshes/link_1_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_5_0_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_5_2_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_3_1_rigid_link.stl": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed",
+    "meshes/link_2_0_rigid_link.stl": "19671309e3bec0e22a90b9d821f9aa2c1c4dbf379ae9e19bb1505fbe3c7f9d92",
+    "meshes/link_3_3_distal_bearing.stl": "7ff23f2e02956d820e6938d825a5f1636f246db7712a33f31327212ff76890a9",
+    "meshes/link_1_1_rigid_link.stl": "209e9e3c9735a2daefd0f00ee029d393e92fead594268db9e3b4cf60d99ba6a0",
+    "meshes/link_1_3_finger_pad.stl": "474f39536c8bceb613b8dad5f0de879f277734e6332dc4adc532c099144de391",
+    "meshes/link_1_3_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_1_1_distal_bearing.stl": "2086a8aaefb0465649ca86b8ea5865e6d011222619b28860bcf8fd1ec8256cfd",
+    "meshes/link_4_1_distal_bearing.stl": "78ba171542e543677a9b3ce8cca1d6a9f045c028bf4eac0f8658630c3758a71a",
+    "meshes/link_1_2_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_4_2_distal_bearing.stl": "4e246b9e54b6cabf30fbf7e0fc9e74503b0d737c0d5e78943bebe88760a37d2f",
+    "meshes/link_1_0_rigid_link.stl": "588f24e1e9dd3004c0ba4823715f7306a0a1e89af55c362eebd151b36e50fe1e",
+    "meshes/link_3_1_distal_bearing.stl": "78ba171542e543677a9b3ce8cca1d6a9f045c028bf4eac0f8658630c3758a71a",
+    "meshes/link_2_3_proximal_bearing.stl": "dba07bed53098cc99406280e27b76476f493766f1c75432422c6a8e91ffee3c7",
+    "meshes/link_3_0_rigid_link.stl": "0bf955b18a16ff1e71a4d2d99134586f59ce0acccc65cd65021d793484f1189b",
+    "meshes/link_2_1_distal_bearing.stl": "cfa2c2087c98282615d9be0227ef028b7b28fd243fa1f283fa531bf2ac52b4b9",
+    "meshes/link_3_2_rigid_link.stl": "f2a285cb65667cd07602235e54fc1ceb36f50da9adbda94c558a2803e32a31e6",
+    "meshes/link_3_0_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_4_1_rigid_link.stl": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed",
+    "meshes/link_2_2_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_4_0_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_1_0_distal_bearing.stl": "414898a27f9156c1f11a6f43409d6622179f254701b08a1828b1cccc8573cff7",
+    "meshes/link_4_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_2_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_5_3_finger_pad.stl": "434f45483584b7b9420025625e4b56ba8e597a825a7418585be6d10c61b5c998",
+    "meshes/link_3_0_distal_bearing.stl": "d5b913222b2ae971605543149d2bf6eabb89cdc20c7b6cc021e91d18ac3fd01f",
+    "meshes/link_5_2_rigid_link.stl": "9646b12d4f8c71a5f84a2f73691040a3b798fb499638df5104ea1f9b8594fdc7",
+    "meshes/link_4_3_proximal_bearing.stl": "dba07bed53098cc99406280e27b76476f493766f1c75432422c6a8e91ffee3c7",
+    "meshes/link_palm_chassis_rigid_palm_chassis.stl": "432620c6584c20f158b4a7ac5271469568f5f31b38a4af1e8c881cbdf935e983",
+    "meshes/link_2_0_distal_bearing.stl": "aa3b993156a567a33a8108c88961778102344057acaeac506f0abe609486194b",
+    "meshes/link_4_3_finger_pad.stl": "eedafb41bd7a8b326e888489dbf7899580f025694130b8aa9c93394c24920908",
+    "meshes/link_palm_palm_chassis.stl": "00e22c384c87b1157509c1e212d20452570d0b2e98efe1eb2e97a0689fb67d5a",
+    "meshes/link_5_1_rigid_link.stl": "2c3ec113fcad691359d7dd45cc1ca683d7d869cb4c30279fc0b4a3db407ab0a1",
+    "meshes/link_3_2_distal_bearing.stl": "408b119a590f51fc4e1e065ee00a388994297161cf99f0ab0f25916a7b483fab",
+    "meshes/link_5_0_distal_bearing.stl": "b5d69189d73e6bc69e65382bb5b28d17ace743ff8645057f8894f47c5f569a97",
+    "meshes/link_1_0_proximal_bearing.stl": "39aa0d5c5f94442df7cc4fa28ef302bfdb42ad3436504eee4a03a5ecdd2d6bf1",
+    "meshes/link_3_2_proximal_bearing.stl": "fe216d69f891e19fee1552eccc34c0d55c04d522b03a8212717e2db0995ca448",
+    "meshes/link_2_2_rigid_link.stl": "b2c98df7308b418a9db736f456b090f31bd7507b3e86cdff6e504c23f4876c23",
+    "meshes/link_4_2_proximal_bearing.stl": "fe216d69f891e19fee1552eccc34c0d55c04d522b03a8212717e2db0995ca448",
+    "meshes/link_2_2_distal_bearing.stl": "84a1ae3650da6b14f1228bff80f611289e3a132a46d4483ff9596f3e45ccaf68",
+    "meshes/link_4_0_distal_bearing.stl": "df7c589cb0caa81c20c4da3245d2c45c46fa5e416ddeff2bee9999fd6c0663d4",
+    "meshes/link_3_1_proximal_bearing.stl": "326f03b48041b09d1fc2497911a47367045f888c58c6f36d285ec41d2e143454",
+    "meshes/link_1_3_distal_bearing.stl": "b90c32162ef59d1a5750cd73b91868c1ae5b616937846b6a5d22953ebadac7a5",
+    "meshes/link_2_3_finger_pad.stl": "eedafb41bd7a8b326e888489dbf7899580f025694130b8aa9c93394c24920908",
+    "meshes/link_4_0_rigid_link.stl": "416d71a92a77dc6ea5cb6b96d36cf124f46fe02bf4e3e9d905d1a2792896f41c",
+    "meshes/link_5_1_proximal_bearing.stl": "c879b168bb280edd8be64a8c1d3fbfbb2d0b6a9a54b53fc458b2a53f0996418e",
+    "meshes/link_2_3_distal_bearing.stl": "7ff23f2e02956d820e6938d825a5f1636f246db7712a33f31327212ff76890a9",
+    "meshes/link_4_2_rigid_link.stl": "ce6d2b5674b68ca45a178f6fcbe98e3e0b8578fdd5d7a9e94ad2e4f3e75991f7",
+    "meshes/link_4_3_distal_bearing.stl": "7ff23f2e02956d820e6938d825a5f1636f246db7712a33f31327212ff76890a9",
+    "meshes/link_3_3_finger_pad.stl": "eedafb41bd7a8b326e888489dbf7899580f025694130b8aa9c93394c24920908",
+    "meshes/link_5_3_distal_bearing.stl": "374eddd97b46a6510f8e72604b3b1b8166ea810a98852b262b05023873172b3d"
+  },
+  "hardware_calibration": false,
+  "unresolved": [
+    "actuator model and mounting",
+    "gearbox/electronics/cable mass budget",
+    "measured pad stiffness and friction"
+  ],
+  "design_assumptions": {
+    "finger_kp_Nm_rad": 6.0,
+    "finger_kd_Nms_rad": 1.0,
+    "armature_kg_m2": 0.001,
+    "joint_speed_rad_s": 0.45,
+    "base_effort_Nm": 0.5,
+    "distal_effort_Nm": 0.3
+  }
+}

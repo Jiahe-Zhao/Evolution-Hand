@@ -1,0 +1,38 @@
+{
+  "status": "approved by user and implemented in independent candidate",
+  "model_variant": "independent baseline copy",
+  "pad_extra_beyond_own_bearings_per_side_m": 0.0005,
+  "unchanged": [
+    "joint topology",
+    "joint axes",
+    "joint limits",
+    "original hand files",
+    "bearing collisions"
+  ],
+  "pad_width_xy_mm": {
+    "thumb": [
+      6.4,
+      6.4
+    ],
+    "index_middle_ring": [
+      5.5,
+      5.5
+    ],
+    "pinky": [
+      4.6,
+      4.6
+    ]
+  },
+  "mass_policy": "recompute the affected link mass/COM/inertia from existing proxy densities; do not invent motor mass",
+  "contact_assumptions": {
+    "pad_friction": 0.8,
+    "metal_friction": 0.2,
+    "test_object_friction": 0.5,
+    "restitution": 0.0,
+    "contact_offset_m": 0.0003,
+    "rest_offset_m": 0.0,
+    "pad_compliant_stiffness_N_m": 3000.0,
+    "pad_compliant_damping_Ns_m": 10.0
+  },
+  "acceptance": "verify cooked geometry, physical parameters and contact identity; pressure/hold tests are not Strike success"
+}
