@@ -1,0 +1,771 @@
+[
+  {
+    "run": "diagnostic_isolated",
+    "diagnostics": {
+      "episodes": 113,
+      "successful_episodes": 0,
+      "falls": 112,
+      "nonfinite": 0,
+      "max_joint_limit_excess_rad": 1.430511474609375e-06,
+      "max_object_speed_m_s": 1.8650848865509033,
+      "max_digit_force_N": 196.56793212890625,
+      "speed_bursts_above_workspace": 0
+    },
+    "events": [
+      {
+        "step": 80,
+        "env": 30,
+        "age": 81,
+        "force_N": 196.5679369917363,
+        "object_speed_m_s": 0.013168309727099679,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0004735645888663348
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_1_0",
+              "part": "rigid_link_1",
+              "depth_m": 0.0002443416888968063
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.00019225579073839938
+            }
+          ]
+        }
+      },
+      {
+        "step": 356,
+        "env": 4,
+        "age": 82,
+        "force_N": 71.3153679236962,
+        "object_speed_m_s": 0.029781652058712128,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0007459180774343794
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0007083305488521155
+            },
+            {
+              "link": "link_1_0",
+              "part": "rigid_link_1",
+              "depth_m": 4.19078561072519e-05
+            }
+          ]
+        }
+      },
+      {
+        "step": 785,
+        "env": 15,
+        "age": 462,
+        "force_N": 140.7053576208751,
+        "object_speed_m_s": 0.3683430718891147,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_palm",
+              "part": "palm_chassis",
+              "depth_m": 3.50948914153655e-05
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_palm",
+              "part": "palm_chassis",
+              "depth_m": 0.00045898604886364516
+            }
+          ]
+        }
+      },
+      {
+        "step": 845,
+        "env": 7,
+        "age": 112,
+        "force_N": 25.370017989127685,
+        "object_speed_m_s": 0.024299511577907305,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0030327921338494123
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010745006019270878
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 2.9450484827010664e-06
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.002954693027958749
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0011240742380245624
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 2.035957129861148e-06
+            }
+          ]
+        }
+      },
+      {
+        "step": 846,
+        "env": 7,
+        "age": 113,
+        "force_N": 25.93589438681106,
+        "object_speed_m_s": 0.026491356324076315,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003078810204442183
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010697529431942792
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 2.9488862020251653e-06
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0030327921338494123
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010745006019270878
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 2.9450484827010664e-06
+            }
+          ]
+        }
+      },
+      {
+        "step": 847,
+        "env": 7,
+        "age": 114,
+        "force_N": 26.07532058866534,
+        "object_speed_m_s": 0.029236526552283607,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031354734759836272
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010254140771936034
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 3.7899771158042783e-06
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003078810204442183
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010697529431942792
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 2.9488862020251653e-06
+            }
+          ]
+        }
+      },
+      {
+        "step": 848,
+        "env": 7,
+        "age": 115,
+        "force_N": 26.74076849729285,
+        "object_speed_m_s": 0.02453557880613662,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003160800255378071
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010183410077944945
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031354734759836272
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010254140771936034
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 3.7899771158042783e-06
+            }
+          ]
+        }
+      },
+      {
+        "step": 849,
+        "env": 7,
+        "age": 116,
+        "force_N": 27.154266548945433,
+        "object_speed_m_s": 0.030534378478815828,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003162935436505971
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010195929087052664
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 1.1356418138299114e-06
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003160800255378071
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010183410077944945
+            }
+          ]
+        }
+      },
+      {
+        "step": 850,
+        "env": 7,
+        "age": 117,
+        "force_N": 27.698855489277484,
+        "object_speed_m_s": 0.028312721711020956,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031628350162245726
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010073979573642564
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 4.718137554480382e-07
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003162935436505971
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010195929087052664
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 1.1356418138299114e-06
+            }
+          ]
+        }
+      },
+      {
+        "step": 851,
+        "env": 7,
+        "age": 118,
+        "force_N": 28.694974049087513,
+        "object_speed_m_s": 0.029823981015000917,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031637684877629316
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010011947143330271
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 3.9150323401757155e-07
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031628350162245726
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010073979573642564
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 4.718137554480382e-07
+            }
+          ]
+        }
+      },
+      {
+        "step": 852,
+        "env": 7,
+        "age": 119,
+        "force_N": 29.208842550318945,
+        "object_speed_m_s": 0.034647078217817005,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003179047239995769
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009579544577602284
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 1.094782877636567e-06
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031637684877629316
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0010011947143330271
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 3.9150323401757155e-07
+            }
+          ]
+        }
+      },
+      {
+        "step": 853,
+        "env": 7,
+        "age": 120,
+        "force_N": 29.906933930367277,
+        "object_speed_m_s": 0.03307057948131538,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003219168118544518
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.000900823589521715
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 8.852473852315329e-07
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_3",
+              "depth_m": 1.9373672540636977e-07
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003179047239995769
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009579544577602284
+            },
+            {
+              "link": "link_2_0",
+              "part": "rigid_link_2",
+              "depth_m": 1.094782877636567e-06
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "run": "diagnostic_original",
+    "diagnostics": {
+      "episodes": 109,
+      "successful_episodes": 0,
+      "falls": 108,
+      "nonfinite": 0,
+      "max_joint_limit_excess_rad": 2.7418136596679688e-06,
+      "max_object_speed_m_s": 1.8650848865509033,
+      "max_digit_force_N": 196.56793212890625,
+      "speed_bursts_above_workspace": 0
+    },
+    "events": [
+      {
+        "step": 80,
+        "env": 30,
+        "age": 81,
+        "force_N": 196.5679369917363,
+        "object_speed_m_s": 0.013168309727099679,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0004735645888663348
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_1_0",
+              "part": "rigid_link_1",
+              "depth_m": 0.0002443416888968063
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.00019225579073839938
+            }
+          ]
+        }
+      },
+      {
+        "step": 356,
+        "env": 4,
+        "age": 82,
+        "force_N": 71.3153679236962,
+        "object_speed_m_s": 0.029781652058712128,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0007459180774343794
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0007083305488521155
+            },
+            {
+              "link": "link_1_0",
+              "part": "rigid_link_1",
+              "depth_m": 4.19078561072519e-05
+            }
+          ]
+        }
+      },
+      {
+        "step": 785,
+        "env": 15,
+        "age": 462,
+        "force_N": 140.7053576208751,
+        "object_speed_m_s": 0.3683430718891147,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_palm",
+              "part": "palm_chassis",
+              "depth_m": 3.50948914153655e-05
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_palm",
+              "part": "palm_chassis",
+              "depth_m": 0.00045898604886364516
+            }
+          ]
+        }
+      },
+      {
+        "step": 845,
+        "env": 7,
+        "age": 112,
+        "force_N": 25.85601587685022,
+        "object_speed_m_s": 0.027600693123837606,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0030457293630924472
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009795467357068262
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.002943822171205201
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.001037227095753708
+            }
+          ]
+        }
+      },
+      {
+        "step": 846,
+        "env": 7,
+        "age": 113,
+        "force_N": 26.56854905999679,
+        "object_speed_m_s": 0.027750511925913116,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003109083209771532
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009815707447243106
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0030457293630924472
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009795467357068262
+            }
+          ]
+        }
+      },
+      {
+        "step": 847,
+        "env": 7,
+        "age": 114,
+        "force_N": 26.455981872043683,
+        "object_speed_m_s": 0.028631851393777632,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.0031451180590498077
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009812958864557346
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.003109083209771532
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0009815707447243106
+            }
+          ]
+        }
+      },
+      {
+        "step": 911,
+        "env": 11,
+        "age": 89,
+        "force_N": 28.22861425455331,
+        "object_speed_m_s": 0.014764996506485212,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0008539959708569266
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0006501619556660305
+            },
+            {
+              "link": "link_palm_chassis",
+              "part": "rigid_palm_chassis",
+              "depth_m": 8.351319100312392e-05
+            },
+            {
+              "link": "link_1_0",
+              "part": "rigid_link_2",
+              "depth_m": 5.84306134759682e-05
+            }
+          ]
+        }
+      },
+      {
+        "step": 1471,
+        "env": 13,
+        "age": 222,
+        "force_N": 25.22051607740417,
+        "object_speed_m_s": 0.0390645302892176,
+        "intersections": {
+          "current": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.021144236295286365
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0006975109613624036
+            },
+            {
+              "link": "link_3_2",
+              "part": "distal_bearing",
+              "depth_m": 0.00019838165454466993
+            },
+            {
+              "link": "link_4_2",
+              "part": "distal_bearing",
+              "depth_m": 4.297117412928896e-05
+            }
+          ],
+          "old_": [
+            {
+              "link": "link_3_3",
+              "part": "finger_pad",
+              "depth_m": 0.02151084908289784
+            },
+            {
+              "link": "link_4_3",
+              "part": "finger_pad",
+              "depth_m": 0.0007261248823695294
+            },
+            {
+              "link": "link_3_2",
+              "part": "distal_bearing",
+              "depth_m": 0.0001975698788712676
+            },
+            {
+              "link": "link_4_2",
+              "part": "distal_bearing",
+              "depth_m": 4.461522381415583e-05
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "run": "diagnostic_single",
+    "diagnostics": {
+      "episodes": 3,
+      "successful_episodes": 0,
+      "falls": 3,
+      "nonfinite": 0,
+      "max_joint_limit_excess_rad": 7.152557373046875e-07,
+      "max_object_speed_m_s": 1.6168066263198853,
+      "max_digit_force_N": 11.667071342468262,
+      "speed_bursts_above_workspace": 0
+    },
+    "events": []
+  }
+]

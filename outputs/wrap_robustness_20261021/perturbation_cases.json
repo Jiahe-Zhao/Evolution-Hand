@@ -1,0 +1,178 @@
+[
+  {
+    "name": "nominal",
+    "x_mm": 0,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "x_minus_05",
+    "x_mm": -0.5,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_5_2",
+        "part": "distal_bearing",
+        "depth_m": 5.504337884622836e-06
+      }
+    ],
+    "max_initial_penetration_mm": 0.005504337884622836,
+    "legal_reset": false
+  },
+  {
+    "name": "x_plus_05",
+    "x_mm": 0.5,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "y_minus_05",
+    "x_mm": 0,
+    "y_mm": -0.5,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "y_plus_05",
+    "x_mm": 0,
+    "y_mm": 0.5,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "yaw_minus_2",
+    "x_mm": 0,
+    "y_mm": 0,
+    "yaw_deg": -2,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "yaw_plus_2",
+    "x_mm": 0,
+    "y_mm": 0,
+    "yaw_deg": 2,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "x_minus_1",
+    "x_mm": -1,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_3_2",
+        "part": "distal_bearing",
+        "depth_m": 0.00021129964862878572
+      },
+      {
+        "link": "link_3_3",
+        "part": "finger_pad",
+        "depth_m": 0.00010636279764191039
+      },
+      {
+        "link": "link_4_2",
+        "part": "distal_bearing",
+        "depth_m": 0.00043823187394996256
+      },
+      {
+        "link": "link_4_3",
+        "part": "finger_pad",
+        "depth_m": 0.00017123716329049842
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_1",
+        "depth_m": 0.0003973355186977024
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_2",
+        "depth_m": 0.00034245090203353343
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_3",
+        "depth_m": 0.0002838843709837294
+      },
+      {
+        "link": "link_5_2",
+        "part": "distal_bearing",
+        "depth_m": 0.0005055043378846072
+      }
+    ],
+    "max_initial_penetration_mm": 0.5055043378846071,
+    "legal_reset": false
+  },
+  {
+    "name": "x_plus_1",
+    "x_mm": 1,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "y_minus_1",
+    "x_mm": 0,
+    "y_mm": -1,
+    "yaw_deg": 0,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  },
+  {
+    "name": "y_plus_1",
+    "x_mm": 0,
+    "y_mm": 1,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_2_1",
+        "part": "rigid_link_3",
+        "depth_m": 8.327636587953421e-05
+      }
+    ],
+    "max_initial_penetration_mm": 0.08327636587953421,
+    "legal_reset": false
+  },
+  {
+    "name": "mixed_minus",
+    "x_mm": -0.5,
+    "y_mm": -0.5,
+    "yaw_deg": -1,
+    "initial_intersections": [
+      {
+        "link": "link_4_2",
+        "part": "distal_bearing",
+        "depth_m": 2.9566554348844766e-05
+      }
+    ],
+    "max_initial_penetration_mm": 0.029566554348844767,
+    "legal_reset": false
+  },
+  {
+    "name": "mixed_plus",
+    "x_mm": 0.5,
+    "y_mm": 0.5,
+    "yaw_deg": 1,
+    "initial_intersections": [],
+    "max_initial_penetration_mm": 0,
+    "legal_reset": true
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "label": "after_ppo",
+  "num_envs": 256,
+  "steps": 1200,
+  "successes": 0,
+  "success_rate": 0.0,
+  "mean_peak_lift_mm": 11.531356811523438,
+  "max_hold_s": 0.0,
+  "scope": "nominal replicated environments; not independent pose samples"
+}

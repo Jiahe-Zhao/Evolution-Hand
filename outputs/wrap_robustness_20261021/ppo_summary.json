@@ -1,0 +1,191 @@
+{
+  "status": "completed",
+  "epochs": 128,
+  "transitions": 524288,
+  "bc_samples": 1200,
+  "bc_steps": 800,
+  "bc_mse": 0.0008790968568064272,
+  "before": {
+    "label": "before_ppo",
+    "num_envs": 256,
+    "steps": 1200,
+    "successes": 0,
+    "success_rate": 0.0,
+    "mean_peak_lift_mm": 41.5865364074707,
+    "max_hold_s": 1.3999993801116943,
+    "scope": "nominal replicated environments; not independent pose samples"
+  },
+  "after": {
+    "label": "after_ppo",
+    "num_envs": 256,
+    "steps": 1200,
+    "successes": 0,
+    "success_rate": 0.0,
+    "mean_peak_lift_mm": 11.531356811523438,
+    "max_hold_s": 0.0,
+    "scope": "nominal replicated environments; not independent pose samples"
+  },
+  "diagnostics": {
+    "episodes": 2916,
+    "successful_episodes": 0,
+    "falls": 2914,
+    "nonfinite": 0,
+    "max_joint_limit_excess_rad": 2.384185791015625e-06,
+    "max_object_speed_m_s": 88.12371826171875,
+    "max_digit_force_N": 779.1874389648438,
+    "speed_bursts_above_workspace": 271
+  },
+  "before_training_diagnostics": {
+    "episodes": 474,
+    "successful_episodes": 0,
+    "falls": 474,
+    "nonfinite": 0,
+    "max_joint_limit_excess_rad": 4.76837158203125e-07,
+    "max_object_speed_m_s": 2.072862386703491,
+    "max_digit_force_N": 5.773647785186768,
+    "speed_bursts_above_workspace": 0
+  },
+  "all_model_tensors_finite": true,
+  "config_changes": {
+    "env_name": {
+      "before": "rlgpu",
+      "after": "wrap_probe"
+    },
+    "max_epochs": {
+      "before": 1,
+      "after": 128
+    },
+    "num_actors": {
+      "before": 4,
+      "after": 256
+    },
+    "save_best_after": {
+      "before": 1,
+      "after": 0
+    },
+    "save_frequency": {
+      "before": 50,
+      "after": 32
+    },
+    "train_dir": {
+      "before": "/home/zjh/Evolution_PC/outputs/strike_v3_training_20261020/bc_seeds/strike",
+      "after": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/ppo_short01"
+    }
+  },
+  "scope": "new 24-action grasp/lift diagnostic; no production Strike checkpoint or evolution resumed",
+  "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+  "runtime_kp": [
+    3000.0,
+    3000.0,
+    3000.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0
+  ],
+  "runtime_kd": [
+    100.0,
+    100.0,
+    100.0,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896,
+    0.30000001192092896
+  ],
+  "observation_contract": "normalized q, prior targets, actual wrist shift, wrist target, object state, digit forces, time",
+  "action_contract": "21 joint target rates at 0.25 rad/s plus world wrist rates at 0.02 m/s",
+  "material_signatures": [
+    [
+      "metal",
+      0.20000000298023224,
+      null,
+      0.0,
+      0.0
+    ],
+    [
+      "object",
+      0.5,
+      null,
+      0.0,
+      0.0
+    ],
+    [
+      "pad",
+      0.800000011920929,
+      null,
+      1500.0,
+      10.0
+    ]
+  ],
+  "baseline_material_signatures": [
+    [
+      "metal",
+      0.20000000298023224,
+      null,
+      0.0,
+      0.0
+    ],
+    [
+      "object",
+      0.5,
+      null,
+      0.0,
+      0.0
+    ],
+    [
+      "pad",
+      0.800000011920929,
+      null,
+      1500.0,
+      10.0
+    ]
+  ],
+  "matches_baseline_source_and_drives": true,
+  "matches_baseline_materials": true,
+  "checkpoints": {
+    "ppo_final.pth": {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/ppo_short01/ppo_final.pth",
+      "sha256": "e052e0a82c01c48f8ff50667a0b6c46674db481d99e46024c83f11d7ff0c990c",
+      "bytes": 5598628
+    },
+    "bc_initial.pth": {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/ppo_short01/bc_initial.pth",
+      "sha256": "fb1c1199cf6f61ead414a583557052d73b66102ca6be0317690eb9eee347d4f4",
+      "bytes": 1868322
+    }
+  }
+}

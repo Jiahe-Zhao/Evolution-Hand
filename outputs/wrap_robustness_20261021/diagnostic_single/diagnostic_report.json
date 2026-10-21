@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "steps": 1800,
+  "num_envs": 1,
+  "isolation": true,
+  "standard_reset": true,
+  "checkpoint": "ppo_short01/ppo_final.pth",
+  "diagnostics": {
+    "episodes": 3,
+    "successful_episodes": 0,
+    "falls": 3,
+    "nonfinite": 0,
+    "max_joint_limit_excess_rad": 7.152557373046875e-07,
+    "max_object_speed_m_s": 1.6168066263198853,
+    "max_digit_force_N": 11.667071342468262,
+    "speed_bursts_above_workspace": 0
+  },
+  "events": []
+}

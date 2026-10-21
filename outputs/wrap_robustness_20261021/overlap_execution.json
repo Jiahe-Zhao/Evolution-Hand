@@ -1,0 +1,217 @@
+[
+  {
+    "name": "x_minus_05",
+    "x_mm": -0.5,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_5_2",
+        "part": "distal_bearing",
+        "depth_m": 5.504337884622836e-06
+      }
+    ],
+    "max_initial_penetration_mm": 0.005504337884622836,
+    "legal_reset": false,
+    "status": "completed",
+    "exit_code": 0,
+    "command": [
+      "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_grasp.py",
+      "--headless",
+      "--plans",
+      "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+      "--pad-face",
+      "ymixed",
+      "--duration",
+      "50",
+      "--kp",
+      "3",
+      "--kd",
+      ".3",
+      "--bounded-ik",
+      "--freeze-after-grasp",
+      "--contact-k",
+      "1500",
+      "--hand-gravity",
+      "--offset-mm",
+      "-0.5",
+      "--offset-y-mm",
+      "0",
+      "--yaw-deg",
+      "0",
+      "--output",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_05"
+    ]
+  },
+  {
+    "name": "x_minus_1",
+    "x_mm": -1,
+    "y_mm": 0,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_3_2",
+        "part": "distal_bearing",
+        "depth_m": 0.00021129964862878572
+      },
+      {
+        "link": "link_3_3",
+        "part": "finger_pad",
+        "depth_m": 0.00010636279764191039
+      },
+      {
+        "link": "link_4_2",
+        "part": "distal_bearing",
+        "depth_m": 0.00043823187394996256
+      },
+      {
+        "link": "link_4_3",
+        "part": "finger_pad",
+        "depth_m": 0.00017123716329049842
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_1",
+        "depth_m": 0.0003973355186977024
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_2",
+        "depth_m": 0.00034245090203353343
+      },
+      {
+        "link": "link_5_2",
+        "part": "rigid_link_3",
+        "depth_m": 0.0002838843709837294
+      },
+      {
+        "link": "link_5_2",
+        "part": "distal_bearing",
+        "depth_m": 0.0005055043378846072
+      }
+    ],
+    "max_initial_penetration_mm": 0.5055043378846071,
+    "legal_reset": false,
+    "status": "completed",
+    "exit_code": 0,
+    "command": [
+      "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_grasp.py",
+      "--headless",
+      "--plans",
+      "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+      "--pad-face",
+      "ymixed",
+      "--duration",
+      "50",
+      "--kp",
+      "3",
+      "--kd",
+      ".3",
+      "--bounded-ik",
+      "--freeze-after-grasp",
+      "--contact-k",
+      "1500",
+      "--hand-gravity",
+      "--offset-mm",
+      "-1",
+      "--offset-y-mm",
+      "0",
+      "--yaw-deg",
+      "0",
+      "--output",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_1"
+    ]
+  },
+  {
+    "name": "y_plus_1",
+    "x_mm": 0,
+    "y_mm": 1,
+    "yaw_deg": 0,
+    "initial_intersections": [
+      {
+        "link": "link_2_1",
+        "part": "rigid_link_3",
+        "depth_m": 8.327636587953421e-05
+      }
+    ],
+    "max_initial_penetration_mm": 0.08327636587953421,
+    "legal_reset": false,
+    "status": "completed",
+    "exit_code": 0,
+    "command": [
+      "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_grasp.py",
+      "--headless",
+      "--plans",
+      "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+      "--pad-face",
+      "ymixed",
+      "--duration",
+      "50",
+      "--kp",
+      "3",
+      "--kd",
+      ".3",
+      "--bounded-ik",
+      "--freeze-after-grasp",
+      "--contact-k",
+      "1500",
+      "--hand-gravity",
+      "--offset-mm",
+      "0",
+      "--offset-y-mm",
+      "1",
+      "--yaw-deg",
+      "0",
+      "--output",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_y_plus_1"
+    ]
+  },
+  {
+    "name": "mixed_minus",
+    "x_mm": -0.5,
+    "y_mm": -0.5,
+    "yaw_deg": -1,
+    "initial_intersections": [
+      {
+        "link": "link_4_2",
+        "part": "distal_bearing",
+        "depth_m": 2.9566554348844766e-05
+      }
+    ],
+    "max_initial_penetration_mm": 0.029566554348844767,
+    "legal_reset": false,
+    "status": "completed",
+    "exit_code": 0,
+    "command": [
+      "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_grasp.py",
+      "--headless",
+      "--plans",
+      "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+      "--pad-face",
+      "ymixed",
+      "--duration",
+      "50",
+      "--kp",
+      "3",
+      "--kd",
+      ".3",
+      "--bounded-ik",
+      "--freeze-after-grasp",
+      "--contact-k",
+      "1500",
+      "--hand-gravity",
+      "--offset-mm",
+      "-0.5",
+      "--offset-y-mm",
+      "-0.5",
+      "--yaw-deg",
+      "-1",
+      "--output",
+      "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_mixed_minus"
+    ]
+  }
+]
