@@ -202,7 +202,8 @@
   "joints_unchanged": true,
   "source_unchanged": true,
   "total_mass_kg": 0.13051304002294734,
-  "status": "implemented; full-hand import and 80 g bench hold passed; 2 N single-side press not passed",
+  "status": "full-hand import, corrected 2 N contact bench and 80 g hold tests passed; hardware calibration and full-hand grasp not verified",
   "motor_mass_calibrated": false,
-  "results": "results/test_results.json"
+  "results": "results/test_results.json",
+  "basic_test_completion": "BASIC_TEST_COMPLETION.md"
 }

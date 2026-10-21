@@ -9,7 +9,7 @@ def walk(path,*a,**k):
  if os.path.realpath(path)=='/home/zjh/Evolution_PC/evolution_tasks/logs':return
  yield from old(path,*a,**k)
 fi._fast_walk=walk
-p=argparse.ArgumentParser();p.add_argument('--mode',choices=['audit','press','hold'],required=True);p.add_argument('--source',required=True);p.add_argument('--output',required=True);AppLauncher.add_app_launcher_args(p);args=p.parse_args();args.source=str(Path(args.source).resolve());args.output=str(Path(args.output).resolve());os.environ['EVOLUTION_ROOT']='/home/zjh/Evolution_PC';app=AppLauncher(args).app
+p=argparse.ArgumentParser();p.add_argument('--solver-velocity-limit',type=float,default=1.);p.add_argument('--dt',type=float,default=1/240);p.add_argument('--drive',choices=['position','effort'],default='position');p.add_argument('--record',action='store_true');p.add_argument('--mode',choices=['audit','press','hold'],required=True);p.add_argument('--source',required=True);p.add_argument('--output',required=True);AppLauncher.add_app_launcher_args(p);args=p.parse_args();args.enable_cameras=args.enable_cameras or args.record;args.source=str(Path(args.source).resolve());args.output=str(Path(args.output).resolve());os.environ['EVOLUTION_ROOT']='/home/zjh/Evolution_PC';app=AppLauncher(args).app
 import torch,numpy as np
 import isaaclab.sim as sim
 from isaaclab.assets import Articulation,ArticulationCfg,RigidObject,RigidObjectCfg
@@ -19,7 +19,7 @@ import omni.physx
 from contact_materials import configure
 from build_contact_bench import build
 out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
-dt=1/240;ctx=sim.SimulationContext(sim.SimulationCfg(dt=dt,device=args.device,gravity=(0,0,-9.81)))
+dt=args.dt;ctx=sim.SimulationContext(sim.SimulationCfg(dt=dt,device=args.device,gravity=(0,0,-9.81)))
 # IsaacLab suppresses CPU contact callbacks by default; enable only in this diagnostic.
 ctx.carb_settings.set_bool('/physics/disableContactProcessing',False)
 if args.mode=='audit':
@@ -29,8 +29,10 @@ if args.mode=='audit':
  spec=importlib.util.spec_from_file_location('baseline_cfg',cfgpath);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);cfg=m.CURRENT_HAND_CFG.replace(prim_path='/World/Hand');cfg.init_state.pos=(0,0,.5)
 else:
  path=build(args.source,out/'bench_model')
- cfg=ArticulationCfg(prim_path='/World/Hand',spawn=sim.UrdfFileCfg(asset_path=str(path),fix_base=True,merge_fixed_joints=False,joint_drive=sim.UrdfConverterCfg.JointDriveCfg(drive_type='force',target_type='position',gains=sim.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(stiffness=10000.,damping=100.))),init_state=ArticulationCfg.InitialStateCfg(joint_pos={'.*':0.}),actuators={'jaws':ImplicitActuatorCfg(joint_names_expr=['.*'],stiffness=10000.,damping=100.,effort_limit_sim=10.,velocity_limit_sim=.01)})
+ cfg=ArticulationCfg(prim_path='/World/Hand',spawn=sim.UrdfFileCfg(asset_path=str(path),fix_base=True,merge_fixed_joints=False,joint_drive=sim.UrdfConverterCfg.JointDriveCfg(drive_type='force',target_type='position',gains=sim.UrdfConverterCfg.JointDriveCfg.PDGainsCfg(stiffness=10000.,damping=100.))),init_state=ArticulationCfg.InitialStateCfg(joint_pos={'.*':0.}),actuators={'jaws':ImplicitActuatorCfg(joint_names_expr=['.*'],stiffness=10000.,damping=100.,effort_limit_sim=10.,velocity_limit_sim=args.solver_velocity_limit)})
 cfg.spawn.make_instanceable=False;cfg.spawn.usd_dir=str(out/'usd');cfg.spawn.force_usd_conversion=True
+if args.drive=='effort' and args.mode!='audit':
+ cfg.actuators['jaws'].stiffness=0.;cfg.actuators['jaws'].damping=0.
 hand=Articulation(cfg)
 obj=support=None
 if args.mode!='audit':
@@ -52,13 +54,18 @@ def contact(headers,data):
     current.append(dict(a=a,b=b,position=list(d.position),normal=list(d.normal),force_N=force))
  except Exception as exc:
   if not callback_errors:callback_errors.append(str(exc))
+recorder=None
+if args.record:
+ from record_bench import Recorder
+ recorder=Recorder(ctx,out,args.device)
 ctx.reset();hand.update(dt)
+if recorder:recorder.initialize()
 ctx.carb_settings.set_bool("/physics/disableContactProcessing",False)
 subscription=omni.physx.get_physx_simulation_interface().subscribe_contact_report_events(contact)
 import omni.physics.tensors as tensors
 sensor_sim=tensors.create_simulation_view('torch');sensor_sim.set_subspace_roots('/')
 contact_views={side:sensor_sim.create_rigid_contact_view('/World/Hand/'+side,filter_patterns=['/World/Object']) for side in ('left','right')} if args.mode!='audit' else {}
-audit=dict(device=args.device,source=args.source,mode=args.mode,dt=dt,gravity=[0,0,-9.81],materials=rows,body_names=hand.body_names,joint_names=hand.joint_names)
+audit=dict(solver_velocity_limit=args.solver_velocity_limit,drive=args.drive,device=args.device,source=args.source,mode=args.mode,dt=dt,gravity=[0,0,-9.81],materials=rows,body_names=hand.body_names,joint_names=hand.joint_names)
 view=hand.root_physx_view
 for name in ['get_masses','get_inertias','get_material_properties','get_dof_stiffnesses','get_dof_dampings','get_dof_armatures','get_dof_max_forces','get_dof_max_velocities','get_contact_offsets','get_rest_offsets']:
  if hasattr(view,name):
@@ -66,7 +73,8 @@ for name in ['get_masses','get_inertias','get_material_properties','get_dof_stif
   except Exception as exc:audit[name]={'error':str(exc)}
 (out/'runtime_audit.json').write_text(json.dumps(audit,indent=2))
 base=hand.data.default_joint_pos.clone();hand.write_joint_state_to_sim(base,torch.zeros_like(base));trace=[];first=None;released=False;release_step=None;anchor=None;held_seconds=0.;max_slip=0.;stop_reason='timeout';target=0.
-steps=240 if args.mode=='audit' else 2400
+press_hold=0.;effort_command=0.;press_target=None
+steps=round(1/dt) if args.mode=='audit' else round(12/dt)
 for step in range(steps):
  current.clear()
  if args.mode=='audit':q=base
@@ -74,9 +82,16 @@ for step in range(steps):
   # A physical, force-limited position drive closes at 1 mm/s.
   target=min(.0075,max(0,(step*dt-.5))*.001)
   if released:target=release_target
+  if press_target is not None:target=press_target
   q=base.clone();q[:,hand.joint_names.index('left_drive')]=target
   if args.mode=='hold':q[:,hand.joint_names.index('right_drive')]=target
- hand.set_joint_position_target(q);hand.write_data_to_sim();ctx.step();hand.update(dt)
+ hand.set_joint_position_target(q)
+ if args.drive=='effort' and args.mode!='audit':
+  effort_command=min(2.5,max(0.,step*dt-.5)*.5)
+  effort=torch.zeros_like(q);effort[:,hand.joint_names.index('left_drive')]=effort_command
+  if args.mode=='hold':effort[:,hand.joint_names.index('right_drive')]=effort_command
+  hand.set_joint_effort_target(effort)
+ hand.write_data_to_sim();ctx.step(render=False);hand.update(dt)
  if obj is not None:obj.update(dt)
  if support is not None:support.update(dt)
  forces={'left':0.,'right':0.};pad_forces={'left':0.,'right':0.};events=[]
@@ -92,8 +107,11 @@ for step in range(steps):
   forces[side]=float(torch.linalg.vector_norm(cv.get_contact_force_matrix(dt=dt).sum(dim=1)).item())
  state=obj.data.root_state_w[0].cpu().tolist() if obj is not None else None
  trace.append(dict(step=step,t_s=(step+1)*dt,target_m=target,joint_pos=hand.data.joint_pos[0].cpu().tolist(),force_N=forces,pad_force_N=pad_forces,object=state,contacts=events,callback_force_N=callback_forces,effort_N=hand.data.applied_torque[0].cpu().tolist()))
- if args.mode=='press' and forces['left']>=2.:
-  stop_reason='2 N press reached';break
+ if recorder and step%max(1,round(1/(30*dt)))==0:recorder.frame((step+1)*dt,args.mode,forces,released,max_slip)
+ if args.mode=='press':
+  if forces['left']>=2. and press_target is None:press_target=target
+  press_hold=press_hold+dt if forces['left']>=2. else 0.
+  if press_hold>=.5:stop_reason='2 N press held 0.5 s';break
  if args.mode=='hold':
   if not released and min(forces.values())>=1.5:
    released=True;release_step=step;release_target=target;anchor=np.array(state[:3]);s=support.data.root_state_w.clone();s[:,2]-=.1;support.write_root_state_to_sim(s)
@@ -104,13 +122,14 @@ for step in range(steps):
    held_seconds=(step-release_step)*dt
    if held_seconds>=3.:stop_reason='3 s suspended hold completed';break
  if not bool(torch.isfinite(hand.data.joint_pos).all()):stop_reason='nonfinite state';break
-report=dict(device=args.device,force_source='PhysX contact tensor; shape identity from CPU callbacks only',mode=args.mode,steps=step+1,first_contact=first,callback_errors=callback_errors,raw_contact_header_count=raw_header_count,stop_reason=stop_reason,released=released,release_step=release_step,held_seconds=held_seconds,final_force_N=forces,max_slip_m=max_slip,shape_reporting_available=raw_header_count>0,final_pad_force_N=pad_forces if raw_header_count else None,scope='isolated contact bench, not full-hand tool grasp or Strike success')
+report=dict(solver_velocity_limit=args.solver_velocity_limit,dt=dt,drive=args.drive,press_hold_s=press_hold,effort_command_N=effort_command,device=args.device,force_source='PhysX contact tensor; shape identity from CPU callbacks only',mode=args.mode,steps=step+1,first_contact=first,callback_errors=callback_errors,raw_contact_header_count=raw_header_count,stop_reason=stop_reason,released=released,release_step=release_step,held_seconds=held_seconds,final_force_N=forces,max_slip_m=max_slip,shape_reporting_available=raw_header_count>0,final_pad_force_N=pad_forces if raw_header_count else None,scope='isolated contact bench, not full-hand tool grasp or Strike success')
 if args.mode=='audit':
  actual_materials=np.array(audit['get_material_properties'])[0]
  report['scope']='full-hand import and static parameter audit; not grasp success'
  report['pad_shape_count']=sum(r['role']=='pad' for r in rows)
  report['material_roles_verified']=bool(np.isclose(actual_materials[:,0],.8).any() and np.isclose(actual_materials[:,0],.2).any())
  report['passed']=bool(torch.isfinite(hand.data.joint_pos).all()) and len(hand.joint_names)==21 and report['pad_shape_count']==5 and report['material_roles_verified']
-elif args.mode=='press':report['passed']=stop_reason=='2 N press reached' and not callback_errors
+elif args.mode=='press':report['passed']=stop_reason=='2 N press held 0.5 s' and not callback_errors
 else:report['passed']=held_seconds>=3. and not callback_errors
+if recorder:recorder.close()
 (out/'trace.json').write_text(json.dumps(trace));(out/'report.json').write_text(json.dumps(report,indent=2));print('BASELINE_REPORT',json.dumps(report),flush=True);os._exit(0)

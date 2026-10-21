@@ -1,0 +1,1289 @@
+{
+  "press_effort": {
+    "report": {
+      "dt": 0.004166666666666667,
+      "drive": "effort",
+      "press_hold_s": 0.0,
+      "effort_command_N": 2.5,
+      "device": "cpu",
+      "force_source": "PhysX contact tensor; shape identity from CPU callbacks only",
+      "mode": "press",
+      "steps": 2880,
+      "first_contact": {
+        "step": 250,
+        "t_s": 1.0458333333333334,
+        "collider": "/World/Hand/left/collisions/finger_pad/mesh",
+        "force_N": 0.013579465448897621
+      },
+      "callback_errors": [],
+      "raw_contact_header_count": 7907,
+      "stop_reason": "timeout",
+      "released": false,
+      "release_step": null,
+      "held_seconds": 0.0,
+      "final_force_N": {
+        "left": 0.08066700398921967,
+        "right": 0.0
+      },
+      "max_slip_m": 0.0,
+      "shape_reporting_available": true,
+      "final_pad_force_N": {
+        "left": 0.08066701178904623,
+        "right": 0.0
+      },
+      "scope": "isolated contact bench, not full-hand tool grasp or Strike success",
+      "passed": false
+    },
+    "runtime_audit": {
+      "drive": "effort",
+      "device": "cpu",
+      "source": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/candidate/right/urdf/current_agent.urdf",
+      "mode": "press",
+      "dt": 0.004166666666666667,
+      "gravity": [
+        0,
+        0,
+        -9.81
+      ],
+      "materials": [
+        {
+          "path": "/World/Hand/left/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Object/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        }
+      ],
+      "body_names": [
+        "base",
+        "left",
+        "right"
+      ],
+      "joint_names": [
+        "left_drive",
+        "right_drive"
+      ],
+      "get_masses": [
+        [
+          1.0,
+          0.02073146216571331,
+          0.02073146216571331
+        ]
+      ],
+      "get_inertias": [
+        [
+          [
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ]
+        ]
+      ],
+      "get_material_properties": [
+        [
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ]
+        ]
+      ],
+      "get_dof_stiffnesses": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_dampings": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_armatures": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_max_forces": [
+        [
+          10.0,
+          10.0
+        ]
+      ],
+      "get_dof_max_velocities": [
+        [
+          0.009999999776482582,
+          0.009999999776482582
+        ]
+      ],
+      "get_contact_offsets": [
+        [
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354
+        ]
+      ],
+      "get_rest_offsets": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "press_speed_limit": {
+    "report": {
+      "solver_velocity_limit": 1.0,
+      "dt": 0.004166666666666667,
+      "drive": "position",
+      "press_hold_s": 0.5041666666666661,
+      "effort_command_N": 0.0,
+      "device": "cpu",
+      "force_source": "PhysX contact tensor; shape identity from CPU callbacks only",
+      "mode": "press",
+      "steps": 1618,
+      "first_contact": {
+        "step": 1383,
+        "t_s": 5.766666666666667,
+        "collider": "/World/Hand/left/collisions/finger_pad/mesh",
+        "force_N": 0.010949463467457555
+      },
+      "callback_errors": [],
+      "raw_contact_header_count": 897,
+      "stop_reason": "2 N press held 0.5 s",
+      "released": false,
+      "release_step": null,
+      "held_seconds": 0.0,
+      "final_force_N": {
+        "left": 4.086833477020264,
+        "right": 0.0
+      },
+      "max_slip_m": 0.0,
+      "shape_reporting_available": true,
+      "final_pad_force_N": {
+        "left": 4.086833652108908,
+        "right": 0.0
+      },
+      "scope": "isolated contact bench, not full-hand tool grasp or Strike success",
+      "passed": true
+    },
+    "runtime_audit": {
+      "solver_velocity_limit": 1.0,
+      "drive": "position",
+      "device": "cpu",
+      "source": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/candidate/right/urdf/current_agent.urdf",
+      "mode": "press",
+      "dt": 0.004166666666666667,
+      "gravity": [
+        0,
+        0,
+        -9.81
+      ],
+      "materials": [
+        {
+          "path": "/World/Hand/left/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Object/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        }
+      ],
+      "body_names": [
+        "base",
+        "left",
+        "right"
+      ],
+      "joint_names": [
+        "left_drive",
+        "right_drive"
+      ],
+      "get_masses": [
+        [
+          1.0,
+          0.02073146216571331,
+          0.02073146216571331
+        ]
+      ],
+      "get_inertias": [
+        [
+          [
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ]
+        ]
+      ],
+      "get_material_properties": [
+        [
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ]
+        ]
+      ],
+      "get_dof_stiffnesses": [
+        [
+          10000.0,
+          10000.0
+        ]
+      ],
+      "get_dof_dampings": [
+        [
+          100.0,
+          100.0
+        ]
+      ],
+      "get_dof_armatures": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_max_forces": [
+        [
+          10.0,
+          10.0
+        ]
+      ],
+      "get_dof_max_velocities": [
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "get_contact_offsets": [
+        [
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354
+        ]
+      ],
+      "get_rest_offsets": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "press_effort_limit1": {
+    "report": {
+      "solver_velocity_limit": 1.0,
+      "dt": 0.004166666666666667,
+      "drive": "effort",
+      "press_hold_s": 0.5041666666666661,
+      "effort_command_N": 2.252083333333333,
+      "device": "cpu",
+      "force_source": "PhysX contact tensor; shape identity from CPU callbacks only",
+      "mode": "press",
+      "steps": 1202,
+      "first_contact": {
+        "step": 146,
+        "t_s": 0.6125,
+        "collider": "/World/Hand/left/collisions/finger_pad/mesh",
+        "force_N": 0.19154422916471958
+      },
+      "callback_errors": [],
+      "raw_contact_header_count": 3166,
+      "stop_reason": "2 N press held 0.5 s",
+      "released": false,
+      "release_step": null,
+      "held_seconds": 0.0,
+      "final_force_N": {
+        "left": 2.252054452896118,
+        "right": 0.0
+      },
+      "max_slip_m": 0.0,
+      "shape_reporting_available": true,
+      "final_pad_force_N": {
+        "left": 2.252054773271084,
+        "right": 0.0
+      },
+      "scope": "isolated contact bench, not full-hand tool grasp or Strike success",
+      "passed": true
+    },
+    "runtime_audit": {
+      "solver_velocity_limit": 1.0,
+      "drive": "effort",
+      "device": "cpu",
+      "source": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/candidate/right/urdf/current_agent.urdf",
+      "mode": "press",
+      "dt": 0.004166666666666667,
+      "gravity": [
+        0,
+        0,
+        -9.81
+      ],
+      "materials": [
+        {
+          "path": "/World/Hand/left/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Object/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        }
+      ],
+      "body_names": [
+        "base",
+        "left",
+        "right"
+      ],
+      "joint_names": [
+        "left_drive",
+        "right_drive"
+      ],
+      "get_masses": [
+        [
+          1.0,
+          0.02073146216571331,
+          0.02073146216571331
+        ]
+      ],
+      "get_inertias": [
+        [
+          [
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ]
+        ]
+      ],
+      "get_material_properties": [
+        [
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ]
+        ]
+      ],
+      "get_dof_stiffnesses": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_dampings": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_armatures": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_max_forces": [
+        [
+          10.0,
+          10.0
+        ]
+      ],
+      "get_dof_max_velocities": [
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "get_contact_offsets": [
+        [
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354
+        ]
+      ],
+      "get_rest_offsets": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "press_dark": {
+    "report": {
+      "solver_velocity_limit": 1.0,
+      "dt": 0.004166666666666667,
+      "drive": "position",
+      "press_hold_s": 0.5041666666666661,
+      "effort_command_N": 0.0,
+      "device": "cuda:0",
+      "force_source": "PhysX contact tensor; shape identity from CPU callbacks only",
+      "mode": "press",
+      "steps": 1618,
+      "first_contact": null,
+      "callback_errors": [],
+      "raw_contact_header_count": 0,
+      "stop_reason": "2 N press held 0.5 s",
+      "released": false,
+      "release_step": null,
+      "held_seconds": 0.0,
+      "final_force_N": {
+        "left": 2.0218093395233154,
+        "right": 0.0
+      },
+      "max_slip_m": 0.0,
+      "shape_reporting_available": false,
+      "final_pad_force_N": null,
+      "scope": "isolated contact bench, not full-hand tool grasp or Strike success",
+      "passed": true
+    },
+    "runtime_audit": {
+      "solver_velocity_limit": 1.0,
+      "drive": "position",
+      "device": "cuda:0",
+      "source": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/candidate/right/urdf/current_agent.urdf",
+      "mode": "press",
+      "dt": 0.004166666666666667,
+      "gravity": [
+        0,
+        0,
+        -9.81
+      ],
+      "materials": [
+        {
+          "path": "/World/Hand/left/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Object/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        }
+      ],
+      "body_names": [
+        "base",
+        "left",
+        "right"
+      ],
+      "joint_names": [
+        "left_drive",
+        "right_drive"
+      ],
+      "get_masses": [
+        [
+          1.0,
+          0.02073146216571331,
+          0.02073146216571331
+        ]
+      ],
+      "get_inertias": [
+        [
+          [
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ]
+        ]
+      ],
+      "get_material_properties": [
+        [
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ]
+        ]
+      ],
+      "get_dof_stiffnesses": [
+        [
+          10000.0,
+          10000.0
+        ]
+      ],
+      "get_dof_dampings": [
+        [
+          100.0,
+          100.0
+        ]
+      ],
+      "get_dof_armatures": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_max_forces": [
+        [
+          10.0,
+          10.0
+        ]
+      ],
+      "get_dof_max_velocities": [
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "get_contact_offsets": [
+        [
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354
+        ]
+      ],
+      "get_rest_offsets": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "hold_dark": {
+    "report": {
+      "solver_velocity_limit": 1.0,
+      "dt": 0.004166666666666667,
+      "drive": "position",
+      "press_hold_s": 0.0,
+      "effort_command_N": 0.0,
+      "device": "cuda:0",
+      "force_source": "PhysX contact tensor; shape identity from CPU callbacks only",
+      "mode": "hold",
+      "steps": 2175,
+      "first_contact": null,
+      "callback_errors": [],
+      "raw_contact_header_count": 0,
+      "stop_reason": "3 s suspended hold completed",
+      "released": true,
+      "release_step": 1454,
+      "held_seconds": 3.0,
+      "final_force_N": {
+        "left": 1.5289676189422607,
+        "right": 1.5160093307495117
+      },
+      "max_slip_m": 0.0005192873843264797,
+      "shape_reporting_available": false,
+      "final_pad_force_N": null,
+      "scope": "isolated contact bench, not full-hand tool grasp or Strike success",
+      "passed": true
+    },
+    "runtime_audit": {
+      "solver_velocity_limit": 1.0,
+      "drive": "position",
+      "device": "cuda:0",
+      "source": "/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/candidate/right/urdf/current_agent.urdf",
+      "mode": "hold",
+      "dt": 0.004166666666666667,
+      "gravity": [
+        0,
+        0,
+        -9.81
+      ],
+      "materials": [
+        {
+          "path": "/World/Hand/left/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/left/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/finger_pad/mesh",
+          "role": "pad",
+          "material": "/World/BaselineMaterials/pad",
+          "static_friction": 0.800000011920929,
+          "compliant_stiffness": 3000.0,
+          "compliant_damping": 10.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/proximal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Hand/right/collisions/distal_bearing/mesh",
+          "role": "metal",
+          "material": "/World/BaselineMaterials/metal",
+          "static_friction": 0.20000000298023224,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Object/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        },
+        {
+          "path": "/World/Support/geometry/mesh",
+          "role": "object",
+          "material": "/World/BaselineMaterials/object",
+          "static_friction": 0.5,
+          "compliant_stiffness": 0.0,
+          "compliant_damping": 0.0,
+          "contact_offset_m": 0.0003000000142492354,
+          "rest_offset_m": 0.0
+        }
+      ],
+      "body_names": [
+        "base",
+        "left",
+        "right"
+      ],
+      "joint_names": [
+        "left_drive",
+        "right_drive"
+      ],
+      "get_masses": [
+        [
+          1.0,
+          0.02073146216571331,
+          0.02073146216571331
+        ]
+      ],
+      "get_inertias": [
+        [
+          [
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582,
+            0.0,
+            0.0,
+            0.0,
+            0.009999999776482582
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ],
+          [
+            1.0265385981256259e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0267052630297258e-06,
+            0.0,
+            0.0,
+            0.0,
+            1.0028843462350778e-06
+          ]
+        ]
+      ],
+      "get_material_properties": [
+        [
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.800000011920929,
+            -3000.0
+          ],
+          [
+            0.20000000298023224,
+            0.20000000298023224,
+            0.0
+          ]
+        ]
+      ],
+      "get_dof_stiffnesses": [
+        [
+          10000.0,
+          10000.0
+        ]
+      ],
+      "get_dof_dampings": [
+        [
+          100.0,
+          100.0
+        ]
+      ],
+      "get_dof_armatures": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "get_dof_max_forces": [
+        [
+          10.0,
+          10.0
+        ]
+      ],
+      "get_dof_max_velocities": [
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "get_contact_offsets": [
+        [
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354,
+          0.0003000000142492354
+        ]
+      ],
+      "get_rest_offsets": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  }
+}
