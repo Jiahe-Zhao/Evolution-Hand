@@ -1,0 +1,146 @@
+[
+  {
+    "run": "long_side01",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "tool_lost_or_unstable",
+    "lift_time_s": 16.083333333333332,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.006957441568374634,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 179.7778755426407
+  },
+  {
+    "run": "long_side02",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.0005092322826385498,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 6.06678007170558
+  },
+  {
+    "run": "long_side03",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.0004214346408843994,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 6.510372739285231
+  },
+  {
+    "run": "long_side04",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": 14.833333333333334,
+    "max_free_hold_s": 19.28333333333352,
+    "max_lift_m": 0.029571741819381714,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 1.2016850523650646
+  },
+  {
+    "run": "long_side05",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "tool_lost_or_unstable",
+    "lift_time_s": 9.166666666666666,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.0007523894309997559,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 178.2352179288864
+  },
+  {
+    "run": "wrap01",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": 7.033333333333333,
+    "max_free_hold_s": 18.800000000000214,
+    "max_lift_m": 0.027114778757095337,
+    "middle_contact_fraction_during_airborne": [
+      0.0,
+      0.8010291595197255,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "middle_peak_N_during_airborne": [
+      0.0,
+      0.21678748726844788,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "final_slip_mm": 5.115311127156019
+  },
+  {
+    "run": "wrap02",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": 9.433333333333334,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.0005651116371154785,
+    "middle_contact_fraction_during_airborne": null,
+    "middle_peak_N_during_airborne": null,
+    "final_slip_mm": 33.667948096990585
+  },
+  {
+    "run": "wrap03",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": 8.683333333333334,
+    "max_free_hold_s": 5.266666666666653,
+    "max_lift_m": 0.02853718400001526,
+    "middle_contact_fraction_during_airborne": [
+      0.0,
+      0.9955237242614146,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "middle_peak_N_during_airborne": [
+      0.0,
+      0.36104053258895874,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "final_slip_mm": 6.367563735693693
+  },
+  {
+    "run": "wrap04",
+    "unchanged_physics_and_drive_parameters": true,
+    "physical_parameter_changes": {},
+    "reason": "duration",
+    "lift_time_s": 14.35,
+    "max_free_hold_s": 19.36666666666685,
+    "max_lift_m": 0.030644536018371582,
+    "middle_contact_fraction_during_airborne": [
+      0.0,
+      0.9880643487285937,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "middle_peak_N_during_airborne": [
+      0.0,
+      0.29385796189308167,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "final_slip_mm": 0.3356192319188267
+  }
+]

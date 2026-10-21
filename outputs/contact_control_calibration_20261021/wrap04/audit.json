@@ -1,0 +1,2220 @@
+{
+  "args": {
+    "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+    "plans": "plans_wrap_cover_selected.json",
+    "plan_index": 0,
+    "output": "wrap04",
+    "record": true,
+    "dt": 0.004166666666666667,
+    "kp": 3.0,
+    "kd": 0.3,
+    "contact_k": 1500.0,
+    "contact_d": 10.0,
+    "torsion_radius": 0.0,
+    "mass": 0.08,
+    "offset_mm": 0.0,
+    "force_target": 2.0,
+    "duration": 50.0,
+    "hand_gravity": true,
+    "close_speed": 0.0006,
+    "no_lift": false,
+    "orientation_weight": 0.003,
+    "staged_force": false,
+    "bounded_ik": true,
+    "pad_face": "ymixed",
+    "freeze_after_grasp": true,
+    "adaptive_force": false,
+    "joint_pulse": 0.0,
+    "device": "cuda:0",
+    "cpu": false,
+    "verbose": false,
+    "info": false,
+    "rendering_mode": null,
+    "kit_args": "",
+    "headless": true,
+    "hide_ui": true,
+    "create_new_stage": false,
+    "physics_gpu": 0,
+    "active_gpu": 0
+  },
+  "fixed_cluster_filter_pairs": [
+    [
+      "link_0_0",
+      "link_1_0"
+    ],
+    [
+      "link_0_0",
+      "link_2_0"
+    ],
+    [
+      "link_0_0",
+      "link_3_0"
+    ],
+    [
+      "link_0_0",
+      "link_4_0"
+    ],
+    [
+      "link_0_0",
+      "link_5_0"
+    ],
+    [
+      "link_0_0",
+      "link_palm"
+    ],
+    [
+      "link_0_0",
+      "link_2_mcp_spread"
+    ],
+    [
+      "link_0_0",
+      "link_3_mcp_spread"
+    ],
+    [
+      "link_0_0",
+      "link_4_mcp_spread"
+    ],
+    [
+      "link_0_0",
+      "link_5_mcp_spread"
+    ],
+    [
+      "link_0_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_1_0",
+      "link_1_1"
+    ],
+    [
+      "link_1_0",
+      "link_palm"
+    ],
+    [
+      "link_1_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_1_1",
+      "link_1_2"
+    ],
+    [
+      "link_1_2",
+      "link_1_3"
+    ],
+    [
+      "link_2_0",
+      "link_2_1"
+    ],
+    [
+      "link_2_0",
+      "link_palm"
+    ],
+    [
+      "link_2_0",
+      "link_2_mcp_spread"
+    ],
+    [
+      "link_2_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_2_1",
+      "link_2_2"
+    ],
+    [
+      "link_2_1",
+      "link_2_3"
+    ],
+    [
+      "link_2_2",
+      "link_2_3"
+    ],
+    [
+      "link_3_0",
+      "link_3_1"
+    ],
+    [
+      "link_3_0",
+      "link_palm"
+    ],
+    [
+      "link_3_0",
+      "link_3_mcp_spread"
+    ],
+    [
+      "link_3_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_3_1",
+      "link_3_2"
+    ],
+    [
+      "link_3_1",
+      "link_3_3"
+    ],
+    [
+      "link_3_2",
+      "link_3_3"
+    ],
+    [
+      "link_4_0",
+      "link_4_1"
+    ],
+    [
+      "link_4_0",
+      "link_palm"
+    ],
+    [
+      "link_4_0",
+      "link_4_mcp_spread"
+    ],
+    [
+      "link_4_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_4_1",
+      "link_4_2"
+    ],
+    [
+      "link_4_1",
+      "link_4_3"
+    ],
+    [
+      "link_4_2",
+      "link_4_3"
+    ],
+    [
+      "link_5_0",
+      "link_5_1"
+    ],
+    [
+      "link_5_0",
+      "link_palm"
+    ],
+    [
+      "link_5_0",
+      "link_5_mcp_spread"
+    ],
+    [
+      "link_5_0",
+      "link_palm_chassis"
+    ],
+    [
+      "link_5_1",
+      "link_5_2"
+    ],
+    [
+      "link_5_1",
+      "link_5_3"
+    ],
+    [
+      "link_5_2",
+      "link_5_3"
+    ],
+    [
+      "link_palm",
+      "link_2_mcp_spread"
+    ],
+    [
+      "link_palm",
+      "link_3_mcp_spread"
+    ],
+    [
+      "link_palm",
+      "link_4_mcp_spread"
+    ],
+    [
+      "link_palm",
+      "link_5_mcp_spread"
+    ],
+    [
+      "link_palm",
+      "link_palm_chassis"
+    ],
+    [
+      "link_2_mcp_spread",
+      "link_palm_chassis"
+    ],
+    [
+      "link_3_mcp_spread",
+      "link_palm_chassis"
+    ],
+    [
+      "link_4_mcp_spread",
+      "link_palm_chassis"
+    ],
+    [
+      "link_5_mcp_spread",
+      "link_palm_chassis"
+    ]
+  ],
+  "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+  "initial_pad_positions": [
+    [
+      0.013363486155867577,
+      -0.01655747927725315,
+      0.28495362401008606
+    ],
+    [
+      -0.011217441409826279,
+      -0.007417025975883007,
+      0.3047485053539276
+    ],
+    [
+      -0.010880524292588234,
+      -0.006744808051735163,
+      0.286347359418869
+    ],
+    [
+      -0.010484246537089348,
+      -0.008414595387876034,
+      0.27377909421920776
+    ],
+    [
+      -0.010924186557531357,
+      -0.0027362890541553497,
+      0.2716577351093292
+    ]
+  ],
+  "initial_pad_normals": [
+    [
+      -0.9515413045883179,
+      0.008245229721069336,
+      -0.30740997195243835
+    ],
+    [
+      0.9080520272254944,
+      0.41120076179504395,
+      -0.07971858978271484
+    ],
+    [
+      0.9163139462471008,
+      0.3714183568954468,
+      -0.14972305297851562
+    ],
+    [
+      0.9382573366165161,
+      0.3060809373855591,
+      -0.16120626032352448
+    ],
+    [
+      0.9576932191848755,
+      0.1791374683380127,
+      -0.22524043917655945
+    ]
+  ],
+  "initial_q": [
+    0.0,
+    0.0,
+    0.0,
+    1.5993893146514893,
+    -0.2805033028125763,
+    -0.1699897050857544,
+    -0.20656289160251617,
+    -0.21653731167316437,
+    1.049989938735962,
+    0.7095845341682434,
+    0.8473458290100098,
+    1.129339337348938,
+    1.5899001359939575,
+    1.04133141040802,
+    1.2252709865570068,
+    1.5434564352035522,
+    1.2073694467544556,
+    0.6606311202049255,
+    1.3237820863723755,
+    0.9426299333572388,
+    0.4057796895503998,
+    0.4102618098258972,
+    0.36126118898391724,
+    0.3087882697582245
+  ],
+  "plan": {
+    "middle_phalanx_gap_to_inflated_tool_mm": [
+      29.980573729317694,
+      0.0,
+      1.309493730057007,
+      2.2976580720789213,
+      5.374420199000746
+    ],
+    "wrap_angle_deg": [
+      7.642058182287672,
+      92.75144207111099,
+      75.5880166152511,
+      86.80695290557604,
+      73.75774315484854
+    ],
+    "pad_face": "ymixed",
+    "curl_axis_deviation_deg": [
+      58.237208046640426,
+      58.830943788456736,
+      51.1282971748313,
+      44.94695583482809
+    ],
+    "cost": 8.896272539742192,
+    "q": {
+      "link_1_thumb_spread_joint": 1.5993893342571504,
+      "link_2_mcp_spread_joint": -0.2805033048825855,
+      "link_3_mcp_spread_joint": -0.1699897035962541,
+      "link_4_mcp_spread_joint": -0.2065628864490654,
+      "link_5_mcp_spread_joint": -0.21653731814555588,
+      "link_0_0_to_link_1_0": 1.0499899922489435,
+      "link_1_0_to_link_1_1": 1.0413313651578522,
+      "link_1_1_to_link_1_2": 1.3237821447944687,
+      "link_0_0_to_link_2_0": 0.709584558912569,
+      "link_2_0_to_link_2_1": 1.2252710310039772,
+      "link_2_1_to_link_2_2": 0.9426299301666471,
+      "link_0_0_to_link_3_0": 0.8473458283221865,
+      "link_3_0_to_link_3_1": 1.543456432491987,
+      "link_3_1_to_link_3_2": 0.4057797001303311,
+      "link_0_0_to_link_4_0": 1.1293393194913832,
+      "link_4_0_to_link_4_1": 1.207369436547589,
+      "link_4_1_to_link_4_2": 0.4102617979764399,
+      "link_0_0_to_link_5_0": 1.589900184057553,
+      "link_5_0_to_link_5_1": 0.6606311200416909,
+      "link_5_1_to_link_5_2": 0.36126120379403753,
+      "link_1_2_to_link_1_3": 0.3087882676624357
+    },
+    "center": [
+      -0.031441129699487994,
+      0.014493810633404903,
+      0.3681243318285085
+    ],
+    "rotation": [
+      [
+        0.31137063295319384,
+        -0.2413494906080093,
+        -0.9191293447157379
+      ],
+      [
+        0.8357973175011892,
+        0.5298123733938315,
+        0.14401976620107204
+      ],
+      [
+        0.45220700236964884,
+        -0.8130493665098385,
+        0.3666872708805239
+      ]
+    ],
+    "pad_points": [
+      [
+        -0.009454406296872967,
+        0.014723658970243275,
+        0.3821121135680757
+      ],
+      [
+        -0.037508328760843666,
+        0.0018725819172308203,
+        0.3708233795454149
+      ],
+      [
+        -0.020652648610967758,
+        -0.00013980879735245354,
+        0.36368169493352714
+      ],
+      [
+        -0.008574348629216627,
+        -0.0025033376813494495,
+        0.3606099101662162
+      ],
+      [
+        -0.008131986673952294,
+        -0.000168131706003191,
+        0.35501634027231854
+      ]
+    ],
+    "pad_normals": [
+      [
+        -0.015722456429258007,
+        -0.8352004695307457,
+        -0.5497208201073085
+      ],
+      [
+        0.25676894661659344,
+        0.9653259661691523,
+        0.047068961035882415
+      ],
+      [
+        0.33328633229158805,
+        0.9410718363356078,
+        0.05748060162827595
+      ],
+      [
+        0.3664419967461331,
+        0.9231419176320048,
+        0.11631535982582808
+      ],
+      [
+        0.461987249141507,
+        0.8629080862968763,
+        0.20483509522082882
+      ]
+    ],
+    "normal_alignment": [
+      0.951541427420399,
+      0.9080520762438451,
+      0.9163140231822261,
+      0.9382574350935939,
+      0.9576933903484225
+    ],
+    "thumb_center_offset_mm": 0.8204054877676021,
+    "intersections": [],
+    "self_intersections": [
+      {
+        "a": "link_3_3",
+        "b": "link_4_2",
+        "parts": [
+          "finger_pad",
+          "distal_bearing"
+        ],
+        "depth_mm": 0.04576855103408561
+      },
+      {
+        "a": "link_4_3",
+        "b": "link_5_3",
+        "parts": [
+          "finger_pad",
+          "finger_pad"
+        ],
+        "depth_mm": 0.020069026688085367
+      }
+    ]
+  },
+  "wrist_contract": {
+    "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+    "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+    "diagnostic_urdf": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap04/wrist/assets/urdf/current_agent.urdf",
+    "diagnostic_sha256": "649b44fa26328bb81b7c6e47f25ea8d5efead305bd60c642df7e29e649fde0bd",
+    "original_nodes_unchanged": true,
+    "hand_root": "link_0_0",
+    "wrist_joint_names": [
+      "diagnostic_wrist_x",
+      "diagnostic_wrist_y",
+      "diagnostic_wrist_z"
+    ],
+    "morphology_genes_include_wrist": false,
+    "axes_frame": "original hand root local frame",
+    "added_moving_mass_kg": 0.1,
+    "effort_limit_N": 100,
+    "velocity_limit_m_s": 0.02,
+    "position_limits_m": [
+      -0.25,
+      0.25
+    ]
+  },
+  "joint_names": [
+    "diagnostic_wrist_x",
+    "diagnostic_wrist_y",
+    "diagnostic_wrist_z",
+    "link_1_thumb_spread_joint",
+    "link_2_mcp_spread_joint",
+    "link_3_mcp_spread_joint",
+    "link_4_mcp_spread_joint",
+    "link_5_mcp_spread_joint",
+    "link_0_0_to_link_1_0",
+    "link_0_0_to_link_2_0",
+    "link_0_0_to_link_3_0",
+    "link_0_0_to_link_4_0",
+    "link_0_0_to_link_5_0",
+    "link_1_0_to_link_1_1",
+    "link_2_0_to_link_2_1",
+    "link_3_0_to_link_3_1",
+    "link_4_0_to_link_4_1",
+    "link_5_0_to_link_5_1",
+    "link_1_1_to_link_1_2",
+    "link_2_1_to_link_2_2",
+    "link_3_1_to_link_3_2",
+    "link_4_1_to_link_4_2",
+    "link_5_1_to_link_5_2",
+    "link_1_2_to_link_1_3"
+  ],
+  "body_names": [
+    "diagnostic_world",
+    "diagnostic_stage_x",
+    "diagnostic_stage_y",
+    "link_0_0",
+    "link_palm",
+    "link_palm_chassis",
+    "link_1_thumb_spread",
+    "link_2_mcp_spread",
+    "link_3_mcp_spread",
+    "link_4_mcp_spread",
+    "link_5_mcp_spread",
+    "link_1_0",
+    "link_2_0",
+    "link_3_0",
+    "link_4_0",
+    "link_5_0",
+    "link_1_1",
+    "link_2_1",
+    "link_3_1",
+    "link_4_1",
+    "link_5_1",
+    "link_1_2",
+    "link_2_2",
+    "link_3_2",
+    "link_4_2",
+    "link_5_2",
+    "link_1_3",
+    "link_2_3",
+    "link_3_3",
+    "link_4_3",
+    "link_5_3"
+  ],
+  "materials": [
+    {
+      "path": "/World/Hand/link_0_0/collisions/wrist_mount/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_palm/collisions/palm_chassis/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_1_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 1500.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_2_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 1500.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_3_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 1500.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_4_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 1500.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_mcp_spread/collisions/spread_shaft/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_0/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_1/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_0/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_1/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_2/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/rigid_link_3/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/proximal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_2/collisions/distal_bearing/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_5_3/collisions/finger_pad/mesh",
+      "role": "pad",
+      "material": "/World/MechanicalContactMaterialsV3/pad",
+      "static_friction": 0.800000011920929,
+      "compliant_stiffness": 1500.0,
+      "compliant_damping": 10.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Hand/link_palm_chassis/collisions/rigid_palm_chassis/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Object/geometry/mesh",
+      "role": "object",
+      "material": "/World/MechanicalContactMaterialsV3/object",
+      "static_friction": 0.5,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Support/geometry/mesh",
+      "role": "object",
+      "material": "/World/MechanicalContactMaterialsV3/object",
+      "static_friction": 0.5,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    },
+    {
+      "path": "/World/Plate/geometry/mesh",
+      "role": "metal",
+      "material": "/World/MechanicalContactMaterialsV3/metal",
+      "static_friction": 0.20000000298023224,
+      "compliant_stiffness": 0.0,
+      "compliant_damping": 0.0,
+      "contact_offset_m": 0.0003000000142492354,
+      "rest_offset_m": 0.0
+    }
+  ],
+  "force_targets_N": [
+    [
+      2.0,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ]
+  ],
+  "object_free": true,
+  "object_mass_kg": 0.08,
+  "object_size_m": [
+    0.018,
+    0.018,
+    0.18
+  ],
+  "hand_gravity": true,
+  "jacobian_shape": [
+    1,
+    30,
+    6,
+    24
+  ],
+  "runtime_materials": [
+    [
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.20000000298023224,
+        0.20000000298023224,
+        0.0
+      ],
+      [
+        0.800000011920929,
+        0.800000011920929,
+        -1500.0
+      ],
+      [
+        0.800000011920929,
+        0.800000011920929,
+        -1500.0
+      ],
+      [
+        0.800000011920929,
+        0.800000011920929,
+        -1500.0
+      ],
+      [
+        0.800000011920929,
+        0.800000011920929,
+        -1500.0
+      ],
+      [
+        0.800000011920929,
+        0.800000011920929,
+        -1500.0
+      ]
+    ]
+  ],
+  "runtime_kp": [
+    [
+      3000.0,
+      3000.0,
+      3000.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0
+    ]
+  ],
+  "runtime_kd": [
+    [
+      100.0,
+      100.0,
+      100.0,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896,
+      0.30000001192092896
+    ]
+  ],
+  "point_jacobian_fd_error_m_per_rad": [
+    3.297434944538047e-08,
+    2.532820629272403e-08,
+    4.238389715235935e-08,
+    3.978964697656795e-08,
+    4.478874316565795e-08
+  ]
+}

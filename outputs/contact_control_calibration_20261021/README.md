@@ -46,3 +46,7 @@ Python：`/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python`。
 在目录中运行 `run_minimum.py`，随后运行 `final_checks.py`。输出目录已存在时会拒绝覆盖；复测应使用新的目录名。需要现有 `motion_collision_revision_20261021` 模型、IsaacLab、FCL，以及已授权的 `diagnostic_wrist` 工具。
 
 模型变异后必须重算抓握姿态和接触点，重新验证；本次基准姿态和关节向量不能直接宣称适用于全部变异形态。
+
+## 包覆抓握后续修改
+
+见 [WRAP_GRASP.md](WRAP_GRASP.md)。仅修改抓握规划与闭合反馈，物理和驱动参数保持不变。`wrap04` 在固定初始条件下通过完整操作测试，末端滑移 0.336 mm；四指与拇指均承重，但中节接触仍不均匀。此结果不替代随机初始条件、时间步和变异手验证，训练仍暂停。

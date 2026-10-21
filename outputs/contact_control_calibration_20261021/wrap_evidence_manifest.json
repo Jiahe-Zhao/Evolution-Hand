@@ -1,0 +1,98 @@
+[
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side01/trace.json",
+    "sha256": "2cfff3dc3e4dffa7e44a0aded9cbb24db86aea746c7f9eb637f445e71f080577",
+    "bytes": 3070994,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side01/validation.mp4",
+    "sha256": "4a6ef4675227ab7f92c64ea27e4b26f9cfa3a0e9f506dbc836f8f541296f3c84",
+    "bytes": 1306743,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side02/trace.json",
+    "sha256": "f4802101a96ffdaf47ef394f132969a0fba95b33f6ca4d86e0f4984a02c69eb2",
+    "bytes": 8325301,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side02/validation.mp4",
+    "sha256": "1d09a8183e7a88e40392855bc6b7155954439ae1c6a6c9f952146c20455e9f62",
+    "bytes": 3277219,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side03/trace.json",
+    "sha256": "6bf0c179be18f9204701d7e024bfaeaf9931e8ba9cb7dd7afd479de64fbb59a4",
+    "bytes": 8399528,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side03/validation.mp4",
+    "sha256": "6672195b76ad3294dc72de052c216089f8eb39ef2fb2385d652c6eeb86fba47d",
+    "bytes": 3296335,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side05/trace.json",
+    "sha256": "ee40461f09f0c960f1ceadb904c377f49c862f8e75c10113f833a286a05fffe0",
+    "bytes": 4379365,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side05/validation.mp4",
+    "sha256": "0fd576c52cb9b6b259e6049bf6ee0a539412f7af9dd7b1810967d4713d7b00ab",
+    "bytes": 1791609,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side04/trace.json",
+    "sha256": "e6abdffac0e4bce8bfe277ee8477f5761976d2c2cf76da87598ff57929e3867b",
+    "bytes": 8527133,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/long_side04/validation.mp4",
+    "sha256": "acbf00329d1896aee0d549b46df069ef94228dad33cfe5841bbea242bd4253e0",
+    "bytes": 3362827,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap03/trace.json",
+    "sha256": "a91a940ffbc1aa392a0d79600edb1d99ac7f04bff1ca4464e3803b0f686ef292",
+    "bytes": 9027792,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap03/validation.mp4",
+    "sha256": "883c94d0bb1adccd75ad61e4fd829ebcfc139a8dc74fb6fcc3c8ef2107410736",
+    "bytes": 3430277,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap01/trace.json",
+    "sha256": "86f5a33a3bb8be08e45ca80d1ab0c20001ac2fa6bff3928f3d7a7656a3bc33fe",
+    "bytes": 9020984,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap04/trace.json",
+    "sha256": "6b611329f643b2732eb588fe05ea3401188b89127b231d33d67ca116f0c3015a",
+    "bytes": 9171496,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap04/validation.mp4",
+    "sha256": "954397a5826f4864b655da1d3b317cc21597c9bde7c0e52b63ee6ee194749fdb",
+    "bytes": 3455377,
+    "kept_on_remote": true
+  },
+  {
+    "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/wrap02/trace.json",
+    "sha256": "bf911afb277a605fbf59a6dea8545c52eb4b0df08b9e1d71ee99620d0df53b5d",
+    "bytes": 9046221,
+    "kept_on_remote": true
+  }
+]

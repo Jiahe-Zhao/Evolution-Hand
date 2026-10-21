@@ -1,0 +1,265 @@
+[
+  {
+    "run": "long_side01",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": false,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": false,
+      "retained_after_contact": false
+    },
+    "lift_time_s": 16.083333333333332,
+    "max_free_hold_s": 0.0,
+    "peak_plate_force_N": 0.0,
+    "peak_limit_excess_rad": 4.76837158203125e-07,
+    "final_slip_mm": 179.7778755426407,
+    "final_angle_deg": 151.7782234339756,
+    "phases": [
+      "close",
+      "lift",
+      "settle"
+    ]
+  },
+  {
+    "run": "long_side02",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": false,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": false,
+      "retained_after_contact": false
+    },
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "peak_plate_force_N": 0.0,
+    "peak_limit_excess_rad": 4.76837158203125e-07,
+    "final_slip_mm": 6.06678007170558,
+    "final_angle_deg": 4.504412000540913,
+    "phases": [
+      "close",
+      "settle"
+    ]
+  },
+  {
+    "run": "long_side03",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": false,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": false,
+      "retained_after_contact": false
+    },
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "peak_plate_force_N": 0.0,
+    "peak_limit_excess_rad": 8.344650268554688e-07,
+    "final_slip_mm": 6.510372739285231,
+    "final_angle_deg": 5.169197300666016,
+    "phases": [
+      "close",
+      "settle"
+    ]
+  },
+  {
+    "run": "long_side04",
+    "passed": true,
+    "checks": {
+      "free_hold_3s": true,
+      "finite_and_limits": true,
+      "lateral_force": true,
+      "torque": true,
+      "swing": true,
+      "transport": true,
+      "light_contact": true,
+      "retained_after_contact": true
+    },
+    "lift_time_s": 14.833333333333334,
+    "max_free_hold_s": 19.28333333333352,
+    "peak_plate_force_N": 1.7965697050094604,
+    "peak_limit_excess_rad": 5.960464477539062e-07,
+    "final_slip_mm": 1.2016850523650646,
+    "final_angle_deg": 4.772278359410474,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "light_tap",
+      "retract",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  },
+  {
+    "run": "long_side05",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": false,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": false,
+      "retained_after_contact": false
+    },
+    "lift_time_s": 9.166666666666666,
+    "max_free_hold_s": 0.0,
+    "peak_plate_force_N": 0.4765979051589966,
+    "peak_limit_excess_rad": 2.384185791015625e-07,
+    "final_slip_mm": 178.2352179288864,
+    "final_angle_deg": 8.446260592735603,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  },
+  {
+    "run": "wrap01",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": true,
+      "finite_and_limits": true,
+      "lateral_force": true,
+      "torque": true,
+      "swing": true,
+      "transport": true,
+      "light_contact": true,
+      "retained_after_contact": false
+    },
+    "lift_time_s": 7.033333333333333,
+    "max_free_hold_s": 18.800000000000214,
+    "peak_plate_force_N": 1.8387962579727173,
+    "peak_limit_excess_rad": 1.0728836059570312e-06,
+    "final_slip_mm": 5.115311127156019,
+    "final_angle_deg": 10.259687770205037,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "light_tap",
+      "retract",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  },
+  {
+    "run": "wrap02",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": false,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": true,
+      "retained_after_contact": false
+    },
+    "lift_time_s": 9.433333333333334,
+    "max_free_hold_s": 0.0,
+    "peak_plate_force_N": 1.0405374765396118,
+    "peak_limit_excess_rad": 7.152557373046875e-07,
+    "final_slip_mm": 33.667948096990585,
+    "final_angle_deg": 14.981234472668417,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "light_tap",
+      "retract",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  },
+  {
+    "run": "wrap03",
+    "passed": false,
+    "checks": {
+      "free_hold_3s": true,
+      "finite_and_limits": true,
+      "lateral_force": false,
+      "torque": false,
+      "swing": false,
+      "transport": false,
+      "light_contact": true,
+      "retained_after_contact": false
+    },
+    "lift_time_s": 8.683333333333334,
+    "max_free_hold_s": 5.266666666666653,
+    "peak_plate_force_N": 1.7753894329071045,
+    "peak_limit_excess_rad": 1.1920928955078125e-07,
+    "final_slip_mm": 6.367563735693693,
+    "final_angle_deg": 10.372129759416373,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "light_tap",
+      "retract",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  },
+  {
+    "run": "wrap04",
+    "passed": true,
+    "checks": {
+      "free_hold_3s": true,
+      "finite_and_limits": true,
+      "lateral_force": true,
+      "torque": true,
+      "swing": true,
+      "transport": true,
+      "light_contact": true,
+      "retained_after_contact": true
+    },
+    "lift_time_s": 14.35,
+    "max_free_hold_s": 19.36666666666685,
+    "peak_plate_force_N": 1.6787594556808472,
+    "peak_limit_excess_rad": 1.1920928955078125e-07,
+    "final_slip_mm": 0.3356192319188267,
+    "final_angle_deg": 1.1928657513945757,
+    "phases": [
+      "close",
+      "hold",
+      "lateral_force",
+      "lift",
+      "light_tap",
+      "retract",
+      "settle",
+      "swing",
+      "torque",
+      "transport"
+    ]
+  }
+]
