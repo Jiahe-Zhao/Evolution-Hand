@@ -1,0 +1,30 @@
+{
+  "status": "experimental_not_accepted",
+  "recommended_for_training": false,
+  "hand_model": "motion_contact_v3",
+  "actuator": {
+    "stiffness_Nm_per_rad": 3,
+    "damping_Nm_s_per_rad": 0.3,
+    "effort_and_velocity_limits": "unchanged"
+  },
+  "contact": {
+    "pad_stiffness_N_per_m": 1500,
+    "pad_damping_Ns_per_m": 10,
+    "pad_friction": 0.8,
+    "object_friction": 0.5,
+    "combine": "average",
+    "torsional_patch_radius_m": 0
+  },
+  "hand_gravity_recommended_for_next_baseline": true,
+  "gravity_on_full_validation_passed": true,
+  "gravity_on_repeat_passed": true,
+  "control": {
+    "frequency_hz": 60,
+    "closure_speed_m_s": 0.0006,
+    "bounded_ik": true,
+    "freeze_after_grasp": true,
+    "tool_has_no_grasp_constraint": true
+  },
+  "minimum_validation_passed": false,
+  "warning": "Baseline candidate only; replan and revalidate after morphology mutation."
+}

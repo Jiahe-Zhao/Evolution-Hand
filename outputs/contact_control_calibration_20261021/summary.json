@@ -1,0 +1,2702 @@
+[
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 8.344650268554688e-07,
+    "peak_object_speed_m_s": 0.0055923746148598494,
+    "max_limit_excess_rad": 0.017939215525984764,
+    "run": "run03",
+    "valid_for_physics_conclusion": false,
+    "excluded_reason": "Initial joint state not explicitly written",
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans.json",
+      "plan_index": 0,
+      "output": "run03",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 6.0,
+      "kd": 0.6,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 15.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          14.983333333333333
+        ],
+        "max_slip_mm": 0.5006246501579881,
+        "max_angle_deg": 0.039564681230461377,
+        "max_normal_force_N": 0.0,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 5.537271499633789e-05,
+    "peak_object_speed_m_s": 0.018234404305960822,
+    "max_limit_excess_rad": 7.152557373046875e-07,
+    "run": "run04",
+    "valid_for_physics_conclusion": false,
+    "excluded_reason": "Unmerged fixed-link collision semantics not yet corrected",
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans.json",
+      "plan_index": 0,
+      "output": "run04",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 6.0,
+      "kd": 0.6,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 15.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          14.983333333333333
+        ],
+        "max_slip_mm": 0.8405786356888711,
+        "max_angle_deg": 3.5763197103471867,
+        "max_normal_force_N": 0.05243568867444992,
+        "last_normal_force_N": [
+          0.046308234333992004,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "tool_lost_or_unstable",
+    "lift_time_s": 1.8166666666666667,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.02547544240951538,
+    "peak_object_speed_m_s": 1.5141094195801428,
+    "max_limit_excess_rad": 1.1920928955078125e-07,
+    "run": "run06",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run06",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 6.0,
+      "kd": 0.6,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 15.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          1.8
+        ],
+        "max_slip_mm": 2.165812999010086,
+        "max_angle_deg": 9.208814511823343,
+        "max_normal_force_N": 9.084296226501465,
+        "last_normal_force_N": [
+          9.084296226501465,
+          0.0,
+          1.3441921472549438,
+          0.7781736850738525,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          1.8166666666666667,
+          4.8
+        ],
+        "max_slip_mm": 5.390342324972153,
+        "max_angle_deg": 22.99059264990463,
+        "max_normal_force_N": 10.273844718933105,
+        "last_normal_force_N": [
+          1.9355452060699463,
+          0.28582894802093506,
+          0.8801776766777039,
+          0.5951068997383118,
+          0.4060854911804199
+        ]
+      },
+      "hold": {
+        "time": [
+          4.816666666666666,
+          5.766666666666667
+        ],
+        "max_slip_mm": 207.24985003471375,
+        "max_angle_deg": 128.61930606785742,
+        "max_normal_force_N": 1.9015867710113525,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.00020778179168701172,
+    "peak_object_speed_m_s": 0.005285750811739591,
+    "max_limit_excess_rad": 4.76837158203125e-07,
+    "run": "run07",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run07",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 18.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          17.983333333333334
+        ],
+        "max_slip_mm": 3.8028934504836798,
+        "max_angle_deg": 10.116841205463567,
+        "max_normal_force_N": 4.194753646850586,
+        "last_normal_force_N": [
+          2.006906032562256,
+          0.5673943758010864,
+          0.5845364928245544,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.00031262636184692383,
+    "peak_object_speed_m_s": 0.0046525229815149805,
+    "max_limit_excess_rad": 1.0728836059570312e-06,
+    "run": "run08",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run08",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 18.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": true,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          17.983333333333334
+        ],
+        "max_slip_mm": 3.779494669288397,
+        "max_angle_deg": 7.69155970295758,
+        "max_normal_force_N": 1.4043424129486084,
+        "last_normal_force_N": [
+          1.2593485116958618,
+          0.1549791842699051,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.00033861398696899414,
+    "peak_object_speed_m_s": 0.0059301062514541016,
+    "max_limit_excess_rad": 4.470348358154297e-08,
+    "run": "run09",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run09",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 22.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": true,
+      "bounded_ik": true,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          21.983333333333334
+        ],
+        "max_slip_mm": 3.7622912786900997,
+        "max_angle_deg": 6.7237009790065,
+        "max_normal_force_N": 1.5113996267318726,
+        "last_normal_force_N": [
+          0.4432245194911957,
+          0.11365126073360443,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": null,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.00034096837043762207,
+    "peak_object_speed_m_s": 0.004702796232035449,
+    "max_limit_excess_rad": 0.0,
+    "run": "run10",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_margin_audited.json",
+      "plan_index": 0,
+      "output": "run10",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 20.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          19.983333333333334
+        ],
+        "max_slip_mm": 4.7102621756494045,
+        "max_angle_deg": 3.2315996356559196,
+        "max_normal_force_N": 1.1708022356033325,
+        "last_normal_force_N": [
+          0.9935458302497864,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "status": "not_reached"
+      },
+      "hold": {
+        "status": "not_reached"
+      },
+      "lateral_force": {
+        "status": "not_reached"
+      },
+      "torque": {
+        "status": "not_reached"
+      },
+      "swing": {
+        "status": "not_reached"
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 5.016666666666667,
+    "max_free_hold_s": 4.466666666666667,
+    "max_lift_m": 0.028114348649978638,
+    "peak_object_speed_m_s": 0.5924510585790856,
+    "max_limit_excess_rad": 0.0,
+    "run": "run11",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run11",
+      "record": true,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 32.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          5.0
+        ],
+        "max_slip_mm": 0.7247900357469916,
+        "max_angle_deg": 1.8792394673644348,
+        "max_normal_force_N": 3.1133196353912354,
+        "last_normal_force_N": [
+          2.7450642585754395,
+          0.0,
+          0.3280746340751648,
+          0.3255888819694519,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          5.016666666666667,
+          8.016666666666666
+        ],
+        "max_slip_mm": 1.468053786084056,
+        "max_angle_deg": 4.275797463056758,
+        "max_normal_force_N": 2.75838565826416,
+        "last_normal_force_N": [
+          1.3888601064682007,
+          0.0,
+          0.6305540204048157,
+          0.41865307092666626,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          8.033333333333333,
+          19.0
+        ],
+        "max_slip_mm": 29.726667329669,
+        "max_angle_deg": 14.636255294793774,
+        "max_normal_force_N": 1.3894402980804443,
+        "last_normal_force_N": [
+          0.182017982006073,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          11.033333333333333,
+          12.016666666666666
+        ],
+        "max_slip_mm": 15.204017981886864,
+        "max_angle_deg": 29.228647114687604,
+        "max_normal_force_N": 1.4253628253936768,
+        "last_normal_force_N": [
+          1.0784518718719482,
+          0.7079420685768127,
+          0.07168938964605331,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "torque": {
+        "time": [
+          13.033333333333333,
+          14.0
+        ],
+        "max_slip_mm": 29.641231521964073,
+        "max_angle_deg": 11.553714932990188,
+        "max_normal_force_N": 0.15611623227596283,
+        "last_normal_force_N": [
+          0.15573358535766602,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "swing": {
+        "time": [
+          15.016666666666666,
+          18.0
+        ],
+        "max_slip_mm": 29.770735651254654,
+        "max_angle_deg": 11.776189562437349,
+        "max_normal_force_N": 0.46724429726600647,
+        "last_normal_force_N": [
+          0.18495042622089386,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "transport": {
+        "time": [
+          19.016666666666666,
+          24.0
+        ],
+        "max_slip_mm": 36.722443997859955,
+        "max_angle_deg": 27.407942368577064,
+        "max_normal_force_N": 0.847544252872467,
+        "last_normal_force_N": [
+          0.09537772834300995,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          24.016666666666666,
+          31.983333333333334
+        ],
+        "max_slip_mm": 36.723315715789795,
+        "max_angle_deg": 30.726657865544865,
+        "max_normal_force_N": 0.7698766589164734,
+        "last_normal_force_N": [
+          0.7695408463478088,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 22.633333333333333,
+    "max_free_hold_s": 11.716666666666669,
+    "max_lift_m": 0.028360962867736816,
+    "peak_object_speed_m_s": 0.035559032817647565,
+    "max_limit_excess_rad": 3.5762786865234375e-07,
+    "run": "run12",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run12",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 3.0,
+      "duration": 36.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": true,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          22.616666666666667
+        ],
+        "max_slip_mm": 1.7526380252093077,
+        "max_angle_deg": 14.045278298825009,
+        "max_normal_force_N": 3.8935301303863525,
+        "last_normal_force_N": [
+          2.955519676208496,
+          0.1395387202501297,
+          1.5650501251220703,
+          0.2409370094537735,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          22.633333333333333,
+          25.616666666666667
+        ],
+        "max_slip_mm": 1.9132598536089063,
+        "max_angle_deg": 2.281448604035155,
+        "max_normal_force_N": 2.9429805278778076,
+        "last_normal_force_N": [
+          1.9161206483840942,
+          0.0,
+          1.0796294212341309,
+          0.6005422472953796,
+          0.015472639352083206
+        ]
+      },
+      "hold": {
+        "time": [
+          25.633333333333333,
+          35.983333333333334
+        ],
+        "max_slip_mm": 2.6625923346728086,
+        "max_angle_deg": 3.194813730848078,
+        "max_normal_force_N": 2.2623603343963623,
+        "last_normal_force_N": [
+          1.8323321342468262,
+          0.0,
+          0.874652087688446,
+          0.4137896001338959,
+          0.017075395211577415
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          28.633333333333333,
+          29.616666666666667
+        ],
+        "max_slip_mm": 2.6696452405303717,
+        "max_angle_deg": 3.2028889354469645,
+        "max_normal_force_N": 2.2647900581359863,
+        "last_normal_force_N": [
+          2.2647900581359863,
+          0.0,
+          1.2571589946746826,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          30.633333333333333,
+          31.616666666666667
+        ],
+        "max_slip_mm": 2.362990053370595,
+        "max_angle_deg": 2.8172316950316256,
+        "max_normal_force_N": 1.8477340936660767,
+        "last_normal_force_N": [
+          1.7772895097732544,
+          0.0,
+          0.8383657932281494,
+          0.4673578441143036,
+          0.025619469583034515
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          32.63333333333333,
+          35.61666666666667
+        ],
+        "max_slip_mm": 2.2834388073533773,
+        "max_angle_deg": 2.7205493000025616,
+        "max_normal_force_N": 1.8354268074035645,
+        "last_normal_force_N": [
+          1.8354268074035645,
+          0.0,
+          0.8757781386375427,
+          0.4128514528274536,
+          0.012203214690089226
+        ],
+        "passed": true
+      },
+      "transport": {
+        "status": "not_reached"
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 5.066666666666666,
+    "max_free_hold_s": 19.0,
+    "max_lift_m": 0.02856731414794922,
+    "peak_object_speed_m_s": 0.047474189054975746,
+    "max_limit_excess_rad": 0.0,
+    "run": "run13",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run13",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 30.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          5.05
+        ],
+        "max_slip_mm": 0.7092844462022185,
+        "max_angle_deg": 2.1587557813999037,
+        "max_normal_force_N": 2.4489307403564453,
+        "last_normal_force_N": [
+          2.447068214416504,
+          0.0,
+          0.2515646815299988,
+          0.31015104055404663,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          5.066666666666666,
+          8.05
+        ],
+        "max_slip_mm": 1.3309582136571407,
+        "max_angle_deg": 2.661795585808153,
+        "max_normal_force_N": 2.4308996200561523,
+        "last_normal_force_N": [
+          1.682451605796814,
+          0.0,
+          0.5365962982177734,
+          0.44223248958587646,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          8.066666666666666,
+          19.05
+        ],
+        "max_slip_mm": 4.874938633292913,
+        "max_angle_deg": 6.061080848091137,
+        "max_normal_force_N": 2.033728837966919,
+        "last_normal_force_N": [
+          1.3497875928878784,
+          0.0,
+          0.7535730600357056,
+          0.293801873922348,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          11.066666666666666,
+          12.05
+        ],
+        "max_slip_mm": 4.866209346801043,
+        "max_angle_deg": 6.073986490542623,
+        "max_normal_force_N": 2.0442891120910645,
+        "last_normal_force_N": [
+          2.02917218208313,
+          0.0,
+          1.2056212425231934,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          13.066666666666666,
+          14.049999999999999
+        ],
+        "max_slip_mm": 3.1060779001563787,
+        "max_angle_deg": 4.645757648081002,
+        "max_normal_force_N": 1.428962230682373,
+        "last_normal_force_N": [
+          1.4086353778839111,
+          0.0,
+          0.6436305046081543,
+          0.3632948398590088,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          15.066666666666666,
+          18.05
+        ],
+        "max_slip_mm": 4.133015871047974,
+        "max_angle_deg": 5.686070591943545,
+        "max_normal_force_N": 1.387351632118225,
+        "last_normal_force_N": [
+          1.3524260520935059,
+          0.0,
+          0.7437851428985596,
+          0.291492223739624,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          19.066666666666666,
+          24.05
+        ],
+        "max_slip_mm": 4.64221928268671,
+        "max_angle_deg": 5.783963424560965,
+        "max_normal_force_N": 1.3700833320617676,
+        "last_normal_force_N": [
+          1.360673189163208,
+          0.0,
+          0.7609903216362,
+          0.256511926651001,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          24.066666666666666,
+          29.983333333333334
+        ],
+        "max_slip_mm": 4.771888256072998,
+        "max_angle_deg": 7.302071580187133,
+        "max_normal_force_N": 1.7675049304962158,
+        "last_normal_force_N": [
+          1.4954489469528198,
+          0.0,
+          0.6073758602142334,
+          0.05995960533618927,
+          0.0
+        ]
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "tool_lost_or_unstable",
+    "lift_time_s": 4.783333333333333,
+    "max_free_hold_s": 13.549999999999999,
+    "max_lift_m": 0.02856692671775818,
+    "peak_object_speed_m_s": 1.5433733287765092,
+    "max_limit_excess_rad": 0.0,
+    "run": "run14",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run14",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 3000.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.002,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 30.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          4.766666666666667
+        ],
+        "max_slip_mm": 0.6190438871271908,
+        "max_angle_deg": 2.100686793670571,
+        "max_normal_force_N": 2.721818685531616,
+        "last_normal_force_N": [
+          2.648097515106201,
+          0.0,
+          0.30566033720970154,
+          0.35854849219322205,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          4.783333333333333,
+          7.766666666666667
+        ],
+        "max_slip_mm": 1.312646665610373,
+        "max_angle_deg": 2.787062962876618,
+        "max_normal_force_N": 2.6923818588256836,
+        "last_normal_force_N": [
+          1.6216297149658203,
+          0.0,
+          0.5678808689117432,
+          0.3710564076900482,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          7.783333333333333,
+          18.78333333333333
+        ],
+        "max_slip_mm": 4.9241334199905396,
+        "max_angle_deg": 6.417761864693233,
+        "max_normal_force_N": 2.06020450592041,
+        "last_normal_force_N": [
+          1.2383835315704346,
+          0.0,
+          0.6781817674636841,
+          0.3157525956630707,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          10.783333333333333,
+          11.766666666666666
+        ],
+        "max_slip_mm": 4.917863290756941,
+        "max_angle_deg": 6.4115357203708285,
+        "max_normal_force_N": 2.0967798233032227,
+        "last_normal_force_N": [
+          2.0269711017608643,
+          0.0,
+          1.0247424840927124,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          12.783333333333333,
+          13.766666666666666
+        ],
+        "max_slip_mm": 3.489352995529771,
+        "max_angle_deg": 4.8806367548487275,
+        "max_normal_force_N": 1.3293702602386475,
+        "last_normal_force_N": [
+          1.2941211462020874,
+          0.0,
+          0.6078483462333679,
+          0.298264741897583,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          14.783333333333333,
+          17.78333333333333
+        ],
+        "max_slip_mm": 4.699569661170244,
+        "max_angle_deg": 5.351819916601401,
+        "max_normal_force_N": 1.3496465682983398,
+        "last_normal_force_N": [
+          1.3306909799575806,
+          0.0,
+          0.6525081396102905,
+          0.24890325963497162,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          18.8,
+          21.016666666666666
+        ],
+        "max_slip_mm": 210.81608533859253,
+        "max_angle_deg": 132.25720142774654,
+        "max_normal_force_N": 1.2563300132751465,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 5.066666666666666,
+    "max_free_hold_s": 19.0,
+    "max_lift_m": 0.02856731414794922,
+    "peak_object_speed_m_s": 0.2803679232157038,
+    "max_limit_excess_rad": 0.0,
+    "run": "run15",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run15",
+      "record": true,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          5.05
+        ],
+        "max_slip_mm": 0.7092844462022185,
+        "max_angle_deg": 2.1587557813999037,
+        "max_normal_force_N": 2.4489307403564453,
+        "last_normal_force_N": [
+          2.447068214416504,
+          0.0,
+          0.2515646815299988,
+          0.31015104055404663,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          5.066666666666666,
+          8.05
+        ],
+        "max_slip_mm": 1.3309582136571407,
+        "max_angle_deg": 2.661795585808153,
+        "max_normal_force_N": 2.4308996200561523,
+        "last_normal_force_N": [
+          1.682451605796814,
+          0.0,
+          0.5365962982177734,
+          0.44223248958587646,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          8.066666666666666,
+          19.05
+        ],
+        "max_slip_mm": 4.874938633292913,
+        "max_angle_deg": 6.061080848091137,
+        "max_normal_force_N": 2.033728837966919,
+        "last_normal_force_N": [
+          1.3497875928878784,
+          0.0,
+          0.7535730600357056,
+          0.293801873922348,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          11.066666666666666,
+          12.05
+        ],
+        "max_slip_mm": 4.866209346801043,
+        "max_angle_deg": 6.073986490542623,
+        "max_normal_force_N": 2.0442891120910645,
+        "last_normal_force_N": [
+          2.02917218208313,
+          0.0,
+          1.2056212425231934,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          13.066666666666666,
+          14.049999999999999
+        ],
+        "max_slip_mm": 3.1060779001563787,
+        "max_angle_deg": 4.645757648081002,
+        "max_normal_force_N": 1.428962230682373,
+        "last_normal_force_N": [
+          1.4086353778839111,
+          0.0,
+          0.6436305046081543,
+          0.3632948398590088,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          15.066666666666666,
+          18.05
+        ],
+        "max_slip_mm": 4.133015871047974,
+        "max_angle_deg": 5.686070591943545,
+        "max_normal_force_N": 1.387351632118225,
+        "last_normal_force_N": [
+          1.3524260520935059,
+          0.0,
+          0.7437851428985596,
+          0.291492223739624,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          19.066666666666666,
+          24.05
+        ],
+        "max_slip_mm": 4.64221928268671,
+        "max_angle_deg": 5.783963424560965,
+        "max_normal_force_N": 1.3700833320617676,
+        "last_normal_force_N": [
+          1.360673189163208,
+          0.0,
+          0.7609903216362,
+          0.256511926651001,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          24.066666666666666,
+          27.55
+        ],
+        "max_slip_mm": 4.771888256072998,
+        "max_angle_deg": 5.7607676752262735,
+        "max_normal_force_N": 1.4009052515029907,
+        "last_normal_force_N": [
+          1.3959802389144897,
+          0.0,
+          0.7524585723876953,
+          0.2678699493408203,
+          0.0
+        ]
+      },
+      "retract": {
+        "time": [
+          27.566666666666666,
+          34.983333333333334
+        ],
+        "max_slip_mm": 14.383357018232346,
+        "max_angle_deg": 21.616957936428125,
+        "max_normal_force_N": 1.3979229927062988,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "static_passed": true,
+    "complete_passed": true
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 5.05,
+    "max_free_hold_s": 4.466666666666668,
+    "max_lift_m": 0.028683096170425415,
+    "peak_object_speed_m_s": 0.5459421552508141,
+    "max_limit_excess_rad": 0.0,
+    "run": "run16",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run16",
+      "record": false,
+      "dt": 0.0020833333333333333,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          5.033333333333333
+        ],
+        "max_slip_mm": 0.6907873903401196,
+        "max_angle_deg": 1.7680763242264568,
+        "max_normal_force_N": 2.495248556137085,
+        "last_normal_force_N": [
+          2.4822065830230713,
+          0.0,
+          0.22443129122257233,
+          0.3035101294517517,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          5.05,
+          8.033333333333333
+        ],
+        "max_slip_mm": 2.1821826230734587,
+        "max_angle_deg": 4.143197877905906,
+        "max_normal_force_N": 2.5521020889282227,
+        "last_normal_force_N": [
+          1.5321367979049683,
+          0.0,
+          0.5273350477218628,
+          0.29131126403808594,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          8.05,
+          19.03333333333333
+        ],
+        "max_slip_mm": 6.240040995180607,
+        "max_angle_deg": 7.822026561537658,
+        "max_normal_force_N": 1.963708519935608,
+        "last_normal_force_N": [
+          1.1251603364944458,
+          0.0,
+          0.7022841572761536,
+          0.29655879735946655,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          11.05,
+          12.033333333333333
+        ],
+        "max_slip_mm": 6.696702912449837,
+        "max_angle_deg": 8.744394944904004,
+        "max_normal_force_N": 2.156994581222534,
+        "last_normal_force_N": [
+          1.9637863636016846,
+          0.0,
+          1.0526036024093628,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "torque": {
+        "time": [
+          13.066666666666666,
+          14.033333333333333
+        ],
+        "max_slip_mm": 4.264728166162968,
+        "max_angle_deg": 6.060305621619455,
+        "max_normal_force_N": 1.2940948009490967,
+        "last_normal_force_N": [
+          1.2770087718963623,
+          0.0,
+          0.6737332940101624,
+          0.2300601750612259,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          15.049999999999999,
+          18.03333333333333
+        ],
+        "max_slip_mm": 5.890876520425081,
+        "max_angle_deg": 7.260767718681576,
+        "max_normal_force_N": 1.304625391960144,
+        "last_normal_force_N": [
+          1.2587639093399048,
+          0.0,
+          0.6758403778076172,
+          0.22100967168807983,
+          0.0
+        ],
+        "passed": false
+      },
+      "transport": {
+        "time": [
+          19.05,
+          24.03333333333333
+        ],
+        "max_slip_mm": 40.113091468811035,
+        "max_angle_deg": 88.54696865219682,
+        "max_normal_force_N": 1.125119686126709,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          24.05,
+          27.53333333333333
+        ],
+        "max_slip_mm": 40.10508209466934,
+        "max_angle_deg": 88.41263932163669,
+        "max_normal_force_N": 0.0,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "retract": {
+        "time": [
+          27.55,
+          34.983333333333334
+        ],
+        "max_slip_mm": 40.097676217556,
+        "max_angle_deg": 88.41267347258258,
+        "max_normal_force_N": 0.0,
+        "last_normal_force_N": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 19.55,
+    "max_free_hold_s": 0.5500000000000007,
+    "max_lift_m": 0.0254172682762146,
+    "peak_object_speed_m_s": 0.08647500193685803,
+    "max_limit_excess_rad": 3.5762786865234375e-07,
+    "run": "run17",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run17",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": -1.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          19.53333333333333
+        ],
+        "max_slip_mm": 2.5784862227737904,
+        "max_angle_deg": 13.489942937533389,
+        "max_normal_force_N": 2.565171003341675,
+        "last_normal_force_N": [
+          2.055004358291626,
+          0.5127707719802856,
+          0.1920396238565445,
+          0.0,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          19.55,
+          22.53333333333333
+        ],
+        "max_slip_mm": 5.91294327750802,
+        "max_angle_deg": 5.455852235516032,
+        "max_normal_force_N": 2.056894063949585,
+        "last_normal_force_N": [
+          0.9981684684753418,
+          0.3087250292301178,
+          0.290533185005188,
+          0.08961135149002075,
+          0.041502173990011215
+        ]
+      },
+      "hold": {
+        "time": [
+          22.55,
+          33.55
+        ],
+        "max_slip_mm": 29.290053993463516,
+        "max_angle_deg": 8.188764177930443,
+        "max_normal_force_N": 1.4896160364151,
+        "last_normal_force_N": [
+          0.9094920754432678,
+          0.40889284014701843,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          25.55,
+          26.53333333333333
+        ],
+        "max_slip_mm": 10.33899188041687,
+        "max_angle_deg": 8.145313929475758,
+        "max_normal_force_N": 1.6789112091064453,
+        "last_normal_force_N": [
+          1.4954859018325806,
+          0.9977006912231445,
+          0.1334381103515625,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "torque": {
+        "time": [
+          27.55,
+          28.53333333333333
+        ],
+        "max_slip_mm": 24.574926123023033,
+        "max_angle_deg": 6.722303778432813,
+        "max_normal_force_N": 0.8131577968597412,
+        "last_normal_force_N": [
+          0.8118956685066223,
+          0.23608990013599396,
+          0.0,
+          0.0,
+          0.05225716531276703
+        ],
+        "passed": false
+      },
+      "swing": {
+        "time": [
+          29.55,
+          32.55
+        ],
+        "max_slip_mm": 29.510727152228355,
+        "max_angle_deg": 7.730161370869662,
+        "max_normal_force_N": 1.033562421798706,
+        "last_normal_force_N": [
+          0.93104088306427,
+          0.40041086077690125,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "transport": {
+        "time": [
+          33.56666666666666,
+          34.983333333333334
+        ],
+        "max_slip_mm": 29.751595109701157,
+        "max_angle_deg": 8.014922202976635,
+        "max_normal_force_N": 0.9096636176109314,
+        "last_normal_force_N": [
+          0.8233335018157959,
+          0.0,
+          0.0,
+          0.0,
+          0.1417044997215271
+        ]
+      },
+      "light_tap": {
+        "status": "not_reached"
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 15.566666666666666,
+    "max_free_hold_s": 0.0,
+    "max_lift_m": 0.009739905595779419,
+    "peak_object_speed_m_s": 0.19984154604412016,
+    "max_limit_excess_rad": 4.76837158203125e-07,
+    "run": "run18",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run18",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 1.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          15.549999999999999
+        ],
+        "max_slip_mm": 1.0769935324788094,
+        "max_angle_deg": 14.800280580351764,
+        "max_normal_force_N": 2.8205008506774902,
+        "last_normal_force_N": [
+          1.569869041442871,
+          0.7046369910240173,
+          0.06172337383031845,
+          0.18722321093082428,
+          0.19197937846183777
+        ]
+      },
+      "lift": {
+        "time": [
+          15.566666666666666,
+          18.55
+        ],
+        "max_slip_mm": 30.094092711806297,
+        "max_angle_deg": 9.042247542117558,
+        "max_normal_force_N": 1.5444120168685913,
+        "last_normal_force_N": [
+          0.3665086030960083,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          18.566666666666666,
+          29.55
+        ],
+        "max_slip_mm": 30.201734974980354,
+        "max_angle_deg": 9.453838157067423,
+        "max_normal_force_N": 0.4501887261867523,
+        "last_normal_force_N": [
+          0.44441547989845276,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          21.566666666666666,
+          22.55
+        ],
+        "max_slip_mm": 30.133536085486412,
+        "max_angle_deg": 9.452014496556945,
+        "max_normal_force_N": 0.400580495595932,
+        "last_normal_force_N": [
+          0.3970552384853363,
+          0.059494081884622574,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "torque": {
+        "time": [
+          23.566666666666666,
+          24.55
+        ],
+        "max_slip_mm": 30.128000304102898,
+        "max_angle_deg": 9.439238627699838,
+        "max_normal_force_N": 0.3705407381057739,
+        "last_normal_force_N": [
+          0.3702962100505829,
+          0.060892365872859955,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "swing": {
+        "time": [
+          25.566666666666666,
+          28.55
+        ],
+        "max_slip_mm": 30.649134889245033,
+        "max_angle_deg": 10.294006067452383,
+        "max_normal_force_N": 0.6110591888427734,
+        "last_normal_force_N": [
+          0.4477081596851349,
+          0.04131438955664635,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "passed": false
+      },
+      "transport": {
+        "time": [
+          29.566666666666666,
+          34.56666666666666
+        ],
+        "max_slip_mm": 34.916479140520096,
+        "max_angle_deg": 12.295365048447957,
+        "max_normal_force_N": 1.0923362970352173,
+        "last_normal_force_N": [
+          0.6713840961456299,
+          0.0,
+          0.0,
+          0.0,
+          0.2818033695220947
+        ]
+      },
+      "light_tap": {
+        "time": [
+          34.583333333333336,
+          34.983333333333334
+        ],
+        "max_slip_mm": 34.91957485675812,
+        "max_angle_deg": 10.51710736675661,
+        "max_normal_force_N": 0.7958672642707825,
+        "last_normal_force_N": [
+          0.7958672642707825,
+          0.0,
+          0.0,
+          0.0,
+          0.2754424214363098
+        ]
+      },
+      "retract": {
+        "status": "not_reached"
+      }
+    },
+    "static_passed": false,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 5.066666666666666,
+    "max_free_hold_s": 13.033333333333331,
+    "max_lift_m": 0.028585851192474365,
+    "peak_object_speed_m_s": 0.31122467214035,
+    "max_limit_excess_rad": 4.76837158203125e-07,
+    "run": "run19",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run19",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": false,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.01,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          5.05
+        ],
+        "max_slip_mm": 0.7092844462022185,
+        "max_angle_deg": 2.1587557813999037,
+        "max_normal_force_N": 2.4489307403564453,
+        "last_normal_force_N": [
+          2.447068214416504,
+          0.0,
+          0.2515646815299988,
+          0.31015104055404663,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          5.066666666666666,
+          8.05
+        ],
+        "max_slip_mm": 1.3309582136571407,
+        "max_angle_deg": 2.661795585808153,
+        "max_normal_force_N": 2.4308996200561523,
+        "last_normal_force_N": [
+          1.682451605796814,
+          0.0,
+          0.5365962982177734,
+          0.44223248958587646,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          8.066666666666666,
+          19.05
+        ],
+        "max_slip_mm": 4.874938633292913,
+        "max_angle_deg": 6.086478906548851,
+        "max_normal_force_N": 2.033728837966919,
+        "last_normal_force_N": [
+          1.332329511642456,
+          0.0,
+          0.7102058529853821,
+          0.27958858013153076,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          11.066666666666666,
+          12.05
+        ],
+        "max_slip_mm": 4.866209346801043,
+        "max_angle_deg": 6.073986490542623,
+        "max_normal_force_N": 2.0442891120910645,
+        "last_normal_force_N": [
+          2.02917218208313,
+          0.0,
+          1.2056212425231934,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          13.066666666666666,
+          14.049999999999999
+        ],
+        "max_slip_mm": 3.1060779001563787,
+        "max_angle_deg": 4.645757648081002,
+        "max_normal_force_N": 1.428962230682373,
+        "last_normal_force_N": [
+          1.4086353778839111,
+          0.0,
+          0.6436305046081543,
+          0.3632948398590088,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          15.066666666666666,
+          18.05
+        ],
+        "max_slip_mm": 4.767999518662691,
+        "max_angle_deg": 5.744297527797614,
+        "max_normal_force_N": 1.6965417861938477,
+        "last_normal_force_N": [
+          1.388651967048645,
+          0.0,
+          0.6572014689445496,
+          0.3095524311065674,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          19.066666666666666,
+          24.05
+        ],
+        "max_slip_mm": 14.642294496297836,
+        "max_angle_deg": 22.65570335187436,
+        "max_normal_force_N": 1.32289457321167,
+        "last_normal_force_N": [
+          0.1119716614484787,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          24.066666666666666,
+          27.55
+        ],
+        "max_slip_mm": 14.64251521974802,
+        "max_angle_deg": 22.666722154565473,
+        "max_normal_force_N": 0.11593049019575119,
+        "last_normal_force_N": [
+          0.11330900341272354,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "retract": {
+        "time": [
+          27.566666666666666,
+          34.983333333333334
+        ],
+        "max_slip_mm": 14.658897183835506,
+        "max_angle_deg": 22.7044008931649,
+        "max_normal_force_N": 0.11377920210361481,
+        "last_normal_force_N": [
+          0.08079849928617477,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "static_passed": true,
+    "complete_passed": false
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 4.416666666666667,
+    "max_free_hold_s": 19.083333333333332,
+    "max_lift_m": 0.02860143780708313,
+    "peak_object_speed_m_s": 0.04811916749421603,
+    "max_limit_excess_rad": 0.0,
+    "run": "run20",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run20",
+      "record": false,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": true,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          4.4
+        ],
+        "max_slip_mm": 0.5045667639933527,
+        "max_angle_deg": 3.1578474663572593,
+        "max_normal_force_N": 2.2806386947631836,
+        "last_normal_force_N": [
+          2.195258617401123,
+          0.0,
+          0.3052681088447571,
+          0.3875376284122467,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          4.416666666666667,
+          7.3999999999999995
+        ],
+        "max_slip_mm": 0.9511940879747272,
+        "max_angle_deg": 1.7856961845928134,
+        "max_normal_force_N": 2.269932746887207,
+        "last_normal_force_N": [
+          1.711442470550537,
+          0.0,
+          0.4802205562591553,
+          0.48808518052101135,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          7.416666666666667,
+          18.4
+        ],
+        "max_slip_mm": 3.9150770753622055,
+        "max_angle_deg": 5.198347700209963,
+        "max_normal_force_N": 1.8862501382827759,
+        "last_normal_force_N": [
+          1.4164127111434937,
+          0.0,
+          0.8521792888641357,
+          0.250898152589798,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          10.433333333333334,
+          11.416666666666666
+        ],
+        "max_slip_mm": 3.9726505056023598,
+        "max_angle_deg": 5.329389148454625,
+        "max_normal_force_N": 2.0240979194641113,
+        "last_normal_force_N": [
+          1.8859343528747559,
+          0.0,
+          1.009846806526184,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          12.433333333333334,
+          13.4
+        ],
+        "max_slip_mm": 1.9486560486257076,
+        "max_angle_deg": 3.323549776801815,
+        "max_normal_force_N": 1.4117952585220337,
+        "last_normal_force_N": [
+          1.3921643495559692,
+          0.0,
+          0.825526773929596,
+          0.2870866358280182,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          14.416666666666666,
+          17.4
+        ],
+        "max_slip_mm": 1.9440054893493652,
+        "max_angle_deg": 3.3495915805895384,
+        "max_normal_force_N": 1.4168269634246826,
+        "last_normal_force_N": [
+          1.4163285493850708,
+          0.0,
+          0.8486843705177307,
+          0.24975617229938507,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          18.416666666666668,
+          23.4
+        ],
+        "max_slip_mm": 1.941930502653122,
+        "max_angle_deg": 3.3523945194733855,
+        "max_normal_force_N": 1.4229023456573486,
+        "last_normal_force_N": [
+          1.4198839664459229,
+          0.0,
+          0.8512337803840637,
+          0.2522144615650177,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          23.416666666666668,
+          26.9
+        ],
+        "max_slip_mm": 1.9353547831997275,
+        "max_angle_deg": 3.526948328205569,
+        "max_normal_force_N": 1.596824288368225,
+        "last_normal_force_N": [
+          1.5945181846618652,
+          0.0,
+          0.8850479125976562,
+          0.26144149899482727,
+          0.0
+        ]
+      },
+      "retract": {
+        "time": [
+          26.916666666666668,
+          34.983333333333334
+        ],
+        "max_slip_mm": 1.9114493625238538,
+        "max_angle_deg": 3.581568924173751,
+        "max_normal_force_N": 1.595443606376648,
+        "last_normal_force_N": [
+          1.3938897848129272,
+          0.0,
+          0.7963757514953613,
+          0.3505439758300781,
+          0.0
+        ]
+      }
+    },
+    "static_passed": true,
+    "complete_passed": true
+  },
+  {
+    "reason": "duration",
+    "lift_time_s": 4.416666666666667,
+    "max_free_hold_s": 19.083333333333332,
+    "max_lift_m": 0.02860143780708313,
+    "peak_object_speed_m_s": 0.04811916749421603,
+    "max_limit_excess_rad": 0.0,
+    "run": "run21",
+    "valid_for_physics_conclusion": true,
+    "excluded_reason": null,
+    "parameters": {
+      "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "plans": "plans_safe_audited.json",
+      "plan_index": 0,
+      "output": "run21",
+      "record": true,
+      "dt": 0.004166666666666667,
+      "kp": 3.0,
+      "kd": 0.3,
+      "contact_k": 1500.0,
+      "contact_d": 10.0,
+      "torsion_radius": 0.0,
+      "mass": 0.08,
+      "offset_mm": 0.0,
+      "force_target": 2.0,
+      "duration": 35.0,
+      "hand_gravity": true,
+      "close_speed": 0.0006,
+      "no_lift": false,
+      "orientation_weight": 0.003,
+      "staged_force": false,
+      "bounded_ik": true,
+      "pad_face": "x",
+      "freeze_after_grasp": true,
+      "adaptive_force": false,
+      "joint_pulse": 0.0,
+      "device": "cuda:0",
+      "cpu": false,
+      "verbose": false,
+      "info": false,
+      "rendering_mode": null,
+      "kit_args": "",
+      "headless": true,
+      "hide_ui": true,
+      "create_new_stage": false,
+      "physics_gpu": 0,
+      "active_gpu": 0
+    },
+    "phases": {
+      "close": {
+        "time": [
+          0.7666666666666666,
+          4.4
+        ],
+        "max_slip_mm": 0.5045667639933527,
+        "max_angle_deg": 3.1578474663572593,
+        "max_normal_force_N": 2.2806386947631836,
+        "last_normal_force_N": [
+          2.195258617401123,
+          0.0,
+          0.3052681088447571,
+          0.3875376284122467,
+          0.0
+        ]
+      },
+      "lift": {
+        "time": [
+          4.416666666666667,
+          7.3999999999999995
+        ],
+        "max_slip_mm": 0.9511940879747272,
+        "max_angle_deg": 1.7856961845928134,
+        "max_normal_force_N": 2.269932746887207,
+        "last_normal_force_N": [
+          1.711442470550537,
+          0.0,
+          0.4802205562591553,
+          0.48808518052101135,
+          0.0
+        ]
+      },
+      "hold": {
+        "time": [
+          7.416666666666667,
+          18.4
+        ],
+        "max_slip_mm": 3.9150770753622055,
+        "max_angle_deg": 5.198347700209963,
+        "max_normal_force_N": 1.8862501382827759,
+        "last_normal_force_N": [
+          1.4164127111434937,
+          0.0,
+          0.8521792888641357,
+          0.250898152589798,
+          0.0
+        ]
+      },
+      "lateral_force": {
+        "time": [
+          10.433333333333334,
+          11.416666666666666
+        ],
+        "max_slip_mm": 3.9726505056023598,
+        "max_angle_deg": 5.329389148454625,
+        "max_normal_force_N": 2.0240979194641113,
+        "last_normal_force_N": [
+          1.8859343528747559,
+          0.0,
+          1.009846806526184,
+          0.0,
+          0.0
+        ],
+        "passed": true
+      },
+      "torque": {
+        "time": [
+          12.433333333333334,
+          13.4
+        ],
+        "max_slip_mm": 1.9486560486257076,
+        "max_angle_deg": 3.323549776801815,
+        "max_normal_force_N": 1.4117952585220337,
+        "last_normal_force_N": [
+          1.3921643495559692,
+          0.0,
+          0.825526773929596,
+          0.2870866358280182,
+          0.0
+        ],
+        "passed": true
+      },
+      "swing": {
+        "time": [
+          14.416666666666666,
+          17.4
+        ],
+        "max_slip_mm": 1.9440054893493652,
+        "max_angle_deg": 3.3495915805895384,
+        "max_normal_force_N": 1.4168269634246826,
+        "last_normal_force_N": [
+          1.4163285493850708,
+          0.0,
+          0.8486843705177307,
+          0.24975617229938507,
+          0.0
+        ],
+        "passed": true
+      },
+      "transport": {
+        "time": [
+          18.416666666666668,
+          23.4
+        ],
+        "max_slip_mm": 1.941930502653122,
+        "max_angle_deg": 3.3523945194733855,
+        "max_normal_force_N": 1.4229023456573486,
+        "last_normal_force_N": [
+          1.4198839664459229,
+          0.0,
+          0.8512337803840637,
+          0.2522144615650177,
+          0.0
+        ]
+      },
+      "light_tap": {
+        "time": [
+          23.416666666666668,
+          26.9
+        ],
+        "max_slip_mm": 1.9353547831997275,
+        "max_angle_deg": 3.526948328205569,
+        "max_normal_force_N": 1.596824288368225,
+        "last_normal_force_N": [
+          1.5945181846618652,
+          0.0,
+          0.8850479125976562,
+          0.26144149899482727,
+          0.0
+        ]
+      },
+      "retract": {
+        "time": [
+          26.916666666666668,
+          34.983333333333334
+        ],
+        "max_slip_mm": 1.9114493625238538,
+        "max_angle_deg": 3.581568924173751,
+        "max_normal_force_N": 1.595443606376648,
+        "last_normal_force_N": [
+          1.3938897848129272,
+          0.0,
+          0.7963757514953613,
+          0.3505439758300781,
+          0.0
+        ]
+      }
+    },
+    "static_passed": true,
+    "complete_passed": true
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "run": "run15",
+    "tool_intersections": [],
+    "max_depth_mm": 0.0
+  },
+  {
+    "run": "run16",
+    "tool_intersections": [],
+    "max_depth_mm": 0.0
+  },
+  {
+    "run": "run17",
+    "tool_intersections": [
+      {
+        "link": "link_2_2",
+        "part": "rigid_link_3",
+        "depth_m": 0.00035550577696832837
+      },
+      {
+        "link": "link_2_2",
+        "part": "distal_bearing",
+        "depth_m": 0.00014962911830526728
+      },
+      {
+        "link": "link_4_3",
+        "part": "finger_pad",
+        "depth_m": 0.0002752185671614331
+      }
+    ],
+    "max_depth_mm": 0.35550577696832836
+  },
+  {
+    "run": "run18",
+    "tool_intersections": [
+      {
+        "link": "link_1_3",
+        "part": "finger_pad",
+        "depth_m": 0.000509754863289232
+      }
+    ],
+    "max_depth_mm": 0.509754863289232
+  },
+  {
+    "run": "run19",
+    "tool_intersections": [],
+    "max_depth_mm": 0.0
+  },
+  {
+    "run": "run20",
+    "tool_intersections": [],
+    "max_depth_mm": 0.0
+  }
+]
