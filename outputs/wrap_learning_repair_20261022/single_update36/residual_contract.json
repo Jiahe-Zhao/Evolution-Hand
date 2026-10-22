@@ -1,0 +1,11 @@
+{
+  "initial_epoch": 0,
+  "initial_frame": 0,
+  "final_epoch": 129,
+  "final_frame": 132096,
+  "initial_residual_head_max_abs": 0.0,
+  "frozen_prior_max_parameter_change": 0.0,
+  "prior_source": "bc_contraction29/bc_initial.pth",
+  "residual_scale": 0.02,
+  "residual_unbounded": true
+}

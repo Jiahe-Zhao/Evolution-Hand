@@ -1,0 +1,19 @@
+{
+  "actor_optimizer_steps": 1,
+  "epoch": 129,
+  "batch_size": 1024,
+  "actor_max_parameter_change": 1.0000000116860974e-07,
+  "frozen_bc_max_parameter_change": 0.0,
+  "joint_mean_change_max_rad": 7.823108916227284e-08,
+  "wrist_mean_change_max_mm": 2.064189175143838e-05,
+  "mean_change_max_in_sigma": 0.0008256757282651961,
+  "advantages_min": -2.310065746307373,
+  "advantages_max": 3.8931808471679688,
+  "action_phase_s": [
+    9.133334159851074,
+    9.383334159851074
+  ],
+  "optimizer_lr": [
+    1e-07
+  ]
+}

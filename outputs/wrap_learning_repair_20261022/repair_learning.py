@@ -15,10 +15,11 @@ p=argparse.ArgumentParser();p.add_argument('--source',default='/home/zjh/Evoluti
 p.add_argument('--offset-y-mm',type=float,default=0.);p.add_argument('--yaw-deg',type=float,default=0.)
 p.add_argument('--mode',choices=['bc','ppo','eval'],default='bc');p.add_argument('--checkpoint',default='');p.add_argument('--seed',type=int,default=42);p.add_argument('--push',action='store_true');p.add_argument('--dataset',default='');p.add_argument('--num-envs',type=int,default=256);p.add_argument('--epochs',type=int,default=128);p.add_argument('--bc-steps',type=int,default=8000);p.add_argument('--eval-steps',type=int,default=1200);p.add_argument('--smoke',action='store_true')
 p.add_argument('--refit',action='store_true');p.add_argument('--recovery-augmentation',action='store_true');p.add_argument('--collect',action='store_true');p.add_argument('--history',action='store_true');p.add_argument('--extra-data',default='');p.add_argument('--only-extra',action='store_true');p.add_argument('--teacher-mix',type=float,default=1.);p.add_argument('--target-skip',action='store_true');p.add_argument('--finger-skip',action='store_true');p.add_argument('--no-policy-time',action='store_true');p.add_argument('--retrieval-bc',action='store_true');p.add_argument('--retrieval-lookahead',type=int,default=0);p.add_argument('--obs-noise',type=float,default=.0005);p.add_argument('--bc-lr',type=float,default=3e-4);p.add_argument('--extra-fraction',type=float,default=-1.);p.add_argument('--diagnostic-ppo',action='store_true');p.add_argument('--finger-std',type=float,default=.0005);p.add_argument('--wrist-std',type=float,default=.0001);p.add_argument('--stable-kl',action='store_true',default=True);p.add_argument('--legacy-kl',action='store_false',dest='stable_kl');p.add_argument('--ppo-lr',type=float,default=1e-7);p.add_argument('--bc-anchor',type=float,default=0.);p.add_argument('--baseline-report',default='');p.add_argument('--no-target-input',action='store_true');p.add_argument('--contraction',type=float,default=0.);p.add_argument('--critic-warmup',type=int,default=0);p.add_argument('--critic-lr',type=float,default=3e-4);p.add_argument('--residual-bc',action='store_true');p.add_argument('--bc-prior',default='');p.add_argument('--sample-eval',action='store_true');p.add_argument('--action-seed',type=int,default=2027);p.add_argument('--eval-bias',default='');p.add_argument('--completion-reward',action='store_true');p.add_argument('--episode-steps',type=int,default=1800);p.add_argument('--gamma',type=float,default=None)
+p.add_argument('--one-update-audit',action='store_true');p.add_argument('--trace-eval',action='store_true')
 AppLauncher.add_app_launcher_args(p);args=p.parse_args();args.enable_cameras=args.enable_cameras or args.record
 out=Path(args.output).resolve();out.mkdir(parents=True,exist_ok=False);shutil.copyfile(__file__,out/'controller_snapshot.py')
 (out/'execution.json').write_text(json.dumps(dict(pid=os.getpid(),argv=sys.argv,args=vars(args),script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()),indent=2))
-for helper in ('expert_feedback.py','retrieval_bc.py','ppo_numerics.py','bc_anchor.py','critic_warmup.py','residual_bc.py'):
+for helper in ('expert_feedback.py','retrieval_bc.py','ppo_numerics.py','bc_anchor.py','critic_warmup.py','residual_bc.py','single_update_audit.py'):
  if (BASE/helper).exists():shutil.copyfile(BASE/helper,out/(Path(helper).stem+'_snapshot.py'))
 from diagnostic_wrist import build,NAMES
 source=Path(args.source);path,contract=build(source,out/'wrist')
@@ -318,19 +319,23 @@ def clear_diagnostics():
 def evaluate(label):
  clear_diagnostics()
  assert args.eval_steps<=args.episode_steps
- agent.model.eval();ob=env.reset();env.evaluating=True;start_falls=env.falls;telemetry=[]
+ agent.model.eval();ob=env.reset();env.evaluating=True;start_falls=env.falls;telemetry=[];trace=[]
  if args.sample_eval:torch.manual_seed(args.action_seed)
  action_bias=torch.tensor(json.loads(Path(args.eval_bias).read_text()),device=dev,dtype=torch.float32) if args.eval_bias else torch.zeros(24,device=dev)
  assert action_bias.shape==(24,)
  for step in range(args.eval_steps):
-  with torch.no_grad():act=predict(ob)['actions' if args.sample_eval else 'mus']
-  ob,_,_,_=env.step(act+action_bias)
+  with torch.no_grad():prediction=predict(ob);act=prediction['actions' if args.sample_eval else 'mus']
+  old_ob=ob
+  ob,reward,done,_=env.step(act+action_bias)
+  if args.trace_eval:
+   trace.append(dict(obs=old_ob.cpu().numpy(),mu=prediction['mus'].cpu().numpy(),value=prediction['values'].cpu().numpy(),reward=reward.cpu().numpy(),done=done.cpu().numpy(),q=hand.data.joint_pos[:,fids].cpu().numpy(),target=env.target[:,fids].cpu().numpy(),wrist=env.wrist.cpu().numpy(),object=obj.data.root_state_w.cpu().numpy(),force=env.contact.cpu().numpy(),hold=env.hold.cpu().numpy()))
   if step%300==0:
    print('EVAL',label,step,'ever3s',int((env.best>=3).sum()),'holding',int((env.hold>=3).sum()),flush=True)
    telemetry.append(dict(step=step,stable=env.stable.cpu().tolist(),force_N=env.contact.norm(dim=-1).cpu().tolist(),wrist=env.wrist.cpu().tolist(),rise=(obj.data.root_pos_w[:,2]-.3).cpu().tolist()))
    (out/(label+'_progress.json')).write_text(json.dumps(telemetry,indent=2))
  success=(env.best>=3)&(env.hold>=3)&(env.episode_falls==0)
  row=dict(action_bias=action_bias.cpu().tolist(),action_mode='sampled' if args.sample_eval else 'mean',action_seed=args.action_seed if args.sample_eval else None,telemetry=telemetry,target_skip=args.target_skip,finger_skip=args.finger_skip,label=label,num_envs=N,steps=args.eval_steps,successes=int(success.sum()),ever_held_3s=int((env.best>=3).sum()),falls=env.falls-start_falls,final_hold_s=env.hold.cpu().tolist(),best_hold_s=env.best.cpu().tolist(),passed=success.cpu().tolist(),cases=env.cases.tolist(),push=bool(args.push),diagnostics=env.diagnostics())
+ if args.trace_eval:np.savez_compressed(out/(label+'_trace.npz'),**{key:np.stack([row[key] for row in trace]) for key in trace[0]})
  (out/(label+'.json')).write_text(json.dumps(row,indent=2));env.evaluating=False;return row
 
 if args.checkpoint:agent.restore(args.checkpoint,set_epoch=False)
@@ -401,10 +406,17 @@ if args.mode=='ppo':
   from critic_warmup import install
   assert args.epochs>args.critic_warmup
   install(agent,args.critic_warmup,args.critic_lr,args.ppo_lr,out)
+ if args.one_update_audit:
+  assert args.residual_bc and args.critic_warmup and args.epochs==args.critic_warmup+1
+  from single_update_audit import install as install_single_update
+  single_update_status=install_single_update(agent,args.critic_warmup,out,(limits[fids,1]-limits[fids,0])/2)
  if args.bc_anchor:
   from bc_anchor import install
   anchor_reference=install(agent,args.bc_anchor)
  env.reset();clear_diagnostics();agent.model.train();agent.train();agent.save(str(out/'ppo_final'));(out/'training_diagnostics.json').write_text(json.dumps(env.diagnostics(),indent=2));after=evaluate('after_ppo')
 else:after=None
+if args.one_update_audit:
+ status=single_update_status();assert status['actor_optimizer_steps']==1
+ (out/'single_update_status.json').write_text(json.dumps(status,indent=2))
 report=dict(status='completed',mode=args.mode,before=before,after=after,source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),action_contract='absolute joint target normalized by original limits, absolute world wrist target / 0.25 m; original slew limits',observation_contract='fixed physical scaling, identical BC/PPO encoder',exploration_std=[args.finger_std]*21+[args.wrist_std]*3,config_changes={k:{'before':original_config['params']['config'].get(k),'after':v} for k,v in pc.items() if original_config['params']['config'].get(k)!=v},separate_actor_critic=True)
 (out/'report.json').write_text(json.dumps(report,indent=2));print('FINISHED',args.mode,before['successes'],None if after is None else after['successes'],flush=True);os._exit(0)

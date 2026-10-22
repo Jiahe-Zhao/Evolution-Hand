@@ -1,0 +1,159 @@
+{
+  "same_state_learned_correction": {
+    "joint_rad": {
+      "max_abs": 7.240192179125415e-08,
+      "rms": 5.4468701592887524e-08,
+      "p95_abs": 7.035520561693428e-08
+    },
+    "wrist_mm": {
+      "max_abs": 2.0687833966803737e-05,
+      "rms": 1.8013599401456304e-05,
+      "p95_abs": 2.0410603792697656e-05
+    }
+  },
+  "on_updated_rollout_correction": {
+    "joint_rad": {
+      "max_abs": 7.696065118523165e-08,
+      "rms": 5.452888181311234e-08,
+      "p95_abs": 7.046260019905048e-08
+    },
+    "wrist_mm": {
+      "max_abs": 2.184360164392274e-05,
+      "rms": 1.8032540538115427e-05,
+      "p95_abs": 2.0440124626475153e-05
+    }
+  },
+  "paired_trajectory_difference": {
+    "joint_rad": {
+      "max_abs": 0.3194848299026489,
+      "rms": 0.015021834522485733,
+      "p95_abs": 0.016966643929481495
+    },
+    "wrist_target_mm": {
+      "max_abs": 28.910850524902344,
+      "rms": 2.775235652923584,
+      "p95_abs": 1.7569940507411939
+    },
+    "object_position_mm": {
+      "max_abs": 39.165496826171875,
+      "rms": 3.4002647399902344,
+      "p95_abs": 2.629053592681882
+    }
+  },
+  "first_threshold_crossing_s": {
+    "joint_0_001rad": 0.05,
+    "wrist_0_05mm": 0.016666666666666666,
+    "object_0_1mm": 0.0
+  },
+  "critic_on_reference_mean_policy": {
+    "scope": "Calibration against a deterministic BC rollout; not an unbiased estimate of the stochastic-policy value or action advantage.",
+    "before_rmse": 7.085428714752197,
+    "after_warmup_rmse": 6.335452556610107,
+    "samples": [
+      {
+        "t_s": 0.0,
+        "predicted_mean_before": 0.016157861799001694,
+        "predicted_mean_warm": 0.16827109456062317,
+        "realized_discounted_return_mean": 4.651310920715332
+      },
+      {
+        "t_s": 5.0,
+        "predicted_mean_before": 0.023686878383159637,
+        "predicted_mean_warm": 0.3251000940799713,
+        "realized_discounted_return_mean": 5.404223918914795
+      },
+      {
+        "t_s": 10.0,
+        "predicted_mean_before": 0.005188933573663235,
+        "predicted_mean_warm": 0.873820424079895,
+        "realized_discounted_return_mean": 6.265096187591553
+      },
+      {
+        "t_s": 15.0,
+        "predicted_mean_before": -0.007921108976006508,
+        "predicted_mean_warm": 0.9247273802757263,
+        "realized_discounted_return_mean": 7.209120750427246
+      },
+      {
+        "t_s": 20.0,
+        "predicted_mean_before": -0.008373936638236046,
+        "predicted_mean_warm": 0.9324842691421509,
+        "realized_discounted_return_mean": 8.388463973999023
+      }
+    ],
+    "gamma": 0.9995,
+    "reward_scale": 0.01
+  },
+  "lost_success_envs": [
+    63
+  ],
+  "gained_success_envs": [],
+  "time_slices": [
+    {
+      "t_s": 0.0,
+      "joint_delta_rad": 0.0004222095012664795,
+      "wrist_delta_mm": 1.9746948964893818e-05,
+      "object_delta_mm": 0.3299117088317871,
+      "before_holding": 0,
+      "after_holding": 0
+    },
+    {
+      "t_s": 0.75,
+      "joint_delta_rad": 0.015044152736663818,
+      "wrist_delta_mm": 0.16015207767486572,
+      "object_delta_mm": 0.4792213439941406,
+      "before_holding": 0,
+      "after_holding": 0
+    },
+    {
+      "t_s": 5.0,
+      "joint_delta_rad": 0.03907811641693115,
+      "wrist_delta_mm": 0.2631334364414215,
+      "object_delta_mm": 0.4426901638507843,
+      "before_holding": 0,
+      "after_holding": 0
+    },
+    {
+      "t_s": 10.0,
+      "joint_delta_rad": 0.23605096340179443,
+      "wrist_delta_mm": 21.982912063598633,
+      "object_delta_mm": 22.000253677368164,
+      "before_holding": 0,
+      "after_holding": 0
+    },
+    {
+      "t_s": 15.0,
+      "joint_delta_rad": 0.26048728823661804,
+      "wrist_delta_mm": 28.29669761657715,
+      "object_delta_mm": 29.52408790588379,
+      "before_holding": 54,
+      "after_holding": 50
+    },
+    {
+      "t_s": 20.0,
+      "joint_delta_rad": 0.31616657972335815,
+      "wrist_delta_mm": 20.85529327392578,
+      "object_delta_mm": 37.72258758544922,
+      "before_holding": 63,
+      "after_holding": 62
+    },
+    {
+      "t_s": 24.983333333333334,
+      "joint_delta_rad": 0.31093645095825195,
+      "wrist_delta_mm": 22.202049255371094,
+      "object_delta_mm": 37.29057312011719,
+      "before_holding": 63,
+      "after_holding": 62
+    }
+  ],
+  "limits": "One update does not establish long-run PPO stability. Paired rollouts differ through physical feedback; same-state corrections isolate the direct policy change. Thresholds are diagnostic markers, not task termination rules.",
+  "initial_observation_difference": {
+    "joint": 0.0,
+    "previous_target": 0.0,
+    "actual_wrist": 0.0,
+    "wrist_target": 0.0,
+    "object_state": 0.0,
+    "contact": 0.0
+  },
+  "attribution_caveat": "The first physical step already differs in object position by 0.33 mm; a no-update repeated-reset control is needed before attributing full trajectory differences or the one lost success exclusively to the optimizer step."
+}
