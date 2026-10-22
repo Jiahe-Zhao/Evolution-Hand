@@ -1,0 +1,12 @@
+[
+  {
+    "path": "recovery_teacher03/demonstrations.pt",
+    "sha256": "e9a6b68ea44c140445b33f60b41049555818f1f95f0c1d1fda64142447bffd82",
+    "samples": 45000
+  },
+  {
+    "path": "recovery_dagger04/demonstrations.pt",
+    "sha256": "1a5e5ab15abefc419217107867ebed8ac372d48740728dd0fa4399fee9c8dba4",
+    "samples": 37500
+  }
+]

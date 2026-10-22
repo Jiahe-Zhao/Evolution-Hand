@@ -1,0 +1,11 @@
+{
+  "initial_epoch": 0,
+  "initial_frame": 0,
+  "final_epoch": 128,
+  "final_frame": 524288,
+  "initial_residual_head_max_abs": 0.0,
+  "frozen_prior_max_parameter_change": 0.0,
+  "prior_source": "ppo_warm21/critic_ready.pth",
+  "residual_scale": 0.02,
+  "residual_unbounded": true
+}

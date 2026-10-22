@@ -1,0 +1,933 @@
+{
+  "python": "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+  "versions": {
+    "torch": "2.5.1+cu121",
+    "rl-games": "1.6.1",
+    "numpy": "1.26.4",
+    "gym": "0.23.1",
+    "tensorboard": "2.19.0"
+  },
+  "files": [
+    {
+      "path": "/home/zjh/Evolution_PC/Isaaclab_other/isaaclab_tool.py",
+      "bytes": 72058,
+      "sha256": "fe7d521578ac7cb6e281bb6e98e3ce8baa9f59c6c8da962381d2c9c7b754d4fd"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/audit_effective_hand.py",
+      "bytes": 22001,
+      "sha256": "e4267d5b42fc85819b7af88b44cf3dca259c96eb29838e173990d901b0ded988"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/audit_pose.py",
+      "bytes": 1376,
+      "sha256": "be0b2b65949f49baf99a7e9076d906de03e097fc246cf7ee417f2b95f794c9c6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/audit_resets.py",
+      "bytes": 785,
+      "sha256": "3ba445b06585e2e81eab6bc089dd6f053078f60ca7ed052de2299294023ad527"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/calibrate_hand.py",
+      "bytes": 22001,
+      "sha256": "e4267d5b42fc85819b7af88b44cf3dca259c96eb29838e173990d901b0ded988"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/calibrate_long_side.py",
+      "bytes": 22124,
+      "sha256": "1d815b0f363c9de7a9552c981f9dd0612080e09e539a9595a9daedfeeb910668"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/calibrate_object_follow_trial.py",
+      "bytes": 22238,
+      "sha256": "5d40750da42a6db27d609c071f13ce191f5b5f654f5066dc4598bf79a9dfe587"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/calibrate_wrap.py",
+      "bytes": 22874,
+      "sha256": "2dccaccb6550560ed99ba5d17a1cd465370ed579c6de2dcaca05384a9b914900"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/check_long_side.py",
+      "bytes": 1867,
+      "sha256": "692e5808ff47cfb43db833d78dd6fe2f78e349bd24a3d79f4892e2904bf3f1a2"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/commit_remote.py",
+      "bytes": 1717,
+      "sha256": "ddf39605d61f6f71a2653ad85392c61f8ef3d74255ec99e148615674c06bf669"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/commit_wrap.py",
+      "bytes": 2083,
+      "sha256": "4571ba8418dc69633386b328af5e4da321101aa42494e2e1064010260ee2ffaf"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/final_checks.py",
+      "bytes": 3096,
+      "sha256": "19a99c6dd8458be1f03e6d07a387c95fedd6e4138e0330b8039c980a9b8d4aff"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/fixed_clusters.py",
+      "bytes": 1293,
+      "sha256": "5ded3836be7f605285850b2d8f26c5e84fab8c5b1852820f960121a4c7ceee33"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/make_report.py",
+      "bytes": 9073,
+      "sha256": "b80f0479158bb941cb67687deafbcc790ce0310a3deb30c7e80743f736e8d47d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/package_evidence.py",
+      "bytes": 1016,
+      "sha256": "789725c86176b1b797273afebb204cd76b06afb4db772e70035c5d11b88e96e7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/package_wrap.py",
+      "bytes": 1224,
+      "sha256": "5218b031a826c294cfaae9c7265b55fac27d762281080359520fe46f2f3c840f"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_flexion.py",
+      "bytes": 3485,
+      "sha256": "d4f7a0e92ac769588b308fafce4af5bdee2e8b49a268dbc6bcbbad33438d8597"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_grasp.py",
+      "bytes": 5745,
+      "sha256": "e3c39e66dd66589aa8d2b0215243463d57ba81c5b02959e713a6cb29a023c949"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_grasp_spaced.py",
+      "bytes": 5466,
+      "sha256": "f0b025cfee5c9732efe656a8a66948a717be016e8073186c76c5f3aebf1de8fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_long_side.py",
+      "bytes": 4216,
+      "sha256": "a80091c96a98ec2766c1f401e46070b9f66d4b537f912907cc863c01d2dee141"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_long_side_balanced.py",
+      "bytes": 4216,
+      "sha256": "5f418fab34dc0ae041efad580d252dfe53595f6a7ee9398395a88a7075b26d95"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_long_side_centered.py",
+      "bytes": 4216,
+      "sha256": "a80091c96a98ec2766c1f401e46070b9f66d4b537f912907cc863c01d2dee141"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_long_side_contact.py",
+      "bytes": 4245,
+      "sha256": "9c9474fbe9ec4f58f95f13b04e47da4a82573a2811cbec311f9837ad72e23d27"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_margin.py",
+      "bytes": 3467,
+      "sha256": "0c524096c7b72758b1e8d2f5681f04d08daf65f8c9097c2ce04a16ed10381b29"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_safe.py",
+      "bytes": 3469,
+      "sha256": "45c7724df699ee013bbe870c318b7b1fc741272c4896147479b1cc11094abe0b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_wrap.py",
+      "bytes": 5305,
+      "sha256": "7e0aa2dc5795446d2a54bb1570efe299dc4c5b1040210aafdf54cdaea5b49260"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plan_wrap_cover.py",
+      "bytes": 5372,
+      "sha256": "d5b5cac213da69bb72b66d0554c4283bccc7672e102ba07e47e8b25ceb0be0de"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+      "bytes": 3790,
+      "sha256": "1d74d597ecaf19e3ad605ce68a17f03a6f2ac12f191d844a11520884909f6691"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plot_results.py",
+      "bytes": 1150,
+      "sha256": "3d39c9bef0c5146ac9badc11b72a7973db5eb33614db85707ad59495d2f09e89"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run_minimum.py",
+      "bytes": 1379,
+      "sha256": "8c1a8f604874b013286ba5e812765961a2696a10ceb240c4201ed5c9ba212b43"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/run_wrap_validation.py",
+      "bytes": 943,
+      "sha256": "ff6d95a0a186e041c98d8f30da8497a8b94ea645a53453ff0b91f55af7690948"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/summarize_runs.py",
+      "bytes": 2745,
+      "sha256": "a42e73480994537f6a38a7ae04ee0600c8384d9ff8db389782557674d3e79cb9"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/summarize_wrap.py",
+      "bytes": 1773,
+      "sha256": "926d22b84ffff6dfee830e2660ca2aabd0a96b1ee616a95a1c402265c199abe5"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_0_0_wrist_mount.stl",
+      "bytes": 102484,
+      "sha256": "d611e5b52fb86832c387e3a78035f06f1b49dcf19a7c2c346203a59de5c490ee"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "aba7e91358a653891e00c3078dd8d9f5de9f442a2c8067538fd926c815a11906"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "0648514d6075d04efd5d3ad1fd609b3376d192ce84f24701481f273826835bed"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "588f24e1e9dd3004c0ba4823715f7306a0a1e89af55c362eebd151b36e50fe1e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "b9e73093b744c5c5a4ec703592a76b2bdd2c7e67efd248fb5dcc8c1321d3fc90"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "919dff7c258c477590e23e6d92e1340f26168f2a21fd4d2710043b20384fcb34"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "951048c1cd8891898757b004d3a4d16de010855b93ce6c83ce99d9b7e9a35077"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_0_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "f7e3617860249fa9c1a1a83bfec71520b847cccc58b43a05da11267a934f4fcd"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "dbc1f588da51b8e8519aa830f6b0605480640136f3a369a0106856c40fbe0456"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "209e9e3c9735a2daefd0f00ee029d393e92fead594268db9e3b4cf60d99ba6a0"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "7224c7dff3699f02ada2b348e77978564b10fd9d889799f58ce02d662c2ba9d2"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "429e7355a8caeb6706a76baa6c5d9b7988f4b14fb6ac05e2f0c8f973554e3bb2"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "a395123f034c5a585c823196022862ce9920f6ff451d86a30842fef7426e605a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_1_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "592ae838d3362d7fe1b18ea1dd633bd5394e9a0f2744ca7c2e5157a3dff3ac3e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "1c4e9b14bea33036c786e70e4d704d9d9f9f658cd98ea2953e48dc4507b85dc8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "9646b12d4f8c71a5f84a2f73691040a3b798fb499638df5104ea1f9b8594fdc7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "dd351a45fffeb4c20d93bc8f8b9e099c4c2ede260474991f995280ce241e3323"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "f101f7d8c11fa32e03ce6c8b06c962ecd7a9583f243b18deb9e8b1cdf6c2fbb6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "3d5fe5421c484bc2ed912d7999bf9cd1f3a6df9494d4f715e809afa821f32946"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_2_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "f4bc38e8c37449ab8ae312f42b345fccb87a3fe12a5256acd53f3b3250ddd20b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_3_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "3cafbd109086fb79fd5556292e6c507dbc58c9817a6eab376a6b9073093492f6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_3_finger_pad.stl",
+      "bytes": 7084,
+      "sha256": "00c1c743424c349126df9bc3acbe32fbacaf9dbf3fd847c35f1d1360f8b14120"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_1_3_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "7562658ec6c821910a580a11ecd4bb1e4cf429c91360b64eb6be778aff6b15e7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "0648514d6075d04efd5d3ad1fd609b3376d192ce84f24701481f273826835bed"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "19671309e3bec0e22a90b9d821f9aa2c1c4dbf379ae9e19bb1505fbe3c7f9d92"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "ca0472385656eed46cb8dfb8680b3d2c8680b576f97cf4e9e92cd9f9d904dba2"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "b3c80671274daad956978c3bf40c6b001c6bde77104c1816d715c4221fcb1243"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "cfa6561ed9a55c6178410990590acf06107c8d461014669e01b6e58fb7b19e61"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_0_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "3dc534c49ff0e9de1a1f769fbd9a335e27fed362b4c66d7d9293239cf41a3c7b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "5c65f1bafb6fb96d2df69190f603fe51040a0336bc65c9e5a233601e088b526f"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "d37a4b6035a0aa3dc417958747526fde99061940e00374b47dd3f1b53b1adad3"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "52345c8655794d9fc0020e200a211d1c0f1651b86cb35a3ca65a14d395fef808"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "9fa76fe0d2f00c234b4f9ec168d746cc861a0d8521fc5f7853c69a4786e807f1"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "0e247bcc8fccaef1d00c20d25c57807c8aeff6476ebb2a68ecd33c144293851b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_1_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "d8cac5f55bd552d7080b0d5733d7fea70f8f76b4e6d893861b41c6972356350d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "fa31742d2f6f20a03e58e020d29251745aafa40036efba016d0d53a50c448a40"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "b2c98df7308b418a9db736f456b090f31bd7507b3e86cdff6e504c23f4876c23"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "271ab00eccc37ad43089de5698f7e766217c84a9722eaca59719ff5a1e5dd35a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "e3a59d265644483f3f3d4125902fd522f878b910a9be956302c982b97af97168"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "7ad47f21fefe865fb582ee0d2acd6b00d9745ded322c44729091faf830bc0d16"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_2_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "3c698ec04e00e76de764cb528a65d92e7f34fab551be69cd5667f22b98cd10f0"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_3_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "89652382922371fab4ff5d1223e3f820a6417a5088fddb28692ad29201ec703a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_3_finger_pad.stl",
+      "bytes": 7084,
+      "sha256": "1f278ba6041acd2c5f0b162d676c32895ab7244d81d57e79c1ac4f6251a86e37"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_3_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "0daccd97beaf706af9c8e51339da5b0229974c68277a298ed61560a237159d8e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_2_mcp_spread_spread_shaft.stl",
+      "bytes": 6484,
+      "sha256": "561258c634668987b150e568a982a2181b47ece33032eb55fe0902003d8cefb8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "59ede9a1a4eabe9e21e1bdbc08216e88fed2354a042459c1bb2fef1d19137a61"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "0bf955b18a16ff1e71a4d2d99134586f59ce0acccc65cd65021d793484f1189b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "ac8c6fa4096428efe893d5b21b3574207f631bcae765731eed3a6a63215e142d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "68bee3dfea251d05a29544a54e762d36735fbaff7b47035f410efd485b6dda8d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "7b68ee15016f2c9917c05518d3915c3f20d5088cbf7c368e1e6312c7ffacf8d5"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_0_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "1a49c1d05bf3127fbc859c92fbb0fe9e0ea9a8eb3b9ce84ac61706b2e22418ec"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "7ec5033a342241791d1aa444e9ed7ac94c30922e9f761786980b8bdf2f314aa6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "73fd968246dc5cf8d0a49dd64870f76d0988eeecddfabfdc66089d514e9cc0a8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "e5db6e769f1d11bbd1b9d79f26be1e7abdbe1f6167e2d3246188a4f964b05a2c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "38857b7b117edc5cbe4b0a1eb973e3833cafcf5f931f519823961e2a465bfac4"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_1_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "29eef38703a274c8d254bf7264ee60530f0fd4314c886293258e5ec124da9d1a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "678134894b253f1667e430972cc7802498b00ee62ff94cbb61f089b03cd24645"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "71f2fa9e7f30ba093c3fdd59047c3fc2f89d5b723aedaab79aaf69d953bca554"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "f2a285cb65667cd07602235e54fc1ceb36f50da9adbda94c558a2803e32a31e6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "1938f6af85ad3ad0cb160639e4dbb6508e3bb2bfa1c50294928cbebfb0182792"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "a227526d455587a944af3914aea069db1023838866df9d8787ec55f10ee62222"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "4e5bcd5990032cf6331bb001868abf6a24c74eb69873895d35c3ebf3c71f734d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_2_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "bcd0ea8d7e1035e818fa465101f2629bfa01698b1bd19441cd83d7baf82192b5"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_3_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "89652382922371fab4ff5d1223e3f820a6417a5088fddb28692ad29201ec703a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_3_finger_pad.stl",
+      "bytes": 7084,
+      "sha256": "1f278ba6041acd2c5f0b162d676c32895ab7244d81d57e79c1ac4f6251a86e37"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_3_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "0daccd97beaf706af9c8e51339da5b0229974c68277a298ed61560a237159d8e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_3_mcp_spread_spread_shaft.stl",
+      "bytes": 6484,
+      "sha256": "8ee9d18de4f82fd45897e6c5f20400ce59d177700c10a4cea45c9790a9e59a59"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "290545b895aa027f4973de7d1602aa12b059821d17105fd705f058e80cbbdbce"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "416d71a92a77dc6ea5cb6b96d36cf124f46fe02bf4e3e9d905d1a2792896f41c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "4d0ed501eced17b8eba1bca4d82f8611e218cf54b5d737e2a6af809354ecf6b0"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "f3ac319a9e55cb305c256b17aafd16f4fab2d0c16a588b6f4eb4c541a1c4c68e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "fd61c66c14dd66fc28c5709331e8c71cc6b7578fa41d0cbf3814484fcb6e3278"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_0_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "03dc5eb1b8f0f812f5bc6d70adc8507b81b9a81d264780eec435d0553eb6afdd"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "7ec5033a342241791d1aa444e9ed7ac94c30922e9f761786980b8bdf2f314aa6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "6dda02b2b7afb9e6fc7e5d6d2f0dd37340d4444aad606ceeed952b16ad0722fb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "ba147b8ca7a6abca699f04b69d66b920863507faea492c176afe7577e9f268ed"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "73fd968246dc5cf8d0a49dd64870f76d0988eeecddfabfdc66089d514e9cc0a8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "e5db6e769f1d11bbd1b9d79f26be1e7abdbe1f6167e2d3246188a4f964b05a2c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "38857b7b117edc5cbe4b0a1eb973e3833cafcf5f931f519823961e2a465bfac4"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_1_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "29eef38703a274c8d254bf7264ee60530f0fd4314c886293258e5ec124da9d1a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "16de373ec5d3853938d1c5f5049d5bc151a3e0bb6dccc500a4374dbd87280dff"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "71f2fa9e7f30ba093c3fdd59047c3fc2f89d5b723aedaab79aaf69d953bca554"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "ce6d2b5674b68ca45a178f6fcbe98e3e0b8578fdd5d7a9e94ad2e4f3e75991f7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "0039c8c181292779ed3f54dcb562c81b9d4b1014dafa1a0251275cb9ab3b2516"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "6b9ae0ed5337aadb78ed54610ed168643851ff2b1b56e6d4ec918624d5c1da93"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "bb7b41526209e6add704e1b8092cecedba57dcb44ea79db55861d1dc30caa8b5"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_2_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "17adb09341f8ee1f9610074a1ee70d176f1f7b6939ba7cb1e20452e9e582ffc9"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_3_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "89652382922371fab4ff5d1223e3f820a6417a5088fddb28692ad29201ec703a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_3_finger_pad.stl",
+      "bytes": 7084,
+      "sha256": "1f278ba6041acd2c5f0b162d676c32895ab7244d81d57e79c1ac4f6251a86e37"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_3_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "0daccd97beaf706af9c8e51339da5b0229974c68277a298ed61560a237159d8e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_4_mcp_spread_spread_shaft.stl",
+      "bytes": 6484,
+      "sha256": "1ee2bef38ff95dd1056ce4ec952b69e5bc99a307dc7d10b52b7a2139a558820c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "d73745b96e05aaf52c0a4b619d66242867492e80e85e6eddc03477716c5850eb"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "1f036c6ba6c9f1e149a8496c681d503400f48d418c06fd2010afcc8fcca2a18a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "15bbfc760ac358295f0820a43cda9ff5c9ed7eb068e7fa84dd633b9111b67fb0"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "368cfe70544ea560ace146720de62062cb0cc411af1a1eb25f02ad552c7a024a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "9fad82968d1973d85e1af8e613cb6dd92ba1405a760fd713027f74a4437eb4ad"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_0_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "c03e70b6cf31d9e1817ec321d5ed861d4789003f626d1fb0b7602197a217ca71"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "34883ecae50fb114f04c6f6bee1c91d49b193065038455dab0abcb6ef5bb827f"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "2c3ec113fcad691359d7dd45cc1ca683d7d869cb4c30279fc0b4a3db407ab0a1"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "c9be42a366e4030960eb2903d918bec27b72dd79ee9a7134b59c8c8d48ce506b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "187627037d14dbf5e97163c582dac45f9495170ed36fe1348b2a2d1fb8aa9469"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "9a5978fe1ccfb1237da000000fc63c317f440d9f619998aa261df30fd1546d3d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_1_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "0626bb8ee3a0801864155e028bc3a861dfc9ab2f3de7db5fd076281fc92beba6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "1c4e9b14bea33036c786e70e4d704d9d9f9f658cd98ea2953e48dc4507b85dc8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "470efafe78750553f94a5d7e44662ce7047810699c029244a0aa950130265651"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_rigid_link.stl",
+      "bytes": 684,
+      "sha256": "9646b12d4f8c71a5f84a2f73691040a3b798fb499638df5104ea1f9b8594fdc7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_rigid_link_0.stl",
+      "bytes": 684,
+      "sha256": "dd351a45fffeb4c20d93bc8f8b9e099c4c2ede260474991f995280ce241e3323"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_rigid_link_1.stl",
+      "bytes": 684,
+      "sha256": "f101f7d8c11fa32e03ce6c8b06c962ecd7a9583f243b18deb9e8b1cdf6c2fbb6"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_rigid_link_2.stl",
+      "bytes": 684,
+      "sha256": "3d5fe5421c484bc2ed912d7999bf9cd1f3a6df9494d4f715e809afa821f32946"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_2_rigid_link_3.stl",
+      "bytes": 684,
+      "sha256": "f4bc38e8c37449ab8ae312f42b345fccb87a3fe12a5256acd53f3b3250ddd20b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_3_distal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "2eda3f3971a7fe08f12508022fcb03ff12aabaa6ca8e5fd76993f41ad9f0a830"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_3_finger_pad.stl",
+      "bytes": 7084,
+      "sha256": "5554e34226136c197c80ea66cbb39deb6dd1d06274b011366674d0479b08c99a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_3_proximal_bearing.stl",
+      "bytes": 6484,
+      "sha256": "e34a72d9517bd1ef54c0697aa27fa1d3152088c8f9bd7aa6855b336137639212"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_5_mcp_spread_spread_shaft.stl",
+      "bytes": 6484,
+      "sha256": "1ee2bef38ff95dd1056ce4ec952b69e5bc99a307dc7d10b52b7a2139a558820c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_palm_chassis_rigid_palm_chassis.stl",
+      "bytes": 684,
+      "sha256": "432620c6584c20f158b4a7ac5271469568f5f31b38a4af1e8c881cbdf935e983"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/meshes/link_palm_palm_chassis.stl",
+      "bytes": 684,
+      "sha256": "00e22c384c87b1157509c1e212d20452570d0b2e98efe1eb2e97a0689fb67d5a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.mapping.json",
+      "bytes": 49520,
+      "sha256": "a3758767ec9d6b15e6398e4319d8941bcc64310b4fa431493d0f8f3ae8d5c5c3"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+      "bytes": 69785,
+      "sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/strike_v3_training_20261020/bc_seeds/strike/ppo/params/agent.yaml",
+      "bytes": 1673,
+      "sha256": "f78452838035143ef14f2bb885af5d7787719f52f69fd4faa1e6bf31142414fa"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/bc_contraction20/bc_initial.pth",
+      "bytes": 3716002,
+      "sha256": "9b86076645ab4407b7ebd810684ea583aa87f8939e4b6b05d98fcda86330385c"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/bc_contraction29/bc_initial.pth",
+      "bytes": 3716002,
+      "sha256": "9384f4d5b53d19489bbaeaf9a494e979ad4e303286f2ad0d4011b717fc8572f8"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/bc_position01/bc_initial.pth",
+      "bytes": 3716002,
+      "sha256": "aa6bcab64a5d02096dc72d854ec8f28fbbe52a9700e7d9838f2fdf17b463d2f9"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/ppo_completion31/bc_initial.pth",
+      "bytes": 7430882,
+      "sha256": "cc4651ed388601ec5503cceb57eeef9359cc9f5b5ded9f3fe92095228f623313"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/ppo_completion31/critic_ready.pth",
+      "bytes": 11134272,
+      "sha256": "f253ba66bbb8b41073e6e565a9aba46f8a167d63e6e532e64f2fd90eb3f87a2e"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/ppo_completion31/ppo_final.pth",
+      "bytes": 14860666,
+      "sha256": "ba74fdffe74f982dbaa845c7940b9cfc2b929a766fc7874653dfdaae6e40da71"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_05/audit.json",
+      "bytes": 59220,
+      "sha256": "b05504094119fc72788937655806e782a288dbccba3fb9db2e02bda17416d219"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_05/trace.json",
+      "bytes": 9167309,
+      "sha256": "e233d8edd6647c2874992d1efa1357ce1f2ca2ec64a8c6f6aaf5fbe690f93229"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_1/audit.json",
+      "bytes": 59218,
+      "sha256": "898b64daf818fb45c8e4e48a34357c3d45e513b08ed37845057d2445072061f7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/overlap_x_minus_1/trace.json",
+      "bytes": 9158708,
+      "sha256": "543c791a1135140cc2b6f7e1e24424f888799bbca3a5b26848ceeb9bc9694d16"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_mixed_plus/audit.json",
+      "bytes": 59219,
+      "sha256": "3c4f2f59c3cd976eef3dc14230f00969f2d7a79a58bcdbef5b60c3bf93770ec7"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_mixed_plus/trace.json",
+      "bytes": 9172161,
+      "sha256": "47dfb220e0bfda11eb245eab10f5ba1d70fbda704024807a637f6e7a70b3aec5"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_nominal/audit.json",
+      "bytes": 59213,
+      "sha256": "fe25c2cc7601119e478aabd32e79ec04232998a3ea3825bbd5706954dc312d3b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_nominal/trace.json",
+      "bytes": 9171496,
+      "sha256": "6b611329f643b2732eb588fe05ea3401188b89127b231d33d67ca116f0c3015a"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_x_plus_1/audit.json",
+      "bytes": 59215,
+      "sha256": "968753334907926c10e8bdfd6a3b65ff3b9429da6e689e351b4cebe753a5418d"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_x_plus_1/trace.json",
+      "bytes": 9183187,
+      "sha256": "1851eef04b18261d7df361e639cc99777f2bb971781f787ef4dde8fd30cf07ad"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_y_minus_1/audit.json",
+      "bytes": 59218,
+      "sha256": "0a6791a03f7c9cdf433fe90fd2c5ee3c6ddd83983c7e37401c69ea9fc2c3050b"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_y_minus_1/trace.json",
+      "bytes": 9219595,
+      "sha256": "2e5bb296aca3277bdc18977301d676622ebaa7a1235184578e0249f2c7ef3c58"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_yaw_minus_2/audit.json",
+      "bytes": 59222,
+      "sha256": "91e3dbaf2b2a175593f9896ba4d9ac91e1e4b90bc008ef912cc92188b9aacaee"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturb_yaw_minus_2/trace.json",
+      "bytes": 9174272,
+      "sha256": "2406ae17665dba250ced529f415876b32d002ea76b5071cf4b70c5b029bfa940"
+    },
+    {
+      "path": "/home/zjh/Evolution_PC/outputs/wrap_robustness_20261021/perturbation_results.json",
+      "bytes": 12745,
+      "sha256": "22ba8dcd07d09dd240ff76816e3153f8b11a013a4f80be5202294887c4d15a3b"
+    }
+  ],
+  "scope": "External dependencies and available selected weights. Raw assets remain on the remote host; this Git archive is not a standalone asset bundle."
+}

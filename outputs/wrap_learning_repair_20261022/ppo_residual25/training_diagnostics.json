@@ -1,0 +1,8 @@
+{
+  "episodes": 256,
+  "falls": 0,
+  "max_speed_m_s": 0.6649366617202759,
+  "max_digit_force_N": 3.2958195209503174,
+  "max_limit_rad": 1.430511474609375e-06,
+  "anomalies": []
+}

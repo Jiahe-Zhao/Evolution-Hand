@@ -1,0 +1,32 @@
+{
+  "pid": 4180162,
+  "argv": [
+    "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+    "repair_learning.py",
+    "--headless",
+    "--plans",
+    "../contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+    "--pad-face",
+    "ymixed",
+    "--kp",
+    "3",
+    "--kd",
+    ".3",
+    "--contact-k",
+    "1500",
+    "--hand-gravity",
+    "--num-envs",
+    "32",
+    "--smoke",
+    "--bc-steps",
+    "8000",
+    "--eval-steps",
+    "1500",
+    "--push",
+    "--mode",
+    "bc",
+    "--output",
+    "bc_position01",
+    ""
+  ]
+}

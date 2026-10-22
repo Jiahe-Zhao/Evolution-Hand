@@ -1,0 +1,7 @@
+{
+  "last_lr": 1e-05,
+  "optimizer_lr": [
+    1e-05
+  ],
+  "scheduler_max_lr": 1e-05
+}

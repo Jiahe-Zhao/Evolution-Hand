@@ -1,0 +1,5 @@
+{
+  "status": "startup_failed",
+  "reason": "num_envs * horizon_length not divisible by inherited minibatch_size; no evaluation or training occurred",
+  "replacement": "eval_contraction33 with --smoke for evaluation minibatch only"
+}

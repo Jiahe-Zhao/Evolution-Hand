@@ -1,0 +1,42 @@
+{
+  "checkpoint": "bc_position01/bc_initial.pth",
+  "scope": "Partial previous-target feedback with all other observations held fixed; excludes plant dynamics and therefore does not prove complete closed-loop stability or instability.",
+  "samples": [
+    {
+      "t_s": 0.0,
+      "spectral_radius": 0.9646319150924683,
+      "largest_singular_value": 1.0021215677261353,
+      "instant_tracking_approx_spectral_radius": 1.06228506565094
+    },
+    {
+      "t_s": 0.75,
+      "spectral_radius": 0.9650521874427795,
+      "largest_singular_value": 1.002603530883789,
+      "instant_tracking_approx_spectral_radius": 1.0625311136245728
+    },
+    {
+      "t_s": 5.0,
+      "spectral_radius": 0.9618781208992004,
+      "largest_singular_value": 1.0008527040481567,
+      "instant_tracking_approx_spectral_radius": 1.0591773986816406
+    },
+    {
+      "t_s": 10.0,
+      "spectral_radius": 0.949377179145813,
+      "largest_singular_value": 0.9905876517295837,
+      "instant_tracking_approx_spectral_radius": 1.0516078472137451
+    },
+    {
+      "t_s": 15.0,
+      "spectral_radius": 0.917025625705719,
+      "largest_singular_value": 0.9584621787071228,
+      "instant_tracking_approx_spectral_radius": 1.0205230712890625
+    },
+    {
+      "t_s": 20.0,
+      "spectral_radius": 0.9178003072738647,
+      "largest_singular_value": 0.9588249325752258,
+      "instant_tracking_approx_spectral_radius": 1.0199955701828003
+    }
+  ]
+}

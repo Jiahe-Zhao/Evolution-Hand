@@ -1,0 +1,60 @@
+{
+  "sources": [
+    {
+      "run": "overlap_x_minus_05",
+      "samples": 1476,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "e233d8edd6647c2874992d1efa1357ce1f2ca2ec64a8c6f6aaf5fbe690f93229"
+    },
+    {
+      "run": "overlap_x_minus_1",
+      "samples": 1446,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "543c791a1135140cc2b6f7e1e24424f888799bbca3a5b26848ceeb9bc9694d16"
+    },
+    {
+      "run": "perturb_mixed_plus",
+      "samples": 1501,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "47dfb220e0bfda11eb245eab10f5ba1d70fbda704024807a637f6e7a70b3aec5"
+    },
+    {
+      "run": "perturb_nominal",
+      "samples": 1461,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "6b611329f643b2732eb588fe05ea3401188b89127b231d33d67ca116f0c3015a"
+    },
+    {
+      "run": "perturb_x_plus_1",
+      "samples": 1442,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "1851eef04b18261d7df361e639cc99777f2bb971781f787ef4dde8fd30cf07ad"
+    },
+    {
+      "run": "perturb_y_minus_1",
+      "samples": 1407,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "2e5bb296aca3277bdc18977301d676622ebaa7a1235184578e0249f2c7ef3c58"
+    },
+    {
+      "run": "perturb_yaw_minus_2",
+      "samples": 1446,
+      "disturbance_and_recovery_samples": 240,
+      "trace_sha256": "2406ae17665dba250ced529f415876b32d002ea76b5071cf4b70c5b029bfa940"
+    }
+  ],
+  "heldout_runs": [
+    "overlap_mixed_minus",
+    "perturb_x_plus_05",
+    "perturb_y_minus_05",
+    "perturb_y_plus_05",
+    "perturb_yaw_plus_2"
+  ],
+  "total_samples": 10179,
+  "scope": "Seven successful physical trajectories including force/torque disturbances and recovery; five successful poses excluded from BC",
+  "extra_data": "recovery_combined04.pt",
+  "extra_samples": 82500,
+  "extra_sha256": "8dead22cfd5e105a8bafe39c77e93a5f37f61518d8d375aa66831fb89e6fd7e9",
+  "only_extra": true,
+  "effective_samples": 82500
+}

@@ -1,0 +1,35 @@
+{
+  "status": "completed",
+  "best_hold_s": [
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    4.03333044052124,
+    1.233332872390747,
+    1.1666662693023682,
+    1.1333329677581787,
+    1.2666661739349365,
+    1.2833328247070312,
+    1.299999475479126,
+    1.299999475479126,
+    1.1499996185302734
+  ],
+  "diagnostics": {
+    "episodes": 24,
+    "successful_episodes": 8,
+    "falls": 16,
+    "nonfinite": 0,
+    "max_joint_limit_excess_rad": 2.384185791015625e-07,
+    "max_object_speed_m_s": 1.9855877161026,
+    "max_digit_force_N": 5.434436798095703,
+    "speed_bursts_above_workspace": 0
+  },
+  "groups": {
+    "first_half": "exact teacher action replay",
+    "second_half": "old BC closed loop"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "ppo_final.pth": "ba74fdffe74f982dbaa845c7940b9cfc2b929a766fc7874653dfdaae6e40da71",
+  "bc_initial.pth": "cc4651ed388601ec5503cceb57eeef9359cc9f5b5ded9f3fe92095228f623313",
+  "critic_ready.pth": "f253ba66bbb8b41073e6e565a9aba46f8a167d63e6e532e64f2fd90eb3f87a2e"
+}

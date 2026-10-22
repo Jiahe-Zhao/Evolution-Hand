@@ -1,0 +1,18 @@
+{
+  "epochs": 128,
+  "actor_max_parameter_change": 0.0,
+  "critic_lr": 0.0003,
+  "actor_start_lr": 1e-07,
+  "pre_actor_training_diagnostics": {
+    "successful_terminal_episodes": 183,
+    "max_terminal_shaping_residual": 5.4836273193359375e-05,
+    "episode_steps": 1500,
+    "completion_reward": true,
+    "episodes": 256,
+    "falls": 0,
+    "max_speed_m_s": 0.35560402274131775,
+    "max_digit_force_N": 3.5178511142730713,
+    "max_limit_rad": 1.430511474609375e-06,
+    "anomalies": []
+  }
+}

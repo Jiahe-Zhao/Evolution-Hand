@@ -1,0 +1,33 @@
+{
+  "scope": "Fixed morphology, free 80 g tool grasp/lift under mild pose and force perturbations; not four-task or morphology generalization",
+  "bc_baseline": {
+    "checkpoint": "bc_contraction29/bc_initial.pth",
+    "observation_size": 67,
+    "action_size": 24,
+    "seed42_successes": 31,
+    "seed42_episodes": 32,
+    "seed2027_successes": 63,
+    "seed2027_episodes": 64,
+    "requires_residual_bc": false,
+    "sampled_seed2027_successes": 63,
+    "sampled_seed2027_episodes": 64
+  },
+  "ppo_reference": {
+    "checkpoint": "bc_contraction20/bc_initial.pth",
+    "reason": "Final short PPO used BC20; BC29 results must not be used as its baseline"
+  },
+  "production_training": "not started; existing evolution processes remain paused because PPO handoff failed",
+  "hand_geometry": "unchanged",
+  "ppo_status": "rejected: success regresses after updates",
+  "final_ppo": {
+    "run": "ppo_completion31",
+    "before_successes": 244,
+    "after_successes": 74,
+    "num_envs": 256,
+    "heldout_successes": 22,
+    "heldout_envs": 64,
+    "actor_update_epochs": 128,
+    "critic_only_epochs": 128,
+    "transitions": 1048576
+  }
+}

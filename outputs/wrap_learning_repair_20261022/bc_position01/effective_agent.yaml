@@ -1,0 +1,79 @@
+params:
+  algo:
+    name: a2c_continuous
+  config:
+    bounds_loss_coef: 0.0001
+    clip_value: true
+    critic_coef: 4
+    device: cuda:0
+    device_name: cuda:0
+    e_clip: 0.2
+    entropy_coef: 0.0
+    env_name: wrap_probe
+    full_experiment_name: ppo
+    gamma: 0.99
+    grad_norm: 1.0
+    horizon_length: 16
+    kl_threshold: 0.016
+    learning_rate: 5e-4
+    lr_schedule: adaptive
+    max_epochs: 128
+    mini_epochs: 5
+    minibatch_size: 512
+    mixed_precision: false
+    multi_gpu: false
+    name: evolution_task
+    normalize_advantage: true
+    normalize_input: false
+    normalize_value: true
+    num_actors: 32
+    player:
+      deterministic: true
+      games_num: 100000
+      print_stats: true
+    ppo: true
+    print_stats: true
+    reward_shaper:
+      scale_value: 0.01
+    save_best_after: 0
+    save_frequency: 32
+    schedule_type: standard
+    score_to_win: 100000
+    seq_length: 4
+    tau: 0.95
+    train_dir: /home/zjh/Evolution_PC/outputs/wrap_learning_repair_20261022/bc_position01
+    truncate_grads: true
+    value_bootstrap: true
+  env:
+    clip_actions: 1.0
+    clip_observations: 5.0
+  load_checkpoint: false
+  load_path: ''
+  model:
+    name: continuous_a2c_logstd
+  network:
+    mlp:
+      activation: elu
+      d2rl: false
+      initializer:
+        name: default
+      regularizer:
+        name: None
+      units:
+      - 512
+      - 512
+      - 256
+      - 128
+    name: actor_critic
+    separate: true
+    space:
+      continuous:
+        fixed_sigma: true
+        mu_activation: None
+        mu_init:
+          name: default
+        sigma_activation: None
+        sigma_init:
+          name: const_initializer
+          val: 0
+  seed: 42
