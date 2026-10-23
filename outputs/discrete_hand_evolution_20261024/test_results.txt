@@ -1,0 +1,12 @@
+test_bc_generation_guard (test_discrete.GenesTest) ... ok
+test_descendants_can_learn_from_initial_failure (test_discrete.GenesTest) ... ok
+test_identity_and_immutable_baseline (test_discrete.GenesTest) ... ok
+test_lineage_and_selection (test_discrete.GenesTest) ... ok
+test_mutations_are_adjacent_and_bounded (test_discrete.GenesTest) ... ok
+test_total_span_and_proximal_fraction (test_discrete.GenesTest) ... ok
+test_only_actor_transfers (test_discrete.InheritanceTest) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.934s
+
+OK

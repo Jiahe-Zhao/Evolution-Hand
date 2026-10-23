@@ -1,0 +1,19 @@
+{
+  "id": "pad_minus_g1",
+  "generation": 1,
+  "code": [0, 0, 0, 0, 0, 0, 0, -1],
+  "parent_id": "baseline_g0",
+  "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+  "candidate": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/matrix/pad_width_-1/candidate.json",
+  "plans": "/home/zjh/Evolution_PC/outputs/contact_control_calibration_20261021/plans_wrap_cover_selected.json",
+  "mode": "ppo",
+  "training": {
+    "num_envs": 256,
+    "epochs": 512,
+    "critic_warmup": 128,
+    "ppo_lr": 1e-7,
+    "finger_std": 0.0005,
+    "wrist_std": 0.0001,
+    "seed": 2027
+  }
+}

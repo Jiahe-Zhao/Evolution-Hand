@@ -1,0 +1,8 @@
+__pycache__/
+reference/
+checks/
+matrix/
+seeds/
+smoke_g1*/
+*.log
+*.pth

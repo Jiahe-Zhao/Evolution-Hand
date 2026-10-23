@@ -1,0 +1,21 @@
+{
+  ".gitignore": "1c7fb84bced9ecddcf505ccfe60e76c4849d8b77e356a377214ed23003ac7c3d",
+  "README.md": "ccb0986fc4293b53a04372bbb1aa0511731f8ab1c05b30ab5db65b23ad253975",
+  "RESULTS.md": "77c1cf76c653f3c6900f0ec8b7fb9b010da63a2f0a4abcca140af5b7e2386d0e",
+  "baseline_genotype.json": "3db9029cf78c9ccb58b9ec75e21c51166b61501fd734ef52968152c594af3d73",
+  "build_candidate.py": "0ba22b67760197096fb7956b6acb9e5471dd555f175f970ec13f585650f3c0c1",
+  "evolution.py": "bdfa6fce04e5fb3f0412c96d91d6631901461e7583c9072bd259c265da7d6162",
+  "example_births.json": "d00a18a8149c0ec8496dea548a62c11953d291e88e890cf17d762c494e5762d7",
+  "example_job.json": "faef0addaf509dbd9dc335b3f3d19ca584a5edfb4417355861df4a952d76d7db",
+  "genes.py": "2a35e79c1e124e0396899aadac1f2b76c1709a3abbeced78723af3e0f6852a57",
+  "import_seed.py": "7726dab72516bb8df18ae49086a4036428670147148b4cd2a2d0d0d687a0d62b",
+  "inheritance.py": "ec0ff91cf8a1c64532b514b1d6675156c001627aea88115a0113585a4eedc8cb",
+  "matrix_results.json": "5f697e1c78e0b6b6548762322127d483ef2382b7b04d4cafd75444d67a1ad8ab",
+  "planned_command.json": "f2eb5fc92d67dcbfa0517e4a11dd17a39ce5c04da04d971194c8acdbf8bedbb6",
+  "summarize_validation.py": "b597e22ff4b06a3daaadfc8be302181b98cb9681ec68fddeaf56c4ae8b20f4f2",
+  "test_discrete.py": "1ebf7a40e2ff1442ea144131684a63c4de19d0eabd6ed16d6f0d86190b7a6854",
+  "test_results.txt": "9567fd992943854e76852b620e5c2d712a8a035b8f9ca899750df8688c6e2251",
+  "validate_matrix.py": "44f5435eb81dfba9be597e597531b566dc3dd29afc0a791c6f1cfd28d087eea3",
+  "validation_summary.json": "9f02de4bb043332173d0acc07a054b61d6d3d1ec64858ce7261f1ab5497f8a54",
+  "worker.py": "bb8cacd1314ef9ef7fddcc31c8c62cc35b9e8f81b3b0eff189b15214a34f6fa5"
+}

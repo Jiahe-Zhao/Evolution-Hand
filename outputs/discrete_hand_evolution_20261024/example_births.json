@@ -1,0 +1,121 @@
+[
+  {
+    "id": "e54cee3aae8ec26f",
+    "code": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "ed66b97230164e32",
+    "code": [
+      0,
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "74b525c253ec3223",
+    "code": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "7aade8bdc1f0852a",
+    "code": [
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "5efb91f3f406f116",
+    "code": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "50009bce003d3ef5",
+    "code": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  },
+  {
+    "id": "87dbf0cc2e99de89",
+    "code": [
+      0,
+      0,
+      0,
+      0,
+      -1,
+      0,
+      0,
+      0
+    ],
+    "generation": 1,
+    "parent_id": "baseline_g0",
+    "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+    "bc_allowed": false
+  }
+]

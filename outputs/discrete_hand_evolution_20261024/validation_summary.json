@@ -1,0 +1,60 @@
+{
+  "status": "implementation_smoke_passed",
+  "model_checks_passed": 17,
+  "model_checks_total": 17,
+  "generation": 1,
+  "code": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -1
+  ],
+  "num_envs": 4,
+  "ppo_epochs": 2,
+  "horizon": 16,
+  "training_transitions": 128,
+  "bc_updates": 0,
+  "bc_dataset_loaded": false,
+  "inherited_actor_error": 0.0,
+  "initial_optimizer_state_entries": 0,
+  "actor_change_during_critic_warmup": 0.0,
+  "actor_change_after_ppo": 4.6193599700927734e-07,
+  "critic_warmup": {
+    "epochs": 1,
+    "actor_max_parameter_change": 0.0,
+    "critic_lr": 0.0003,
+    "actor_start_lr": 1e-07,
+    "pre_actor_training_diagnostics": {
+      "successful_terminal_episodes": 0,
+      "max_terminal_shaping_residual": 0.0,
+      "episode_steps": 1500,
+      "completion_reward": true,
+      "episodes": 0,
+      "falls": 0,
+      "max_speed_m_s": 0.012559992261230946,
+      "max_digit_force_N": 0.0,
+      "max_limit_rad": 2.384185791015625e-07,
+      "anomalies": []
+    }
+  },
+  "training_diagnostics": {
+    "successful_terminal_episodes": 0,
+    "max_terminal_shaping_residual": 0.0,
+    "episode_steps": 1500,
+    "completion_reward": true,
+    "episodes": 0,
+    "falls": 0,
+    "max_speed_m_s": 0.012559992261230946,
+    "max_digit_force_N": 0.0,
+    "max_limit_rad": 2.384185791015625e-07,
+    "anomalies": []
+  },
+  "complete_episode_evaluation": false,
+  "convergence_demonstrated": false,
+  "run": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/smoke_g1c",
+  "old_production_training": "still paused"
+}

@@ -1,0 +1,312 @@
+[
+  {
+    "name": "baseline",
+    "passed": true,
+    "urdf_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+    "meshes_identical": true
+  },
+  {
+    "name": "palm_width_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "palm_width_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "finger_spread_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "finger_spread_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "finger_length_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "finger_length_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "proximal_fraction_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "proximal_fraction_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_length_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_length_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_lateral_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_lateral_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_axis_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "thumb_axis_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "pad_width_-1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  },
+  {
+    "name": "pad_width_+1",
+    "passed": true,
+    "checks": {
+      "bone": {
+        "passed": true,
+        "reasons": []
+      },
+      "right": {
+        "passed": true,
+        "reasons": []
+      },
+      "left": {
+        "passed": true,
+        "reasons": []
+      }
+    },
+    "joint_interface_unchanged": true
+  }
+]

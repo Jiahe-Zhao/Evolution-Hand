@@ -1,0 +1,658 @@
+{
+  "agent_code": "arboreal_comparative_prior_v1",
+  "base_link": [
+    {
+      "name_code": "link_0_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.01,
+      "geometry_length": 0.035
+    }
+  ],
+  "links": [
+    {
+      "name_code": "link_1_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.005,
+      "geometry_length": 0.04,
+      "geometry_size": null,
+      "joint_name": "link_0_0_to_link_1_0",
+      "joint_parent": "link_0_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1,
+        "effort": 15.0,
+        "velocity": 2.0
+      },
+      "joint_origin_translation": [
+        0.015,
+        0,
+        0
+      ],
+      "joint_origin_rpy": [
+        0,
+        1.87,
+        0
+      ]
+    },
+    {
+      "name_code": "link_1_1",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.022,
+      "geometry_size": null,
+      "joint_name": "link_1_0_to_link_1_1",
+      "joint_parent": "link_1_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 10.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.045
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_1_2",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_1_1_to_link_1_2",
+      "joint_parent": "link_1_1",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.026
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_2_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.005,
+      "geometry_length": 0.045,
+      "geometry_size": null,
+      "joint_name": "link_0_0_to_link_2_0",
+      "joint_parent": "link_0_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1,
+        "effort": 15.0,
+        "velocity": 2.0
+      },
+      "joint_origin_translation": [
+        0.015,
+        0,
+        0.01
+      ],
+      "joint_origin_rpy": [
+        0,
+        1.6700000000000002,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_2_1",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.028,
+      "geometry_size": null,
+      "joint_name": "link_2_0_to_link_2_1",
+      "joint_parent": "link_2_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 10.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.049999999999999996
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_2_2",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.02,
+      "geometry_size": null,
+      "joint_name": "link_2_1_to_link_2_2",
+      "joint_parent": "link_2_1",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.032
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_2_3",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.0025,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_2_2_to_link_2_3",
+      "joint_parent": "link_2_2",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.024
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_3_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.048,
+      "geometry_size": null,
+      "joint_name": "link_0_0_to_link_3_0",
+      "joint_parent": "link_0_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1,
+        "effort": 15.0,
+        "velocity": 2.0
+      },
+      "joint_origin_translation": [
+        0.015,
+        0,
+        0.02
+      ],
+      "joint_origin_rpy": [
+        0,
+        1.57,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_3_1",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.029,
+      "geometry_size": null,
+      "joint_name": "link_3_0_to_link_3_1",
+      "joint_parent": "link_3_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 10.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.052000000000000005
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_3_2",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.0035,
+      "geometry_length": 0.022,
+      "geometry_size": null,
+      "joint_name": "link_3_1_to_link_3_2",
+      "joint_parent": "link_3_1",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.033
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_3_3",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.0025,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_3_2_to_link_3_3",
+      "joint_parent": "link_3_2",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.0255
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_4_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.04,
+      "geometry_size": null,
+      "joint_name": "link_0_0_to_link_4_0",
+      "joint_parent": "link_0_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1,
+        "effort": 15.0,
+        "velocity": 2.0
+      },
+      "joint_origin_translation": [
+        0.015,
+        0,
+        0.03
+      ],
+      "joint_origin_rpy": [
+        0,
+        1.47,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_4_1",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.004,
+      "geometry_length": 0.029,
+      "geometry_size": null,
+      "joint_name": "link_4_0_to_link_4_1",
+      "joint_parent": "link_4_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 10.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.043000000000000003
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_4_2",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.0035,
+      "geometry_length": 0.021,
+      "geometry_size": null,
+      "joint_name": "link_4_1_to_link_4_2",
+      "joint_parent": "link_4_1",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.033
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_4_3",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.0025,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_4_2_to_link_4_3",
+      "joint_parent": "link_4_2",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.0245
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_5_0",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.039,
+      "geometry_size": null,
+      "joint_name": "link_0_0_to_link_5_0",
+      "joint_parent": "link_0_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1,
+        "effort": 15.0,
+        "velocity": 2.0
+      },
+      "joint_origin_translation": [
+        0.015,
+        0,
+        0.04
+      ],
+      "joint_origin_rpy": [
+        0,
+        1.37,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_5_1",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.02,
+      "geometry_size": null,
+      "joint_name": "link_5_0_to_link_5_1",
+      "joint_parent": "link_5_0",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 10.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.042
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ],
+      "phalanx_sagitta_ratio": 0.04
+    },
+    {
+      "name_code": "link_5_2",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_5_1_to_link_5_2",
+      "joint_parent": "link_5_1",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.023
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_5_3",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.002,
+      "geometry_length": 0.012,
+      "geometry_size": null,
+      "joint_name": "link_5_2_to_link_5_3",
+      "joint_parent": "link_5_2",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0,
+        0,
+        0.018
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name_code": "link_1_3",
+      "geometry_type": "capsule",
+      "geometry_radius": 0.003,
+      "geometry_length": 0.015,
+      "geometry_size": null,
+      "joint_name": "link_1_2_to_link_1_3",
+      "joint_parent": "link_1_2",
+      "joint_type": "revolute",
+      "joint_axis": [
+        1,
+        0,
+        0
+      ],
+      "joint_limit": {
+        "lower": 0.0,
+        "upper": 1.57,
+        "effort": 5.0,
+        "velocity": 1.5
+      },
+      "joint_origin_translation": [
+        0.0,
+        0.0,
+        0.018
+      ],
+      "joint_origin_rpy": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "evolution_information": [],
+  "evolution_id": "3729d8702154564c815b7640d03ae8db",
+  "model_prior": {
+    "evidence": "simulation_prior",
+    "taxon": null,
+    "age_ma": null,
+    "lengths": "reference geometry; not fossil-measured proportions",
+    "phalanx_sagitta_ratio": 0.04,
+    "sensitivity_values": [
+      0.0,
+      0.02,
+      0.04,
+      0.08
+    ],
+    "note": "Do not infer an ancestor's anatomy from task optimization alone."
+  }
+}
