@@ -27,7 +27,7 @@ if args.generation>0 and args.mode=='ppo' and args.critic_warmup<1:
  raise ValueError('Descendants require critic warmup before actor adaptation')
 out=Path(args.output).resolve();out.mkdir(parents=True,exist_ok=False);shutil.copyfile(__file__,out/'controller_snapshot.py')
 (out/'execution.json').write_text(json.dumps(dict(pid=os.getpid(),argv=sys.argv,args=vars(args),script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()),indent=2))
-for helper in ('expert_feedback.py','retrieval_bc.py','ppo_numerics.py','bc_anchor.py','critic_warmup.py','residual_bc.py','single_update_audit.py'):
+for helper in ('expert_feedback.py','retrieval_bc.py','ppo_numerics.py','bc_anchor.py','critic_warmup.py','residual_bc.py','single_update_audit.py','inheritance.py','pilot_metrics.py'):
  if (BASE/helper).exists():shutil.copyfile(BASE/helper,out/(Path(helper).stem+'_snapshot.py'))
 from diagnostic_wrist import build,NAMES
 source=Path(args.source).resolve();path,contract=build(source,out/'wrist')
@@ -439,6 +439,8 @@ if args.mode=='ppo':
  if args.bc_anchor:
   from bc_anchor import install
   anchor_reference=install(agent,args.bc_anchor)
+ from pilot_metrics import install as install_metrics
+ install_metrics(agent,out)
  env.reset();clear_diagnostics();agent.model.train();agent.train();agent.save(str(out/'ppo_final'));(out/'training_diagnostics.json').write_text(json.dumps(env.diagnostics(),indent=2));after=evaluate('after_ppo')
 else:after=None
 if args.one_update_audit:

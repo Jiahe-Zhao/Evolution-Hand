@@ -4,5 +4,6 @@ checks/
 matrix/
 seeds/
 smoke_g1*/
+pilot_8_20261024/
 *.log
 *.pth

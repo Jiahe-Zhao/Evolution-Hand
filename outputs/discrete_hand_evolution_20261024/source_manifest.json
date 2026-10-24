@@ -1,6 +1,6 @@
 {
-  ".gitignore": "1c7fb84bced9ecddcf505ccfe60e76c4849d8b77e356a377214ed23003ac7c3d",
-  "README.md": "ccb0986fc4293b53a04372bbb1aa0511731f8ab1c05b30ab5db65b23ad253975",
+  ".gitignore": "8eb074e632181f90156a13d10f44dd9875dbe9750fcf5292dc218c38cf3b4b20",
+  "README.md": "010d289c2e17d1f81705f9fefbb0b109d57bf5ea23865ba1a7e4cc843e247ea6",
   "RESULTS.md": "77c1cf76c653f3c6900f0ec8b7fb9b010da63a2f0a4abcca140af5b7e2386d0e",
   "baseline_genotype.json": "3db9029cf78c9ccb58b9ec75e21c51166b61501fd734ef52968152c594af3d73",
   "build_candidate.py": "0ba22b67760197096fb7956b6acb9e5471dd555f175f970ec13f585650f3c0c1",
@@ -17,5 +17,8 @@
   "test_results.txt": "9567fd992943854e76852b620e5c2d712a8a035b8f9ca899750df8688c6e2251",
   "validate_matrix.py": "44f5435eb81dfba9be597e597531b566dc3dd29afc0a791c6f1cfd28d087eea3",
   "validation_summary.json": "9f02de4bb043332173d0acc07a054b61d6d3d1ec64858ce7261f1ab5497f8a54",
-  "worker.py": "bb8cacd1314ef9ef7fddcc31c8c62cc35b9e8f81b3b0eff189b15214a34f6fa5"
+  "worker.py": "3dac6b9fc063be6ea2441d04e95d8c8d9c97cb461997b89903737395d5de0d5c",
+  "pilot_metrics.py": "c072b93ebf7dee475df9e560a6f0fec39c9b543cc1fac5a61c6dbe8ea6ef75d9",
+  "run_pilot.py": "8c5eb6ffc1dec49f3bdec9d1088415013cf346c7b463595d809c8e6affc1c35f",
+  "PILOT_8.md": "dc7feab20a5764bd3e21d37b1253a73968a0727ce256778854380312bd329371"
 }
