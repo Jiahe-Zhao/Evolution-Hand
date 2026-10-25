@@ -1,0 +1,13 @@
+{
+  "force_exceedances": 0,
+  "successful_terminal_episodes": 0,
+  "max_terminal_shaping_residual": 0.0,
+  "episode_steps": 1500,
+  "completion_reward": false,
+  "episodes": 0,
+  "falls": 0,
+  "max_speed_m_s": 0.01783294789493084,
+  "max_digit_force_N": 0.0,
+  "max_limit_rad": 1.4901161193847656e-08,
+  "anomalies": []
+}
