@@ -1,0 +1,10 @@
+test_exported_exploration_restored (test_adaptation.Tests) ... ok
+test_frames (test_adaptation.Tests) ... ok
+test_gaussian_kl_detects_variance_only_change (test_adaptation.Tests) ... ok
+test_migration (test_adaptation.Tests) ... ok
+test_reject_restores_sigma_and_actor (test_adaptation.Tests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.353s
+
+OK
