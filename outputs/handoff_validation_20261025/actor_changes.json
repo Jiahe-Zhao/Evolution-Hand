@@ -1,0 +1,14 @@
+{
+  "standard": {
+    "actor_max_absolute_change": 5.055611836723983e-05,
+    "actor_l2_change": 0.002301434287801385,
+    "appended_observation_weight_l2": 0.0012346666771918535,
+    "appended_observation_nonzero": 20992
+  },
+  "calibrated": {
+    "actor_max_absolute_change": 3.0798837542533875e-06,
+    "actor_l2_change": 0.0005069004837423563,
+    "appended_observation_weight_l2": 9.231384319718927e-05,
+    "appended_observation_nonzero": 20992
+  }
+}

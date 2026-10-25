@@ -1,0 +1,14 @@
+{
+  "epoch": 128,
+  "elapsed_s": 217.96083273366094,
+  "completed_episodes": 32,
+  "successes": 29,
+  "new_episodes": 0,
+  "new_successes": 0,
+  "new_success_rate": null,
+  "learning_rate": 6.25e-09,
+  "falls": 0,
+  "max_speed_m_s": 0.03729674220085144,
+  "max_digit_force_N": 2.4172749519348145,
+  "anomaly_count": 0
+}

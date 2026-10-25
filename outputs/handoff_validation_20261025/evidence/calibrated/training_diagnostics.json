@@ -1,0 +1,12 @@
+{
+  "successful_terminal_episodes": 29,
+  "max_terminal_shaping_residual": 1.9073486328125e-05,
+  "episode_steps": 1500,
+  "completion_reward": true,
+  "episodes": 32,
+  "falls": 0,
+  "max_speed_m_s": 0.03729674220085144,
+  "max_digit_force_N": 2.4172749519348145,
+  "max_limit_rad": 8.344650268554688e-07,
+  "anomalies": []
+}

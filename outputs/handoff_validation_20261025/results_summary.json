@@ -1,0 +1,241 @@
+{
+  "scope": "32 environments, same seed, complete 25-second episodes, short PPO",
+  "reward_and_morphology_unchanged": true,
+  "independent_seed_evaluation": false,
+  "observation_dimension": 108,
+  "rows": [
+    {
+      "name": "control",
+      "num_envs": 32,
+      "before": 31,
+      "after": 31,
+      "lost_success": 0,
+      "gained_success": 0,
+      "before_falls": 0,
+      "after_falls": 0,
+      "bc_updates": 0,
+      "after_diagnostics": {
+        "successful_terminal_episodes": 31,
+        "max_terminal_shaping_residual": 1.7642974853515625e-05,
+        "episode_steps": 1500,
+        "completion_reward": true,
+        "episodes": 32,
+        "falls": 0,
+        "max_speed_m_s": 0.03412451222538948,
+        "max_digit_force_N": 2.58023738861084,
+        "max_limit_rad": 4.76837158203125e-07,
+        "anomalies": []
+      },
+      "inheritance": {
+        "mode": "actor_only",
+        "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+        "parent_sha256": "9384f4d5b53d19489bbaeaf9a494e979ad4e303286f2ad0d4011b717fc8572f8",
+        "copied_keys": [
+          "a2c_network.actor_mlp.0.weight",
+          "a2c_network.actor_mlp.0.bias",
+          "a2c_network.actor_mlp.2.weight",
+          "a2c_network.actor_mlp.2.bias",
+          "a2c_network.actor_mlp.4.weight",
+          "a2c_network.actor_mlp.4.bias",
+          "a2c_network.actor_mlp.6.weight",
+          "a2c_network.actor_mlp.6.bias",
+          "a2c_network.mu.weight",
+          "a2c_network.mu.bias"
+        ],
+        "actor_max_copy_error": 0.0,
+        "observation_expanded_with_zero_weights": true,
+        "critic": "fresh",
+        "optimizer": "fresh",
+        "value_normalizer": "fresh",
+        "exploration": "configured_for_child",
+        "bc_updates": 0
+      }
+    },
+    {
+      "name": "standard",
+      "num_envs": 32,
+      "before": 31,
+      "after": 29,
+      "lost_success": 2,
+      "gained_success": 0,
+      "before_falls": 0,
+      "after_falls": 0,
+      "bc_updates": 0,
+      "after_diagnostics": {
+        "successful_terminal_episodes": 29,
+        "max_terminal_shaping_residual": 1.0251998901367188e-05,
+        "episode_steps": 1500,
+        "completion_reward": true,
+        "episodes": 32,
+        "falls": 0,
+        "max_speed_m_s": 0.14658798277378082,
+        "max_digit_force_N": 2.570162773132324,
+        "max_limit_rad": 2.384185791015625e-07,
+        "anomalies": []
+      },
+      "inheritance": {
+        "mode": "actor_only",
+        "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+        "parent_sha256": "9384f4d5b53d19489bbaeaf9a494e979ad4e303286f2ad0d4011b717fc8572f8",
+        "copied_keys": [
+          "a2c_network.actor_mlp.0.weight",
+          "a2c_network.actor_mlp.0.bias",
+          "a2c_network.actor_mlp.2.weight",
+          "a2c_network.actor_mlp.2.bias",
+          "a2c_network.actor_mlp.4.weight",
+          "a2c_network.actor_mlp.4.bias",
+          "a2c_network.actor_mlp.6.weight",
+          "a2c_network.actor_mlp.6.bias",
+          "a2c_network.mu.weight",
+          "a2c_network.mu.bias"
+        ],
+        "actor_max_copy_error": 0.0,
+        "observation_expanded_with_zero_weights": true,
+        "critic": "fresh",
+        "optimizer": "fresh",
+        "value_normalizer": "fresh",
+        "exploration": "configured_for_child",
+        "bc_updates": 0
+      },
+      "last_epoch": {
+        "epoch": 256,
+        "elapsed_s": 433.4310690443963,
+        "completed_episodes": 64,
+        "successes": 61,
+        "new_episodes": 0,
+        "new_successes": 0,
+        "new_success_rate": null,
+        "learning_rate": 3.375e-07,
+        "falls": 0,
+        "max_speed_m_s": 0.35463187098503113,
+        "max_digit_force_N": 2.5248279571533203,
+        "anomaly_count": 0
+      },
+      "epochs": 256
+    },
+    {
+      "name": "calibrated",
+      "num_envs": 32,
+      "before": 31,
+      "after": 15,
+      "lost_success": 16,
+      "gained_success": 0,
+      "before_falls": 0,
+      "after_falls": 0,
+      "bc_updates": 0,
+      "after_diagnostics": {
+        "successful_terminal_episodes": 15,
+        "max_terminal_shaping_residual": 1.7642974853515625e-05,
+        "episode_steps": 1500,
+        "completion_reward": true,
+        "episodes": 32,
+        "falls": 0,
+        "max_speed_m_s": 0.35478854179382324,
+        "max_digit_force_N": 3.340538501739502,
+        "max_limit_rad": 8.344650268554688e-07,
+        "anomalies": []
+      },
+      "inheritance": {
+        "mode": "actor_only",
+        "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+        "parent_sha256": "9384f4d5b53d19489bbaeaf9a494e979ad4e303286f2ad0d4011b717fc8572f8",
+        "copied_keys": [
+          "a2c_network.actor_mlp.0.weight",
+          "a2c_network.actor_mlp.0.bias",
+          "a2c_network.actor_mlp.2.weight",
+          "a2c_network.actor_mlp.2.bias",
+          "a2c_network.actor_mlp.4.weight",
+          "a2c_network.actor_mlp.4.bias",
+          "a2c_network.actor_mlp.6.weight",
+          "a2c_network.actor_mlp.6.bias",
+          "a2c_network.mu.weight",
+          "a2c_network.mu.bias"
+        ],
+        "actor_max_copy_error": 0.0,
+        "observation_expanded_with_zero_weights": true,
+        "critic": "fresh",
+        "optimizer": "fresh",
+        "value_normalizer": "fresh",
+        "exploration": "configured_for_child",
+        "bc_updates": 0
+      },
+      "critic_calibration": {
+        "before": {
+          "rmse": 7.110962867736816,
+          "bias": -6.9557576179504395,
+          "target_mean": 6.987579345703125
+        },
+        "after": {
+          "rmse": 0.33209463953971863,
+          "bias": 0.006156971678137779,
+          "target_mean": 6.987579345703125
+        },
+        "history": [
+          {
+            "step": 100,
+            "rmse": 0.7123507857322693,
+            "bias": -0.29647713899612427,
+            "target_mean": 6.987579345703125
+          },
+          {
+            "step": 200,
+            "rmse": 0.8603736162185669,
+            "bias": -0.6162358522415161,
+            "target_mean": 6.987579345703125
+          },
+          {
+            "step": 300,
+            "rmse": 0.528504490852356,
+            "bias": 0.07039040327072144,
+            "target_mean": 6.987579345703125
+          },
+          {
+            "step": 400,
+            "rmse": 0.50496506690979,
+            "bias": -0.24464894831180573,
+            "target_mean": 6.987579345703125
+          },
+          {
+            "step": 500,
+            "rmse": 0.33209463953971863,
+            "bias": 0.006156971678137779,
+            "target_mean": 6.987579345703125
+          }
+        ],
+        "training_samples": 36000,
+        "validation_samples": 12000,
+        "actor_max_change": 0.0,
+        "bc_updates": 0,
+        "accepted": true,
+        "split": "held-out environments; calibration validation, not independent task evaluation",
+        "sampled_policy": true,
+        "reward_scale": 0.01,
+        "gamma": 0.9995
+      },
+      "policy_guard": {
+        "accepted": 636,
+        "rejected": 4,
+        "threshold": 0.01,
+        "critic_learning_rate": 0.0003,
+        "max_accepted_kl": 0.004580086097121239,
+        "max_proposed_kl": 0.19723202288150787,
+        "learning_rate": 6.25e-09
+      },
+      "last_epoch": {
+        "epoch": 128,
+        "elapsed_s": 217.96083273366094,
+        "completed_episodes": 32,
+        "successes": 29,
+        "new_episodes": 0,
+        "new_successes": 0,
+        "new_success_rate": null,
+        "learning_rate": 6.25e-09,
+        "falls": 0,
+        "max_speed_m_s": 0.03729674220085144,
+        "max_digit_force_N": 2.4172749519348145,
+        "anomaly_count": 0
+      },
+      "epochs": 128
+    }
+  ]
+}

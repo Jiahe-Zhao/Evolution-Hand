@@ -1,0 +1,9 @@
+{
+  "accepted": 636,
+  "rejected": 4,
+  "threshold": 0.01,
+  "critic_learning_rate": 0.0003,
+  "max_accepted_kl": 0.004580086097121239,
+  "max_proposed_kl": 0.19723202288150787,
+  "learning_rate": 6.25e-09
+}

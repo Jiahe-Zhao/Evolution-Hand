@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "task": "free_tool_wrap",
+  "observation": "wrap108_hold_signed_force_velocity_support_v2",
+  "action": "joint_absolute_normalized_and_world_wrist_0.25m",
+  "joint_names": [
+    "link_1_thumb_spread_joint",
+    "link_2_mcp_spread_joint",
+    "link_3_mcp_spread_joint",
+    "link_4_mcp_spread_joint",
+    "link_5_mcp_spread_joint",
+    "link_0_0_to_link_1_0",
+    "link_1_0_to_link_1_1",
+    "link_1_1_to_link_1_2",
+    "link_0_0_to_link_2_0",
+    "link_2_0_to_link_2_1",
+    "link_2_1_to_link_2_2",
+    "link_0_0_to_link_3_0",
+    "link_3_0_to_link_3_1",
+    "link_3_1_to_link_3_2",
+    "link_0_0_to_link_4_0",
+    "link_4_0_to_link_4_1",
+    "link_4_1_to_link_4_2",
+    "link_0_0_to_link_5_0",
+    "link_5_0_to_link_5_1",
+    "link_5_1_to_link_5_2",
+    "link_1_2_to_link_1_3"
+  ],
+  "joint_limits": [
+    [
+      0.0,
+      1.7453292519943295
+    ],
+    [
+      -0.35,
+      0.35
+    ],
+    [
+      -0.17,
+      0.17
+    ],
+    [
+      -0.26,
+      0.26
+    ],
+    [
+      -0.35,
+      0.35
+    ],
+    [
+      0.0,
+      1.05
+    ],
+    [
+      0.0,
+      1.05
+    ],
+    [
+      0.0,
+      1.55
+    ],
+    [
+      0.0,
+      1.18
+    ],
+    [
+      0.0,
+      1.75
+    ],
+    [
+      0.0,
+      1.57
+    ],
+    [
+      0.0,
+      1.4
+    ],
+    [
+      0.0,
+      1.75
+    ],
+    [
+      0.0,
+      1.57
+    ],
+    [
+      0.0,
+      1.46
+    ],
+    [
+      0.0,
+      1.75
+    ],
+    [
+      0.0,
+      1.57
+    ],
+    [
+      0.0,
+      1.59
+    ],
+    [
+      0.0,
+      1.75
+    ],
+    [
+      0.0,
+      1.57
+    ],
+    [
+      0.0,
+      1.57
+    ]
+  ],
+  "separate_actor_critic": true,
+  "normalize_input": false
+}

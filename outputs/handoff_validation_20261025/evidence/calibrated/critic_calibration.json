@@ -1,0 +1,53 @@
+{
+  "before": {
+    "rmse": 7.110962867736816,
+    "bias": -6.9557576179504395,
+    "target_mean": 6.987579345703125
+  },
+  "after": {
+    "rmse": 0.33209463953971863,
+    "bias": 0.006156971678137779,
+    "target_mean": 6.987579345703125
+  },
+  "history": [
+    {
+      "step": 100,
+      "rmse": 0.7123507857322693,
+      "bias": -0.29647713899612427,
+      "target_mean": 6.987579345703125
+    },
+    {
+      "step": 200,
+      "rmse": 0.8603736162185669,
+      "bias": -0.6162358522415161,
+      "target_mean": 6.987579345703125
+    },
+    {
+      "step": 300,
+      "rmse": 0.528504490852356,
+      "bias": 0.07039040327072144,
+      "target_mean": 6.987579345703125
+    },
+    {
+      "step": 400,
+      "rmse": 0.50496506690979,
+      "bias": -0.24464894831180573,
+      "target_mean": 6.987579345703125
+    },
+    {
+      "step": 500,
+      "rmse": 0.33209463953971863,
+      "bias": 0.006156971678137779,
+      "target_mean": 6.987579345703125
+    }
+  ],
+  "training_samples": 36000,
+  "validation_samples": 12000,
+  "actor_max_change": 0.0,
+  "bc_updates": 0,
+  "accepted": true,
+  "split": "held-out environments; calibration validation, not independent task evaluation",
+  "sampled_policy": true,
+  "reward_scale": 0.01,
+  "gamma": 0.9995
+}

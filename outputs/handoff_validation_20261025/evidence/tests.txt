@@ -1,0 +1,7 @@
+test_guard_rejects_large_actor_change_and_accepts_small_change (test_handoff.TestHandoff) ... ok
+test_observation_expansion_preserves_actor_and_new_features_can_learn (test_handoff.TestHandoff) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.351s
+
+OK

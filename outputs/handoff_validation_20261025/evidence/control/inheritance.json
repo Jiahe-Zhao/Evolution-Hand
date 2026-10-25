@@ -1,0 +1,24 @@
+{
+  "mode": "actor_only",
+  "parent_checkpoint": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/seeds/g0/policy.pth",
+  "parent_sha256": "9384f4d5b53d19489bbaeaf9a494e979ad4e303286f2ad0d4011b717fc8572f8",
+  "copied_keys": [
+    "a2c_network.actor_mlp.0.weight",
+    "a2c_network.actor_mlp.0.bias",
+    "a2c_network.actor_mlp.2.weight",
+    "a2c_network.actor_mlp.2.bias",
+    "a2c_network.actor_mlp.4.weight",
+    "a2c_network.actor_mlp.4.bias",
+    "a2c_network.actor_mlp.6.weight",
+    "a2c_network.actor_mlp.6.bias",
+    "a2c_network.mu.weight",
+    "a2c_network.mu.bias"
+  ],
+  "actor_max_copy_error": 0.0,
+  "observation_expanded_with_zero_weights": true,
+  "critic": "fresh",
+  "optimizer": "fresh",
+  "value_normalizer": "fresh",
+  "exploration": "configured_for_child",
+  "bc_updates": 0
+}

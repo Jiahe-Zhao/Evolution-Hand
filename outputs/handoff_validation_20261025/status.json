@@ -1,0 +1,26 @@
+[
+  {
+    "name": "control",
+    "status": "completed",
+    "start": 1792913694.6351926,
+    "pid": 671570,
+    "exit_code": 0,
+    "duration": 322.12806844711304
+  },
+  {
+    "name": "standard",
+    "status": "completed",
+    "start": 1792914016.763399,
+    "pid": 672904,
+    "exit_code": 0,
+    "duration": 752.129909992218
+  },
+  {
+    "name": "calibrated",
+    "status": "completed",
+    "start": 1792914768.8934548,
+    "pid": 674608,
+    "exit_code": 0,
+    "duration": 702.6654920578003
+  }
+]
