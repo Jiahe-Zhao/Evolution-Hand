@@ -1,0 +1,6 @@
+__pycache__/
+/smoke/
+/runs/
+*.pth
+*.log
+._*

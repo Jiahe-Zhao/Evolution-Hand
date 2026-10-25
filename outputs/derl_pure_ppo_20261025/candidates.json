@@ -1,0 +1,62 @@
+[
+  {
+    "name": "baseline",
+    "genes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline/right/urdf/current_agent.urdf",
+    "plans": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/pilot_8_20261024/00_plans.json",
+    "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+    "plan_sha256": "1d74d597ecaf19e3ad605ce68a17f03a6f2ac12f191d844a11520884909f6691",
+    "initialization": "morphology-specific static collision-free pregrasp; no teacher actions",
+    "parent_checkpoint": null,
+    "bc_updates": 0
+  },
+  {
+    "name": "thumb_lateral_plus",
+    "genes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "source": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/matrix/thumb_lateral_+1/right/urdf/current_agent.urdf",
+    "plans": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/pilot_8_20261024/03_plans.json",
+    "source_sha256": "429932ab6ff3b5ebf4b7c1ca00e9a81275a0f1fbd7c2ea45b9fa0fd5848ee419",
+    "plan_sha256": "1d74d597ecaf19e3ad605ce68a17f03a6f2ac12f191d844a11520884909f6691",
+    "initialization": "morphology-specific static collision-free pregrasp; no teacher actions",
+    "parent_checkpoint": null,
+    "bc_updates": 0
+  },
+  {
+    "name": "thumb_length_plus",
+    "genes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "source": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/matrix/thumb_length_+1/right/urdf/current_agent.urdf",
+    "plans": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/pilot_8_20261024/06_plans.json",
+    "source_sha256": "461f6096f70c31d53bf3f57d1f736d923eec09143f5bb251f0cec55da146e0fd",
+    "plan_sha256": "90f17d61bae889f56e084dac92cc0561d287e1b1897fea0fa78f66ff7a0bcbaf",
+    "initialization": "morphology-specific static collision-free pregrasp; no teacher actions",
+    "parent_checkpoint": null,
+    "bc_updates": 0
+  }
+]
