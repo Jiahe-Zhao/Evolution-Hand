@@ -1,0 +1,7 @@
+{
+  "status": "completed",
+  "trials": 4,
+  "observations_frozen": true,
+  "policy_updated": false,
+  "checkpoint_frames": 7077888
+}
