@@ -1,0 +1,938 @@
+[
+  {
+    "name": "baseline_s2027",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 249,
+        "duration_s": 185.28828003816307,
+        "physics": {
+          "force_exceedances": 10,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 719,
+          "falls": 712,
+          "max_speed_m_s": 1.9032220840454102,
+          "max_digit_force_N": 169.68829345703125,
+          "max_limit_rad": 4.867244206252508e-05
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 130,
+        "unique_fallen": 135,
+        "duration_s": 171.4948097486049,
+        "physics": {
+          "force_exceedances": 8,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 261,
+          "falls": 140,
+          "max_speed_m_s": 2.2888107299804688,
+          "max_digit_force_N": 66.4020767211914,
+          "max_limit_rad": 1.0728836059570312e-06
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 121,
+        "unique_fallen": 123,
+        "duration_s": 170.51054540462792,
+        "physics": {
+          "force_exceedances": 2,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 262,
+          "falls": 129,
+          "max_speed_m_s": 2.263153553009033,
+          "max_digit_force_N": 31.405269622802734,
+          "max_limit_rad": 1.8656253814697266e-05
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 118,
+        "unique_fallen": 129,
+        "duration_s": 169.08891179971397,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 259,
+          "falls": 132,
+          "max_speed_m_s": 2.283798933029175,
+          "max_digit_force_N": 17.738880157470703,
+          "max_limit_rad": 1.3113021850585938e-06
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "thumb_lateral_plus_s2027",
+    "status": "completed",
+    "original_mean_successes": 91,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 77,
+        "ever_held_3s": 256,
+        "unique_fallen": 167,
+        "duration_s": 131.2746281605214,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 77,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 167,
+          "max_speed_m_s": 2.683391809463501,
+          "max_digit_force_N": 8.669733047485352,
+          "max_limit_rad": 2.384185791015625e-06
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 253,
+        "ever_held_3s": 256,
+        "unique_fallen": 0,
+        "duration_s": 123.92817481607199,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 253,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 0.911640465259552,
+          "max_digit_force_N": 7.0475664138793945,
+          "max_limit_rad": 1.6689300537109375e-06
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 253,
+        "ever_held_3s": 256,
+        "unique_fallen": 0,
+        "duration_s": 126.31887413561344,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 253,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 0.10631804168224335,
+          "max_digit_force_N": 5.937967300415039,
+          "max_limit_rad": 1.5497207641601562e-06
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 255,
+        "ever_held_3s": 256,
+        "unique_fallen": 0,
+        "duration_s": 123.51461221836507,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 255,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 1.1405982971191406,
+          "max_digit_force_N": 5.904167652130127,
+          "max_limit_rad": 1.9073486328125e-06
+        }
+      }
+    ],
+    "sample_mean": 0.9908854166666666,
+    "sample_range": [
+      0.98828125,
+      0.99609375
+    ]
+  },
+  {
+    "name": "thumb_length_plus_s2027",
+    "status": "completed",
+    "original_mean_successes": 16,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 14,
+        "ever_held_3s": 211,
+        "unique_fallen": 238,
+        "duration_s": 191.19837348163128,
+        "physics": {
+          "force_exceedances": 463,
+          "successful_terminal_episodes": 14,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 786,
+          "falls": 768,
+          "max_speed_m_s": 2.5361645221710205,
+          "max_digit_force_N": 219.32347106933594,
+          "max_limit_rad": 1.1920928955078125e-06
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 166,
+        "ever_held_3s": 256,
+        "unique_fallen": 39,
+        "duration_s": 167.3914450444281,
+        "physics": {
+          "force_exceedances": 166,
+          "successful_terminal_episodes": 166,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 39,
+          "max_speed_m_s": 2.3452439308166504,
+          "max_digit_force_N": 145.0596160888672,
+          "max_limit_rad": 1.6689300537109375e-06
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 170,
+        "ever_held_3s": 255,
+        "unique_fallen": 33,
+        "duration_s": 164.7047980800271,
+        "physics": {
+          "force_exceedances": 82,
+          "successful_terminal_episodes": 170,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 33,
+          "max_speed_m_s": 2.485092878341675,
+          "max_digit_force_N": 73.36373138427734,
+          "max_limit_rad": 1.7881393432617188e-06
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 163,
+        "ever_held_3s": 256,
+        "unique_fallen": 37,
+        "duration_s": 171.73856320418417,
+        "physics": {
+          "force_exceedances": 35,
+          "successful_terminal_episodes": 163,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 258,
+          "falls": 39,
+          "max_speed_m_s": 2.452406883239746,
+          "max_digit_force_N": 317.95599365234375,
+          "max_limit_rad": 1.702278859738726e-05
+        }
+      }
+    ],
+    "sample_mean": 0.6497395833333334,
+    "sample_range": [
+      0.63671875,
+      0.6640625
+    ]
+  },
+  {
+    "name": "baseline_s2028",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 5,
+        "duration_s": 137.05092291906476,
+        "physics": {
+          "force_exceedances": 4,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 5,
+          "max_speed_m_s": 1.5522373914718628,
+          "max_digit_force_N": 301.378662109375,
+          "max_limit_rad": 4.470348358154297e-07
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 2,
+        "duration_s": 156.98523193970323,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 2,
+          "max_speed_m_s": 1.5225521326065063,
+          "max_digit_force_N": 3.734471082687378,
+          "max_limit_rad": 2.384185791015625e-07
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 2,
+        "duration_s": 157.22239948622882,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 2,
+          "max_speed_m_s": 1.6745784282684326,
+          "max_digit_force_N": 15.041560173034668,
+          "max_limit_rad": 1.6689300537109375e-06
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 5,
+        "duration_s": 157.05316865071654,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 5,
+          "max_speed_m_s": 1.8364222049713135,
+          "max_digit_force_N": 1.8306195735931396,
+          "max_limit_rad": 1.1920928955078125e-06
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "thumb_lateral_plus_s2028",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 0,
+        "duration_s": 130.95341372676194,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 0.22802820801734924,
+          "max_digit_force_N": 2.761026620864868,
+          "max_limit_rad": 8.344650268554688e-07
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 0,
+        "duration_s": 161.72168094478548,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 0.27029675245285034,
+          "max_digit_force_N": 5.609003067016602,
+          "max_limit_rad": 4.76837158203125e-07
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 0,
+        "duration_s": 161.83153047412634,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 0,
+          "max_speed_m_s": 0.2640632390975952,
+          "max_digit_force_N": 2.6303389072418213,
+          "max_limit_rad": 5.960464477539062e-07
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 1,
+        "duration_s": 162.19742633216083,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 1,
+          "max_speed_m_s": 1.2445435523986816,
+          "max_digit_force_N": 2.8610451221466064,
+          "max_limit_rad": 5.960464477539062e-07
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "thumb_length_plus_s2028",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 95,
+        "duration_s": 138.84433663636446,
+        "physics": {
+          "force_exceedances": 54,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 95,
+          "max_speed_m_s": 1.6521037817001343,
+          "max_digit_force_N": 829.72607421875,
+          "max_limit_rad": 2.682209014892578e-07
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 115,
+        "duration_s": 158.7759216222912,
+        "physics": {
+          "force_exceedances": 3,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 115,
+          "max_speed_m_s": 1.719761610031128,
+          "max_digit_force_N": 829.141357421875,
+          "max_limit_rad": 1.7881393432617188e-07
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 103,
+        "duration_s": 157.5912395529449,
+        "physics": {
+          "force_exceedances": 13,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 103,
+          "max_speed_m_s": 1.7189663648605347,
+          "max_digit_force_N": 809.700927734375,
+          "max_limit_rad": 1.1920928955078125e-07
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 111,
+        "duration_s": 158.62886043265462,
+        "physics": {
+          "force_exceedances": 14,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 111,
+          "max_speed_m_s": 1.7201687097549438,
+          "max_digit_force_N": 830.1113891601562,
+          "max_limit_rad": 1.4901161193847656e-07
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "baseline_s2029",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 50,
+        "duration_s": 186.85101972147822,
+        "physics": {
+          "force_exceedances": 48,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 50,
+          "max_speed_m_s": 1.7326579093933105,
+          "max_digit_force_N": 73.05216217041016,
+          "max_limit_rad": 1.5497207641601562e-06
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 32,
+        "duration_s": 190.69790623523295,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 258,
+          "falls": 34,
+          "max_speed_m_s": 1.9330694675445557,
+          "max_digit_force_N": 20.80626678466797,
+          "max_limit_rad": 9.5367431640625e-07
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 34,
+        "duration_s": 189.47162287682295,
+        "physics": {
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 34,
+          "max_speed_m_s": 1.7427717447280884,
+          "max_digit_force_N": 7.6421027183532715,
+          "max_limit_rad": 1.1920928955078125e-06
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 29,
+        "duration_s": 190.34234289079905,
+        "physics": {
+          "force_exceedances": 2,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 257,
+          "falls": 30,
+          "max_speed_m_s": 1.7364407777786255,
+          "max_digit_force_N": 84.22418212890625,
+          "max_limit_rad": 1.0728836059570312e-06
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "thumb_lateral_plus_s2029",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 29,
+        "duration_s": 176.9186898879707,
+        "physics": {
+          "force_exceedances": 7,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 29,
+          "max_speed_m_s": 1.751356601715088,
+          "max_digit_force_N": 242.7864532470703,
+          "max_limit_rad": 5.960464477539062e-07
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 8,
+        "duration_s": 181.0764721017331,
+        "physics": {
+          "force_exceedances": 19,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 8,
+          "max_speed_m_s": 2.1965172290802,
+          "max_digit_force_N": 113.39579010009766,
+          "max_limit_rad": 4.76837158203125e-07
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 10,
+        "duration_s": 177.45499799214303,
+        "physics": {
+          "force_exceedances": 11,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 10,
+          "max_speed_m_s": 1.754554033279419,
+          "max_digit_force_N": 213.01893615722656,
+          "max_limit_rad": 3.5762786865234375e-07
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 11,
+        "duration_s": 181.13408186100423,
+        "physics": {
+          "force_exceedances": 11,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 11,
+          "max_speed_m_s": 1.7673574686050415,
+          "max_digit_force_N": 359.373291015625,
+          "max_limit_rad": 2.384185791015625e-07
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "name": "thumb_length_plus_s2029",
+    "status": "completed",
+    "original_mean_successes": 0,
+    "trials": [
+      {
+        "label": "mean",
+        "action_mode": "mean",
+        "action_seed": null,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 197,
+        "duration_s": 163.26894437335432,
+        "physics": {
+          "force_exceedances": 1015,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 432,
+          "falls": 373,
+          "max_speed_m_s": 5.40278959274292,
+          "max_digit_force_N": 745.2708129882812,
+          "max_limit_rad": 2.1636486053466797e-05
+        }
+      },
+      {
+        "label": "sample_1062602",
+        "action_mode": "sample",
+        "action_seed": 1062602,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 20,
+        "duration_s": 168.0185778606683,
+        "physics": {
+          "force_exceedances": 1,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 20,
+          "max_speed_m_s": 1.6970921754837036,
+          "max_digit_force_N": 82.1059341430664,
+          "max_limit_rad": 1.1920928955078125e-06
+        }
+      },
+      {
+        "label": "sample_1062603",
+        "action_mode": "sample",
+        "action_seed": 1062603,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 16,
+        "duration_s": 164.3062056247145,
+        "physics": {
+          "force_exceedances": 5,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 16,
+          "max_speed_m_s": 1.7087818384170532,
+          "max_digit_force_N": 48.55374526977539,
+          "max_limit_rad": 1.7881393432617188e-06
+        }
+      },
+      {
+        "label": "sample_1062604",
+        "action_mode": "sample",
+        "action_seed": 1062604,
+        "observation_seed": 1062601,
+        "num_envs": 256,
+        "successes": 0,
+        "ever_held_3s": 0,
+        "unique_fallen": 22,
+        "duration_s": 167.32868570275605,
+        "physics": {
+          "force_exceedances": 6,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 256,
+          "falls": 22,
+          "max_speed_m_s": 2.237590789794922,
+          "max_digit_force_N": 131.114501953125,
+          "max_limit_rad": 1.3113021850585938e-06
+        }
+      }
+    ],
+    "sample_mean": 0.0,
+    "sample_range": [
+      0.0,
+      0.0
+    ]
+  }
+]
