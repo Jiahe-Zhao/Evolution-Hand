@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "tests": 7,
+  "checkpoint_hashes": {
+    "best": "45c6df23c2fb914495665dfe000f809f5f785a1630ebdd640f957aa97197aa2f",
+    "final": "567f78e54dd619275df31b511f2caad61db43ed7eb7e75a6c426b737981cfd49"
+  }
+}
