@@ -1,0 +1,7 @@
+{
+  "source_commit": "91e077e355b27bb74fa920c708d606ff9f4d611e",
+  "scope": "actual upstream Agent class + illustrative control transform; not full DERL reproduction",
+  "sampled_action_std": 0.9994258880615234,
+  "mean_action_step": 0.004166666883975267,
+  "sample_action_expected_step": 0.0003510965616442263
+}

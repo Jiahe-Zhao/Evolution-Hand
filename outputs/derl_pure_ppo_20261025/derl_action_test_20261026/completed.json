@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "tests": 4,
+  "checkpoint_frames": {
+    "old_final": 4980736,
+    "frozen_final": 950272
+  }
+}

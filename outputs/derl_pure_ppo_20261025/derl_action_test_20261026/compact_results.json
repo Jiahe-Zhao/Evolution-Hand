@@ -1,0 +1,102 @@
+[
+  {
+    "label": "old_final_mean",
+    "actor": "old_final",
+    "normalization": "old_final",
+    "frames": 4980736,
+    "seed": 1062601,
+    "scale": 1.0,
+    "push": true,
+    "num_envs": 256,
+    "successes": 77,
+    "ever_held_3s": 256,
+    "duration_s": 132.74242949299514,
+    "diagnostics": {
+      "force_exceedances": 0,
+      "successful_terminal_episodes": 77,
+      "max_terminal_shaping_residual": 0.0,
+      "episode_steps": 1500,
+      "completion_reward": false,
+      "episodes": 256,
+      "falls": 167,
+      "max_speed_m_s": 2.683391809463501,
+      "max_digit_force_N": 8.669733047485352,
+      "max_limit_rad": 2.384185791015625e-06
+    }
+  },
+  {
+    "label": "old_final_sample",
+    "actor": "old_final",
+    "normalization": "old_final",
+    "frames": 4980736,
+    "seed": 1062601,
+    "scale": 1.0,
+    "push": true,
+    "num_envs": 256,
+    "successes": 253,
+    "ever_held_3s": 256,
+    "duration_s": 125.30230921879411,
+    "diagnostics": {
+      "force_exceedances": 0,
+      "successful_terminal_episodes": 253,
+      "max_terminal_shaping_residual": 0.0,
+      "episode_steps": 1500,
+      "completion_reward": false,
+      "episodes": 256,
+      "falls": 0,
+      "max_speed_m_s": 0.911640465259552,
+      "max_digit_force_N": 7.0475664138793945,
+      "max_limit_rad": 1.6689300537109375e-06
+    }
+  },
+  {
+    "label": "frozen_final_mean",
+    "actor": "frozen_final",
+    "normalization": "frozen_final",
+    "frames": 950272,
+    "seed": 1062601,
+    "scale": 1.0,
+    "push": true,
+    "num_envs": 256,
+    "successes": 103,
+    "ever_held_3s": 256,
+    "duration_s": 139.53277656435966,
+    "diagnostics": {
+      "force_exceedances": 0,
+      "successful_terminal_episodes": 103,
+      "max_terminal_shaping_residual": 0.0,
+      "episode_steps": 1500,
+      "completion_reward": false,
+      "episodes": 258,
+      "falls": 141,
+      "max_speed_m_s": 2.687507390975952,
+      "max_digit_force_N": 11.000467300415039,
+      "max_limit_rad": 1.430511474609375e-06
+    }
+  },
+  {
+    "label": "frozen_final_sample",
+    "actor": "frozen_final",
+    "normalization": "frozen_final",
+    "frames": 950272,
+    "seed": 1062601,
+    "scale": 1.0,
+    "push": true,
+    "num_envs": 256,
+    "successes": 228,
+    "ever_held_3s": 256,
+    "duration_s": 135.27358758077025,
+    "diagnostics": {
+      "force_exceedances": 0,
+      "successful_terminal_episodes": 228,
+      "max_terminal_shaping_residual": 0.0,
+      "episode_steps": 1500,
+      "completion_reward": false,
+      "episodes": 256,
+      "falls": 3,
+      "max_speed_m_s": 2.6148059368133545,
+      "max_digit_force_N": 7.946877956390381,
+      "max_limit_rad": 1.6689300537109375e-06
+    }
+  }
+]
