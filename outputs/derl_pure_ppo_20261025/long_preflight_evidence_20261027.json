@@ -1,0 +1,659 @@
+{
+  "captured_at": "2026-10-27T17:27:31.809660",
+  "checks": {
+    "grasp": {
+      "passed": true,
+      "checks": [
+        {
+          "mode": "static",
+          "peak_force_context": {
+            "env": 10,
+            "age": 7,
+            "object_height_m": 0.30000483989715576,
+            "rise_m": 4.887580871582031e-06,
+            "speed_m_s": 0.0045189689844846725,
+            "support_force_N": 0.6164528131484985,
+            "digit_force_N": [
+              0.0,
+              0.21889004111289978,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "wrist_command_m": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 0,
+          "falls": 0,
+          "max_speed_m_s": 0.021030554547905922,
+          "max_digit_force_N": 0.21889004111289978,
+          "max_limit_rad": 1.1920928955078125e-07,
+          "anomalies": []
+        },
+        {
+          "mode": "perturbation",
+          "peak_force_context": {
+            "env": 7,
+            "age": 131,
+            "object_height_m": 0.3000797927379608,
+            "rise_m": 7.984042167663574e-05,
+            "speed_m_s": 0.044346995651721954,
+            "support_force_N": 0.5981261730194092,
+            "digit_force_N": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.6530583500862122
+            ],
+            "wrist_command_m": [
+              0.0025775067042559385,
+              0.002577506937086582,
+              0.002577506937086582
+            ]
+          },
+          "force_exceedances": 0,
+          "successful_terminal_episodes": 0,
+          "max_terminal_shaping_residual": 0.0,
+          "episode_steps": 1500,
+          "completion_reward": false,
+          "episodes": 0,
+          "falls": 0,
+          "max_speed_m_s": 0.0744682252407074,
+          "max_digit_force_N": 0.6530583500862122,
+          "max_limit_rad": 1.1920928955078125e-06,
+          "anomalies": []
+        }
+      ],
+      "scope": "static and small control perturbation; not task success"
+    },
+    "branch": {
+      "task": "branch",
+      "passed": true,
+      "steps": 360,
+      "contact_seen": [
+        [
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "peak_force_N": 0.0,
+      "peak_object_speed_m_s": 0.0,
+      "max_joint_limit_excess_rad": 0.0,
+      "max_joint_motion_rad": 0.6192895770072937,
+      "trace": [
+        {
+          "step": 0,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "step": 120,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "step": 240,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "scope": "reach/contact/finite-state check only; not task success or BC"
+    },
+    "forage": {
+      "task": "forage",
+      "passed": true,
+      "steps": 706,
+      "contact_seen": [
+        [
+          false,
+          true
+        ]
+      ],
+      "peak_force_N": 0.15550114214420319,
+      "peak_object_speed_m_s": 0.5425819754600525,
+      "max_joint_limit_excess_rad": 0.0,
+      "max_joint_motion_rad": 0.05340468883514404,
+      "trace": [
+        {
+          "step": 0,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            -9.999999747378752e-05,
+            -9.999999747378752e-05,
+            -9.999999747378752e-05
+          ]
+        },
+        {
+          "step": 120,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            -0.004057355225086212,
+            -0.012099983170628548,
+            -0.012099983170628548
+          ]
+        },
+        {
+          "step": 240,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            -0.004057433921843767,
+            -0.02410012111067772,
+            -0.022267261520028114
+          ]
+        },
+        {
+          "step": 360,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            -0.004057449288666248,
+            -0.036100324243307114,
+            -0.022268034517765045
+          ]
+        },
+        {
+          "step": 480,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            -0.004057326819747686,
+            -0.04810052737593651,
+            -0.022268006578087807
+          ]
+        },
+        {
+          "step": 600,
+          "stage": "lower",
+          "contact_N": [
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.00163467216771096,
+            -0.05331447720527649,
+            -0.031868018209934235
+          ]
+        }
+      ],
+      "scope": "reach/contact/finite-state check only; not task success or BC"
+    },
+    "strike": {
+      "task": "strike",
+      "passed": true,
+      "steps": 211,
+      "contact_seen": [
+        [
+          true,
+          false,
+          false,
+          false,
+          false
+        ]
+      ],
+      "peak_force_N": 0.059165775775909424,
+      "peak_object_speed_m_s": 1.7177618741989136,
+      "max_joint_limit_excess_rad": 0.0,
+      "max_joint_motion_rad": 0.3433709740638733,
+      "trace": [
+        {
+          "step": 0,
+          "stage": "contact",
+          "contact_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "step": 120,
+          "stage": "contact",
+          "contact_N": [
+            0.007677318062633276,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "wrist": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "scope": "reach/contact/finite-state check only; not task success or BC"
+    }
+  },
+  "benchmarks": {
+    "branch": {
+      "iteration": 1,
+      "frames": 32768,
+      "lr": 0.0003,
+      "elapsed_s": 12.924945082515478,
+      "training_fps": 2535.2524281281867,
+      "completed_episodes": 0,
+      "successful_episodes": 0,
+      "new_episodes": 0,
+      "new_successes": 0,
+      "mean_raw_reward": -0.003431383893257589,
+      "held_fraction": 0.0,
+      "reward_components_last": {
+        "potential": 0.2992916703224182,
+        "shaping": -0.003074376378208399,
+        "native_reward": 0.0
+      },
+      "peak_lift_m": 0.0,
+      "optimizer_updates": 256,
+      "kl_early_stop": false,
+      "max_approx_kl": 0.039408762007951736,
+      "std_min": 0.9933544993400574,
+      "std_max": 1.0102577209472656,
+      "physical": {
+        "episodes": 0,
+        "max_digit_force_N": 0.0,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.0,
+        "physical_extrema_collected": true
+      }
+    },
+    "forage": {
+      "iteration": 1,
+      "frames": 32768,
+      "lr": 0.0003,
+      "elapsed_s": 13.381657039746642,
+      "training_fps": 2448.725065431839,
+      "completed_episodes": 0,
+      "successful_episodes": 0,
+      "new_episodes": 0,
+      "new_successes": 0,
+      "mean_raw_reward": -0.0080446866722923,
+      "held_fraction": 0.0,
+      "reward_components_last": {
+        "potential": 1.1192269325256348,
+        "shaping": -0.011058663949370384,
+        "native_reward": 0.0
+      },
+      "peak_lift_m": 0.0,
+      "optimizer_updates": 256,
+      "kl_early_stop": false,
+      "max_approx_kl": 0.05504453927278519,
+      "std_min": 0.9937297105789185,
+      "std_max": 1.0038448572158813,
+      "physical": {
+        "episodes": 0,
+        "max_digit_force_N": 0.0,
+        "max_speed_m_s": 0.5425819754600525,
+        "max_limit_rad": 0.0,
+        "physical_extrema_collected": true
+      }
+    },
+    "strike": {
+      "iteration": 1,
+      "frames": 32768,
+      "lr": 0.0003,
+      "elapsed_s": 16.463321916759014,
+      "training_fps": 1990.3637549306775,
+      "completed_episodes": 1,
+      "successful_episodes": 0,
+      "new_episodes": 1,
+      "new_successes": 0,
+      "mean_raw_reward": -0.005822897846883279,
+      "held_fraction": 0.0,
+      "reward_components_last": {
+        "potential": 0.5673640966415405,
+        "shaping": -0.00735885463654995,
+        "native_reward": 0.0
+      },
+      "peak_lift_m": 0.0,
+      "optimizer_updates": 256,
+      "kl_early_stop": false,
+      "max_approx_kl": 0.06092023849487305,
+      "std_min": 0.9940961003303528,
+      "std_max": 1.0034996271133423,
+      "physical": {
+        "episodes": 1,
+        "max_digit_force_N": 8.031524658203125,
+        "max_speed_m_s": 2.3185536861419678,
+        "max_limit_rad": 0.0,
+        "physical_extrema_collected": true
+      }
+    }
+  },
+  "status": [
+    {
+      "task": "grasp",
+      "phase": "check",
+      "status": "completed",
+      "started": 1793092097.836645,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_worker.py",
+        "--source",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline/right/urdf/current_agent.urdf",
+        "--plans",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/pilot_8_20261024/00_plans.json",
+        "--output",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/grasp_check",
+        "--num-envs",
+        "16",
+        "--steps",
+        "10000000",
+        "--eval-every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval-seed",
+        "1062801",
+        "--headless",
+        "--limited-check"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/grasp_check",
+      "pid": 1063123,
+      "exit_code": 0,
+      "duration_s": 99.36812376976013
+    },
+    {
+      "task": "forage",
+      "phase": "check",
+      "status": "completed",
+      "started": 1793092197.2049694,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "forage",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/forage_check",
+        "--physics_batch_probe_envs",
+        "1",
+        "--steps",
+        "10000000",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--finite_check"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/forage_check",
+      "pid": 1063532,
+      "exit_code": 0,
+      "duration_s": 55.71938729286194
+    },
+    {
+      "task": "forage",
+      "phase": "benchmark",
+      "status": "completed",
+      "started": 1793092252.9246037,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "forage",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/forage_benchmark",
+        "--physics_batch_probe_envs",
+        "256",
+        "--steps",
+        "32768",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--benchmark"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/forage_benchmark",
+      "pid": 1063911,
+      "exit_code": 0,
+      "duration_s": 37.56774067878723
+    },
+    {
+      "task": "branch",
+      "phase": "check",
+      "status": "completed",
+      "started": 1793092290.4925687,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "branch",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/branch_check",
+        "--physics_batch_probe_envs",
+        "1",
+        "--steps",
+        "10000000",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--finite_check"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/branch_check",
+      "pid": 1064350,
+      "exit_code": 0,
+      "duration_s": 33.88867115974426
+    },
+    {
+      "task": "branch",
+      "phase": "benchmark",
+      "status": "completed",
+      "started": 1793092324.3814466,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "branch",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/branch_benchmark",
+        "--physics_batch_probe_envs",
+        "256",
+        "--steps",
+        "32768",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--benchmark"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/branch_benchmark",
+      "pid": 1064705,
+      "exit_code": 0,
+      "duration_s": 287.43611884117126
+    },
+    {
+      "task": "strike",
+      "phase": "check",
+      "status": "completed",
+      "started": 1793092611.8540206,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "strike",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/strike_check",
+        "--physics_batch_probe_envs",
+        "1",
+        "--steps",
+        "10000000",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--finite_check"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/strike_check",
+      "pid": 1065419,
+      "exit_code": 0,
+      "duration_s": 162.8327465057373
+    },
+    {
+      "task": "strike",
+      "phase": "benchmark",
+      "status": "completed",
+      "started": 1793092774.6869938,
+      "command": [
+        "/home/zjh/miniconda3/envs/evolution_isaaclab/bin/python",
+        "-u",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+        "--task",
+        "strike",
+        "--output_dir",
+        "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/strike_benchmark",
+        "--physics_batch_probe_envs",
+        "256",
+        "--steps",
+        "32768",
+        "--eval_every",
+        "1048576",
+        "--seed",
+        "2027",
+        "--eval_seed",
+        "1062801",
+        "--headless",
+        "--baseline_genotype",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/baseline_genotype.json",
+        "--mechanical_asset_dir",
+        "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline",
+        "--legacy_source_urdf",
+        "/home/zjh/Evolution_PC/Isaaclab_other/evaluation_results/preflight_grasp_projected_20260922/morphology/0_0/right/urdf/current_agent.urdf",
+        "--benchmark"
+      ],
+      "output": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/goal_long_20261027/strike_benchmark",
+      "pid": 1065959,
+      "exit_code": 0,
+      "duration_s": 41.87409472465515
+    }
+  ],
+  "source_sha256": {
+    "goal_contract.py": "313079f279bc21d5224f55214f5379de5ce87cd130a26358d0f765256c593e48",
+    "goal_worker.py": "0d822f32c41c15df496e45637126c13ff4127c8fd64c885606e26bb3a4036e21",
+    "goal_ppo.py": "82d8e2855030265edf4ce73a11e63f058e80b063d1d266c808e9420c749f959f",
+    "native_goal_adapter.py": "cc307c99379da99d1fe7150c16879942e75d1972a2c00197bc5420040e05b81b",
+    "native_goal_ppo.py": "6c18e22b04445abac496ece1204dce719259e42fd346a0caf94bcde8716b99ea",
+    "native_goal_worker.py": "d8b299858e4580d52abc64015ae24da233bc6555c1e03f8fa24e593ebbedd36d",
+    "limited_native_check.py": "6e742060436d4a2f4c02a48976ca0f62199a0c41f7db9f19ca8940c6ae1108e0",
+    "launch_goal_long.py": "7f38c37464f4155d4517f8451ebe32ca0c41ccde436e37840931ea26c5bd20b2"
+  }
+}
