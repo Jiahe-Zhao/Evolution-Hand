@@ -54,16 +54,16 @@ def clear_diagnostics(env):
 
 def evaluate(env,net,rms,args,out,label):
  cpu_rng=torch.get_rng_state();cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
- torch.manual_seed(args.eval_seed+1)
+ torch.manual_seed(getattr(args,'action_seed',args.eval_seed+1))
  original=env.cases.copy();rng=np.random.default_rng(args.eval_seed)
  env.cases=np.column_stack((rng.uniform(-.5,.5,(env.num_envs,2)),rng.uniform(-1.5,1.5,env.num_envs)))
  clear_diagnostics(env);env.evaluating=True;obs=env.reset();net.eval();start=time.monotonic()
  for t in range(32 if args.smoke else args.episode_steps):
-  with torch.no_grad():dist,_=net(rms.normalize(obs));action=dist.sample()
+  with torch.no_grad():dist,_=net(rms.normalize(obs));action=dist.mean if getattr(args,'evaluation_mode','sample')=='mean' else dist.sample()
   obs,_,_,_=env.step(action)
  success=(env.hold>=3)&(env.episode_falls==0)
  row=dict(label=label,full_episode=not args.smoke,successes=int(success.sum()),num_envs=env.num_envs,ever_held_3s=int((env.best>=3).sum()),passed=success.cpu().tolist(),
-          final_hold_s=env.hold.cpu().tolist(),cases=env.cases.tolist(),eval_seed=args.eval_seed,action_mode='sample',action_seed=args.eval_seed+1,goal_contract=env.goals.contract(),goal_heights_m=env.goals.target.cpu().tolist(),diagnostics=env.diagnostics(),duration_s=time.monotonic()-start)
+          final_hold_s=env.hold.cpu().tolist(),cases=env.cases.tolist(),eval_seed=args.eval_seed,action_mode=getattr(args,'evaluation_mode','sample'),action_seed=getattr(args,'action_seed',args.eval_seed+1),goal_contract=env.goals.contract(),goal_heights_m=env.goals.target.cpu().tolist(),diagnostics=env.diagnostics(),duration_s=time.monotonic()-start)
  row['by_goal']=[dict(height_m=float(h),environments=int((env.goals.target==h).sum()),successes=int((success & (env.goals.target==h)).sum())) for h in env.goals.levels]
  save_json(out/(label+'.json'),row);print('EVAL',label,row['successes'],'/',env.num_envs,flush=True)
  env.cases=original;env.evaluating=False;clear_diagnostics(env);net.train()
@@ -152,3 +152,11 @@ def run(env,args,out):
              training_episodes=train_episodes,training_successes=train_success,bc_updates=0,checkpoint_loaded=False,
              total_training_and_eval_s=time.monotonic()-run_started,source_sha256=__import__('hashlib').sha256(Path(args.source).read_bytes()).hexdigest())
  save_json(out/'report.json',report);print('FINISHED',before['successes'],evaluations[-1]['successes'],flush=True)
+
+ if not args.smoke:
+  final_trials=[]
+  for mode,seed in [('mean',args.eval_seed+1)]+[('sample',args.eval_seed+i) for i in (1,2,3)]:
+   args.evaluation_mode=mode;args.action_seed=seed
+   final_trials.append(evaluate(env,net,rms,args,out,f'final_{mode}_{seed}'))
+  save_json(out/'final_trials.json',final_trials)
+  save_json(out/'completed.json',dict(status='completed',frames=frames,full_episode=True,trials=len(final_trials)))
