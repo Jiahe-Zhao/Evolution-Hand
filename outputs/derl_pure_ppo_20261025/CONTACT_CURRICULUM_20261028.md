@@ -25,3 +25,11 @@ PPO otherwise retained: independent 64×64 tanh actor/critic, learned exploratio
 ## Limitations and interpretation
 
 This is a new curriculum experiment, not a demonstrated cure for nonconvergence. Random-policy performance, physical extrema, full-episode success, and per-stage success must be inspected before expanding the population. Forage is a rigid leaf proxy on a support, not a deformable leaf model. Strike retains the previously diagnosed contact force spikes as a monitored unresolved risk; this change does not certify its contact physics. The promotion test covers two action seeds, not broad object-pose perturbation robustness.
+
+## Launch record
+
+- Original launcher PID 1135563. Strike and Branch full-episode checks completed in 217.5 s and 221.5 s respectively; all initial check evaluations had zero task successes. These are execution checks, not evidence of convergence.
+- Branch entered its 256-environment, 9,994,240-step run.
+- First Forage check failed before simulation: adding a table to env_0 already propagated it through inherited scene prims, so manually creating env_1 duplicated the prim. Fixed by one regex spawner call with environment-local coordinates.
+- Forage recovery launcher PID 1138575 uses separate `forage_recovery_status.json`; its short check temporarily shares the GPU with Branch. Its full training waits for `queue_completed.json` from the original queue, preserving serialized long training. Therefore actual order after recovery is Branch, Strike stage 1, optional Strike stage 2, then Forage. The failed first Forage check is retained.
+- Historical three-task runs took about 3.24 hours excluding startup and some final trials. Provisional new budget: 3–5 hours for the three training runs, plus 1–2 hours if Strike advances; new tactile/scene overhead and diagnostic overlap may increase this.

@@ -23,10 +23,7 @@ def install_forage_surface(env_id, cfg):
             collision_props=sim.CollisionPropertiesCfg(contact_offset=.0005, rest_offset=0.),
             visual_material=sim.PreviewSurfaceCfg(diffuse_color=(.16,.19,.22)),
             physics_material=sim.RigidBodyMaterialCfg(static_friction=.65,dynamic_friction=.5,restitution=0.))
-        for i in range(e.num_envs):
-            origin=e.scene.env_origins[i].cpu().tolist()
-            table.func(f'/World/envs/env_{i}/forage_table',table,
-                       translation=(origin[0],origin[1],.05))
+        table.func('/World/envs/env_.*/forage_table',table,translation=(0.,0.,.05))
     cls._setup_scene = setup
 
 
