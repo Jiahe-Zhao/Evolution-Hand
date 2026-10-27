@@ -577,7 +577,10 @@ def main() -> None:
         args.source=str(mechanical_urdf)
         run(wrapped,args,output_dir)
     finally:
-        if 'raw_env' in locals(): raw_env.close()
+        # Standalone worker exits immediately after main. PhysX callback cleanup
+        # can hang after a completed run; process exit releases its resources.
+        if 'raw_env' in locals() and not (output_dir/'completed.json').exists():
+            raw_env.close()
 
 if __name__=='__main__':
     try:
