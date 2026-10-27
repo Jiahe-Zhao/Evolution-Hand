@@ -14,6 +14,15 @@ class GoalContractTest(unittest.TestCase):
         self.assertTrue(torch.allclose(g.lift_reward(g.target),torch.ones(3)))
         self.assertTrue(torch.all(g.lift_reward(g.target+.05)<.01))
 
+    def test_dense_progress_before_target(self):
+        g=LiftGoals(3,'cpu',1)
+        previous=torch.zeros(3)
+        for fraction in (.05,.1,.2,.4,.6,.8,1.):
+            reward=g.lift_reward(g.target*fraction)
+            self.assertTrue(torch.all(reward>previous))
+            self.assertTrue(torch.allclose(reward,torch.full((3,),fraction)))
+            previous=reward
+
     def test_partial_reset_and_reproducible_training(self):
         a=LiftGoals(8,'cpu',3);b=LiftGoals(8,'cpu',3)
         ids=torch.tensor([1,4,7]);old=a.target.clone()

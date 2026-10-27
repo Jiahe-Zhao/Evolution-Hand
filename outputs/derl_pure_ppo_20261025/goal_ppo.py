@@ -50,6 +50,7 @@ def save_json(path,data):
  temp=Path(str(path)+'.tmp');temp.write_text(json.dumps(data,indent=2));temp.replace(path)
 
 def clear_diagnostics(env):
+ if hasattr(env,'peak_force_context'):env.peak_force_context=None
  env.force_exceedances=0;env.max_speed=0.;env.max_force=0.;env.max_limit=0.;env.falls=0;env.episodes=0;env.anomalies=[];env.successful_terminal_episodes=0;env.max_terminal_shaping_residual=0.
 
 def evaluate(env,net,rms,args,out,label):

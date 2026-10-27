@@ -59,14 +59,14 @@ def evaluate(env,net,rms,args,out,label):
  alive=torch.ones(env.num_envs,dtype=torch.bool,device=obs.device)
  success=torch.zeros_like(alive);lengths=torch.zeros_like(alive,dtype=torch.long)
  returns=torch.zeros(env.num_envs,device=obs.device)
- for t in range(args.episode_steps):
+ for t in range(min(32,args.episode_steps) if getattr(args,'smoke',False) else args.episode_steps):
   with torch.no_grad():
    dist,_=net(rms.normalize(obs));action=dist.mean if getattr(args,'evaluation_mode','sample')=='mean' else dist.sample()
   obs,reward,done,info=env.step(action)
   success |= alive & info['episode_success'];lengths+=alive.long();returns+=reward*alive
   alive &= ~done
   if not alive.any():break
- row=dict(label=label,full_episode=True,successes=int(success.sum()),num_envs=env.num_envs,passed=success.cpu().tolist(),
+ row=dict(label=label,full_episode=not getattr(args,'smoke',False),successes=int(success.sum()),num_envs=env.num_envs,passed=success.cpu().tolist(),
   first_episode_lengths=lengths.cpu().tolist(),unfinished_at_cap=int(alive.sum()),returns=returns.cpu().tolist(),
   action_mode=getattr(args,'evaluation_mode','sample'),action_seed=getattr(args,'action_seed',args.eval_seed+1),eval_seed=args.eval_seed,
   goal_contract=env.contract())

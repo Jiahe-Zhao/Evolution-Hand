@@ -18,6 +18,7 @@ p.add_argument('--seed',type=int,default=2027);p.add_argument('--eval-seed',type
 p.add_argument('--num-envs',type=int,default=256);p.add_argument('--steps',type=int,default=5_000_000)
 p.add_argument('--eval-every',type=int,default=1_000_000);p.add_argument('--horizon',type=int,default=128)
 p.add_argument('--smoke',action='store_true')
+p.add_argument('--limited-check',action='store_true')
 p.add_argument('--goal-heights',type=float,nargs='+',default=[.025,.040,.055])
 p.add_argument('--goal-tolerance',type=float,default=.0075)
 p.set_defaults(plan_index=0,pad_face='ymixed',dt=1/240,kp=3.,kd=.3,contact_k=1500.,contact_d=10.,torsion_radius=0.,mass=.08,offset_mm=0.,offset_y_mm=0.,yaw_deg=0.,hand_gravity=True,episode_steps=1500,push=True,completion_reward=False)
@@ -126,7 +127,7 @@ class WrapEnv:
   self.support_force=torch.zeros(N,device=dev);self.hold=torch.zeros(N,device=dev);self.best=torch.zeros(N,device=dev)
   self.filtered=torch.zeros((N,5),device=dev);self.stable=torch.zeros(N,device=dev)
   self.episode_falls=torch.zeros(N,device=dev,dtype=torch.long)
-  self.max_speed=0.;self.max_force=0.;self.max_limit=0.;self.falls=0;self.episodes=0;self.force_exceedances=0
+  self.peak_force_context=None;self.max_speed=0.;self.max_force=0.;self.max_limit=0.;self.falls=0;self.episodes=0;self.force_exceedances=0
   self.peak_lift=torch.zeros(N,device=dev);self.anomalies=[];self.reward_terms={}
   self.potential=torch.zeros(N,device=dev);self.evaluating=False
   self.shaping_return=torch.zeros(N,device=dev);self.discount_power=torch.ones(N,device=dev);self.successful_terminal_episodes=0;self.max_terminal_shaping_residual=0.
@@ -209,6 +210,9 @@ class WrapEnv:
   self.reward_terms=dict(reach=float(reach.mean()),balance=float(balance.mean()),height=float((self.goals.lift_reward(rise)*quality).mean()),overforce=float(overforce.mean()),overspeed=float(overspeed.mean()))
   if not torch.isfinite(hand.data.joint_pos).all() or not torch.isfinite(obj.data.root_state_w).all():raise RuntimeError('Nonfinite physical state')
   self.max_limit=max(self.max_limit,float(torch.maximum(limits[:,0]-hand.data.joint_pos,hand.data.joint_pos-limits[:,1]).clamp_min(0).max()))
+  if float(norm.max())>self.max_force:
+   i=int(norm.max(1).values.argmax())
+   self.peak_force_context=dict(env=i,age=int(self.age[i]),object_height_m=float(obj.data.root_pos_w[i,2]),rise_m=float(rise[i]),speed_m_s=float(speed[i]),support_force_N=float(support_force[i]),digit_force_N=norm[i].cpu().tolist(),wrist_command_m=self.wrist[i].cpu().tolist())
   self.max_speed=max(self.max_speed,float(speed.max()));self.max_force=max(self.max_force,float(norm.max()))
   self.force_exceedances+=int((norm.max(1).values>25).sum())
   bad=(norm.max(1).values>25)|((speed>2)&(obj.data.root_pos_w[:,2]>.2))
@@ -221,12 +225,28 @@ class WrapEnv:
   self.falls+=int(fell.sum());self.episodes+=int(done.sum());self.episode_falls+=fell.long()
   self.reset_ids((fell if self.evaluating else done).nonzero().flatten())
   return self.obs(),reward,done,{'episode_success':completed,'held':held,'rise':rise}
- def diagnostics(self):return dict(force_exceedances=self.force_exceedances,successful_terminal_episodes=self.successful_terminal_episodes,max_terminal_shaping_residual=self.max_terminal_shaping_residual,episode_steps=args.episode_steps,completion_reward=args.completion_reward,episodes=self.episodes,falls=self.falls,max_speed_m_s=self.max_speed,max_digit_force_N=self.max_force,max_limit_rad=self.max_limit,anomalies=self.anomalies)
+ def diagnostics(self):return dict(peak_force_context=self.peak_force_context,force_exceedances=self.force_exceedances,successful_terminal_episodes=self.successful_terminal_episodes,max_terminal_shaping_residual=self.max_terminal_shaping_residual,episode_steps=args.episode_steps,completion_reward=args.completion_reward,episodes=self.episodes,falls=self.falls,max_speed_m_s=self.max_speed,max_digit_force_N=self.max_force,max_limit_rad=self.max_limit,anomalies=self.anomalies)
 
 
 from goal_ppo import run
 try:
- run(WrapEnv(),args,out)
+ env=WrapEnv()
+ if args.limited_check:
+  from goal_ppo import clear_diagnostics,save_json
+  rows=[]
+  for mode in ('static','perturbation'):
+   clear_diagnostics(env);obs=env.reset();neutral=torch.cat((obs[:,:21],torch.zeros(N,3,device=dev)),1)
+   for t in range(180 if mode=='static' else 360):
+    action=neutral.clone()
+    if mode=='perturbation':
+     action[:,:21]+=.03*math.sin(t*.03)
+     action[:,21:]+=.02*math.sin(t*.02)
+    obs,reward,done,info=env.step(action)
+   rows.append(dict(mode=mode,**env.diagnostics()))
+  passed=all(r['max_limit_rad']<.05 and r['max_speed_m_s']<2 for r in rows) and rows[0]['max_digit_force_N']<25
+  save_json(out/'limited_check.json',dict(passed=passed,checks=rows,scope='static and small control perturbation; not task success'))
+  if not passed:raise RuntimeError('Limited physical check failed; inspect diagnostics')
+ else:run(env,args,out)
 except Exception:
  import traceback
  error=traceback.format_exc();(out/'failure.txt').write_text(error);print(error,flush=True);os._exit(1)

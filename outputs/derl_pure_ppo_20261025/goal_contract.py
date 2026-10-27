@@ -25,7 +25,7 @@ class LiftGoals:
 
     def lift_reward(self, rise):
         progress=(rise/self.target).clamp(0,1)
-        excess=(self.error(rise).abs()-self.tolerance).clamp_min(0)
+        excess=(rise-self.target-self.tolerance).clamp_min(0)
         return progress*torch.exp(-excess/self.tolerance)
 
     def features(self, rise):
@@ -35,7 +35,7 @@ class LiftGoals:
                             torch.full_like(rise,.1/.1)),dim=-1)
 
     def contract(self):
-        return dict(version='lift_goal_v1',task='grasp',height_levels_m=self.levels.tolist(),height_tolerance_m=self.tolerance,
+        return dict(version='lift_goal_v2_dense_below_target',task='grasp',height_levels_m=self.levels.tolist(),height_tolerance_m=self.tolerance,
                     observation_names=['target_rise_div_0.05','height_error_div_0.05','tolerance_div_0.05','speed_limit_div_0.1'],
                     success='old held predicate AND height within tolerance, continuously 3 seconds at episode end, no evaluation falls',
                     target_frame='world gravity axis relative to initial object height',evaluation_assignment='environment index modulo target count',

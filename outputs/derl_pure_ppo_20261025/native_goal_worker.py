@@ -76,6 +76,8 @@ parser.add_argument(
 )
 parser.add_argument("--lineage_json", help="Optional lineage JSON used to rebuild a fixed evolved morphology.")
 parser.add_argument("--individual_key", help="Lineage key such as '5_16'; required with --lineage_json.")
+parser.add_argument('--finite_check',action='store_true')
+parser.add_argument('--benchmark',action='store_true')
 parser.add_argument('--steps',type=int,default=32768)
 parser.add_argument('--horizon',type=int,default=128)
 parser.add_argument('--eval_seed',type=int,default=1062701)
@@ -563,11 +565,15 @@ def main() -> None:
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         raw = raw_env.unwrapped
         obs, _ = raw_env.reset(seed=args.seed)
+        if args.finite_check:
+            from limited_native_check import run as check
+            check(raw_env,graph,args,output_dir)
+            return
         from native_goal_adapter import GoalAdapter
         from native_goal_ppo import run
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
         args.episode_steps=raw.max_episode_length
-        args.smoke=False
+        args.smoke=args.benchmark
         args.source=str(mechanical_urdf)
         run(wrapped,args,output_dir)
     finally:
