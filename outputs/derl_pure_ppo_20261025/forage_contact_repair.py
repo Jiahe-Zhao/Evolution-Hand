@@ -1,5 +1,5 @@
 """Explicit per-body contact mapping and declared planar leaf support."""
-import importlib,json
+import importlib,json,os
 from types import SimpleNamespace
 
 def install(env_id,cfg,out):
@@ -21,6 +21,7 @@ def install(env_id,cfg,out):
  original=cls._setup_scene
  def setup(e):
   original(e)
+  if os.environ.get("CONTACT_CURRICULUM") == "1":return
   from pxr import Gf,Sdf,UsdPhysics
   for index in range(e.num_envs):
    root=f'/World/envs/env_{index}'
@@ -45,6 +46,7 @@ def attach(e,out):
  t=attach_tactile(e,'forage',out)
  e.legacy_leaf_contact=e.leaf_contact;e.leaf_contact=ContactProxy(t)
  paths=[f'/World/envs/env_{i}/{leaf}_planar_support' for i in range(e.num_envs) for leaf in ['leaf_one','leaf_two']]
+ if os.environ.get('CONTACT_CURRICULUM') == '1':paths=[]
  if not all(e.sim.stage.GetPrimAtPath(p).IsValid() for p in paths):raise RuntimeError('Missing declared leaf planar support')
- (out/'forage_repair_contract.json').write_text(json.dumps(dict(contact='one view per hand body, two leaf channels plus food tactile',planar_support_joints=len(paths),success_thresholds_unchanged=True,hand_structure_unchanged=True),indent=2))
+ (out/'forage_repair_contract.json').write_text(json.dumps(dict(contact='one view per hand body, two leaf channels plus food tactile',planar_support_joints=len(paths),success_thresholds_unchanged=os.environ.get("CONTACT_CURRICULUM")!="1",hand_structure_unchanged=True),indent=2))
  return t

@@ -3,7 +3,7 @@
 Reference: agrimgupta92/derl@91e077e355b27bb74fa920c708d606ff9f4d611e.
 Task adaptation: true finite-horizon terminals, full vector normalization, GPU batching.
 """
-import json,math,time
+import json,math,time,os
 from pathlib import Path
 import numpy as np
 import torch
@@ -70,6 +70,8 @@ def evaluate(env,net,rms,args,out,label):
   first_episode_lengths=lengths.cpu().tolist(),unfinished_at_cap=int(alive.sum()),returns=returns.cpu().tolist(),
   action_mode=getattr(args,'evaluation_mode','sample'),action_seed=getattr(args,'action_seed',args.eval_seed+1),eval_seed=args.eval_seed,
   goal_contract=env.contract())
+ if env.task=='strike' and hasattr(env,'phase'):
+  row['per_goal']={str(k):{'successes':int(success[env.phase==k].sum()),'episodes':int((env.phase==k).sum())} for k in (1,2)}
  save_json(out/(label+'.json'),row);print('EVAL',label,row['successes'],'/',env.num_envs,flush=True)
  env.reset_seed=None;net.train();torch.set_rng_state(cpu_rng);torch.cuda.set_rng_state_all(cuda_rng)
  return row
@@ -79,6 +81,7 @@ def run(env,args,out):
  source_files=['native_goal_ppo.py','native_goal_adapter.py','native_goal_worker.py','native_contact_hooks.py']
  if hasattr(env.raw,'whole_hand_tactile'):source_files.append('whole_hand_tactile.py')
  if getattr(args,'forage_contact_repair',False):source_files.append('forage_contact_repair.py')
+ if os.environ.get('CONTACT_CURRICULUM')=='1':source_files.append('contact_curriculum.py')
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:
@@ -88,16 +91,23 @@ def run(env,args,out):
  device=env.reset().device;net=Policy(env.observation_space.shape[0],env.action_space.shape[0]).to(device)
  optimizer=torch.optim.Adam(net.parameters(),lr=3e-4,eps=1e-5)
  rms=Moments((env.observation_space.shape[0],),device);rrms=Moments((),device)
+ parent=os.environ.get('PPO_PARENT_CHECKPOINT')
+ if parent:
+  checkpoint=torch.load(parent,map_location=device,weights_only=False)
+  net.load_state_dict(checkpoint['policy'])
+  for moments,key in ((rms,'observation_moments'),(rrms,'reward_moments')):
+   state=checkpoint[key];moments.mean=state['mean'].to(device);moments.var=state['var'].to(device);moments.count=state['count']
  N,T=env.num_envs,args.horizon;iterations=args.steps//(N*T)
  config=dict(reference_commit='91e077e355b27bb74fa920c708d606ff9f4d611e',network=[64,64],activation='tanh',separate_actor_critic=True,
              initial_lr=3e-4,lr_schedule='linear',gamma=.99,gae_lambda=.95,clip=.2,optimizer_epochs=4,minibatch=512,value_coefficient=.5,
              entropy_coefficient=.01,max_grad_norm=.5,adam_eps=1e-5,kl_early_stop=.2,initial_std=1.,learn_std=True,
              rollout=T,num_envs=N,batch=N*T,iterations=iterations,requested_steps=args.steps,actual_steps=iterations*N*T,
              observation_size=env.observation_space.shape[0],observation_normalization=True,reward_return_std_normalization=True,
-             bc_updates=0,parent_policy_loaded=False,critic_warmup=0,episode_steps=args.episode_steps,
+             bc_updates=0,parent_policy_loaded=bool(parent),critic_warmup=0,episode_steps=args.episode_steps,
              reward='potential difference plus native final success; no grasp milestone reward',
              differences_from_derl=['Isaac/PhysX contact task, not MuJoCo locomotion','GPU environment batch size','native task joint graph observations and goal normalized','finite-horizon terminal evaluation','native joint graph action bounds and slew limits'])
  config.update(goal_contract=env.goals.contract(),observation_contract='native joint graph plus task goal; fresh per-task policy')
+ config.update(parent_checkpoint=parent,goal_contract=env.contract(),reward='potential difference plus current curriculum success' if os.environ.get('CONTACT_CURRICULUM')=='1' else config['reward'])
  save_json(out/'effective_config.json',config)
  def save(name,frames):
   torch.save(dict(policy=net.state_dict(),optimizer=optimizer.state_dict(),observation_moments=rms.state(),reward_moments=rrms.state(),frames=frames,config=config),out/(name+'.pth'))
@@ -155,13 +165,13 @@ def run(env,args,out):
    started+=time.monotonic()-eval_start
  save('final',frames)
  report=dict(status='completed',config=config,before=before,after=evaluations[-1],best_successes=best,evaluations=evaluations,
-             training_episodes=train_episodes,training_successes=train_success,bc_updates=0,checkpoint_loaded=False,
+             training_episodes=train_episodes,training_successes=train_success,bc_updates=0,checkpoint_loaded=bool(parent),
              total_training_and_eval_s=time.monotonic()-run_started,source_sha256=__import__('hashlib').sha256(Path(args.source).read_bytes()).hexdigest())
  save_json(out/'report.json',report);print('FINISHED',before['successes'],evaluations[-1]['successes'],flush=True)
 
  if not args.smoke:
   final_trials=[evaluations[-1]]
-  for mode,seed in [('mean',args.eval_seed+1)]:
+  for mode,seed in [('sample',args.eval_seed+2),('mean',args.eval_seed+1)]:
    args.evaluation_mode=mode;args.action_seed=seed
    final_trials.append(evaluate(env,net,rms,args,out,f'final_{mode}_{seed}'))
   save_json(out/'final_trials.json',final_trials)

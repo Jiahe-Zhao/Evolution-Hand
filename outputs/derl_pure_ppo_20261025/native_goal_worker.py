@@ -572,6 +572,9 @@ def main() -> None:
             if args.task!='forage':raise ValueError('Forage repair only')
             from forage_contact_repair import install as install_forage
             install_forage(env_id,env_cfg,output_dir)
+        if os.environ.get('CONTACT_CURRICULUM') == '1' and args.task == 'forage':
+            from contact_curriculum import install_forage_surface
+            install_forage_surface(env_id,env_cfg)
         from native_contact_hooks import install as install_baseline
         install_baseline(env_id,env_cfg,output_dir,args.task)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
@@ -596,6 +599,8 @@ def main() -> None:
             check(raw_env,graph,args,output_dir)
             return
         from native_goal_adapter import GoalAdapter
+        if os.environ.get('CONTACT_CURRICULUM') == '1':
+            from contact_curriculum import CurriculumAdapter as GoalAdapter
         from native_goal_ppo import run
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
         args.episode_steps=raw.max_episode_length
