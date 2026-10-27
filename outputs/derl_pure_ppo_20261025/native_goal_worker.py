@@ -76,6 +76,8 @@ parser.add_argument(
 )
 parser.add_argument("--lineage_json", help="Optional lineage JSON used to rebuild a fixed evolved morphology.")
 parser.add_argument("--individual_key", help="Lineage key such as '5_16'; required with --lineage_json.")
+parser.add_argument('--forage_contact_repair',action='store_true')
+parser.add_argument('--forage_full_probe',action='store_true')
 parser.add_argument('--finite_check',action='store_true')
 parser.add_argument('--whole_hand_tactile',action='store_true')
 parser.add_argument('--branch_tactile_probe',action='store_true')
@@ -88,6 +90,9 @@ parser.add_argument('--eval_every',type=int,default=1048576)
 parser.add_argument('--baseline_genotype',required=True)
 AppLauncher.add_app_launcher_args(parser)
 args, hydra_args = parser.parse_known_args()
+# New runs must not silently fall back to the known broken contact setup.
+args.forage_contact_repair = args.task == "forage"
+args.whole_hand_tactile = args.whole_hand_tactile or args.task == "branch"
 args.enable_cameras = args.record_video
 sys.argv = [sys.argv[0]] + hydra_args
 _worker_mode = os.environ.get("EVOLUTION_ISAAC_WORKER_MODE") == "1"
@@ -563,14 +568,25 @@ def main() -> None:
         if os.environ.get('GRAPH_STRIKE_SUPPORT')=='1':
             from strike_support_v5 import install as install_support
             install_support(env_id,env_cfg)
+        if args.forage_contact_repair:
+            if args.task!='forage':raise ValueError('Forage repair only')
+            from forage_contact_repair import install as install_forage
+            install_forage(env_id,env_cfg,output_dir)
         from native_contact_hooks import install as install_baseline
         install_baseline(env_id,env_cfg,output_dir,args.task)
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         raw = raw_env.unwrapped
+        if args.forage_contact_repair:
+            from forage_contact_repair import attach as attach_forage
+            attach_forage(raw,output_dir)
         obs, _ = raw_env.reset(seed=args.seed)
-        if args.whole_hand_tactile:
+        if args.whole_hand_tactile and not args.forage_contact_repair:
             from whole_hand_tactile import attach
             attach(raw,args.task,output_dir,branch_success=args.task=='branch')
+        if args.forage_full_probe:
+            from forage_full_probe import run as forage_probe
+            forage_probe(raw_env,graph,args,output_dir)
+            return
         if args.branch_tactile_probe:
             from branch_tactile_probe import run as probe
             probe(raw_env,graph,args,output_dir)
