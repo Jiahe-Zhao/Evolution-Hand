@@ -43,6 +43,8 @@ class GoalAdapter:
     sensor=raw.branch_contact_sensor if self.task=='branch' else raw.leaf_contact
     force=torch.linalg.vector_norm(sensor.data.force_matrix_w,dim=-1).sum(1)
     assets=(raw.branch,) if self.task=='branch' else (raw.leaf_one,raw.leaf_two)
+   if hasattr(raw,'whole_hand_tactile'):
+    raw.whole_hand_tactile.update();force=raw.whole_hand_tactile.force.norm(dim=-1)
    self.max_force=max(self.max_force,float(force.max()))
    self.max_speed=max(self.max_speed,max(float(a.data.root_lin_vel_w.norm(dim=-1).max()) for a in assets))
    if not torch.isfinite(extra).all() or not torch.isfinite(reward).all():raise RuntimeError('Nonfinite native goal state/reward')
@@ -50,7 +52,7 @@ class GoalAdapter:
   r._get_rewards=MethodType(reward_hook,r)
   (out/'goal_contract.json').write_text(json.dumps(self.contract(),indent=2))
  def contract(self):
-  return dict(task=self.task,version=2,goal_source='native scene state and native success thresholds',
+  return dict(task=self.task,version=3 if hasattr(self.raw,'whole_hand_tactile') else 2,whole_hand_tactile=hasattr(self.raw,'whole_hand_tactile'),goal_source='native scene state and native success thresholds',
    goals={'branch':'branch center, contact opposition and stable hold duration','forage':'both leaf centers outside food clearance radius with valid hand contact','strike':'tool tip at strike target with impact threshold while currently held'}[self.task],
    success='native final event only; grasp milestone is not Strike success',shaping='gamma*Phi(next)-Phi(current); terminal Phi=0',bc=False,
    observation_size=self.observation_space.shape[0],action_size=self.action_space.shape[0],episode_steps=self.raw.max_episode_length)
@@ -61,7 +63,7 @@ class GoalAdapter:
    target=r.branch.data.root_pos_w-r.scene.env_origins
    rel=r.branch.data.root_pos_w-r.hand.data.root_pos_w
    matrix=r.branch_contact_sensor.data.force_matrix_w
-   forces=torch.linalg.vector_norm(matrix[:,0,:,:],dim=-1)
+   forces=r.whole_hand_tactile.digit_forces() if hasattr(r,'whole_hand_tactile') else torch.linalg.vector_norm(matrix[:,0,:,:],dim=-1)
    contact=(forces>=r.cfg.branch_contact_force_threshold).float()
    hold=(r.branch_success_streak.float()/r.cfg.branch_success_hold_steps).clamp(0,1)
    self.held=(contact[:,0]>0)&(contact[:,1:].sum(-1)>=r.cfg.min_long_finger_contacts)
@@ -95,6 +97,7 @@ class GoalAdapter:
    reach=torch.exp(-torch.linalg.vector_norm(tips-r.cone.data.root_pos_w[:,None,:],dim=-1)/.08).mean(-1)
    phi=reach+contact[:,0]+contact[:,1:].mean(-1)+self.held.float()*torch.exp(-torch.linalg.vector_norm(error,dim=-1)/.05)
    extra=torch.cat((target/.1,error/.1,contact,self.held[:,None].float(),(impact/r.cfg.success_force_threshold).clamp(0,10)[:,None],constant(r.cfg.success_distance),constant(r.cfg.success_force_threshold)),1)
+  if hasattr(r,'whole_hand_tactile'):extra=torch.cat((extra,r.whole_hand_tactile.features()),-1)
   return extra,phi
  def reset(self):
   obs,_=self.env.reset(seed=getattr(self,'reset_seed',None));extra,phi=self.features();self.prev_potential=phi.detach().clone()

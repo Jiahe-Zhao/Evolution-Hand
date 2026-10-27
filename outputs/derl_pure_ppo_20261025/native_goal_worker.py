@@ -77,6 +77,9 @@ parser.add_argument(
 parser.add_argument("--lineage_json", help="Optional lineage JSON used to rebuild a fixed evolved morphology.")
 parser.add_argument("--individual_key", help="Lineage key such as '5_16'; required with --lineage_json.")
 parser.add_argument('--finite_check',action='store_true')
+parser.add_argument('--whole_hand_tactile',action='store_true')
+parser.add_argument('--branch_tactile_probe',action='store_true')
+parser.add_argument('--probe_modes',default='teacher,close_04,close_07,close_10,close_14,open_then_close')
 parser.add_argument('--benchmark',action='store_true')
 parser.add_argument('--steps',type=int,default=32768)
 parser.add_argument('--horizon',type=int,default=128)
@@ -565,6 +568,13 @@ def main() -> None:
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         raw = raw_env.unwrapped
         obs, _ = raw_env.reset(seed=args.seed)
+        if args.whole_hand_tactile:
+            from whole_hand_tactile import attach
+            attach(raw,args.task,output_dir,branch_success=args.task=='branch')
+        if args.branch_tactile_probe:
+            from branch_tactile_probe import run as probe
+            probe(raw_env,graph,args,output_dir)
+            return
         if args.finite_check:
             from limited_native_check import run as check
             check(raw_env,graph,args,output_dir)

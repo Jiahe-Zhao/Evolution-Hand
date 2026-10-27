@@ -77,6 +77,7 @@ def evaluate(env,net,rms,args,out,label):
 def run(env,args,out):
  import shutil,hashlib
  source_files=['native_goal_ppo.py','native_goal_adapter.py','native_goal_worker.py','native_contact_hooks.py']
+ if hasattr(env.raw,'whole_hand_tactile'):source_files.append('whole_hand_tactile.py')
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:
