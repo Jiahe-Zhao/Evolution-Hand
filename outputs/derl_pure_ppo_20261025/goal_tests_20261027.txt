@@ -1,0 +1,9 @@
+test_goal_changes_observation_reward_and_success (test_goal_contract.GoalContractTest) ... ok
+test_invalid_goals (test_goal_contract.GoalContractTest) ... ok
+test_partial_reset_and_reproducible_training (test_goal_contract.GoalContractTest) ... ok
+test_targets_cannot_all_be_met_by_one_height (test_goal_contract.GoalContractTest) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

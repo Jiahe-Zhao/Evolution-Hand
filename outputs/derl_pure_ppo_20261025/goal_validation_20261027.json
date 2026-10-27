@@ -1,0 +1,24 @@
+{
+  "observation_size": 152,
+  "frames": 8192,
+  "optimizer_updates": 64,
+  "actor_max_change": 0.011051601730287075,
+  "by_goal": [
+    {
+      "height_m": 0.02500000037252903,
+      "environments": 22,
+      "successes": 0
+    },
+    {
+      "height_m": 0.03999999910593033,
+      "environments": 21,
+      "successes": 0
+    },
+    {
+      "height_m": 0.054999999701976776,
+      "environments": 21,
+      "successes": 0
+    }
+  ],
+  "full_episode": false
+}
