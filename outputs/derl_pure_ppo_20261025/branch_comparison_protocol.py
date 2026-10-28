@@ -135,4 +135,7 @@ def train(e,args,out):
  Path(args.source).write_text(json.dumps(descriptor,default=str,indent=2))
  net=Policy(env.observation_space.shape[0],env.action_space.shape[0])
  save_json(out/'comparison_model.json',dict(observation_size=env.observation_space.shape[0],action_size=env.action_space.shape[0],parameter_count=sum(p.numel() for p in net.parameters()),architecture=[64,64],joint_names=e.hand.joint_names,hand_structure_unchanged=True))
+ if os.environ.get('BRANCH_POLICY_VIDEO'):
+  from branch_policy_video import record
+  return record(env,args,out)
  run(env,args,out)

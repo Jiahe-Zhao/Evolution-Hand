@@ -108,6 +108,9 @@ class BranchComparisonEnv(DirectRLEnv):
   self.scene.clone_environments(copy_from_source=False)
   self.scene.articulations['robot']=self.hand;self.scene.rigid_objects['branch']=self.branch;self.scene.sensors['branch_contact_sensor']=self.branch_contact_sensor
   light=sim.DomeLightCfg(intensity=1500.,color=(.7,.7,.7));light.func('/World/Light',light)
+  if os.environ.get('BRANCH_POLICY_VIDEO'):
+   from branch_policy_video import setup
+   setup(self)
  def _pre_physics_step(self,actions):self.actions=actions.clone()
  def _apply_action(self):
   c=self.graph_control
