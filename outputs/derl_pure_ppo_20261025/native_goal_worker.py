@@ -582,6 +582,10 @@ def main() -> None:
             install_forage_surface(env_id,env_cfg)
         from native_contact_hooks import install as install_baseline
         install_baseline(env_id,env_cfg,output_dir,args.task)
+        if args.task=='forage' and os.environ.get('FORAGE_ZERO_VELOCITY_ITERATIONS')=='1':
+            env_cfg.robot_cfg.spawn.articulation_props.solver_velocity_iteration_count=0
+            for asset in (env_cfg.leaf_one_cfg,env_cfg.leaf_two_cfg):
+                asset.spawn.rigid_props.solver_velocity_iteration_count=0
         raw_env = gym.make(env_id, cfg=env_cfg, render_mode="rgb_array" if args.record_video else None)
         raw = raw_env.unwrapped
         if args.forage_contact_repair:

@@ -11,9 +11,12 @@ def run(env,args,out):
  rms=Moments((obs.shape[-1],),obs.device);state=ck['observation_moments']
  rms.mean=state['mean'];rms.var=state['var'];rms.count=state['count']
  # Capture terminal progress before automatic reset overwrites state.
+ from forage_state_audit import StateAudit
+ state_audit=StateAudit(env.raw,out) if env.task=="forage" else None
  original=env.task_reward
  def reward(self,*a):
   result=original(*a);self.audit_progress=self.current_progress.clone()
+  if state_audit is not None and hasattr(self,"audit_alive"):state_audit.sample(self.audit_alive)
   if self.task=='forage' and hasattr(self,'audit_alive'):
    r=self.raw;speed=torch.stack([x.data.root_lin_vel_w.norm(dim=-1) for x in (r.leaf_one,r.leaf_two)],-1)
    ids=((speed.amax(-1)>2)&self.audit_alive).nonzero().flatten()
@@ -24,9 +27,10 @@ def run(env,args,out):
  results=[]
  modes=[('mean',0.,1),('sample',1.,1),('quarter_noise',.25,1),('held_noise_12',1.,12)]
  if os.environ.get('CONTACT_AUDIT_MEAN_ONLY'):modes=modes[:1]
+ if os.environ.get('CONTACT_AUDIT_MODE'):modes=[x for x in modes if x[0]==os.environ['CONTACT_AUDIT_MODE']]
  for name,scale,period in modes:
   env.speed_events=[]
-  env.reset_seed=1062802;obs=env.reset();torch.manual_seed(1062803)
+  env.reset_seed=int(os.environ.get('CONTACT_AUDIT_SCENE_SEED','1062802'));obs=env.reset();torch.manual_seed(1062803)
   n=env.num_envs;alive=torch.ones(n,dtype=torch.bool,device=obs.device);passed=~alive
   peak=torch.zeros(n,len(env.progress_names),device=obs.device);ret=torch.zeros(n,device=obs.device)
   count=clip=reverse=zero=latezero=latecount=0.;prev=None;lastdelta=None
@@ -53,5 +57,7 @@ def run(env,args,out):
    if step%240==0:save_json(out/'audit_progress.json',dict(mode=name,step=step,successes=int(passed.sum())))
    if not alive.any():break
   row=dict(speed_events=env.speed_events,mode=name,successes=int(passed.sum()),num_envs=n,success_ids=passed.nonzero().flatten().tolist(),unfinished=int(alive.sum()),clip_fraction=clip/max(count,1),action_reversal_fraction=reverse/max(count,1),late_nonpositive_fraction=latezero/max(latecount,1),peak_mean=dict(zip(env.progress_names,peak.mean(0).tolist())),peak_max=dict(zip(env.progress_names,peak.amax(0).tolist())),reached_half=dict(zip(env.progress_names,(peak>=.5).sum(0).tolist())),reached_full=dict(zip(env.progress_names,(peak>=.999).sum(0).tolist())),returns=ret.tolist(),physical=env.diagnostics())
-  results.append(row);save_json(out/'audit_results.json',dict(checkpoint=checkpoint,scene_seed=1062802,action_seed=1062803,frozen_normalization=True,rows=results))
+  results.append(row);save_json(out/'audit_results.json',dict(checkpoint=checkpoint,scene_seed=int(os.environ.get("CONTACT_AUDIT_SCENE_SEED","1062802")),action_seed=1062803,frozen_normalization=True,rows=results))
   print('AUDIT',name,row['successes'],flush=True)
+ if state_audit is not None:state_audit.save()
+ save_json(out/"completed.json",dict(status="completed",kind="frozen_policy_audit",modes=len(results)))

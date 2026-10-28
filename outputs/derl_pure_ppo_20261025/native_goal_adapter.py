@@ -19,9 +19,15 @@ class GoalAdapter:
   self.reward_terms={};self.peak_lift=torch.zeros(self.num_envs,device=self.device)
   self.prev_potential=None;self.event=torch.zeros(self.num_envs,dtype=torch.bool,device=self.device)
   self.held=self.event.clone();self.max_force=0.;self.max_speed=0.;self.max_limit=0.;self.episodes=0
+  self.state_monitor=None
+  if task=="forage" and os.environ.get("FORAGE_STATE_GUARD")=="1":
+   from forage_state_audit import StateAudit
+   self.state_monitor=StateAudit(r,out)
   original=r._get_rewards
   def reward_hook(raw):
    sparse=original();extra,potential=self.features()
+   if self.state_monitor is not None:
+    self.state_monitor.sample(raw.episode_length_buf>2);self.state_monitor.guard()
    # Current tasks emit >=1000 exclusively for their final native success.
    self.event=(sparse>=999).clone()
    before=potential if self.prev_potential is None else self.prev_potential
