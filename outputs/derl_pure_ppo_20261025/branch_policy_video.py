@@ -22,10 +22,28 @@ def record(env,args,out):
  for role,color in {'pad':(.06,.46,.28),'bearing':(.6,.32,.08),'body':(.22,.31,.42)}.items():
   mat=sim.PreviewSurfaceCfg(diffuse_color=color,roughness=.65);mat.func('/World/ReviewAppearance/'+role,mat)
   appearance[role]=UsdShade.Material(e.sim.stage.GetPrimAtPath('/World/ReviewAppearance/'+role))
- for prim in Usd.PrimRange(e.sim.stage.GetPrimAtPath('/World/envs/env_0/Robot')):
+ root=e.sim.stage.GetPrimAtPath('/World/envs/env_0/Robot')
+ # Visual instances may have been reintroduced by scene cloning.
+ for _ in range(4):
+  instances=[p for p in Usd.PrimRange(root) if p.IsInstance() and '/visuals' in str(p.GetPath())]
+  for p in instances:p.SetInstanceable(False)
+ from pxr import UsdPhysics
+ audit=[]
+ for prim in Usd.PrimRange(root):
+  binding=prim.GetRelationship('material:binding')
+  if binding and binding.GetTargets():
+   target=e.sim.stage.GetPrimAtPath(binding.GetTargets()[0])
+   if target.HasAPI(UsdPhysics.MaterialAPI):
+    api=UsdShade.MaterialBindingAPI.Apply(prim)
+    if not prim.GetRelationship('material:binding:physics').GetTargets():
+     api.Bind(UsdShade.Material(target),materialPurpose='physics')
+    prim.RemoveProperty('material:binding')
   if prim.GetTypeName()=='Mesh' and '/visuals/' in str(prim.GetPath()):
    name=str(prim.GetPath());role='pad' if 'finger_pad' in name else ('bearing' if 'bearing' in name or 'shaft' in name else 'body')
-   UsdShade.MaterialBindingAPI.Apply(prim).Bind(appearance[role],bindingStrength='strongerThanDescendants',materialPurpose='allPurpose')
+   UsdShade.MaterialBindingAPI.Apply(prim).Bind(appearance[role],bindingStrength='strongerThanDescendants')
+   audit.append(dict(path=name,role=role))
+ save_json(out/'visual_audit.json',audit)
+ if not audit:raise RuntimeError('No mechanical visual meshes recolored')
  path=os.environ['BRANCH_POLICY_VIDEO'];ck=torch.load(path,map_location=dev,weights_only=False)
  net=Policy(env.observation_space.shape[0],env.action_space.shape[0]).to(dev);net.load_state_dict(ck['policy']);net.eval()
  rms=Moments((env.observation_space.shape[0],),dev)
