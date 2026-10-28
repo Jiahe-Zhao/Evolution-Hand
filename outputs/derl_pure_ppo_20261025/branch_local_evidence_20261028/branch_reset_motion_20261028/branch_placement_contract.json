@@ -1,0 +1,13 @@
+{
+  "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_translation_20261028/candidate57.json",
+  "manifest_sha256": "9f9d6dc169e4901217923def010d6d485ee0fce53e05dd954b2ac0b3f9dc14ab",
+  "shift_world_m": [
+    0.0,
+    -0.029999999329447746,
+    -0.029999999329447746
+  ],
+  "uniform_position_jitter_each_axis_m": 0.002,
+  "hand_geometry_unchanged": true,
+  "reset_only": true,
+  "identical_train_eval_reset": true
+}

@@ -54,8 +54,10 @@ def clear_diagnostics(env):
 
 def evaluate(env,net,rms,args,out,label):
  cpu_rng=torch.get_rng_state();cuda_rng=torch.cuda.get_rng_state_all()
- torch.manual_seed(getattr(args,'action_seed',args.eval_seed+1))
  env.reset_seed=args.eval_seed;obs=env.reset();net.eval()
+ # Environment reset seeds Torch too. Set the action stream afterwards so
+ # different action_seed trials really sample different trajectories.
+ torch.manual_seed(getattr(args,'action_seed',args.eval_seed+1))
  alive=torch.ones(env.num_envs,dtype=torch.bool,device=obs.device)
  success=torch.zeros_like(alive);lengths=torch.zeros_like(alive,dtype=torch.long)
  returns=torch.zeros(env.num_envs,device=obs.device)
@@ -82,6 +84,7 @@ def run(env,args,out):
  if hasattr(env.raw,'whole_hand_tactile'):source_files.append('whole_hand_tactile.py')
  if getattr(args,'forage_contact_repair',False):source_files.append('forage_contact_repair.py')
  if os.environ.get('CONTACT_CURRICULUM')=='1':source_files.append('contact_curriculum.py')
+ if os.environ.get('BRANCH_PLACEMENT_MANIFEST'):source_files.append('branch_local_scene.py')
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:

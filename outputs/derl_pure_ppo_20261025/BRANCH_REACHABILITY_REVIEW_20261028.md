@@ -40,3 +40,7 @@ Remote strict run: `outputs/derl_pure_ppo_20261025/branch_reachability_v2_202610
 Remote relaxed run: `outputs/derl_pure_ppo_20261025/branch_reachability_relaxed_20261028`.
 Initial diagnostic failed on runtime-body versus fixed-pad lookup; that failure was retained and the mapping corrected before the above runs.
 Local evidence: `branch_reachability_evidence_20261028/`.
+
+## Follow-up: local placement search
+
+The subsequent user-authorized translation search found a feasible position at world offset `(0, -30, -30) mm`, with per-axis ±2 mm perturbations. The independent script passed 64/64 full episodes, including opposed hold and release. This supports the earlier placement-mismatch hypothesis, without establishing that the hand itself required structural changes. See `BRANCH_LOCAL_PLACEMENT_20261028.md` for contact-report reset protection and the separate short-PPO results.

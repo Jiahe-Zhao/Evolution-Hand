@@ -33,6 +33,7 @@ class WholeHandTactile:
   (out/'whole_hand_tactile_contract.json').write_text(json.dumps(self.manifest,indent=2))
  def reset(self,ids=None):
   ids=slice(None) if ids is None else ids
+  if hasattr(self,'ready_after_reset'):self.ready_after_reset[ids]=False
   self.age[ids]=0;self.previous[ids]=0;self.force[ids]=0;self.delta[ids]=0;self.total[ids]=0
   # Tensor contact buffers can still contain the preceding episode until the
   # next physics step. Do not expose those forces in reset observations.
@@ -43,6 +44,13 @@ class WholeHandTactile:
   self.stamp=stamp
   f=torch.stack([v.get_contact_force_matrix(dt=self.e.cfg.sim.dt).reshape(self.n,len(self.targets),3) for v in self.views],1)
   total=torch.stack([v.get_net_contact_forces(dt=self.e.cfg.sim.dt).reshape(self.n,3) for v in self.views],1)
+  if hasattr(self,'ready_after_reset'):
+   # Tensor contact reports can retain a pre-teleport contact until motion
+   # generates a fresh report. Use only after observing a clear-contact frame.
+   self.raw_force=f.clone()
+   self.ready_after_reset |= f.norm(dim=-1).flatten(1).amax(-1)<0.05
+   f=f*self.ready_after_reset[:,None,None,None]
+   total=total*self.ready_after_reset[:,None,None]
   self.delta=f-self.force;self.previous=self.force;self.force=f;self.total=total
   self.age=torch.where(f.norm(dim=-1)>.05,self.age+self.e.step_dt,torch.zeros_like(self.age))
   if not torch.isfinite(f).all():raise RuntimeError('Nonfinite full-hand contact force')

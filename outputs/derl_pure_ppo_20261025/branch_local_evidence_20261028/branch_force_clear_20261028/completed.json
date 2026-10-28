@@ -1,0 +1,42 @@
+{
+  "status": "completed",
+  "script_only": true,
+  "trials": [
+    {
+      "seed": 1062803,
+      "episodes": 4,
+      "successes": 4,
+      "sustained_3s": 4,
+      "initial_collision_envs": 0,
+      "initial_successes": 0,
+      "initial_raw_peak_force_N": 0.0,
+      "initial_settled_peak_force_N": 0.0,
+      "max_hold_steps": 758,
+      "hold_steps": [
+        755,
+        758,
+        756,
+        742
+      ],
+      "peak_force_N": 23.912927627563477
+    },
+    {
+      "seed": 1062809,
+      "episodes": 4,
+      "successes": 4,
+      "sustained_3s": 0,
+      "initial_collision_envs": 4,
+      "initial_successes": 4,
+      "initial_raw_peak_force_N": 15.623015403747559,
+      "initial_settled_peak_force_N": 15.623015403747559,
+      "max_hold_steps": 1199,
+      "hold_steps": [
+        1199,
+        1199,
+        1199,
+        1199
+      ],
+      "peak_force_N": 15.623015403747559
+    }
+  ]
+}

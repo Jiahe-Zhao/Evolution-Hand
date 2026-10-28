@@ -586,6 +586,10 @@ def main() -> None:
         if args.whole_hand_tactile and not args.forage_contact_repair:
             from whole_hand_tactile import attach
             attach(raw,args.task,output_dir,branch_success=args.task=='branch')
+        if os.environ.get('BRANCH_PLACEMENT_MANIFEST'):
+            if args.task!='branch':raise ValueError('Branch placement requires Branch task')
+            from branch_local_scene import attach as attach_branch_placement
+            attach_branch_placement(raw,output_dir)
         if args.forage_full_probe:
             from forage_full_probe import run as forage_probe
             forage_probe(raw_env,graph,args,output_dir)
@@ -604,7 +608,11 @@ def main() -> None:
         from native_goal_ppo import run
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
         if os.environ.get('CONTACT_DIAGNOSTIC'):
-            if os.environ['CONTACT_DIAGNOSTIC']=='branch_reachability':
+            if os.environ['CONTACT_DIAGNOSTIC']=='branch_local_validation':
+                from branch_local_scene import validate as audit
+            elif os.environ['CONTACT_DIAGNOSTIC']=='branch_translation':
+                from branch_translation_search import run as audit
+            elif os.environ['CONTACT_DIAGNOSTIC']=='branch_reachability':
                 from branch_reachability import run as audit
             else:
                 from task_bottleneck_audit import run as audit

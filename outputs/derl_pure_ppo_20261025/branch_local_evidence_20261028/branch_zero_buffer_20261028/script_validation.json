@@ -1,0 +1,38 @@
+[
+  {
+    "seed": 1062803,
+    "episodes": 4,
+    "successes": 4,
+    "sustained_3s": 4,
+    "initial_collision_envs": 0,
+    "initial_successes": 0,
+    "initial_raw_peak_force_N": 0.0,
+    "initial_settled_peak_force_N": 0.0,
+    "max_hold_steps": 259,
+    "hold_steps": [
+      256,
+      259,
+      257,
+      243
+    ],
+    "peak_force_N": 23.912927627563477
+  },
+  {
+    "seed": 1062809,
+    "episodes": 4,
+    "successes": 4,
+    "sustained_3s": 0,
+    "initial_collision_envs": 4,
+    "initial_successes": 4,
+    "initial_raw_peak_force_N": 11.05215835571289,
+    "initial_settled_peak_force_N": 11.05215835571289,
+    "max_hold_steps": 700,
+    "hold_steps": [
+      700,
+      700,
+      700,
+      700
+    ],
+    "peak_force_N": 11.05215835571289
+  }
+]
