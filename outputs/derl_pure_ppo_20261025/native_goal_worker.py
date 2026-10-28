@@ -620,6 +620,8 @@ def main() -> None:
         if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':
             from contact_progress_reward import ProgressAdapter as GoalAdapter
         from native_goal_ppo import run
+        if os.environ.get('STRIKE_PROGRESS_REWARD')=='1':
+            from strike_progress_reward import StrikeProgressAdapter as GoalAdapter
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
         if os.environ.get('CONTACT_DIAGNOSTIC')=='progress_probe':
             from contact_progress_probe import run as probe_progress

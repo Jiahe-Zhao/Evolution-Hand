@@ -94,6 +94,7 @@ def run(env,args,out):
  if os.environ.get('BRANCH_COMPARISON_HAND'):source_files.extend(['branch_comparison.py','branch_comparison_geometry.py','branch_comparison_protocol.py'])
  if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':source_files.append('contact_progress_reward.py')
  if os.environ.get('FORAGE_STATE_GUARD')=='1':source_files.append('forage_state_audit.py')
+ if os.environ.get('STRIKE_PROGRESS_REWARD')=='1':source_files.extend(['strike_progress_reward.py','contact_progress_reward.py','contact_curriculum.py'])
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:
