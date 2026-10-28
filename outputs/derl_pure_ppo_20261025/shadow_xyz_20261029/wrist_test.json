@@ -1,0 +1,191 @@
+{
+  "rows": [
+    {
+      "mode": "static",
+      "mount_displacement_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tracking_error_m": 0.0,
+      "peak_body_speed_m_s": 0.0,
+      "stage_positions_m": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "mode": "local_x",
+      "mount_displacement_m": [
+        -0.010000176727771759,
+        -1.5440528500221262e-07,
+        0.0
+      ],
+      "tracking_error_m": 2.384251445164409e-07,
+      "peak_body_speed_m_s": 0.008196108043193817,
+      "stage_positions_m": [
+        [
+          0.010000176727771759,
+          -4.629741867656634e-10,
+          1.5440521394793905e-07
+        ]
+      ]
+    },
+    {
+      "mode": "local_y",
+      "mount_displacement_m": [
+        -2.7939677238464355e-09,
+        4.5771557211082836e-08,
+        -0.01000174880027771
+      ],
+      "tracking_error_m": 1.750121782606584e-06,
+      "peak_body_speed_m_s": 0.008070923388004303,
+      "stage_positions_m": [
+        [
+          0.010000152513384819,
+          0.01000173855572939,
+          1.438933310282664e-07
+        ]
+      ]
+    },
+    {
+      "mode": "local_z",
+      "mount_displacement_m": [
+        -1.555308699607849e-07,
+        -0.01000291295349598,
+        0.0
+      ],
+      "tracking_error_m": 2.9184525374148507e-06,
+      "peak_body_speed_m_s": 0.007460909895598888,
+      "stage_positions_m": [
+        [
+          0.01000030618160963,
+          0.010001728311181068,
+          0.010003060102462769
+        ]
+      ]
+    },
+    {
+      "mode": "world_x",
+      "mount_displacement_m": [
+        0.01000017486512661,
+        1.5087425708770752e-07,
+        0.0
+      ],
+      "tracking_error_m": 2.3112566793770384e-07,
+      "peak_body_speed_m_s": 0.008194498717784882,
+      "stage_positions_m": [
+        [
+          1.3156520140000794e-07,
+          0.010001728311181068,
+          0.010002908296883106
+        ]
+      ]
+    },
+    {
+      "mode": "world_y",
+      "mount_displacement_m": [
+        1.557583857447753e-07,
+        0.010002915747463703,
+        0.0
+      ],
+      "tracking_error_m": 2.920128054029192e-06,
+      "peak_body_speed_m_s": 0.007466516457498074,
+      "stage_positions_m": [
+        [
+          -2.26977512340909e-08,
+          0.010001763701438904,
+          -9.913507348358053e-09
+        ]
+      ]
+    },
+    {
+      "mode": "world_z",
+      "mount_displacement_m": [
+        3.332054632210202e-10,
+        -1.1275417932665732e-08,
+        0.01000162959098816
+      ],
+      "tracking_error_m": 1.629853500162426e-06,
+      "peak_body_speed_m_s": 0.007881244644522667,
+      "stage_positions_m": [
+        [
+          3.820375127361331e-09,
+          1.1322126169943658e-07,
+          -3.377639146151523e-08
+        ]
+      ]
+    }
+  ],
+  "reference_mount_quaternion_wxyz": [
+    [
+      -9.070328133020666e-07,
+      -8.963237405623659e-07,
+      0.7071080207824707,
+      -0.7071054577827454
+    ]
+  ],
+  "joint_names": [
+    "diagnostic_wrist_x",
+    "diagnostic_wrist_y",
+    "diagnostic_wrist_z",
+    "robot0_WRJ1",
+    "robot0_WRJ0",
+    "robot0_FFJ3",
+    "robot0_MFJ3",
+    "robot0_RFJ3",
+    "robot0_LFJ4",
+    "robot0_THJ4",
+    "robot0_FFJ2",
+    "robot0_MFJ2",
+    "robot0_RFJ2",
+    "robot0_LFJ3",
+    "robot0_THJ3",
+    "robot0_FFJ1",
+    "robot0_MFJ1",
+    "robot0_RFJ1",
+    "robot0_LFJ2",
+    "robot0_THJ2",
+    "robot0_FFJ0",
+    "robot0_MFJ0",
+    "robot0_RFJ0",
+    "robot0_LFJ1",
+    "robot0_THJ1",
+    "robot0_LFJ0",
+    "robot0_THJ0"
+  ],
+  "body_names": [
+    "diagnostic_world",
+    "diagnostic_stage_x",
+    "diagnostic_stage_y",
+    "robot0_hand_mount",
+    "robot0_forearm",
+    "robot0_wrist",
+    "robot0_palm",
+    "robot0_ffknuckle",
+    "robot0_mfknuckle",
+    "robot0_rfknuckle",
+    "robot0_lfmetacarpal",
+    "robot0_thbase",
+    "robot0_ffproximal",
+    "robot0_mfproximal",
+    "robot0_rfproximal",
+    "robot0_lfknuckle",
+    "robot0_thproximal",
+    "robot0_ffmiddle",
+    "robot0_mfmiddle",
+    "robot0_rfmiddle",
+    "robot0_lfproximal",
+    "robot0_thhub",
+    "robot0_ffdistal",
+    "robot0_mfdistal",
+    "robot0_rfdistal",
+    "robot0_lfmiddle",
+    "robot0_thmiddle",
+    "robot0_lfdistal",
+    "robot0_thdistal"
+  ]
+}

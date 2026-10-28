@@ -1,0 +1,113 @@
+#usda 1.0
+(
+    defaultPrim = "shadow_hand"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "shadow_hand" (
+    prepend references = @http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/ShadowHand/shadow_hand_instanceable.usd@</shadow_hand>
+)
+{
+    def Xform "diagnostic_world" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0.05
+        matrix4d xformOp:transform = ( (-1.0000001001368801, -9.176704643572287e-12, 0.0000025351818616565615, 0), (-0.00000253518186167317, 0.0000035745590157842955, -1.0000000500602644, 0), (-1.2388751320386443e-14, -1.0000000500634778, -0.000003674699109446067, 0), (0, 0, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def Xform "diagnostic_stage_x" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0.05
+        matrix4d xformOp:transform = ( (-1.0000001001368801, -9.176704643572287e-12, 0.0000025351818616565615, 0), (-0.00000253518186167317, 0.0000035745590157842955, -1.0000000500602644, 0), (-1.2388751320386443e-14, -1.0000000500634778, -0.000003674699109446067, 0), (0, 0, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    def Xform "diagnostic_stage_y" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0)
+        float3 physics:diagonalInertia = (0.00001, 0.00001, 0.00001)
+        float physics:mass = 0.05
+        matrix4d xformOp:transform = ( (-1.0000001001368801, -9.176704643572287e-12, 0.0000025351818616565615, 0), (-0.00000253518186167317, 0.0000035745590157842955, -1.0000000500602644, 0), (-1.2388751320386443e-14, -1.0000000500634778, -0.000003674699109446067, 0), (0, 0, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+    }
+
+    over "joints"
+    {
+        over "rootJoint"
+        {
+            rel physics:body1 = </shadow_hand/diagnostic_world>
+        }
+
+        def PhysicsPrismaticJoint "diagnostic_wrist_x" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear", "PhysxJointAPI"]
+        )
+        {
+            float drive:linear:physics:damping = 100
+            float drive:linear:physics:maxForce = 100
+            float drive:linear:physics:stiffness = 3000
+            uniform token drive:linear:physics:type = "force"
+            uniform token physics:axis = "X"
+            rel physics:body0 = </shadow_hand/diagnostic_world>
+            rel physics:body1 = </shadow_hand/diagnostic_stage_x>
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -0.25
+            float physics:upperLimit = 0.25
+            float physxJoint:maxJointVelocity = 0.02
+        }
+
+        def PhysicsPrismaticJoint "diagnostic_wrist_y" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear", "PhysxJointAPI"]
+        )
+        {
+            float drive:linear:physics:damping = 100
+            float drive:linear:physics:maxForce = 100
+            float drive:linear:physics:stiffness = 3000
+            uniform token drive:linear:physics:type = "force"
+            uniform token physics:axis = "Y"
+            rel physics:body0 = </shadow_hand/diagnostic_stage_x>
+            rel physics:body1 = </shadow_hand/diagnostic_stage_y>
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -0.25
+            float physics:upperLimit = 0.25
+            float physxJoint:maxJointVelocity = 0.02
+        }
+
+        def PhysicsPrismaticJoint "diagnostic_wrist_z" (
+            prepend apiSchemas = ["PhysicsDriveAPI:linear", "PhysxJointAPI"]
+        )
+        {
+            float drive:linear:physics:damping = 100
+            float drive:linear:physics:maxForce = 100
+            float drive:linear:physics:stiffness = 3000
+            uniform token drive:linear:physics:type = "force"
+            uniform token physics:axis = "Z"
+            rel physics:body0 = </shadow_hand/diagnostic_stage_y>
+            rel physics:body1 = </shadow_hand/robot0_hand_mount>
+            point3f physics:localPos0 = (0, 0, 0)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+            float physics:lowerLimit = -0.25
+            float physics:upperLimit = 0.25
+            float physxJoint:maxJointVelocity = 0.02
+        }
+    }
+}
+

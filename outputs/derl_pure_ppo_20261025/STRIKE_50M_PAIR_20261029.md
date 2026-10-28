@@ -29,3 +29,14 @@ PPO：网络 64×64 tanh，可学习 Gaussian 方差，rollout128，初始学习
 
 ours 长训 PID 1374695（timeout wrapper），首批确认迭代9、294912步、4345.8 steps/s，成功数暂0。早期峰值接触力469N、工具速度7.59m/s，仍需观察，不能把短测可运行说成接触已完全稳定。预计本轮约3.5–5小时，依后续速度及评估耗时更新。
 已创建当前聊天自动接续 `strike`（每30分钟），继续Shadow适配、验证和后续启动；重要进展/异常/完成才通知。Shadow当前仍是pending，不是已启动或已完成适配。
+
+## 自动接续：Shadow XYZ 独立物理验证完成；ours 出现严重异常
+
+新增 shadow_xyz_wrapper.py / shadow_xyz_probe.py / test_shadow_xyz.py。Shadow 官方 USD 独立组合副本 shadow_xyz_20261029/shadow_xyz.usda：只把原 rootJoint 的 body1 改接 diagnostic_world，并增加 XYZ 驱动链；逐属性与关系检查原手指/掌部/腱等保持不变（排除原 rootJoint 的唯一重挂接）。原资产没有覆盖。新增移动质量0.1kg，±0.25m、0.02m/s、100N、刚度3000、阻尼100，与我们的外部腕部参数对应。
+
+静态保持、local XYZ、world XYZ 共7段验证通过：1cm位移最大误差2.92e-6m，峰值刚体速度0.00820m/s，有限状态。首次测试把安装坐标系误当世界轴，失败报告已保留；正确转换后通过。
+**集成必须使用 reset 时 robot0_hand_mount 的世界四元数，把 world offset 逆旋转到 stage 坐标；不能只用 cfg.init_state.rot。** Shadow 资产安装根有额外旋转。wrist_test.json 保存参考四元数与实际关节列表。
+
+还未完成：共同 Strike 观测/原生成功接口、目标和工具/支撑位置对齐、初始碰撞、接触静态保持、完整回合及短 PPO。不得因无负载腕部通过就启动 Shadow 长训。
+
+ours 本次初查11,862,016步、5次评估0成功；历史200.087m/s峰值首次在3,440,640步记录。后查27,951,104步、13次评估全0、历史峰值接触力1861N；速度峰值是历史累计，并不表示每一步都为200m/s。已通过异步问题请求用户暂停排查，尚未获得回复；训练未停止，不重复启动。应优先确认物理异常（TGS手部velocity iterations>4警告、接触/求解器/状态一致性）而非继续把零成功归因为训练步数不足。不得静默修改运行中模型或宣称已收敛。

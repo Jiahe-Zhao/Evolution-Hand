@@ -1,0 +1,22 @@
+{
+  "source": "http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/4.5/Isaac/Robots/ShadowHand/shadow_hand_instanceable.usd",
+  "wrapper": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/shadow_xyz_20261029/shadow_xyz.usda",
+  "original_attributes_relationships_unchanged": true,
+  "only_reparented_joint": "/shadow_hand/joints/rootJoint",
+  "hand_root": "/shadow_hand/robot0_hand_mount",
+  "wrist_joint_names": [
+    "diagnostic_wrist_x",
+    "diagnostic_wrist_y",
+    "diagnostic_wrist_z"
+  ],
+  "added_moving_mass_kg": 0.1,
+  "position_limits_m": [
+    -0.25,
+    0.25
+  ],
+  "speed_limit_m_s": 0.02,
+  "force_limit_N": 100,
+  "stiffness_N_m": 3000,
+  "damping_N_s_m": 100,
+  "axes_frame": "stock mounting frame"
+}
