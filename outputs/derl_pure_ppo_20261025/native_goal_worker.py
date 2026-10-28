@@ -603,6 +603,10 @@ def main() -> None:
             from contact_curriculum import CurriculumAdapter as GoalAdapter
         from native_goal_ppo import run
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
+        if os.environ.get('CONTACT_DIAGNOSTIC'):
+            from task_bottleneck_audit import run as audit
+            audit(wrapped,args,output_dir)
+            return
         args.episode_steps=raw.max_episode_length
         args.smoke=args.benchmark
         args.source=str(mechanical_urdf)

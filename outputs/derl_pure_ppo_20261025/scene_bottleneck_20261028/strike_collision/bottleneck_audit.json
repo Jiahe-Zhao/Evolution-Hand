@@ -1,0 +1,536 @@
+{
+  "task": "strike",
+  "trials": [
+    {
+      "mode": "neutral",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 0,
+        "two_long": 0,
+        "simultaneous": 0,
+        "native_grasp": 0,
+        "lift10mm": 0,
+        "held_lift": 0,
+        "slow_held_lift": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.0,
+        "two_long": 0.0,
+        "simultaneous": 0.0,
+        "native_grasp": 0.0,
+        "lift10mm": 0.0,
+        "held_lift": 0.0,
+        "slow_held_lift": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 0.0,
+      "peak_speed_m_s": 0.16357019543647766,
+      "max_bottom_lift_m": 5.960464477539063e-08,
+      "mean_episode_steps": 240.0,
+      "timeouts": 0,
+      "early": 0,
+      "unfinished": 32,
+      "failure_discounted_residual_max": null,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.5703494548797607,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 32,
+          "mean_phi": 0.570344090461731,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        }
+      ],
+      "collision_events": [],
+      "body_peak_N": {
+        "diagnostic_world": 0.0,
+        "diagnostic_stage_x": 0.0,
+        "diagnostic_stage_y": 0.0,
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 0.0,
+        "link_3_0": 0.0,
+        "link_4_0": 0.0,
+        "link_5_0": 0.0,
+        "link_1_1": 0.0,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 0.0,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.0
+      }
+    },
+    {
+      "mode": "final_fixed_wrist",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 14,
+        "two_long": 0,
+        "simultaneous": 0,
+        "native_grasp": 0,
+        "lift10mm": 2,
+        "held_lift": 0,
+        "slow_held_lift": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.0013842198932173225,
+        "two_long": 0.0,
+        "simultaneous": 0.0,
+        "native_grasp": 0.0,
+        "lift10mm": 0.00029661854854656913,
+        "held_lift": 0.0,
+        "slow_held_lift": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 0.2071610689163208,
+      "peak_speed_m_s": 2.3322155475616455,
+      "max_bottom_lift_m": 0.014577478170394897,
+      "mean_episode_steps": 316.0625,
+      "timeouts": 6,
+      "early": 26,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 3.814697265625e-06,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.5704635381698608,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 12,
+          "mean_phi": 0.011622795835137367,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 6,
+          "mean_phi": 0.010820124298334122,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 6,
+          "mean_phi": 0.0102285947650671,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 6,
+          "mean_phi": 0.010210284031927586,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 6,
+          "mean_phi": 0.010204914957284927,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 6,
+          "mean_phi": 0.010787892155349255,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 6,
+          "mean_phi": 0.011310058645904064,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 6,
+          "mean_phi": 0.011701693758368492,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 6,
+          "mean_phi": 0.011938769370317459,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        }
+      ],
+      "collision_events": [],
+      "body_peak_N": {
+        "diagnostic_world": 0.0,
+        "diagnostic_stage_x": 0.0,
+        "diagnostic_stage_y": 0.0,
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 0.0,
+        "link_3_0": 0.0,
+        "link_4_0": 0.0,
+        "link_5_0": 0.0,
+        "link_1_1": 0.0,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 0.0,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.2071610689163208
+      }
+    },
+    {
+      "mode": "final_sample",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 7,
+        "two_long": 0,
+        "simultaneous": 0,
+        "native_grasp": 0,
+        "lift10mm": 2,
+        "held_lift": 0,
+        "slow_held_lift": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.0006697362913352867,
+        "two_long": 0.0,
+        "simultaneous": 0.0,
+        "native_grasp": 0.0,
+        "lift10mm": 0.00016743407283382168,
+        "held_lift": 0.0,
+        "slow_held_lift": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 0.19997350871562958,
+      "peak_speed_m_s": 3.171433210372925,
+      "max_bottom_lift_m": 0.01836499571800232,
+      "mean_episode_steps": 373.28125,
+      "timeouts": 8,
+      "early": 24,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 2.9802322387695312e-06,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.5705755352973938,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 9,
+          "mean_phi": 0.013701038435101509,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 8,
+          "mean_phi": 0.011120963841676712,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 8,
+          "mean_phi": 0.010713513940572739,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 8,
+          "mean_phi": 0.010985828936100006,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 8,
+          "mean_phi": 0.012462561018764973,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 8,
+          "mean_phi": 0.014095653779804707,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 8,
+          "mean_phi": 0.015488276258111,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 8,
+          "mean_phi": 0.01619851589202881,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 8,
+          "mean_phi": 0.016651447862386703,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "native_grasp": 0,
+            "lift10mm": 0,
+            "held_lift": 0,
+            "slow_held_lift": 0,
+            "success": 0
+          }
+        }
+      ],
+      "collision_events": [],
+      "body_peak_N": {
+        "diagnostic_world": 0.0,
+        "diagnostic_stage_x": 0.0,
+        "diagnostic_stage_y": 0.0,
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 0.0,
+        "link_3_0": 0.0,
+        "link_4_0": 0.0,
+        "link_5_0": 0.0,
+        "link_1_1": 0.0,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 0.19997350871562958,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.17062708735466003
+      }
+    }
+  ],
+  "source": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/contact_curriculum_20261028/strike_stage1",
+  "same_checkpoint_inputs": true,
+  "first_episode_only": true
+}

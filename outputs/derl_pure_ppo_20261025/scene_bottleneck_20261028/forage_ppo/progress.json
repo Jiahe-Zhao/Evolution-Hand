@@ -1,0 +1,31 @@
+{
+  "iteration": 1,
+  "frames": 32768,
+  "lr": 0.0003,
+  "elapsed_s": 6.329760607331991,
+  "training_fps": 5176.81470510834,
+  "completed_episodes": 0,
+  "successful_episodes": 0,
+  "new_episodes": 0,
+  "new_successes": 0,
+  "mean_raw_reward": 0.0006733771078870632,
+  "held_fraction": 0.675079345703125,
+  "reward_components_last": {
+    "potential": 1.0,
+    "shaping": -0.009999990463256836,
+    "native_reward": 0.0
+  },
+  "peak_lift_m": 0.0,
+  "optimizer_updates": 256,
+  "kl_early_stop": false,
+  "max_approx_kl": 0.08826153725385666,
+  "std_min": 0.9925015568733215,
+  "std_max": 1.0052446126937866,
+  "physical": {
+    "episodes": 0,
+    "max_digit_force_N": 12.068536758422852,
+    "max_speed_m_s": 1.2760040760040283,
+    "max_limit_rad": 0.0,
+    "physical_extrema_collected": true
+  }
+}

@@ -1,6 +1,8 @@
 """Task-only curriculum. No action overrides, BC, or hand geometry edits."""
 import importlib
 import os
+import json
+import time
 from types import MethodType
 import torch
 from native_goal_adapter import GoalAdapter
@@ -18,18 +20,29 @@ def install_forage_surface(env_id, cfg):
     cfg.food_cfg.spawn.collision_props.collision_enabled = False
     original = cls._setup_scene
     def setup(e):
-        original(e)
         table = sim.CuboidCfg(size=(.70, .70, .10),
             collision_props=sim.CollisionPropertiesCfg(contact_offset=.0005, rest_offset=0.),
             visual_material=sim.PreviewSurfaceCfg(diffuse_color=(.16,.19,.22)),
             physics_material=sim.RigidBodyMaterialCfg(static_friction=.65,dynamic_friction=.5,restitution=0.))
-        table.func('/World/envs/env_.*/forage_table',table,translation=(0.,0.,.05))
+        # Define the complete source environment before registering replication.
+        # Adding and recloning static geometry after clone_environments can leave
+        # the PhysX replication callback with an inconsistent source hierarchy.
+        clone = e.scene.clone_environments
+        def clone_with_surface(*args, **kwargs):
+            table.func('/World/envs/env_0/forage_table',table,translation=(0.,0.,.05))
+            return clone(*args, **kwargs)
+        e.scene.clone_environments = clone_with_surface
+        try:
+            original(e)
+        finally:
+            e.scene.clone_environments = clone
     cls._setup_scene = setup
 
 
 class CurriculumAdapter(GoalAdapter):
     def __init__(self, env, task, out):
         r=env.unwrapped
+        self.output_dir=out;self.heartbeat_steps=0
         self.stage=int(os.environ.get('STRIKE_TRAIN_STAGE','1'))
         self.phase=torch.ones(r.num_envs,device=r.device,dtype=torch.long)
         if task=='strike' and self.stage==2:
@@ -84,6 +97,16 @@ class CurriculumAdapter(GoalAdapter):
             return sparse
         r._get_rewards=MethodType(reward,r)
         super().__init__(env,task,out)
+
+    def step(self, action):
+        result=super().step(action)
+        self.heartbeat_steps+=1
+        if self.heartbeat_steps % 120 == 0:
+            p=self.output_dir/'simulation_heartbeat.json'
+            temp=p.with_suffix('.tmp')
+            temp.write_text(json.dumps(dict(updated=time.time(),vector_steps=self.heartbeat_steps)))
+            temp.replace(p)
+        return result
 
     @staticmethod
     def coverage(r):

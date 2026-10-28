@@ -1,0 +1,316 @@
+{
+  "task": "forage",
+  "trials": [
+    {
+      "mode": "neutral",
+      "num_envs": 256,
+      "counts": {
+        "contact_both": 0,
+        "exposed": 0,
+        "settled": 256,
+        "success": 0
+      },
+      "frame_fractions": {
+        "contact_both": 0.0,
+        "exposed": 0.0,
+        "settled": 1.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 0.0,
+      "peak_speed_m_s": 0.0033405630383640528,
+      "max_bottom_lift_m": 0.0,
+      "mean_episode_steps": 240.0,
+      "timeouts": 0,
+      "early": 0,
+      "unfinished": 256,
+      "failure_discounted_residual_max": null,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 256,
+          "mean_phi": 0.0,
+          "counts": {
+            "contact_both": 0,
+            "exposed": 0,
+            "settled": 256,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 256,
+          "mean_phi": 0.0,
+          "counts": {
+            "contact_both": 0,
+            "exposed": 0,
+            "settled": 256,
+            "success": 0
+          }
+        }
+      ],
+      "z_min": 0.10199997574090958,
+      "z_max": 0.10600000619888306,
+      "mean_max_exposure": 0.0
+    },
+    {
+      "mode": "random",
+      "num_envs": 256,
+      "counts": {
+        "contact_both": 256,
+        "exposed": 0,
+        "settled": 256,
+        "success": 0
+      },
+      "frame_fractions": {
+        "contact_both": 0.9804915459566486,
+        "exposed": 0.0,
+        "settled": 0.9469472957482284,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 40.947757720947266,
+      "peak_speed_m_s": 1.2335319519042969,
+      "max_bottom_lift_m": 0.0,
+      "mean_episode_steps": 2399.0,
+      "timeouts": 256,
+      "early": 0,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 8.07809044545138e-07,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 256,
+          "mean_phi": 0.0,
+          "counts": {
+            "contact_both": 0,
+            "exposed": 0,
+            "settled": 256,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 182,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 239,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 247,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 246,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 246,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 245,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 244,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 249,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 249,
+            "success": 0
+          }
+        },
+        {
+          "step": 1200,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 241,
+            "success": 0
+          }
+        },
+        {
+          "step": 1320,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 253,
+            "success": 0
+          }
+        },
+        {
+          "step": 1440,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 249,
+            "success": 0
+          }
+        },
+        {
+          "step": 1560,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 249,
+            "success": 0
+          }
+        },
+        {
+          "step": 1680,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 251,
+            "success": 0
+          }
+        },
+        {
+          "step": 1800,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 247,
+            "success": 0
+          }
+        },
+        {
+          "step": 1920,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 248,
+            "success": 0
+          }
+        },
+        {
+          "step": 2040,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 246,
+            "success": 0
+          }
+        },
+        {
+          "step": 2160,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 246,
+            "success": 0
+          }
+        },
+        {
+          "step": 2280,
+          "alive": 256,
+          "mean_phi": 1.0,
+          "counts": {
+            "contact_both": 256,
+            "exposed": 0,
+            "settled": 245,
+            "success": 0
+          }
+        }
+      ],
+      "z_min": 0.10199179500341415,
+      "z_max": 0.10726812481880188,
+      "mean_max_exposure": 0.0
+    }
+  ],
+  "source": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/contact_curriculum_20261028/forage",
+  "same_checkpoint_inputs": true,
+  "first_episode_only": true
+}

@@ -1,6 +1,7 @@
 """Serialized baseline curriculum, full-episode checks, explicit stage gate."""
 import json,os,subprocess,sys,time
 from pathlib import Path
+from training_watchdog import wait_for_progress
 b=Path(__file__).resolve().parent
 root=b/'contact_curriculum_20261028';root.mkdir(exist_ok=False)
 env=os.environ.copy();env.update(EVOLUTION_ROOT='/home/zjh/Evolution_PC',EVOLUTION_CODE_ROOT='/home/zjh/Evolution_PC',ISAACLAB_ROOT='/home/zjh/IsaacLab',CONDA_PREFIX='/home/zjh/miniconda3/envs/evolution_isaaclab',ACCEPT_EULA='Y',PRIVACY_CONSENT='Y',OMP_NUM_THREADS='8',MKL_NUM_THREADS='8',GRAPH_SKIP_LOG_SCAN='1',BASELINE_RL_TOLERANCE='1',EVOLUTION_STRIKE_SCENE_PRESET='open_grasp_v4',EVOLUTION_STRIKE_V4_TOOL_WIDTH_M='0.018',EVOLUTION_STRIKE_V4_PREGRASP='0.0',CONTACT_CURRICULUM='1')
@@ -15,7 +16,7 @@ def execute(task,label,steps=10000000,n=256,stage=1,parent=None):
  with (root/(label+'.log')).open('x') as f:
   p=subprocess.Popen(cmd,env=e,cwd='/home/zjh/Evolution_PC/Isaaclab_other',stdout=f,stderr=subprocess.STDOUT);row['pid']=p.pid;save()
   subprocess.run(['ionice','-c','2','-n','4','-p',str(p.pid)],check=False)
-  code=p.wait()
+  code=wait_for_progress(p,out)
  valid=code==0 and (out/'completed.json').exists()
  row.update(status='completed' if valid else 'failed',exit_code=code,elapsed_s=time.time()-row['started']);save()
  return valid

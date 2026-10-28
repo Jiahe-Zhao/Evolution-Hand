@@ -1,6 +1,7 @@
 """Retry Forage validation, then serialize its training after the original queue."""
 import json,os,subprocess,sys,time
 from pathlib import Path
+from training_watchdog import wait_for_progress
 b=Path(__file__).resolve().parent;root=b/'contact_curriculum_20261028'
 rows=json.loads((root/'status.json').read_text());original=next(r for r in rows if r['label']=='forage_check')
 cmd=original['command'].copy()
@@ -14,7 +15,7 @@ def run(label,n,steps):
  state.update(status='running',label=label,started=time.time(),output=str(out));save()
  with (root/(label+'.log')).open('x') as f:
   p=subprocess.Popen(cmd,env=env,cwd='/home/zjh/Evolution_PC/Isaaclab_other',stdout=f,stderr=subprocess.STDOUT);state['pid']=p.pid;save()
-  subprocess.run(['ionice','-c','2','-n','4','-p',str(p.pid)],check=False);code=p.wait()
+  subprocess.run(['ionice','-c','2','-n','4','-p',str(p.pid)],check=False);code=wait_for_progress(p,out)
  state.update(status='completed' if code==0 and (out/'completed.json').exists() else 'failed',exit_code=code);save()
  return state['status']=='completed'
 # Short diagnostic can share the GPU; long optimization remains serialized.

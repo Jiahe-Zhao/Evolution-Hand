@@ -1,0 +1,575 @@
+{
+  "task": "branch",
+  "trials": [
+    {
+      "mode": "initial_sample",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 12,
+        "two_long": 0,
+        "simultaneous": 0,
+        "opposed": 0,
+        "qualified_hold": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.0054993744787322765,
+        "two_long": 0.0,
+        "simultaneous": 0.0,
+        "opposed": 0.0,
+        "qualified_hold": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 0,
+      "lost_after_grasp": 0,
+      "peak_force_N": 25.729646682739258,
+      "peak_speed_m_s": 0.0,
+      "max_bottom_lift_m": 0.0,
+      "mean_episode_steps": 1199.0,
+      "timeouts": 32,
+      "early": 0,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 9.238719940185547e-07,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.34120023250579834,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 32,
+          "mean_phi": 0.3819087743759155,
+          "counts": {
+            "thumb": 1,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 32,
+          "mean_phi": 0.35367536544799805,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 32,
+          "mean_phi": 0.3490230143070221,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 32,
+          "mean_phi": 0.326254665851593,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 32,
+          "mean_phi": 0.3350214958190918,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 32,
+          "mean_phi": 0.32643043994903564,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 32,
+          "mean_phi": 0.32597628235816956,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 32,
+          "mean_phi": 0.3256738781929016,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 32,
+          "mean_phi": 0.3251159191131592,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        }
+      ],
+      "body_peak_N": {
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 25.729646682739258,
+        "link_3_0": 0.0,
+        "link_4_0": 0.0,
+        "link_5_0": 0.0,
+        "link_1_1": 14.998725891113281,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 0.0,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.0
+      },
+      "distal_peak_N": 0.0
+    },
+    {
+      "mode": "final_sample",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 29,
+        "two_long": 15,
+        "simultaneous": 1,
+        "opposed": 0,
+        "qualified_hold": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.30402939949958296,
+        "two_long": 0.18095809007506256,
+        "simultaneous": 0.0013813594662218515,
+        "opposed": 0.0,
+        "qualified_hold": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 53,
+      "lost_after_grasp": 0,
+      "peak_force_N": 117.42881774902344,
+      "peak_speed_m_s": 0.0,
+      "max_bottom_lift_m": 0.0,
+      "mean_episode_steps": 1199.0,
+      "timeouts": 32,
+      "early": 0,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 9.238719940185547e-07,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.3412133455276489,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 32,
+          "mean_phi": 0.30337145924568176,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 32,
+          "mean_phi": 0.5631061792373657,
+          "counts": {
+            "thumb": 7,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 32,
+          "mean_phi": 0.7421818971633911,
+          "counts": {
+            "thumb": 11,
+            "two_long": 1,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 32,
+          "mean_phi": 0.9708539247512817,
+          "counts": {
+            "thumb": 15,
+            "two_long": 4,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 32,
+          "mean_phi": 1.0353118181228638,
+          "counts": {
+            "thumb": 14,
+            "two_long": 7,
+            "simultaneous": 1,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 32,
+          "mean_phi": 1.1210777759552002,
+          "counts": {
+            "thumb": 16,
+            "two_long": 7,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 32,
+          "mean_phi": 0.9837119579315186,
+          "counts": {
+            "thumb": 11,
+            "two_long": 7,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 32,
+          "mean_phi": 1.0526816844940186,
+          "counts": {
+            "thumb": 11,
+            "two_long": 10,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 32,
+          "mean_phi": 1.0407626628875732,
+          "counts": {
+            "thumb": 9,
+            "two_long": 13,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        }
+      ],
+      "body_peak_N": {
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 117.42881774902344,
+        "link_3_0": 41.31751251220703,
+        "link_4_0": 36.85636520385742,
+        "link_5_0": 78.39408874511719,
+        "link_1_1": 29.715681076049805,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 0.0,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.0
+      },
+      "distal_peak_N": 0.0
+    },
+    {
+      "mode": "final_mean",
+      "num_envs": 32,
+      "counts": {
+        "thumb": 32,
+        "two_long": 29,
+        "simultaneous": 7,
+        "opposed": 0,
+        "qualified_hold": 0,
+        "success": 0
+      },
+      "frame_fractions": {
+        "thumb": 0.08668682235195997,
+        "two_long": 0.6133757297748124,
+        "simultaneous": 0.007714762301918266,
+        "opposed": 0.0,
+        "qualified_hold": 0.0,
+        "success": 0.0
+      },
+      "max_hold_steps": 0,
+      "max_native_grasp_steps": 0,
+      "max_contact_only_hold": 31,
+      "lost_after_grasp": 0,
+      "peak_force_N": 155.48748779296875,
+      "peak_speed_m_s": 0.0,
+      "max_bottom_lift_m": 0.0,
+      "mean_episode_steps": 1199.0,
+      "timeouts": 32,
+      "early": 0,
+      "unfinished": 0,
+      "failure_discounted_residual_max": 1.1324882507324219e-06,
+      "trace": [
+        {
+          "step": 0,
+          "alive": 32,
+          "mean_phi": 0.341219961643219,
+          "counts": {
+            "thumb": 0,
+            "two_long": 0,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 120,
+          "alive": 32,
+          "mean_phi": 0.39528095722198486,
+          "counts": {
+            "thumb": 0,
+            "two_long": 2,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 240,
+          "alive": 32,
+          "mean_phi": 0.7880140542984009,
+          "counts": {
+            "thumb": 6,
+            "two_long": 8,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 360,
+          "alive": 32,
+          "mean_phi": 1.0736379623413086,
+          "counts": {
+            "thumb": 11,
+            "two_long": 12,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 480,
+          "alive": 32,
+          "mean_phi": 1.1333458423614502,
+          "counts": {
+            "thumb": 7,
+            "two_long": 20,
+            "simultaneous": 1,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 600,
+          "alive": 32,
+          "mean_phi": 1.1123991012573242,
+          "counts": {
+            "thumb": 3,
+            "two_long": 25,
+            "simultaneous": 1,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 720,
+          "alive": 32,
+          "mean_phi": 1.142594814300537,
+          "counts": {
+            "thumb": 1,
+            "two_long": 26,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 840,
+          "alive": 32,
+          "mean_phi": 1.195425271987915,
+          "counts": {
+            "thumb": 0,
+            "two_long": 29,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 960,
+          "alive": 32,
+          "mean_phi": 1.196727991104126,
+          "counts": {
+            "thumb": 0,
+            "two_long": 29,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        },
+        {
+          "step": 1080,
+          "alive": 32,
+          "mean_phi": 1.2037944793701172,
+          "counts": {
+            "thumb": 0,
+            "two_long": 29,
+            "simultaneous": 0,
+            "opposed": 0,
+            "qualified_hold": 0,
+            "success": 0
+          }
+        }
+      ],
+      "body_peak_N": {
+        "link_0_0": 0.0,
+        "link_1_thumb_spread": 0.0,
+        "link_2_mcp_spread": 0.0,
+        "link_3_mcp_spread": 0.0,
+        "link_4_mcp_spread": 0.0,
+        "link_5_mcp_spread": 0.0,
+        "link_1_0": 0.0,
+        "link_2_0": 155.48748779296875,
+        "link_3_0": 47.9814338684082,
+        "link_4_0": 39.52603530883789,
+        "link_5_0": 147.4444580078125,
+        "link_1_1": 25.551555633544922,
+        "link_2_1": 0.0,
+        "link_3_1": 0.0,
+        "link_4_1": 0.0,
+        "link_5_1": 0.0,
+        "link_1_2": 4.449627876281738,
+        "link_2_2": 0.0,
+        "link_3_2": 0.0,
+        "link_4_2": 0.0,
+        "link_5_2": 0.0,
+        "link_1_3": 0.5593951344490051
+      },
+      "distal_peak_N": 0.5593951344490051
+    }
+  ],
+  "source": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/contact_curriculum_20261028/branch",
+  "same_checkpoint_inputs": true,
+  "first_episode_only": true
+}
