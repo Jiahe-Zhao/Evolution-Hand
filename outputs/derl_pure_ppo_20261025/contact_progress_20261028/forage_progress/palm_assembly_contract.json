@@ -1,0 +1,8 @@
+{
+  "mode": "rigid_morphology_adaptive_palm_v1",
+  "urdf": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline/right/urdf/current_agent.urdf",
+  "collision_count": 1,
+  "fixed_to_wrist_and_parent_of_digit_roots": true,
+  "mechanical_wrist_speed_m_s": null,
+  "sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760"
+}

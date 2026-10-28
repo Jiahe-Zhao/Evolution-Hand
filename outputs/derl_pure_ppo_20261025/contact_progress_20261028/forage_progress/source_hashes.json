@@ -1,0 +1,10 @@
+{
+  "native_goal_ppo.py": "ec38172301504390e454aaf2ea39a22b8aec54706f7c2e779bd905ddcb0941c3",
+  "native_goal_adapter.py": "c4b1c9d531a03eac3dcd75a9d4f9a64fc9efef7400765393b765183700c7058d",
+  "native_goal_worker.py": "0f6c8084df3e0861a9167f5c982736b46133056e90530f6a4308afe91d0c08a5",
+  "native_contact_hooks.py": "685695000b2beb2a876b1a29c017f56050e200eae3205a1ffc034c63b9f8b4e3",
+  "whole_hand_tactile.py": "6f17685d03d2b6c3552059df38de492e37b62607bc0f79e13f2b21d82050f3fe",
+  "forage_contact_repair.py": "46f8b7a98ebcde67a047e62f7b60c863bfdd8246982d4608dcbf037ea6ba6597",
+  "contact_curriculum.py": "f5f69bb5587b487db08604c2b919c279ecbdd50c25e0ea9b068c0b7113cfa1fb",
+  "contact_progress_reward.py": "a7693b2ccc60fa0b4224e7e2f6ed33fc62b52df20dbcc43bba6c7516109fd20f"
+}

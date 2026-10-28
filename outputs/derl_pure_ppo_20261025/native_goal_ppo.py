@@ -86,6 +86,7 @@ def run(env,args,out):
  if os.environ.get('CONTACT_CURRICULUM')=='1':source_files.append('contact_curriculum.py')
  if os.environ.get('BRANCH_PLACEMENT_MANIFEST'):source_files.append('branch_local_scene.py')
  if os.environ.get('BRANCH_COMPARISON_HAND'):source_files.extend(['branch_comparison.py','branch_comparison_geometry.py','branch_comparison_protocol.py'])
+ if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':source_files.append('contact_progress_reward.py')
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:
@@ -102,6 +103,8 @@ def run(env,args,out):
   for moments,key in ((rms,'observation_moments'),(rrms,'reward_moments')):
    state=checkpoint[key];moments.mean=state['mean'].to(device);moments.var=state['var'].to(device);moments.count=state['count']
  N,T=env.num_envs,args.horizon;iterations=args.steps//(N*T)
+ gamma=float(os.environ.get('CONTACT_PPO_GAMMA','.99'))
+ if not 0<gamma<1:raise ValueError('Invalid discount factor')
  config=dict(reference_commit='91e077e355b27bb74fa920c708d606ff9f4d611e',network=[64,64],activation='tanh',separate_actor_critic=True,
              initial_lr=3e-4,lr_schedule='linear',gamma=.99,gae_lambda=.95,clip=.2,optimizer_epochs=4,minibatch=512,value_coefficient=.5,
              entropy_coefficient=.01,max_grad_norm=.5,adam_eps=1e-5,kl_early_stop=.2,initial_std=1.,learn_std=True,
@@ -112,6 +115,8 @@ def run(env,args,out):
              differences_from_derl=['Isaac/PhysX contact task, not MuJoCo locomotion','GPU environment batch size','native task joint graph observations and goal normalized','finite-horizon terminal evaluation','native joint graph action bounds and slew limits'])
  config.update(goal_contract=env.goals.contract(),observation_contract='native joint graph plus task goal; fresh per-task policy')
  config.update(parent_checkpoint=parent,goal_contract=env.contract(),reward='potential difference plus current curriculum success' if os.environ.get('CONTACT_CURRICULUM')=='1' else config['reward'])
+ config['gamma']=gamma
+ if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':config['reward']='bounded per-episode progress increments plus unchanged native success; soft physical/time costs'
  save_json(out/'effective_config.json',config)
  def save(name,frames):
   torch.save(dict(policy=net.state_dict(),optimizer=optimizer.state_dict(),observation_moments=rms.state(),reward_moments=rrms.state(),frames=frames,config=config),out/(name+'.pth'))
@@ -130,14 +135,14 @@ def run(env,args,out):
    with torch.no_grad():dist,value=net(normalized);action=dist.sample();logp=dist.log_prob(action).sum(-1)
    if not torch.isfinite(action).all():raise RuntimeError('Nonfinite policy action')
    obs,reward,done,info=env.step(action)
-   discounted=.99*discounted+reward;rrms.update(discounted)
+   discounted=gamma*discounted+reward;rrms.update(discounted)
    norm_reward=(reward/(rrms.var+1e-8).sqrt()).float().clamp(-10,10);discounted[done]=0
    rms.update(obs)
    for key,val in zip(storage,(normalized,action,logp,value,norm_reward,done)):storage[key].append(val.detach().clone())
    window_episodes+=int(done.sum());window_success+=int(info['episode_success'].sum());raw_return+=float(reward.mean());held_samples+=int(info['held'].sum())
   with torch.no_grad():_,tail=net(rms.normalize(obs))
   data={k:torch.stack(v) for k,v in storage.items()}
-  ret,adv=gae(data['rew'],data['value'],data['done'],tail)
+  ret,adv=gae(data['rew'],data['value'],data['done'],tail,gamma=gamma)
   adv=(adv-adv.mean())/(adv.std()+1e-5)
   flat=dict(obs=data['obs'].flatten(0,1),act=data['act'].flatten(0,1),logp=data['logp'].flatten(),value=data['value'].flatten(),ret=ret.flatten(),adv=adv.flatten())
   stop=False;updates=0;kls=[];losses=[]

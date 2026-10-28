@@ -1,0 +1,7 @@
+{
+  "workspace_exit_grace_s": 0.1,
+  "forage_speed_grace_s": 0.15,
+  "physical_limits_unchanged": true,
+  "success_thresholds_unchanged": true,
+  "not_deployed_to_paused_training": true
+}

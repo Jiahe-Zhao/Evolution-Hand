@@ -1,4 +1,5 @@
 import tempfile,unittest
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace as S
 import torch
@@ -41,9 +42,13 @@ class NativeGoalsTest(unittest.TestCase):
  def test_timeout_terminal_potential_zero(self):
   a,r=self.adapter(0.);r.reset_time_outs[:]=True
   self.assertEqual(r._get_rewards().item(),-2.)
+ def test_configured_discount_matches_potential_shaping(self):
+  with patch.dict('os.environ',{'CONTACT_PPO_GAMMA':'.999'}):a,r=self.adapter(0.)
+  self.assertAlmostEqual(float(r._get_rewards()),-.002,places=5)
  def test_evaluation_ignores_later_episode(self):
   class Env:
    num_envs=2
+   task='branch'
    def reset(self):self.t=0;return torch.zeros(2,1)
    def step(self,action):
     self.t+=1

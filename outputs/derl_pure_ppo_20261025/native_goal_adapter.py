@@ -3,7 +3,7 @@
 No trajectory, teacher, BC override or hand geometry change. All snapshots are
 captured inside _get_rewards, before DirectRLEnv's automatic reset.
 """
-import json
+import json,os
 from types import MethodType
 import gymnasium as gym
 import torch
@@ -11,6 +11,7 @@ import torch
 class GoalAdapter:
  def __init__(self,env,task,out):
   self.env=env;self.raw=r=env.unwrapped;self.task=task;self.num_envs=r.num_envs;self.device=r.device
+  self.gamma=float(os.environ.get('CONTACT_PPO_GAMMA','.99'))
   self.goals=self;self.evaluating=False
   self.action_space=gym.spaces.Box(-1,1,(int(r.cfg.action_space),))
   base=r._get_observations()['policy'];extra,_=self.features()
@@ -27,11 +28,8 @@ class GoalAdapter:
    raw.reset_terminated |= self.event
    raw.reset_buf |= self.event
    terminal=(raw.reset_terminated|raw.reset_time_outs).bool()
-   next_phi=torch.where(terminal,torch.zeros_like(potential),potential)
-   shaping=.99*next_phi-before
    self.prev_potential=potential.detach().clone()
-   reward=shaping+10*self.event.float()
-   self.reward_terms={'potential':float(potential.mean()),'shaping':float(shaping.mean()),'native_reward':float(sparse.mean())}
+   reward=self.task_reward(potential,before,terminal,sparse)
    self.last_native=sparse.clone()
    control=raw.graph_control
    q=raw.hand.data.joint_pos.index_select(-1,control.indices)
@@ -51,6 +49,10 @@ class GoalAdapter:
    return reward
   r._get_rewards=MethodType(reward_hook,r)
   (out/'goal_contract.json').write_text(json.dumps(self.contract(),indent=2))
+ def task_reward(self,potential,before,terminal,sparse):
+  shaping=self.gamma*torch.where(terminal,torch.zeros_like(potential),potential)-before
+  self.reward_terms={'potential':float(potential.mean()),'shaping':float(shaping.mean()),'native_reward':float(sparse.mean())}
+  return shaping+10*self.event.float()
  def contract(self):
   return dict(task=self.task,version=3 if hasattr(self.raw,'whole_hand_tactile') else 2,whole_hand_tactile=hasattr(self.raw,'whole_hand_tactile'),goal_source='native scene state and native success thresholds',
    goals={'branch':'branch center, contact opposition and stable hold duration','forage':'both leaf centers outside food clearance radius with valid hand contact','strike':'tool tip at strike target with impact threshold while currently held'}[self.task],

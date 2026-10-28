@@ -1,0 +1,18 @@
+test_contact_oscillation_cannot_farm (test_contact_progress_reward.RewardInvariants) ... ok
+test_discount_is_applied_in_gae (test_contact_progress_reward.RewardInvariants) ... ok
+test_partial_budget_is_bounded (test_contact_progress_reward.RewardInvariants) ... ok
+test_pre_exposure_clearance_has_signal (test_contact_progress_reward.RewardInvariants) ... ok
+test_success_bonus_remains_distinct (test_contact_progress_reward.RewardInvariants) ... ok
+test_timeout_retains_partial_credit_and_no_repeat (test_contact_progress_reward.RewardInvariants) ... ok
+test_branch_has_signal_before_contact (test_native_goals.NativeGoalsTest) ... ok
+test_configured_discount_matches_potential_shaping (test_native_goals.NativeGoalsTest) ... ok
+test_evaluation_ignores_later_episode (test_native_goals.NativeGoalsTest) ... EVAL test 1 / 2
+ok
+test_strike_grasp_is_not_success (test_native_goals.NativeGoalsTest) ... ok
+test_success_terminal_potential_zero (test_native_goals.NativeGoalsTest) ... ok
+test_timeout_terminal_potential_zero (test_native_goals.NativeGoalsTest) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.018s
+
+OK

@@ -1,0 +1,12 @@
+{
+  "native_goal_ppo.py": "ec38172301504390e454aaf2ea39a22b8aec54706f7c2e779bd905ddcb0941c3",
+  "native_goal_adapter.py": "c4b1c9d531a03eac3dcd75a9d4f9a64fc9efef7400765393b765183700c7058d",
+  "native_goal_worker.py": "ce6c01cc279fbeffc0d4caede1cad96509eb5b1d9f428177c8c4d3d4e1f63cee",
+  "native_contact_hooks.py": "685695000b2beb2a876b1a29c017f56050e200eae3205a1ffc034c63b9f8b4e3",
+  "whole_hand_tactile.py": "6f17685d03d2b6c3552059df38de492e37b62607bc0f79e13f2b21d82050f3fe",
+  "contact_curriculum.py": "f5f69bb5587b487db08604c2b919c279ecbdd50c25e0ea9b068c0b7113cfa1fb",
+  "branch_comparison.py": "0030c9e6e1ede8adb27e0cca5ab8a333786854b5bcf11bd97be24c78e0c56813",
+  "branch_comparison_geometry.py": "b4df5cb6f0cbc9bfc1f040716fd9022f9eda9464f5b83c8b23b1e09d0c09e53f",
+  "branch_comparison_protocol.py": "2730f0fb1f517981af7a7286a6356ceecabc239c3184f31cd3bcb7eccc9936ca",
+  "contact_progress_reward.py": "a7693b2ccc60fa0b4224e7e2f6ed33fc62b52df20dbcc43bba6c7516109fd20f"
+}

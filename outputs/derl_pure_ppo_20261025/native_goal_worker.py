@@ -610,8 +610,18 @@ def main() -> None:
         from native_goal_adapter import GoalAdapter
         if os.environ.get('CONTACT_CURRICULUM') == '1':
             from contact_curriculum import CurriculumAdapter as GoalAdapter
+        if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':
+            from contact_progress_reward import ProgressAdapter as GoalAdapter
         from native_goal_ppo import run
         wrapped=GoalAdapter(raw_env,args.task,output_dir)
+        if os.environ.get('CONTACT_DIAGNOSTIC')=='progress_probe':
+            from contact_progress_probe import run as probe_progress
+            probe_progress(wrapped,graph,args,output_dir)
+            return
+        if os.environ.get('CONTACT_DIAGNOSTIC')=='sweep_probe':
+            from forage_sweep_probe import run as probe_sweep
+            probe_sweep(wrapped,graph,args,output_dir)
+            return
         if os.environ.get('CONTACT_DIAGNOSTIC'):
             if os.environ['CONTACT_DIAGNOSTIC']=='branch_local_validation':
                 from branch_local_scene import validate as audit

@@ -1,0 +1,26 @@
+{
+  "source": "/home/zjh/Evolution_PC/outputs/discrete_hand_evolution_20261024/checks/baseline/right/urdf/current_agent.urdf",
+  "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+  "diagnostic_urdf": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/contact_progress_20261028/forage_sweep/driven_wrist_model/assets/urdf/current_agent.urdf",
+  "diagnostic_sha256": "649b44fa26328bb81b7c6e47f25ea8d5efead305bd60c642df7e29e649fde0bd",
+  "original_nodes_unchanged": true,
+  "hand_root": "link_0_0",
+  "wrist_joint_names": [
+    "diagnostic_wrist_x",
+    "diagnostic_wrist_y",
+    "diagnostic_wrist_z"
+  ],
+  "morphology_genes_include_wrist": false,
+  "axes_frame": "original hand root local frame",
+  "added_moving_mass_kg": 0.1,
+  "effort_limit_N": 100,
+  "velocity_limit_m_s": 0.02,
+  "position_limits_m": [
+    -0.25,
+    0.25
+  ],
+  "stiffness_N_m": 3000.0,
+  "damping_N_s_m": 100.0,
+  "command_frame": "world translated into root local axes",
+  "adapter_sha256": "4e5fb882b6b1e942aeb5dd140b770c9383164f6593addc4c389f7a328f8eedc9"
+}

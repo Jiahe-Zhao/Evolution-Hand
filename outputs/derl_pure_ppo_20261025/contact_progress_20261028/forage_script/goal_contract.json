@@ -1,0 +1,42 @@
+{
+  "task": "forage",
+  "version": 4,
+  "whole_hand_tactile": true,
+  "goal_source": "native scene state and native success thresholds",
+  "goals": "both leaf centers outside food clearance radius with valid hand contact",
+  "success": ">=98% exposed grid under conservative projected AABB test, both leaves contacted, speed <0.15 m/s for 0.5 s",
+  "shaping": "positive improvement of per-component episode maximum; no terminal cancellation",
+  "bc": false,
+  "observation_size": 1160,
+  "action_size": 24,
+  "episode_steps": 2400,
+  "task_curriculum": true,
+  "hand_structure_unchanged": true,
+  "action_override": false,
+  "support": "real static table at z=0.100 m; no leaf joints; flush visual food patch",
+  "reward_version": "bounded_progress_v1",
+  "progress_names": [
+    "leaf_approach",
+    "touch_leaf1",
+    "touch_leaf2",
+    "clearance_leaf1",
+    "clearance_leaf2",
+    "exposure",
+    "settled_hold"
+  ],
+  "progress_weights": [
+    1.0,
+    0.5,
+    0.5,
+    1.0,
+    1.0,
+    4.0,
+    2.0
+  ],
+  "partial_reward_upper_bound": 10.0,
+  "success_bonus": 10.0,
+  "history_observed": true,
+  "success_predicate_unchanged": true,
+  "control_unchanged": true,
+  "soft_costs": "per-second 0.01 time + 0.05 capped overforce cost above 40 N + Forage 0.05 capped overspeed cost above 1 m/s; no new episode termination"
+}

@@ -1,0 +1,55 @@
+{
+  "iteration": 32,
+  "frames": 1048576,
+  "lr": 9.375e-06,
+  "elapsed_s": 60.60424030199647,
+  "training_fps": 17302.023561285463,
+  "completed_episodes": 768,
+  "successful_episodes": 0,
+  "new_episodes": 0,
+  "new_successes": 0,
+  "mean_raw_reward": 0.002295157668754655,
+  "held_fraction": 0.0,
+  "reward_components_last": {
+    "partial": 0.00312325032427907,
+    "success_bonus": 0.0,
+    "soft_cost": 0.00016666666488163173,
+    "progress_mean": {
+      "thumb_approach": 0.5858380794525146,
+      "two_long_approach": 0.4105672538280487,
+      "thumb_contact": 0.24646881222724915,
+      "long_contact": 0.1988205760717392,
+      "simultaneous_contact": 0.0,
+      "opposed_contact": 0.0,
+      "opposed_hold": 0.0
+    },
+    "episode_best_mean": {
+      "thumb_approach": 0.5988541841506958,
+      "two_long_approach": 0.4375405013561249,
+      "thumb_contact": 0.3806854784488678,
+      "long_contact": 0.2799040675163269,
+      "simultaneous_contact": 0.0,
+      "opposed_contact": 0.0,
+      "opposed_hold": 0.0
+    }
+  },
+  "peak_lift_m": 0.0,
+  "optimizer_updates": 256,
+  "kl_early_stop": false,
+  "max_approx_kl": 0.014781061559915543,
+  "std_min": 0.908424973487854,
+  "std_max": 1.0106608867645264,
+  "physical": {
+    "episodes": 1024,
+    "max_digit_force_N": 29.7991943359375,
+    "max_speed_m_s": 0.0,
+    "max_limit_rad": 0.000997304916381836,
+    "physical_extrema_collected": true,
+    "reset_sampling": {
+      "episodes": 2048,
+      "resampled_episodes": 0,
+      "rejected_joint_samples": 0
+    },
+    "fresh_contact_fraction": 1.0
+  }
+}

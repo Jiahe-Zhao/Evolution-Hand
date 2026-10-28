@@ -1,0 +1,49 @@
+{
+  "iteration": 64,
+  "frames": 2097152,
+  "lr": 4.6875e-06,
+  "elapsed_s": 520.8961246013641,
+  "training_fps": 4026.046460184549,
+  "completed_episodes": 768,
+  "successful_episodes": 0,
+  "new_episodes": 0,
+  "new_successes": 0,
+  "mean_raw_reward": 0.0006171001848542801,
+  "held_fraction": 1.0,
+  "reward_components_last": {
+    "partial": 0.0008160625584423542,
+    "success_bonus": 0.0,
+    "soft_cost": 0.00016666666488163173,
+    "progress_mean": {
+      "leaf_approach": 0.7298945188522339,
+      "touch_leaf1": 1.0,
+      "touch_leaf2": 1.0,
+      "clearance_leaf1": 0.22749799489974976,
+      "clearance_leaf2": 0.5621861815452576,
+      "exposure": 0.0,
+      "settled_hold": 0.0
+    },
+    "episode_best_mean": {
+      "leaf_approach": 0.8853275179862976,
+      "touch_leaf1": 1.0,
+      "touch_leaf2": 1.0,
+      "clearance_leaf1": 0.240224227309227,
+      "clearance_leaf2": 0.5855852961540222,
+      "exposure": 0.0,
+      "settled_hold": 0.0
+    }
+  },
+  "peak_lift_m": 0.0,
+  "optimizer_updates": 256,
+  "kl_early_stop": false,
+  "max_approx_kl": 0.012050863355398178,
+  "std_min": 0.9281215071678162,
+  "std_max": 1.0007048845291138,
+  "physical": {
+    "episodes": 1024,
+    "max_digit_force_N": 37.569801330566406,
+    "max_speed_m_s": 1.3422147035598755,
+    "max_limit_rad": 0.00014788420230615884,
+    "physical_extrema_collected": true
+  }
+}

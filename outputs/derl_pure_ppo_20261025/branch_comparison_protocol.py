@@ -120,6 +120,8 @@ def replay(e,args,out,mode):
 
 def train(e,args,out):
  from contact_curriculum import CurriculumAdapter
+ if os.environ.get('CONTACT_PROGRESS_REWARD')=='1':
+  from contact_progress_reward import ProgressAdapter as CurriculumAdapter
  from native_goal_ppo import run,Policy
  env=CurriculumAdapter(e,'branch',out)
  original_diagnostics=env.diagnostics
