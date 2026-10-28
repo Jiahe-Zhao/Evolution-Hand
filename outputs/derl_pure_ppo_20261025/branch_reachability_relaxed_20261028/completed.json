@@ -1,0 +1,25 @@
+{
+  "status": "completed",
+  "diagnostic": true,
+  "kinematic_candidates": 0,
+  "physical_trials": [
+    {
+      "ramp_steps": 360,
+      "episodes": 32,
+      "simultaneous": 32,
+      "opposed": 0,
+      "successes": 0,
+      "max_hold_steps": 0,
+      "peak_digit_force_N": 31.44721794128418
+    },
+    {
+      "ramp_steps": 900,
+      "episodes": 32,
+      "simultaneous": 32,
+      "opposed": 0,
+      "successes": 0,
+      "max_hold_steps": 0,
+      "peak_digit_force_N": 33.22366714477539
+    }
+  ]
+}
