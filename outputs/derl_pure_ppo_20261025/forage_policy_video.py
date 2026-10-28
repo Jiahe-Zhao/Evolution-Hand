@@ -54,10 +54,10 @@ def record(env,args,out):
  for k,v in ck['observation_moments'].items():setattr(rms,k,v)
  env.evaluating=True;results=[];mode='sample';action_seed=int(os.environ.get('FORAGE_VIDEO_ACTION_SEED','1062803'))
  torch.manual_seed(action_seed)
- for seed in [1062802,1062809]:
+ for seed in json.loads(os.environ.get('FORAGE_VIDEO_SCENES','[1062802,1062809]')):
   env.reset_seed=seed;obs=env.reset();torch.manual_seed(action_seed)
   target=torch.tensor([[0.,0.,.14]],device=dev)
-  camera.set_world_poses_from_view(target+torch.tensor([[.28,-.35,.32]],device=dev),target)
+  camera.set_world_poses_from_view(target+torch.tensor([json.loads(os.environ.get('FORAGE_VIDEO_EYE','[.28,-.35,.32]'))],device=dev),target)
   video=out/f'forage_action{action_seed}_scene{seed}.mp4';writer=imageio.get_writer(str(video),fps=20,codec='libx264',quality=8)
   success=False;last=None;forces=[]
   for t in range(e.max_episode_length):
