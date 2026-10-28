@@ -1,0 +1,7 @@
+{
+  "status": "completed",
+  "inspection_only": true,
+  "finite": true,
+  "max_joint_drift": 2.6628272171622374e-15,
+  "max_branch_force": 0.0
+}

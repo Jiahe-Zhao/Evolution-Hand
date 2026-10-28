@@ -1,0 +1,25 @@
+{
+  "origin_world": [
+    0.025000005960464478,
+    0.014999985694885254,
+    0.4000000059604645
+  ],
+  "rotation": [
+    [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      -1.0
+    ]
+  ],
+  "definition": "origin=mean long proximal origins; x=little to index; y=palm toward proximal group, orthogonal to x; z=x cross y"
+}

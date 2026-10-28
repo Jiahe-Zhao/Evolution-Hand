@@ -85,6 +85,7 @@ def run(env,args,out):
  if getattr(args,'forage_contact_repair',False):source_files.append('forage_contact_repair.py')
  if os.environ.get('CONTACT_CURRICULUM')=='1':source_files.append('contact_curriculum.py')
  if os.environ.get('BRANCH_PLACEMENT_MANIFEST'):source_files.append('branch_local_scene.py')
+ if os.environ.get('BRANCH_COMPARISON_HAND'):source_files.extend(['branch_comparison.py','branch_comparison_geometry.py','branch_comparison_protocol.py'])
  snapshot=out/'source_snapshot';snapshot.mkdir(exist_ok=True)
  hashes={}
  for name in source_files:

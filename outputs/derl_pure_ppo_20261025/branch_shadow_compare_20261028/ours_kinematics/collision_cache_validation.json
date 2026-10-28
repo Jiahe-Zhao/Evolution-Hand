@@ -1,0 +1,47 @@
+[
+  {
+    "offset": [
+      0,
+      0,
+      0
+    ],
+    "collision_count": 17,
+    "matches": true
+  },
+  {
+    "offset": [
+      0,
+      0.03,
+      0.03
+    ],
+    "collision_count": 22,
+    "matches": true
+  },
+  {
+    "offset": [
+      0,
+      -0.03,
+      0.03
+    ],
+    "collision_count": 0,
+    "matches": true
+  },
+  {
+    "offset": [
+      0,
+      0.03,
+      -0.03
+    ],
+    "collision_count": 0,
+    "matches": true
+  },
+  {
+    "offset": [
+      0,
+      0,
+      0.15
+    ],
+    "collision_count": 0,
+    "matches": true
+  }
+]

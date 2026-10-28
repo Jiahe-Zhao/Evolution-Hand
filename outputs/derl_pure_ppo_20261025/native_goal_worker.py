@@ -499,6 +499,11 @@ def main() -> None:
         from mechanical_scene_contract import apply_mechanical_scene
         apply_mechanical_scene(env_cfg,args.task,output_dir)
         env_cfg.seed = args.seed
+        if os.environ.get('BRANCH_COMPARISON_HAND'):
+            if args.task!='branch':raise ValueError('Branch comparison only')
+            from branch_comparison import run as compare_branch
+            compare_branch(env_cfg,args,output_dir)
+            return
         env_cfg.viewer.eye, env_cfg.viewer.lookat = CAMERA_VIEWS[args.task]
         env_cfg.viewer.origin_type, env_cfg.viewer.env_index = "env", 0
         print(f"[EVAL] Creating {args.task} environment", flush=True)

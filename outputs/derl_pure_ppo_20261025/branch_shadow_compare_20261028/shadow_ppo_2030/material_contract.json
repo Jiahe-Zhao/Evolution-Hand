@@ -1,0 +1,8 @@
+{
+  "collision_prims": 22,
+  "friction": 0.8,
+  "restitution": 0.0,
+  "compliance": 0.0,
+  "contact_offset": 0.0003,
+  "common_to_both_hands": true
+}

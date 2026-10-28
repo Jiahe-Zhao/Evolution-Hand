@@ -1,0 +1,110 @@
+{
+  "started": 1793165586.0311172,
+  "plan": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ppo_queue.json",
+  "jobs": [
+    {
+      "job": {
+        "hand": "ours",
+        "mode": "train",
+        "name": "ours_ppo_2028",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2028,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+      },
+      "started": 1793165586.0311236,
+      "state": "completed",
+      "launcher_output": "1244077\n",
+      "launcher_error": "",
+      "pid": 1244077,
+      "finished": 1793165706.6492085
+    },
+    {
+      "job": {
+        "hand": "shadow",
+        "mode": "train",
+        "name": "shadow_ppo_2028",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2028,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+      },
+      "started": 1793165706.649395,
+      "state": "completed",
+      "launcher_output": "1246346\n",
+      "launcher_error": "",
+      "pid": 1246346,
+      "finished": 1793165817.1198215
+    },
+    {
+      "job": {
+        "hand": "ours",
+        "mode": "train",
+        "name": "ours_ppo_2029",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2029,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+      },
+      "started": 1793165817.1200795,
+      "state": "completed",
+      "launcher_output": "1247272\n",
+      "launcher_error": "",
+      "pid": 1247272,
+      "finished": 1793165937.669845
+    },
+    {
+      "job": {
+        "hand": "shadow",
+        "mode": "train",
+        "name": "shadow_ppo_2029",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2029,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+      },
+      "started": 1793165937.6707256,
+      "state": "completed",
+      "launcher_output": "1247761\n",
+      "launcher_error": "",
+      "pid": 1247761,
+      "finished": 1793166038.2046812
+    },
+    {
+      "job": {
+        "hand": "ours",
+        "mode": "train",
+        "name": "ours_ppo_2030",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2030,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+      },
+      "started": 1793166038.204871,
+      "state": "completed",
+      "launcher_output": "1247989\n",
+      "launcher_error": "",
+      "pid": 1247989,
+      "finished": 1793166158.729711
+    },
+    {
+      "job": {
+        "hand": "shadow",
+        "mode": "train",
+        "name": "shadow_ppo_2030",
+        "envs": 256,
+        "steps": 1048576,
+        "seed": 2030,
+        "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+      },
+      "started": 1793166158.7300763,
+      "state": "completed",
+      "launcher_output": "1250966\n",
+      "launcher_error": "",
+      "pid": 1250966,
+      "finished": 1793166259.160764
+    }
+  ],
+  "state": "completed",
+  "finished": 1793166259.1609945
+}

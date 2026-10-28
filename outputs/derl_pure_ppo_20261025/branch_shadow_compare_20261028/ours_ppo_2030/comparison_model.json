@@ -1,0 +1,33 @@
+{
+  "observation_size": 388,
+  "action_size": 21,
+  "parameter_count": 59563,
+  "architecture": [
+    64,
+    64
+  ],
+  "joint_names": [
+    "link_1_thumb_spread_joint",
+    "link_2_mcp_spread_joint",
+    "link_3_mcp_spread_joint",
+    "link_4_mcp_spread_joint",
+    "link_5_mcp_spread_joint",
+    "link_0_0_to_link_1_0",
+    "link_0_0_to_link_2_0",
+    "link_0_0_to_link_3_0",
+    "link_0_0_to_link_4_0",
+    "link_0_0_to_link_5_0",
+    "link_1_0_to_link_1_1",
+    "link_2_0_to_link_2_1",
+    "link_3_0_to_link_3_1",
+    "link_4_0_to_link_4_1",
+    "link_5_0_to_link_5_1",
+    "link_1_1_to_link_1_2",
+    "link_2_1_to_link_2_2",
+    "link_3_1_to_link_3_2",
+    "link_4_1_to_link_4_2",
+    "link_5_1_to_link_5_2",
+    "link_1_2_to_link_1_3"
+  ],
+  "hand_structure_unchanged": true
+}

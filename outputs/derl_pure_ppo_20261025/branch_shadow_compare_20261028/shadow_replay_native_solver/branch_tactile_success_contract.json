@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "contact_force_threshold_N": 1.0,
+  "min_long_fingers": 2,
+  "hold_steps": 15,
+  "added_requirement": "thumb and long-finger force resultants have negative dot product",
+  "legacy_fingertip_event_retained": true,
+  "contact_only_streak_retained": true
+}

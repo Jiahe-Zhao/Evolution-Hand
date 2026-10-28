@@ -1,0 +1,556 @@
+{
+  "rows": [
+    {
+      "hand": "ours",
+      "seed": 2028,
+      "before": 0,
+      "train_success": 0,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        0
+      ],
+      "mean_success": 0,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 27.623376846313477,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.010064840316772461,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 0,
+          "rejected_joint_samples": 0
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3840,
+        "resampled_episodes": 0,
+        "rejected_joint_samples": 0
+      },
+      "training_fps": 18774.35338349756,
+      "training_elapsed": 55.851510372012854,
+      "max_held_fraction": 0.0,
+      "last_std": [
+        0.9380846619606018,
+        1.0252984762191772
+      ],
+      "model": {
+        "observation_size": 388,
+        "action_size": 21,
+        "parameter_count": 59563,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "link_1_thumb_spread_joint",
+          "link_2_mcp_spread_joint",
+          "link_3_mcp_spread_joint",
+          "link_4_mcp_spread_joint",
+          "link_5_mcp_spread_joint",
+          "link_0_0_to_link_1_0",
+          "link_0_0_to_link_2_0",
+          "link_0_0_to_link_3_0",
+          "link_0_0_to_link_4_0",
+          "link_0_0_to_link_5_0",
+          "link_1_0_to_link_1_1",
+          "link_2_0_to_link_2_1",
+          "link_3_0_to_link_3_1",
+          "link_4_0_to_link_4_1",
+          "link_5_0_to_link_5_1",
+          "link_1_1_to_link_1_2",
+          "link_2_1_to_link_2_2",
+          "link_3_1_to_link_3_2",
+          "link_4_1_to_link_4_2",
+          "link_5_1_to_link_5_2",
+          "link_1_2_to_link_1_3"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    },
+    {
+      "hand": "shadow",
+      "seed": 2028,
+      "before": 0,
+      "train_success": 5,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        2
+      ],
+      "mean_success": 29,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 72.44347381591797,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.06867332756519318,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 73,
+          "rejected_joint_samples": 77
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3841,
+        "resampled_episodes": 130,
+        "rejected_joint_samples": 134
+      },
+      "training_fps": 20752.227694258236,
+      "training_elapsed": 50.52835806645453,
+      "max_held_fraction": 0.07244873046875,
+      "last_std": [
+        0.9713984131813049,
+        1.0124866962432861
+      ],
+      "model": {
+        "observation_size": 420,
+        "action_size": 18,
+        "parameter_count": 63461,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "robot0_WRJ1",
+          "robot0_WRJ0",
+          "robot0_FFJ3",
+          "robot0_MFJ3",
+          "robot0_RFJ3",
+          "robot0_LFJ4",
+          "robot0_THJ4",
+          "robot0_FFJ2",
+          "robot0_MFJ2",
+          "robot0_RFJ2",
+          "robot0_LFJ3",
+          "robot0_THJ3",
+          "robot0_FFJ1",
+          "robot0_MFJ1",
+          "robot0_RFJ1",
+          "robot0_LFJ2",
+          "robot0_THJ2",
+          "robot0_FFJ0",
+          "robot0_MFJ0",
+          "robot0_RFJ0",
+          "robot0_LFJ1",
+          "robot0_THJ1",
+          "robot0_LFJ0",
+          "robot0_THJ0"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    },
+    {
+      "hand": "ours",
+      "seed": 2029,
+      "before": 0,
+      "train_success": 0,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        0
+      ],
+      "mean_success": 0,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 23.71466636657715,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 5.726419871621147e-08,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 0,
+          "rejected_joint_samples": 0
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3840,
+        "resampled_episodes": 0,
+        "rejected_joint_samples": 0
+      },
+      "training_fps": 18452.53115238675,
+      "training_elapsed": 56.82559124007821,
+      "max_held_fraction": 0.0,
+      "last_std": [
+        0.9718305468559265,
+        1.02520751953125
+      ],
+      "model": {
+        "observation_size": 388,
+        "action_size": 21,
+        "parameter_count": 59563,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "link_1_thumb_spread_joint",
+          "link_2_mcp_spread_joint",
+          "link_3_mcp_spread_joint",
+          "link_4_mcp_spread_joint",
+          "link_5_mcp_spread_joint",
+          "link_0_0_to_link_1_0",
+          "link_0_0_to_link_2_0",
+          "link_0_0_to_link_3_0",
+          "link_0_0_to_link_4_0",
+          "link_0_0_to_link_5_0",
+          "link_1_0_to_link_1_1",
+          "link_2_0_to_link_2_1",
+          "link_3_0_to_link_3_1",
+          "link_4_0_to_link_4_1",
+          "link_5_0_to_link_5_1",
+          "link_1_1_to_link_1_2",
+          "link_2_1_to_link_2_2",
+          "link_3_1_to_link_3_2",
+          "link_4_1_to_link_4_2",
+          "link_5_1_to_link_5_2",
+          "link_1_2_to_link_1_3"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    },
+    {
+      "hand": "shadow",
+      "seed": 2029,
+      "before": 0,
+      "train_success": 0,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        0
+      ],
+      "mean_success": 3,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 92.5510025024414,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.07171427458524704,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 90,
+          "rejected_joint_samples": 92
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3840,
+        "resampled_episodes": 138,
+        "rejected_joint_samples": 140
+      },
+      "training_fps": 21461.746210696077,
+      "training_elapsed": 48.8579066041857,
+      "max_held_fraction": 0.013946533203125,
+      "last_std": [
+        0.9642951488494873,
+        1.0276515483856201
+      ],
+      "model": {
+        "observation_size": 420,
+        "action_size": 18,
+        "parameter_count": 63461,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "robot0_WRJ1",
+          "robot0_WRJ0",
+          "robot0_FFJ3",
+          "robot0_MFJ3",
+          "robot0_RFJ3",
+          "robot0_LFJ4",
+          "robot0_THJ4",
+          "robot0_FFJ2",
+          "robot0_MFJ2",
+          "robot0_RFJ2",
+          "robot0_LFJ3",
+          "robot0_THJ3",
+          "robot0_FFJ1",
+          "robot0_MFJ1",
+          "robot0_RFJ1",
+          "robot0_LFJ2",
+          "robot0_THJ2",
+          "robot0_FFJ0",
+          "robot0_MFJ0",
+          "robot0_RFJ0",
+          "robot0_LFJ1",
+          "robot0_THJ1",
+          "robot0_LFJ0",
+          "robot0_THJ0"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    },
+    {
+      "hand": "ours",
+      "seed": 2030,
+      "before": 0,
+      "train_success": 0,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        0
+      ],
+      "mean_success": 0,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 32.245452880859375,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.0020069272723048925,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 0,
+          "rejected_joint_samples": 0
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3840,
+        "resampled_episodes": 0,
+        "rejected_joint_samples": 0
+      },
+      "training_fps": 18530.717894941372,
+      "training_elapsed": 56.585826847702265,
+      "max_held_fraction": 0.0,
+      "last_std": [
+        0.9675326347351074,
+        1.0244097709655762
+      ],
+      "model": {
+        "observation_size": 388,
+        "action_size": 21,
+        "parameter_count": 59563,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "link_1_thumb_spread_joint",
+          "link_2_mcp_spread_joint",
+          "link_3_mcp_spread_joint",
+          "link_4_mcp_spread_joint",
+          "link_5_mcp_spread_joint",
+          "link_0_0_to_link_1_0",
+          "link_0_0_to_link_2_0",
+          "link_0_0_to_link_3_0",
+          "link_0_0_to_link_4_0",
+          "link_0_0_to_link_5_0",
+          "link_1_0_to_link_1_1",
+          "link_2_0_to_link_2_1",
+          "link_3_0_to_link_3_1",
+          "link_4_0_to_link_4_1",
+          "link_5_0_to_link_5_1",
+          "link_1_1_to_link_1_2",
+          "link_2_1_to_link_2_2",
+          "link_3_1_to_link_3_2",
+          "link_4_1_to_link_4_2",
+          "link_5_1_to_link_5_2",
+          "link_1_2_to_link_1_3"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    },
+    {
+      "hand": "shadow",
+      "seed": 2030,
+      "before": 0,
+      "train_success": 0,
+      "train_episodes": 768,
+      "sample_success": [
+        0,
+        0
+      ],
+      "mean_success": 0,
+      "physical": {
+        "episodes": 1024,
+        "max_digit_force_N": 31.89653968811035,
+        "max_speed_m_s": 0.0,
+        "max_limit_rad": 0.0683617889881134,
+        "physical_extrema_collected": true,
+        "reset_sampling": {
+          "episodes": 2048,
+          "resampled_episodes": 72,
+          "rejected_joint_samples": 73
+        },
+        "fresh_contact_fraction": 1.0
+      },
+      "reset_sampling": {
+        "episodes": 3840,
+        "resampled_episodes": 124,
+        "rejected_joint_samples": 125
+      },
+      "training_fps": 20979.223473210757,
+      "training_elapsed": 49.981639789417386,
+      "max_held_fraction": 0.002105712890625,
+      "last_std": [
+        0.9754770994186401,
+        1.019226312637329
+      ],
+      "model": {
+        "observation_size": 420,
+        "action_size": 18,
+        "parameter_count": 63461,
+        "architecture": [
+          64,
+          64
+        ],
+        "joint_names": [
+          "robot0_WRJ1",
+          "robot0_WRJ0",
+          "robot0_FFJ3",
+          "robot0_MFJ3",
+          "robot0_RFJ3",
+          "robot0_LFJ4",
+          "robot0_THJ4",
+          "robot0_FFJ2",
+          "robot0_MFJ2",
+          "robot0_RFJ2",
+          "robot0_LFJ3",
+          "robot0_THJ3",
+          "robot0_FFJ1",
+          "robot0_MFJ1",
+          "robot0_RFJ1",
+          "robot0_LFJ2",
+          "robot0_THJ2",
+          "robot0_FFJ0",
+          "robot0_MFJ0",
+          "robot0_RFJ0",
+          "robot0_LFJ1",
+          "robot0_THJ1",
+          "robot0_LFJ0",
+          "robot0_THJ0"
+        ],
+        "hand_structure_unchanged": true
+      },
+      "bc": 0,
+      "parent_loaded": false
+    }
+  ],
+  "wall_seconds": 673.1298773288727,
+  "queue": {
+    "started": 1793165586.0311172,
+    "plan": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ppo_queue.json",
+    "jobs": [
+      {
+        "job": {
+          "hand": "ours",
+          "mode": "train",
+          "name": "ours_ppo_2028",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2028,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+        },
+        "started": 1793165586.0311236,
+        "state": "completed",
+        "launcher_output": "1244077\n",
+        "launcher_error": "",
+        "pid": 1244077,
+        "finished": 1793165706.6492085
+      },
+      {
+        "job": {
+          "hand": "shadow",
+          "mode": "train",
+          "name": "shadow_ppo_2028",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2028,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+        },
+        "started": 1793165706.649395,
+        "state": "completed",
+        "launcher_output": "1246346\n",
+        "launcher_error": "",
+        "pid": 1246346,
+        "finished": 1793165817.1198215
+      },
+      {
+        "job": {
+          "hand": "ours",
+          "mode": "train",
+          "name": "ours_ppo_2029",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2029,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+        },
+        "started": 1793165817.1200795,
+        "state": "completed",
+        "launcher_output": "1247272\n",
+        "launcher_error": "",
+        "pid": 1247272,
+        "finished": 1793165937.669845
+      },
+      {
+        "job": {
+          "hand": "shadow",
+          "mode": "train",
+          "name": "shadow_ppo_2029",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2029,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+        },
+        "started": 1793165937.6707256,
+        "state": "completed",
+        "launcher_output": "1247761\n",
+        "launcher_error": "",
+        "pid": 1247761,
+        "finished": 1793166038.2046812
+      },
+      {
+        "job": {
+          "hand": "ours",
+          "mode": "train",
+          "name": "ours_ppo_2030",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2030,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/ours_shared_grid3.json"
+        },
+        "started": 1793166038.204871,
+        "state": "completed",
+        "launcher_output": "1247989\n",
+        "launcher_error": "",
+        "pid": 1247989,
+        "finished": 1793166158.729711
+      },
+      {
+        "job": {
+          "hand": "shadow",
+          "mode": "train",
+          "name": "shadow_ppo_2030",
+          "envs": 256,
+          "steps": 1048576,
+          "seed": 2030,
+          "manifest": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/branch_shadow_compare_20261028/shadow_shared_grid3.json"
+        },
+        "started": 1793166158.7300763,
+        "state": "completed",
+        "launcher_output": "1250966\n",
+        "launcher_error": "",
+        "pid": 1250966,
+        "finished": 1793166259.160764
+      }
+    ],
+    "state": "completed",
+    "finished": 1793166259.1609945
+  }
+}

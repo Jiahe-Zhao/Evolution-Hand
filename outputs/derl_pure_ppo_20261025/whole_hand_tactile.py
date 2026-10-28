@@ -24,7 +24,9 @@ class WholeHandTactile:
    self.views.append(v)
   self.groups=[]
   for name in self.names:
-   m=re.match(r'link_(\d+)_',name);self.groups.append(int(m[1]) if m and int(m[1])>0 else 0)
+   m=re.match(r'link_(\d+)_',name)
+   group=getattr(e,'tactile_body_groups',{}).get(name,int(m[1]) if m and int(m[1])>0 else 0)
+   self.groups.append(group)
   self.digits=sorted(set(self.groups)-{0});self.stamp=None
   shape=(self.n,len(self.names),len(objects),3)
   self.force=torch.zeros(shape,device=e.device);self.total=torch.zeros(shape[:2]+(3,),device=e.device)

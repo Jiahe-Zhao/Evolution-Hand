@@ -1,0 +1,17 @@
+{
+  "task": "branch",
+  "version": 4,
+  "whole_hand_tactile": true,
+  "goal_source": "native scene state and native success thresholds",
+  "goals": "branch center, contact opposition and stable hold duration",
+  "success": "native final event only; grasp milestone is not Strike success",
+  "shaping": "gamma*Phi(next)-Phi(current); terminal Phi=0",
+  "bc": false,
+  "observation_size": 420,
+  "action_size": 18,
+  "episode_steps": 1200,
+  "task_curriculum": true,
+  "hand_structure_unchanged": true,
+  "action_override": false,
+  "shaping_extra": "Continuous finger contact and opposing force feedback; no teacher action stopping"
+}

@@ -1,0 +1,195 @@
+{
+  "valid": [
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "collisions": {
+    "0": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_thproximal/collisions/robot0_C_thproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "1": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_thproximal/collisions/robot0_C_thproximal",
+      "/World/envs/env_0/Robot/robot0_thhub/collisions/robot0_V_thhub",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "2": [
+      "/World/envs/env_0/Robot/robot0_thproximal/collisions/robot0_C_thproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "7": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_thproximal/collisions/robot0_C_thproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "8": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_thproximal/collisions/robot0_C_thproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "9": [
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "14": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "15": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "16": [
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "21": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "22": [
+      "/World/envs/env_0/Robot/robot0_palm/collisions/robot0_C_palm0",
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfmetacarpal/collisions/robot0_C_lfmetacarpal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thmiddle/collisions/robot0_C_thmiddle",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "23": [
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "28": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "29": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "30": [
+      "/World/envs/env_0/Robot/robot0_thdistal/collisions/robot0_C_thdistal"
+    ],
+    "35": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal"
+    ],
+    "36": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal"
+    ],
+    "42": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_ffmiddle/collisions/robot0_C_ffmiddle",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal",
+      "/World/envs/env_0/Robot/robot0_lfmiddle/collisions/robot0_C_lfmiddle"
+    ],
+    "43": [
+      "/World/envs/env_0/Robot/robot0_ffproximal/collisions/robot0_C_ffproximal",
+      "/World/envs/env_0/Robot/robot0_mfproximal/collisions/robot0_C_mfproximal",
+      "/World/envs/env_0/Robot/robot0_rfproximal/collisions/robot0_C_rfproximal",
+      "/World/envs/env_0/Robot/robot0_lfproximal/collisions/robot0_C_lfproximal"
+    ]
+  }
+}

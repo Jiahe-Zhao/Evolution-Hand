@@ -1,0 +1,93 @@
+{
+  "mode": "validate",
+  "plan": {
+    "variant": "ours",
+    "condition": "shared anatomical grid 3; feasible for both in preflight",
+    "anatomical_offset": [
+      0.023,
+      -0.034999999999999996,
+      0.032
+    ],
+    "anatomical_rotation": [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "center_world": [
+      0.0020000338554382324,
+      -0.020000040531158447,
+      0.36800000071525574
+    ],
+    "quat_world": [
+      -0.7071067811865475,
+      0.0,
+      0.7071067811865477,
+      0.0
+    ],
+    "joint_names": [
+      "link_1_thumb_spread_joint",
+      "link_2_mcp_spread_joint",
+      "link_3_mcp_spread_joint",
+      "link_4_mcp_spread_joint",
+      "link_5_mcp_spread_joint",
+      "link_0_0_to_link_1_0",
+      "link_0_0_to_link_2_0",
+      "link_0_0_to_link_3_0",
+      "link_0_0_to_link_4_0",
+      "link_0_0_to_link_5_0",
+      "link_1_0_to_link_1_1",
+      "link_2_0_to_link_2_1",
+      "link_3_0_to_link_3_1",
+      "link_4_0_to_link_4_1",
+      "link_5_0_to_link_5_1",
+      "link_1_1_to_link_1_2",
+      "link_2_1_to_link_2_2",
+      "link_3_1_to_link_3_2",
+      "link_4_1_to_link_4_2",
+      "link_5_1_to_link_5_2",
+      "link_1_2_to_link_1_3"
+    ],
+    "joint_target": [
+      1.7453291416168213,
+      -0.08978112787008286,
+      0.16999998688697815,
+      -0.18494732677936554,
+      0.34732785820961,
+      0.1892186552286148,
+      1.0741841793060303,
+      1.313395380973816,
+      1.3517838716506958,
+      1.3600722551345825,
+      0.9919403195381165,
+      1.7499998807907104,
+      1.6150254011154175,
+      1.6165452003479004,
+      1.3706281185150146,
+      0.9835397601127625,
+      1.2974979877471924,
+      1.5699999332427979,
+      1.1426551342010498,
+      1.4530640840530396,
+      1.5574942827224731
+    ],
+    "search_candidate": 3,
+    "bc": false,
+    "diagnostic_script_only": true
+  },
+  "initial_clearance_margin_m": 0.0005,
+  "contact_freshness": "require a fresh all-clear frame after every reset",
+  "jitter_m": 0.002,
+  "scenario_rng": "SeedSequence(scene_seed,env_id,episode_counter,attempt); matched proposals, acceptance conditioned on per-hand geometric clearance; not exactly paired accepted states"
+}

@@ -1,0 +1,99 @@
+{
+  "mode": "validate",
+  "plan": {
+    "variant": "shadow",
+    "condition": "shared anatomical grid 3; feasible for both in preflight",
+    "anatomical_offset": [
+      0.023,
+      -0.034999999999999996,
+      0.032
+    ],
+    "anatomical_rotation": [
+      [
+        -0.9945864081382751,
+        0.10391328483819962,
+        1.6973656329355435e-06
+      ],
+      [
+        -0.10391328483819962,
+        -0.9945863485336304,
+        -3.473752713034628e-06
+      ],
+      [
+        1.3272076557768742e-06,
+        -3.6313256259745685e-06,
+        1.0
+      ]
+    ],
+    "center_world": [
+      -0.02626246213912964,
+      -0.35182952880859375,
+      0.4219987392425537
+    ],
+    "quat_world": [
+      -0.03678745977575528,
+      -0.7061485920969154,
+      -0.03678997520702441,
+      0.7061496628952378
+    ],
+    "joint_names": [
+      "robot0_WRJ1",
+      "robot0_WRJ0",
+      "robot0_FFJ3",
+      "robot0_MFJ3",
+      "robot0_RFJ3",
+      "robot0_LFJ4",
+      "robot0_THJ4",
+      "robot0_FFJ2",
+      "robot0_MFJ2",
+      "robot0_RFJ2",
+      "robot0_LFJ3",
+      "robot0_THJ3",
+      "robot0_FFJ1",
+      "robot0_MFJ1",
+      "robot0_RFJ1",
+      "robot0_LFJ2",
+      "robot0_THJ2",
+      "robot0_FFJ0",
+      "robot0_MFJ0",
+      "robot0_RFJ0",
+      "robot0_LFJ1",
+      "robot0_THJ1",
+      "robot0_LFJ0",
+      "robot0_THJ0"
+    ],
+    "joint_target": [
+      0.0,
+      0.0,
+      -0.32079651951789856,
+      -0.3487987220287323,
+      -0.0960526391863823,
+      0.0,
+      -1.0157020092010498,
+      1.3646070957183838,
+      1.5230244398117065,
+      1.4595447778701782,
+      0.09979629516601562,
+      0.6219369173049927,
+      1.5460807085037231,
+      1.3486608266830444,
+      1.5521119832992554,
+      1.3611317873001099,
+      -0.08644653111696243,
+      1.5709998607635498,
+      1.5399601459503174,
+      1.5709998607635498,
+      1.5709998607635498,
+      0.00622326647862792,
+      1.5709998607635498,
+      -0.4218270778656006
+    ],
+    "search_candidate": 3,
+    "bc": false,
+    "diagnostic_script_only": true
+  },
+  "initial_clearance_margin_m": 0.0005,
+  "contact_freshness": "require a fresh all-clear frame after every reset",
+  "jitter_m": 0.002,
+  "scenario_rng": "SeedSequence(scene_seed,env_id,episode_counter,attempt); matched proposals, acceptance conditioned on per-hand geometric clearance; not exactly paired accepted states"
+}

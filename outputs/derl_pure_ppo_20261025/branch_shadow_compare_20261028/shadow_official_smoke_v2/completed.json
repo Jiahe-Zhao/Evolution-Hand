@@ -1,0 +1,7 @@
+{
+  "status": "completed",
+  "official_task_smoke_only": true,
+  "steps": 1200,
+  "finite": true,
+  "peak_joint_velocity": 49.469818115234375
+}

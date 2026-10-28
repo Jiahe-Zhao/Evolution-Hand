@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "effective_settings": {},
+  "curriculum_stage": "stage2",
+  "task": "branch",
+  "changes": {},
+  "mechanical_urdf_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+  "implementation_sha256": "e46b011682d488c0767ef17bd62e9cb18b543d826658b6c8b904b3485b5f7eb6",
+  "success_thresholds_unchanged": true
+}
