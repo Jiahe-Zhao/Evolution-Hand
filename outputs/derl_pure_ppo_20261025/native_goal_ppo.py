@@ -79,6 +79,9 @@ def evaluate(env,net,rms,args,out,label):
  return row
 
 def run(env,args,out):
+ if os.environ.get("CONTACT_POLICY_AUDIT"):
+  from contact_policy_audit import run as audit
+  return audit(env,args,out)
  import shutil,hashlib
  source_files=['native_goal_ppo.py','native_goal_adapter.py','native_goal_worker.py','native_contact_hooks.py']
  if hasattr(env.raw,'whole_hand_tactile'):source_files.append('whole_hand_tactile.py')
