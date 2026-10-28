@@ -79,6 +79,9 @@ def evaluate(env,net,rms,args,out,label):
  return row
 
 def run(env,args,out):
+ if os.environ.get('FORAGE_POLICY_VIDEO'):
+  from forage_policy_video import record
+  return record(env,args,out)
  if os.environ.get("CONTACT_POLICY_AUDIT"):
   from contact_policy_audit import run as audit
   return audit(env,args,out)
