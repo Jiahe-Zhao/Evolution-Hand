@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "checks": {
+    "Cone_cfg.size": true,
+    "Cone_cfg.rigid_props": true,
+    "Cone_cfg.collision_props": true,
+    "Cone_cfg.mass_props": true,
+    "Cone_cfg.physics_material": true,
+    "strike_object_cfg.size": true,
+    "strike_object_cfg.rigid_props": true,
+    "strike_object_cfg.collision_props": true,
+    "strike_object_cfg.mass_props": true,
+    "strike_object_cfg.physics_material": true,
+    "current_grasp_and_filtered_impact": true,
+    "five_digit_contact_groups": true
+  },
+  "digit_groups": [
+    [
+      "robot0_thbase",
+      "robot0_thproximal",
+      "robot0_thhub",
+      "robot0_thmiddle",
+      "robot0_thdistal"
+    ],
+    [
+      "robot0_ffknuckle",
+      "robot0_ffproximal",
+      "robot0_ffmiddle",
+      "robot0_ffdistal"
+    ],
+    [
+      "robot0_mfknuckle",
+      "robot0_mfproximal",
+      "robot0_mfmiddle",
+      "robot0_mfdistal"
+    ],
+    [
+      "robot0_rfknuckle",
+      "robot0_rfproximal",
+      "robot0_rfmiddle",
+      "robot0_rfdistal"
+    ],
+    [
+      "robot0_lfmetacarpal",
+      "robot0_lfknuckle",
+      "robot0_lfproximal",
+      "robot0_lfmiddle",
+      "robot0_lfdistal"
+    ]
+  ],
+  "scope": "configuration and contact-predicate checks only; no loaded-scene or rollout claim"
+}

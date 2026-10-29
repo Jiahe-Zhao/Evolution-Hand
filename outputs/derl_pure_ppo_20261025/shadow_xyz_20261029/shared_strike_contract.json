@@ -1,0 +1,198 @@
+{
+  "Cone_cfg": {
+    "class_type": "isaaclab.assets.rigid_object.rigid_object:RigidObject",
+    "prim_path": "/World/envs/env_.*/Cone",
+    "spawn": {
+      "func": "isaaclab.sim.spawners.shapes.shapes:spawn_cuboid",
+      "visible": true,
+      "semantic_tags": null,
+      "copy_from_source": true,
+      "mass_props": {
+        "mass": 0.08,
+        "density": null
+      },
+      "rigid_props": {
+        "rigid_body_enabled": null,
+        "kinematic_enabled": false,
+        "disable_gravity": false,
+        "linear_damping": null,
+        "angular_damping": null,
+        "max_linear_velocity": null,
+        "max_angular_velocity": null,
+        "max_depenetration_velocity": 3.0,
+        "max_contact_impulse": null,
+        "enable_gyroscopic_forces": true,
+        "retain_accelerations": null,
+        "solver_position_iteration_count": 8,
+        "solver_velocity_iteration_count": 0,
+        "sleep_threshold": 0.005,
+        "stabilization_threshold": 0.0025
+      },
+      "collision_props": {
+        "collision_enabled": true,
+        "contact_offset": 0.001,
+        "rest_offset": 0.0,
+        "torsional_patch_radius": null,
+        "min_torsional_patch_radius": null
+      },
+      "activate_contact_sensors": true,
+      "visual_material_path": "material",
+      "visual_material": {
+        "func": "isaaclab.sim.spawners.materials.visual_materials:spawn_preview_surface",
+        "diffuse_color": [
+          0.8,
+          1.0,
+          0.0
+        ],
+        "emissive_color": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "roughness": 0.5,
+        "metallic": 0.0,
+        "opacity": 1.0
+      },
+      "physics_material_path": "material",
+      "physics_material": {
+        "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+        "static_friction": 3.0,
+        "dynamic_friction": 2.5,
+        "restitution": 0.0,
+        "improve_patch_friction": true,
+        "friction_combine_mode": "average",
+        "restitution_combine_mode": "average",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      },
+      "size": [
+        0.018,
+        0.018,
+        0.18
+      ]
+    },
+    "init_state": {
+      "pos": [
+        -0.05,
+        0.01,
+        0.35
+      ],
+      "rot": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lin_vel": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ang_vel": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "collision_group": 0,
+    "debug_vis": false
+  },
+  "strike_object_cfg": {
+    "class_type": "isaaclab.assets.rigid_object.rigid_object:RigidObject",
+    "prim_path": "/World/envs/env_.*/strike_object",
+    "spawn": {
+      "func": "isaaclab.sim.spawners.shapes.shapes:spawn_cuboid",
+      "visible": true,
+      "semantic_tags": null,
+      "copy_from_source": true,
+      "mass_props": {
+        "mass": null,
+        "density": 567.0
+      },
+      "rigid_props": {
+        "rigid_body_enabled": null,
+        "kinematic_enabled": true,
+        "disable_gravity": true,
+        "linear_damping": null,
+        "angular_damping": null,
+        "max_linear_velocity": null,
+        "max_angular_velocity": null,
+        "max_depenetration_velocity": 1000.0,
+        "max_contact_impulse": null,
+        "enable_gyroscopic_forces": true,
+        "retain_accelerations": null,
+        "solver_position_iteration_count": 8,
+        "solver_velocity_iteration_count": 0,
+        "sleep_threshold": 0.005,
+        "stabilization_threshold": 0.0025
+      },
+      "collision_props": {
+        "collision_enabled": true,
+        "contact_offset": 0.005,
+        "rest_offset": 0.001,
+        "torsional_patch_radius": null,
+        "min_torsional_patch_radius": null
+      },
+      "activate_contact_sensors": true,
+      "visual_material_path": "material",
+      "visual_material": null,
+      "physics_material_path": "material",
+      "physics_material": null,
+      "size": [
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "init_state": {
+      "pos": [
+        -0.05,
+        0.01,
+        0.1
+      ],
+      "rot": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lin_vel": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ang_vel": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "collision_group": 0,
+    "debug_vis": false
+  },
+  "success_distance": 0.045,
+  "success_force_threshold": 5.0,
+  "tool_finger_contact_force_threshold": 0.1,
+  "min_long_finger_contacts": 2,
+  "tool_grasp_hold_steps": 10,
+  "source": "/home/zjh/Evolution_PC/outputs/derl_pure_ppo_20261025/strike_50m_pair_20261029/ours/native_physics_config.json",
+  "source_sha256": "1ae059ecffe9a330b80fe85e0c70985df4d5f594c7cb6c0acc97ca887e826c11",
+  "tool_grasp_loss_grace_steps": 2,
+  "sim_dt": 0.008333333333333333,
+  "decimation": 2,
+  "episode_length_s": 20.0,
+  "support": {
+    "size": [
+      0.012,
+      0.012,
+      0.02
+    ],
+    "contact_offset": 0.001,
+    "rest_offset": 0.0,
+    "static_friction": 1.0,
+    "dynamic_friction": 1.0,
+    "kinematic": true,
+    "placement": "under actual reset tool bottom; no tool attachment"
+  },
+  "target_force_filter": "tool only, not net target force from hand/support"
+}
