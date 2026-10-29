@@ -23,7 +23,11 @@ def rigid_object_from_contract(row,prim_path):
  if not spawn['func'].endswith(':spawn_cuboid'):raise ValueError('Expected native cuboid, not legacy cone')
  cfg=sim.CuboidCfg(size=tuple(spawn['size']),rigid_props=sim.RigidBodyPropertiesCfg(**clean(spawn['rigid_props'])),collision_props=sim.CollisionPropertiesCfg(**clean(spawn['collision_props'])),mass_props=sim.MassPropertiesCfg(**clean(spawn['mass_props'])),activate_contact_sensors=spawn.get('activate_contact_sensors',False))
  if spawn.get('physics_material'):cfg.physics_material=sim.RigidBodyMaterialCfg(**clean(spawn['physics_material']))
- if spawn.get('visual_material'):cfg.visual_material=sim.PreviewSurfaceCfg(**clean(spawn['visual_material']))
+ if spawn.get('visual_material'):
+  material=clean(spawn['visual_material'])
+  for key in ('diffuse_color','emissive_color'):
+   if isinstance(material.get(key),list):material[key]=tuple(material[key])
+  cfg.visual_material=sim.PreviewSurfaceCfg(**material)
  return RigidObjectCfg(prim_path=prim_path,spawn=cfg,init_state=RigidObjectCfg.InitialStateCfg(**row['init_state']))
 
 def native_hit(held,holding_now,tip,target,filtered_tool_target_force,contract):
