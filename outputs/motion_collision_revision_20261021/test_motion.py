@@ -57,6 +57,11 @@ for i,name in enumerate(hand.joint_names):
     if 'mcp_spread' in name:spread[i]=min(.18,float(limits[i,1])*.7)
     elif 'thumb_spread' in name:spread[i]=min(.45,float(limits[i,1])*.5)
     else:curl[i]=min(1.2 if args.full_range else .45,float(limits[i,1])*(.8 if args.full_range else .35))
+
+for i,name in enumerate(hand.joint_names):
+    if name.endswith("wrist_roll"): spread[i]=0.6
+    elif name.endswith("wrist_pitch"): spread[i]=-0.45
+    elif name.endswith("wrist_yaw"): spread[i]=0.7
 targets.extend([spread,zero.clone(),curl,curl+spread*.5,zero.clone()])
 phase_duration=6. if args.full_range else 3.;total=(len(targets)-1)*phase_duration+1.;trace=[];peak_limit=peak_velocity=peak_target_velocity=peak_error=0.;last_target=zero.clone()
 for step in range(round(total/args.dt)):
