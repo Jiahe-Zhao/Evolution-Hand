@@ -1,0 +1,26 @@
+{
+  "source": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/matrix/baseline/right/urdf/current_agent.urdf",
+  "source_sha256": "6f50d6605c5b8d02b9967ebd1a6677f482bede92e05efb3d73607ad98119c760",
+  "diagnostic_urdf": "/home/zjh/Evolution_PC/outputs/motion_collision_revision_20261021/runtime/wrist_rpy_v2/assets/urdf/current_agent.urdf",
+  "wrist_joint_names": [
+    "diagnostic_wrist_x",
+    "diagnostic_wrist_y",
+    "diagnostic_wrist_z",
+    "diagnostic_wrist_roll",
+    "diagnostic_wrist_pitch",
+    "diagnostic_wrist_yaw"
+  ],
+  "morphology_genes_include_wrist": false,
+  "axes_frame": "original hand root local frame",
+  "added_moving_mass_kg": 0.3,
+  "translation_limits_m": [
+    -0.25,
+    0.25
+  ],
+  "rotation_limits_rad": [
+    -1.5708,
+    1.5708
+  ],
+  "rotation_effort_Nm": 20,
+  "rotation_velocity_rad_s": 2.0
+}
