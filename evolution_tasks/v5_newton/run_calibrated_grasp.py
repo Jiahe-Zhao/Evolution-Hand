@@ -11,6 +11,7 @@ p.add_argument('--fingertip-grid',action='store_true')
 p.add_argument('--wrist-test',action='store_true')
 p.add_argument('--wrist-free-space',action='store_true')
 p.add_argument('--skin-observation',action='store_true',help='Append 20 named metacarpal/digit state and tactile regions')
+p.add_argument("--candidate-manifest",type=Path)
 add_launcher_args(p);a=p.parse_args()
 import torch
 import isaaclab.sim as sim
@@ -19,8 +20,19 @@ from isaaclab_newton.physics import NewtonCfg,MJWarpSolverCfg
 from task_scene import create_scene_config
 from task_env import TaskEnv
 root=Path(__file__).resolve().parent;config=json.loads((root/'configs'/f'{a.task}.json').read_text())
+binding=None
+if a.candidate_manifest:
+    import hashlib
+    candidate=json.loads(a.candidate_manifest.read_text())
+    binding=candidate["tasks"][a.task]
+    files=binding["files"]
+    for name,cli in [("hand.usda",a.asset),("hand.urdf",a.urdf),("visual_binding.json",Path(a.asset).with_name("visual_binding.json"))]:
+        path=Path(cli).resolve()
+        if path!=Path(files[name]["path"]).resolve() or hashlib.sha256(path.read_bytes()).hexdigest()!=files[name]["sha256"]:
+            raise ValueError("Candidate asset mismatch: "+name)
+    config["candidate"]=candidate["candidate"]
 config["paired_v5"]=True
-config["left_pad"]=Path(a.asset).parent.name=="left"
+config["left_pad"]=(binding["side"]=="left" if binding else Path(a.asset).parent.name=="left")
 config["collision_asset"]=str(Path(a.asset).resolve())
 config['skin_observation']=True
 config['fingertip_grid']=a.fingertip_grid
