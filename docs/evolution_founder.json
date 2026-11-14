@@ -1,0 +1,21 @@
+{
+  "founder": "anatomical_surface_v5_wrist_tactile",
+  "asset_directory": "/home/zjh/newton_lab3_trial/migration/anatomical_surface_v5_wrist_tactile",
+  "artifacts": {
+    "hand.urdf": "8ab5b502de9770610f1d2a4d08ab7e3ff735c48c697bd5d4a478de811ef1e57f",
+    "hand.usda": "0cf6ce3aeb669a4bfd784dfb9fd118bc7bca3aa5158ce4750fdf29c3d84e8399",
+    "visual_binding.json": "64048038e0e48bc8a3ba82e93e5bc957141ff4b53f966e8ebcd679ba458d62ca"
+  },
+  "runtime": {
+    "run_calibrated_grasp.py": "2341cbf0efabf3fdd520ec226a4d0609da9b38d7be8743915c51201d6dd172ff",
+    "task_env.py": "d50114214931b3ec8c8124036fe39e97afb2d8e3bf0b688097d58cbe102c744b",
+    "controller_config.py": "1fe953be3818b61d0ebbddec485feb30b512a925e54704c699d7f871cbd9fa5a",
+    "fingertip_contact_grid.py": "e46b379d8d2712b8a4ac7167e8d7fff69926cf2e636c785b9ebcb2b882fce303",
+    "tactile_slip.py": "fe66a881a5d5de6d876b9632b9ea2dff484b2decdf4135e1e3ae5de8701200d0",
+    "calibrated_materials.py": "1275d4284b845cf5e03ccd3bcf7e488f8763cb0bf646c835b220a28308aa0760",
+    "dynamic_surface.py": "d781ad882f60f3d896ea6a7839549565f0c701d14a2ea5debec2bde03a015ff0",
+    "render_latest_grasp_demo.py": "31524039283d8728c0b2e01efe10b55b15fa9745990018fdadb08d5eac8689a8"
+  },
+  "supersedes": "paired_grid_wrist6/hand_111",
+  "four_task_accepted": false
+}
