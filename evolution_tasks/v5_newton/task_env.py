@@ -230,7 +230,11 @@ class TaskEnv:
         truncated=self.age>=self.max_steps;terminated=event|failed
         terminal_obs=self.observe().clone();done=terminated|truncated
         info=dict(episode_success=event.clone(),terminal_observation=terminal_obs,held=self.held.clone())
-        self.reset(done.nonzero().flatten())
+        if getattr(self,"record_terminal_evidence",False):
+            info["physics"]=dict(age=self.age.clone(),streak=self.streak.clone(),hold_s=self.hold.clone(),
+                seen=self.seen.clone(),force=self.tactile.digit_forces().clone(),
+                objects={name:self.pose(name).clone() for name in self.object_names})
+        if done.any():self.reset(done.nonzero().flatten())
         return self.observe(),reward,terminated,truncated,info
     def compute_reward(self):
         n=self.num_envs;zero=torch.zeros(n,device=self.device,dtype=torch.bool)

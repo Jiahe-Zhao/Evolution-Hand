@@ -66,6 +66,10 @@ with launch_simulation(scfg,a):
     from isaaclab_newton.physics import NewtonManager
     (out/'backend_materials.json').write_text(json.dumps(verify_backend(NewtonManager.get_model(),a.task),indent=2))
     env=TaskEnv(ctx,scene,config,rows,objects,targets,a.seed,a.urdf)
+    if __import__("os").environ.get("V5_TERMINAL_TRIAL")=="1":
+        from terminal_probe import run as verify_terminal
+        verify_terminal(env,out)
+        env.reset()
     if any(__import__("os").environ.get(k)=="1" for k in ("V5_CONTACT_AB","V5_WRIST_AB")):
         from contact_ab import run as contact_probe
         (out/"contact_ab.json").write_text(json.dumps(contact_probe(env),indent=2))
