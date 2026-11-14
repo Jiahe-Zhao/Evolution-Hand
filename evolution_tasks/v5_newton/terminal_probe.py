@@ -3,6 +3,7 @@ import json,torch
 from frame_math import inverse_rotate_xyzw
 def run(e,out):
     e.record_terminal_evidence=True
+    if e.skin_observation is not None:e.skin_observation.inspect_raw=True
     e.reset()
     ids=torch.arange(e.num_envs,device=e.device)
     lo,hi=e.limits[e.fids].T;initial=e.q0[:,e.fids].clone()
@@ -29,10 +30,14 @@ def run(e,out):
             delta=torch.where(e.held[:,None],dest-obj,delta)
         wrist=(e.wrist+.4*inverse_rotate_xyzw(mount,delta)).clamp(-.12,.12)
         a=torch.zeros_like(e.last_action);a[:,:len(lo)]=2*(q-lo)/(hi-lo)-1;a[:,len(lo):len(lo)+3]=wrist/.12
-        _,r,term,trunc,info=e.step(a);success=info['episode_success'];seen|=success;peak=torch.maximum(peak,e.streak)
+        _,r,term,trunc,info=e.step(a);success=info['episode_success'];seen|=success;peak=torch.maximum(peak,info["physics"]["streak"])
         if i%30==0 or (term|trunc).any():
             rows.append(dict(step=i,reward=r.tolist(),success=success.tolist(),terminated=term.tolist(),truncated=trunc.tolist(),forces_before=force.tolist(),peak_streak=peak.tolist()))
             (out/'terminal_trial.json').write_text(json.dumps(dict(task=e.task,steps=i+1,successes=seen.tolist(),samples=rows)))
+        if e.task=="strike" and term.any():
+            pos=info["physics"]["objects"]["Cone"][:,:3]-e.origins
+            xy=(pos[:,:2]-e.tensor(e.native["target_position"])[:2]).norm(dim=-1)
+            (out/"strike_terminal.json").write_text(json.dumps(dict(step=i+1,pos=pos.tolist(),xy=xy.tolist(),held=info["held"].tolist(),force=info["physics"]["force"].tolist(),outside_streak=info["physics"]["outside_streak"].tolist())))
         if success.any():
             physics=info["physics"]
             events=[dict(environment=k,step=i,reward=r[k].item(),terminated=term[k].item(),truncated=trunc[k].item(),
