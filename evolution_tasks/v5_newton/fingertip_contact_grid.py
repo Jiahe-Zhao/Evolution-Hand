@@ -61,7 +61,7 @@ class FingertipContactGrid:
                 tip=torch.tensor(self.tipids,device=e.device)[f]
                 pose=self.env.hand.data.body_link_pose_w.torch[e,tip]
                 local_n=inverse_rotate_xyzw(pose[:,3:],normal)
-                pad=(p[:,0]<0)&(local_n[:,0].abs()>.5)&(fn>0)
+                pad=((p[:,0]>0) if self.env.config.get("left_pad") else (p[:,0]<0))&(local_n[:,0].abs()>.5)&(fn>0)
                 e=e[pad];f=f[pad];p=p[pad];pose=pose[pad];tip=tip[pad];normal=normal[pad];fn=fn[pad];ft=ft[pad]
                 if len(e):
                     other_id=other_id[pad]

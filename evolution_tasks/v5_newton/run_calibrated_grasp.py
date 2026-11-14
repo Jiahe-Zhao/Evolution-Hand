@@ -20,6 +20,8 @@ from task_scene import create_scene_config
 from task_env import TaskEnv
 root=Path(__file__).resolve().parent;config=json.loads((root/'configs'/f'{a.task}.json').read_text())
 config["paired_v5"]=True
+config["left_pad"]=Path(a.asset).parent.name=="left"
+config["collision_asset"]=str(Path(a.asset).resolve())
 config['skin_observation']=True
 config['fingertip_grid']=a.fingertip_grid
 config['physics_dt']=1/480;config['decimation']=int(480/a.control_hz);config['control_dt']=1/a.control_hz
@@ -52,6 +54,13 @@ with launch_simulation(scfg,a):
     from isaaclab_newton.physics import NewtonManager
     (out/'backend_materials.json').write_text(json.dumps(verify_backend(NewtonManager.get_model(),a.task),indent=2))
     env=TaskEnv(ctx,scene,config,rows,objects,targets,a.seed,a.urdf)
+    if any(__import__("os").environ.get(k)=="1" for k in ("V5_CONTACT_AB","V5_WRIST_AB")):
+        from contact_ab import run as contact_probe
+        (out/"contact_ab.json").write_text(json.dumps(contact_probe(env),indent=2))
+        env.reset()
+    if __import__("os").environ.get("V5_WRIST_AB")=="1":
+        from probe_pair import wrist
+        (out/"wrist_ab.json").write_text(json.dumps(wrist(env)))
     import numpy as np
     model=NewtonManager.get_model()
     masses=model.body_mass.numpy();inertias=model.body_inertia.numpy()
