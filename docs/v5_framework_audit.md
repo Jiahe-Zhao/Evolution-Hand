@@ -13,3 +13,5 @@
 - framework01_211_grasp：当前落盘 306 步，尚无新终局或异常栈。
 - framework01_111_branch：当前落盘 271 步，尚无新终局或异常栈。
 旧 branch 第 450 步：env 0 成功、terminated=true、truncated=false、奖励 10.440855；旧连续计数为 reset 后读取，不能替代终局快照。旧 grasp 只保留了集合断言，无法从历史文件判定第一个非有限字段。
+
+111/branch 重放完成：env 0 第 450 步正常成功终止（未超时），reset 前 streak=15，五指接触力 4.565/8.142/10.355/9.445/12.938 N，当步奖励 10.415128。原始快照见 [终局证据](v5_branch111_terminal_evidence.json)。211/grasp 至第 1300 步尚未复现旧异常，尚不能归因。
