@@ -196,6 +196,7 @@ class TaskEnv:
         self.last_action=action.clamp(-1,1).clone();lo=self.limits[self.fids,0];hi=self.limits[self.fids,1]
         desired=lo+(self.last_action[:,:len(self.fids)]+1)*.5*(hi-lo)
         speed=.25 if self.task=='grasp' else .45
+        if self.fingertip_grid is not None:self.fingertip_grid.begin_interval()
         for _ in range(self.config['decimation']):
             self.target[:,self.fids]+=(desired-self.target[:,self.fids]).clamp(-speed*self.physics_dt,speed*self.physics_dt)
             if self.wids:
@@ -219,8 +220,11 @@ class TaskEnv:
                     mass=cfg['mass_props']['mass'];force=-mass*damping*self.velocity(name)[:,:3,None].transpose(1,2)
                     self.scene[name].set_external_force_and_torque(force,torch.zeros_like(force),is_global=True)
             self.scene.write_data_to_sim();self.ctx.step(render=False);self.scene.update(self.physics_dt)
+            if self.fingertip_grid is not None:self.fingertip_grid.add_substep()
+            if getattr(self,"contact_trace",None) is not None:
+                self.contact_trace.append(self.fingertip_grid.raw_sample())
         self.tactile.enabled[:]=True
-        if self.fingertip_grid is not None:self.fingertip_grid.sample()
+        if self.fingertip_grid is not None:self.fingertip_grid.finish_interval(self.config['decimation'])
         self.age+=1
         reward,event,failed=self.compute_reward()
         truncated=self.age>=self.max_steps;terminated=event|failed

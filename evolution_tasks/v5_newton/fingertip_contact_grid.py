@@ -13,7 +13,7 @@ class FingertipContactGrid:
     def __init__(self, env):
         from isaaclab_newton.physics import NewtonManager
         self.manager=NewtonManager;self.env=env;self.model=NewtonManager.get_model()
-        self.detector=SlipDetector(dt=env.dt,grid_mm=1.)
+        self.detector=SlipDetector(dt=env.physics_dt,grid_mm=1.)
         self.size=32;self.pitch=.001
         self.tipids=[env.hand.body_names.index(f'link_{d}_3') for d in range(1,6)]
         body=self.model.shape_body.numpy();labels=self.model.shape_label
@@ -37,6 +37,34 @@ class FingertipContactGrid:
     def reset(self, ids):
         for x in [self.grid,self.slip,self.warning,self.speed,self.contact_count,self.total_force,self.dropped_force]:x[ids]=0
         self.detector.reset(ids)
+
+    def begin_interval(self):
+        self.acc={k:torch.zeros_like(getattr(self,k)) for k in ("grid","total_force","dropped_force","contact_count","speed","slip","warning")}
+
+    def add_substep(self):
+        self.sample()
+        for k,v in self.acc.items():
+            x=getattr(self,k)
+            if k in ("slip","warning"):v.logical_or_(x)
+            elif k=="speed":torch.maximum(v,x,out=v)
+            else:v.add_(x)
+
+    def finish_interval(self,count):
+        for k,v in self.acc.items():
+            if k in ("grid","total_force","dropped_force"):v.div_(count)
+            getattr(self,k).copy_(v)
+        assert torch.allclose(self.grid.sum((-1,-2))+self.dropped_force,self.total_force,atol=1e-5,rtol=1e-4)
+
+    def raw_sample(self):
+        c=self.manager.get_contacts();n=int(wp.to_torch(c.rigid_contact_count)[0])
+        a=self.meta[wp.to_torch(c.rigid_contact_shape0)[:n].long()]
+        b=self.meta[wp.to_torch(c.rigid_contact_shape1)[:n].long()]
+        valid=(a[:,0]>=0)&(a[:,0]==b[:,0])
+        selected=valid&(((a[:,1]==0)&(b[:,2]>0))|((b[:,1]==0)&(a[:,2]>0)))
+        load=(wp.to_torch(c.force)[:n,:3]*wp.to_torch(c.rigid_contact_normal)[:n]).sum(-1).abs()
+        out=torch.zeros(self.env.num_envs,device=load.device)
+        out.scatter_add_(0,a[selected,0],load[selected])
+        return out.tolist()
 
     def sample(self):
         c=self.manager.get_contacts();count=int(wp.to_torch(c.rigid_contact_count)[0])
@@ -62,6 +90,8 @@ class FingertipContactGrid:
                 pose=self.env.hand.data.body_link_pose_w.torch[e,tip]
                 local_n=inverse_rotate_xyzw(pose[:,3:],normal)
                 pad=((p[:,0]>0) if self.env.config.get("left_pad") else (p[:,0]<0))&(local_n[:,0].abs()>.5)&(fn>0)
+                if getattr(self.env,"contact_trace",None) is not None:
+                    self.env.filter_trace.append(dict(env=e.tolist(),digit=f.tolist(),x=p[:,0].tolist(),nx=local_n[:,0].tolist(),fn=fn.tolist(),accepted=pad.tolist()))
                 e=e[pad];f=f[pad];p=p[pad];pose=pose[pad];tip=tip[pad];normal=normal[pad];fn=fn[pad];ft=ft[pad]
                 if len(e):
                     other_id=other_id[pad]
