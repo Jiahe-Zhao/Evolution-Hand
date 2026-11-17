@@ -1,0 +1,613 @@
+<robot name="v6_1_palm_skeleton">
+  <link name="link_0_0">
+    <inertial>
+      <origin xyz="0.0 1.5544763013660075e-19 0.0175" rpy="0 0 0" />
+      <mass value="0.016584660957464963" />
+      <inertia ixx="3.7047370331850545e-06" ixy="-9.478111185503441e-25" ixz="7.582488948402753e-24" iyy="3.7047370331850545e-06" iyz="2.9950831346190885e-23" izz="7.782522108814911e-07" />
+    </inertial>
+  </link>
+  <link name="link_palm">
+    <inertial>
+      <origin xyz="0.0 0.0 0.028999999999999998" rpy="0 0 0" />
+      <mass value="0.05103999624967584" />
+      <inertia ixx="1.600954459083169e-05" ixy="0.0" ixz="0.0" iyy="2.1113543987632717e-05" iyz="-2.426396463488881e-22" izz="8.50666566133504e-06" />
+    </inertial>
+  </link>
+  <joint name="link_0_0_to_link_palm" type="fixed">
+    <parent link="link_0_0" />
+    <child link="link_palm" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+  <link name="diagnostic_world">
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="diagnostic_stage_x">
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="diagnostic_stage_y">
+    <inertial>
+      <mass value="0.05" />
+      <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="diagnostic_wrist_x" type="prismatic">
+    <parent link="diagnostic_world" />
+    <child link="diagnostic_stage_x" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.25" upper="0.25" effort="100" velocity="0.02" />
+  </joint>
+  <joint name="diagnostic_wrist_y" type="prismatic">
+    <parent link="diagnostic_stage_x" />
+    <child link="diagnostic_stage_y" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.25" upper="0.25" effort="100" velocity="0.02" />
+  </joint>
+  <joint name="diagnostic_wrist_z" type="prismatic">
+    <parent link="diagnostic_stage_y" />
+    <child link="wrist_translation_end" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.25" upper="0.25" effort="100" velocity="0.02" />
+  </joint>
+  <link name="wrist_translation_end">
+    <inertial>
+      <mass value=".02" />
+      <inertia ixx="8e-7" iyy="8e-7" izz="8e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="wrist_roll_link">
+    <inertial>
+      <mass value=".02" />
+      <inertia ixx="8e-7" iyy="8e-7" izz="8e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <link name="wrist_pitch_link">
+    <inertial>
+      <mass value=".02" />
+      <inertia ixx="8e-7" iyy="8e-7" izz="8e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="wrist_roll" type="revolute">
+    <parent link="wrist_translation_end" />
+    <child link="wrist_roll_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-3.141592653589793" upper="3.141592653589793" effort="2" velocity="1" />
+  </joint>
+  <joint name="wrist_pitch" type="revolute">
+    <parent link="wrist_roll_link" />
+    <child link="wrist_pitch_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-3.141592653589793" upper="3.141592653589793" effort="2" velocity="1" />
+  </joint>
+  <joint name="wrist_yaw" type="revolute">
+    <parent link="wrist_pitch_link" />
+    <child link="link_0_0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.141592653589793" upper="3.141592653589793" effort="2" velocity="1" />
+  </joint>
+  <link name="link_1_0">
+    <inertial>
+      <origin xyz="0 0 0.0225" rpy="0 0 0" />
+      <mass value="0.0024881392799999996" />
+      <inertia ixx="4.298260606199999e-07" iyy="4.298260606199999e-07" izz="1.9905114239999995e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0225" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.045" radius="0.004" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0225" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.045" radius="0.004" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arch_1" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_1_0" />
+    <origin xyz="-0.012 0 -0.011" rpy="0 2.356194490192345 0" />
+    <axis xyz="-0.7071067811865475 0 0.7071067811865476" /><limit lower="-.16" upper=".72" effort="1" velocity="3" /></joint>
+  <link name="link_1_1">
+    <inertial>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <mass value="0.0009908323532800002" />
+      <inertia ixx="6.727091123869015e-08" iyy="6.727091123869015e-08" izz="5.073061648793601e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.028" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.028" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_1_flex_1" type="revolute">
+    <parent link="link_1_0" />
+    <child link="link_1_1" />
+    <origin xyz="0 0 0.045" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_1_2">
+    <inertial>
+      <origin xyz="0 0 0.0105" rpy="0 0 0" />
+      <mass value="0.0007431242649600001" />
+      <inertia ixx="2.9212214855577606e-08" iyy="2.9212214855577606e-08" izz="3.8047962365952e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0105" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.021" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0105" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.021" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_1_flex_2" type="revolute">
+    <parent link="link_1_1" />
+    <child link="link_1_2" />
+    <origin xyz="0 0 0.028" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="tip_1" />
+  <joint name="tip_1_marker" type="fixed">
+    <parent link="link_1_2" />
+    <child link="tip_1" />
+    <origin xyz="0 0 0.021" rpy="0 0 0" />
+  </joint>
+  <link name="link_2_0">
+    <inertial>
+      <origin xyz="0 0 0.031" rpy="0 0 0" />
+      <mass value="0.0034281030079999996" />
+      <inertia ixx="1.1118480755946664e-06" iyy="1.1118480755946664e-06" izz="2.7424824063999996e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.031" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.062" radius="0.004" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.031" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.062" radius="0.004" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arch_2" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_2_0" />
+    <origin xyz="-0.012 0 -0.006" rpy="0 1.7453292519943295 0" />
+  <axis xyz="-0.3420201433256687 0 0.9396926207859084" /><limit lower="-.16" upper=".72" effort="1" velocity="3" /></joint>
+  <link name="link_2_1">
+    <inertial>
+      <origin xyz="0 0 0.0195" rpy="0 0 0" />
+      <mass value="0.0013800879206400001" />
+      <inertia ixx="1.7845916901795842e-07" iyy="1.7845916901795842e-07" izz="7.066050153676801e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0195" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.039" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0195" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.039" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_2_flex_1" type="revolute">
+    <parent link="link_2_0" />
+    <child link="link_2_1" />
+    <origin xyz="0 0 0.062" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_2_2">
+    <inertial>
+      <origin xyz="0 0 0.012" rpy="0 0 0" />
+      <mass value="0.00084928487424" />
+      <inertia ixx="4.2939843241574404e-08" iyy="4.2939843241574404e-08" izz="4.3483385561088e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.012" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.024" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.012" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.024" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_2_flex_2" type="revolute">
+    <parent link="link_2_1" />
+    <child link="link_2_2" />
+    <origin xyz="0 0 0.039" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_2_3">
+    <inertial>
+      <origin xyz="0 0 0.0085" rpy="0 0 0" />
+      <mass value="0.00060157678592" />
+      <inertia ixx="1.6028010832861867e-08" iyy="1.6028010832861867e-08" izz="3.0800731439104e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0085" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.017" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0085" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.017" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_2_flex_3" type="revolute">
+    <parent link="link_2_2" />
+    <child link="link_2_3" />
+    <origin xyz="0 0 0.024" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="tip_2" />
+  <joint name="tip_2_marker" type="fixed">
+    <parent link="link_2_3" />
+    <child link="tip_2" />
+    <origin xyz="0 0 0.017" rpy="0 0 0" />
+  </joint>
+  <link name="link_3_0">
+    <inertial>
+      <origin xyz="0 0 0.033" rpy="0 0 0" />
+      <mass value="0.0036492709439999997" />
+      <inertia ixx="1.3392824364480002e-06" iyy="1.3392824364480002e-06" izz="2.9194167551999997e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.033" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.066" radius="0.004" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.033" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.066" radius="0.004" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arch_3" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_3_0" />
+    <origin xyz="-0.012 0 0.006" rpy="0 1.5707963267948966 0" />
+  <axis xyz="-0.30901699437494734 0 0.9510565162951536" /><limit lower="-.16" upper=".72" effort="1" velocity="3" /></joint>
+  <link name="link_3_1">
+    <inertial>
+      <origin xyz="0 0 0.022" rpy="0 0 0" />
+      <mass value="0.00155702226944" />
+      <inertia ixx="2.5518556981275307e-07" iyy="2.5518556981275307e-07" izz="7.9719540195328e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.022" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.044" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.022" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.044" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_3_flex_1" type="revolute">
+    <parent link="link_3_0" />
+    <child link="link_3_1" />
+    <origin xyz="0 0 0.066" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_3_2">
+    <inertial>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <mass value="0.0009908323532800002" />
+      <inertia ixx="6.727091123869015e-08" iyy="6.727091123869015e-08" izz="5.073061648793601e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.028" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.014" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.028" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_3_flex_2" type="revolute">
+    <parent link="link_3_1" />
+    <child link="link_3_2" />
+    <origin xyz="0 0 0.044" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_3_3">
+    <inertial>
+      <origin xyz="0 0 0.0095" rpy="0 0 0" />
+      <mass value="0.00067235052544" />
+      <inertia ixx="2.1947762318779737e-08" iyy="2.1947762318779737e-08" izz="3.4424346902528e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0095" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.019" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0095" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.019" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_3_flex_3" type="revolute">
+    <parent link="link_3_2" />
+    <child link="link_3_3" />
+    <origin xyz="0 0 0.028" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="tip_3" />
+  <joint name="tip_3_marker" type="fixed">
+    <parent link="link_3_3" />
+    <child link="tip_3" />
+    <origin xyz="0 0 0.019" rpy="0 0 0" />
+  </joint>
+  <link name="link_4_0">
+    <inertial>
+      <origin xyz="0 0 0.0305" rpy="0 0 0" />
+      <mass value="0.0033728110239999998" />
+      <inertia ixx="1.0593437291213333e-06" iyy="1.0593437291213333e-06" izz="2.6982488191999995e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0305" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.061" radius="0.004" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0305" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.061" radius="0.004" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arch_4" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_4_0" />
+    <origin xyz="-0.012 0 0.017" rpy="0 1.4486232791552935 0" />
+    <axis xyz="-0.35836794954530027 0 0.9335804264972017" /><limit lower="-.16" upper=".72" effort="1" velocity="3" /></joint>
+  <link name="link_4_1">
+    <inertial>
+      <origin xyz="0 0 0.0205" rpy="0 0 0" />
+      <mass value="0.0014508616601600001" />
+      <inertia ixx="2.069557434107563e-07" iyy="2.069557434107563e-07" izz="7.428411700019201e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.0205" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.041" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0205" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.041" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_4_flex_1" type="revolute">
+    <parent link="link_4_0" />
+    <child link="link_4_1" />
+    <origin xyz="0 0 0.061" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_4_2">
+    <inertial>
+      <origin xyz="0 0 0.013" rpy="0 0 0" />
+      <mass value="0.00092005861376" />
+      <inertia ixx="5.418531862637226e-08" iyy="5.418531862637226e-08" izz="4.7107001024512e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.013" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.026" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.013" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.026" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_4_flex_2" type="revolute">
+    <parent link="link_4_1" />
+    <child link="link_4_2" />
+    <origin xyz="0 0 0.041" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_4_3">
+    <inertial>
+      <origin xyz="0 0 0.009" rpy="0 0 0" />
+      <mass value="0.00063696365568" />
+      <inertia ixx="1.8828645661900803e-08" iyy="1.8828645661900803e-08" izz="3.2612539170816003e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.009" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.018" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.009" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.018" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_4_flex_3" type="revolute">
+    <parent link="link_4_2" />
+    <child link="link_4_3" />
+    <origin xyz="0 0 0.026" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="tip_4" />
+  <joint name="tip_4_marker" type="fixed">
+    <parent link="link_4_3" />
+    <child link="tip_4" />
+    <origin xyz="0 0 0.018" rpy="0 0 0" />
+  </joint>
+  <link name="link_5_0">
+    <inertial>
+      <origin xyz="0 0 0.026" rpy="0 0 0" />
+      <mass value="0.0028751831679999997" />
+      <inertia ixx="6.593753398613331e-07" iyy="6.593753398613331e-07" izz="2.3001465343999996e-08" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.026" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.052" radius="0.004" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.026" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.052" radius="0.004" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arch_5" type="revolute">
+    <parent link="link_palm" />
+    <child link="link_5_0" />
+    <origin xyz="-0.012 0 0.026" rpy="0 1.2740903539558606 0" />
+    <axis xyz="-0.4383711467890775 0 0.8987940462991669" /><limit lower="-.16" upper=".72" effort="1" velocity="3" /></joint>
+  <link name="link_5_1">
+    <inertial>
+      <origin xyz="0 0 0.016" rpy="0 0 0" />
+      <mass value="0.00113237983232" />
+      <inertia ixx="9.952863806204587e-08" iyy="9.952863806204587e-08" izz="5.7977847414784e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.016" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.016" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.032" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_5_flex_1" type="revolute">
+    <parent link="link_5_0" />
+    <child link="link_5_1" />
+    <origin xyz="0 0 0.052" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_5_2">
+    <inertial>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <mass value="0.0007077373952000001" />
+      <inertia ixx="2.540305423837867e-08" iyy="2.540305423837867e-08" izz="3.6236154634240004e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.02" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.01" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.02" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_5_flex_2" type="revolute">
+    <parent link="link_5_1" />
+    <child link="link_5_2" />
+    <origin xyz="0 0 0.032" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="link_5_3">
+    <inertial>
+      <origin xyz="0 0 0.008" rpy="0 0 0" />
+      <mass value="0.00056618991616" />
+      <inertia ixx="1.352816439678293e-08" iyy="1.352816439678293e-08" izz="2.8988923707392e-09" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.008" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.016" radius="0.0032" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.008" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.016" radius="0.0032" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="digit_5_flex_3" type="revolute">
+    <parent link="link_5_2" />
+    <child link="link_5_3" />
+    <origin xyz="0 0 0.02" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="0" upper="1.5" effort="0.8" velocity="2" />
+  </joint>
+  <link name="tip_5" />
+  <joint name="tip_5_marker" type="fixed">
+    <parent link="link_5_3" />
+    <child link="tip_5" />
+    <origin xyz="0 0 0.016" rpy="0 0 0" />
+  </joint>
+</robot>
