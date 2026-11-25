@@ -33,9 +33,12 @@ def short(label):
 class PebbleRuntime(HandleRuntime):
     """HandleRuntime with the tray and three free pebbles instead of the vessel."""
 
-    def __init__(self, *args, object_xml=None, **kwargs):
+    def __init__(self, *args, object_xml=None, apply_pair_overrides=True, **kwargs):
         self.object_xml = Path(object_xml) if object_xml is not None else OBJECT_XML
         super().__init__(*args, **kwargs)
+        if apply_pair_overrides:
+            from pebble_pairs import install_pair_overrides
+            install_pair_overrides(self)
 
     def _add_brush(self, b):
         if not self.object_xml.exists():

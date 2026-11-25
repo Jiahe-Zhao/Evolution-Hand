@@ -1,73 +1,23 @@
-# AX50 场景07（石子）资产检查与适配准备
+# AX50 场景07：捏取石子
 
-范围仅限资产提取与 CPU 导入/静态检查。本目录不产生抓取结论：**能导入不等于操作通过**。
+## 2026-11-25 接触处理与捏取启动
 
-## 命令
+状态：接触参数覆盖已实测通过；顺序屈指预备动作完成。尚未实际夹起目标石，不计07通过。
 
-使用 `/home/zjh/Evolution_PC_flip/IsaacLab3/.venv/bin/python`（Python 3.12.14，Warp 1.17.0）。
+- 原运行时实际保留225个显式接触对；AX50采用Newton接触后，原21个对象接触对虽在模型中，参数没有自动用于外部接触。新增仅scene07的实例级GPU覆盖，在转换接触后、求解前按MuJoCo geom ID写入原pair friction/solref/solimp/condim。原204个旧手规则统一映射为246个AX50有效刚体geom与目标石两形状的492条规则；加原21条，共513条。没有统一提高所有物体摩擦，没有修改公共Newton、物体形状、质量或碰撞过滤。
+- 实际GPU接触验证通过：foot/tray摩擦[1,1,.003,.0001,.0001]、solref[.009,1]；stone/tray摩擦[.9,.9,.003,.0001,.0001]、solref[.01,1]。石体接触测试采用单独旋转石子的诊断初态，未修改原任务初态，不计捏取。手与石的规则映射完成，真实手石接触仍待后续验证。软垫保留其原耦合参数，不宣称等价旧刚性手。
+- 非流形警告来自AX50 pads四面体表面：6条边各有4个相邻面。逐条确认模型保留全部边、顶点到边邻接、4个面，且6条边弯曲刚度和阻尼均0；不存在因任取两面而产生的弯曲力。本次不重网格、不删接触、不屏蔽警告；警告仍可见，表面拓扑本身仍非流形，后续接触试验继续关注该区域。
+- 修复开启后完成0.9秒空中拇指先摆姿、食指后屈曲及保持，100 Hz记录状态均有限，末态最大关节目标误差0.000383 rad（0.0219°），最大软粒子速度0.1956 m/s；两邻石全程采样最大位移0.1287/0.1007 mm。手远离物体，以上不是夹持或任务验收。
+- CPU首个对捏候选间距20.303 mm，但掌弓、拇指转动靠近限位，未执行下降。下一步重新选择实际指腹接触点和无顶限位的对捏姿态，再垂直接近、夹持和提起。AX50拇指末节为link_1_2，食指末节link_2_3；必须按解剖末节映射原标准，不能机械复用旧手拇指link_1_3名字。
 
-```bash
-# 1. 从 outputs/nov20/pebble.xml 提取原盘+三石，生成 object.xml 与审计 JSON（CPU）
-python scripts/nov20/ax50_pebble07/inspect_asset.py
+证据目录outputs/nov20/ax50_pebble07：pair_verification.json、verified_topology.json、preshape_fixed_result.json、preshape_fixed_trace.csv、preshape_fixed.npz、pinch_candidate.json。GPU对照切换开关时须清空_advance_graph，防止CUDA图保留旧开关值。
 
-# 2. CPU 静态检查 object.xml 的物体/自由关节/质量/无驱动（不实例化 runtime）
-python scripts/nov20/ax50_pebble07/pebble_runtime.py
+## 运行
+在/home/zjh/Evolution_PC使用/home/zjh/Evolution_PC_flip/IsaacLab3/.venv/bin/python：
+- scripts/nov20/ax50_pebble07/inspect_asset.py：原对象提取与CPU核对。
+- scripts/nov20/ax50_pebble07/verify_pairs.py：实际GPU接触参数对照。
+- scripts/nov20/ax50_pebble07/verify_topology.py：六条边、零弯曲材料、表面及顶点邻接复核。
+- scripts/nov20/ax50_pebble07/run_preshape.py：修复开启后的顺序屈指；RUN_TAG控制输出名。
+- scripts/nov20/ax50_pebble07/fit_pinch.py：仅CPU候选，不可直接视为可执行轨迹。
 
-# 3. 可选：实例化 AX50 共享世界并前进 0.05 s（需要 GPU；本次未运行）
-python scripts/nov20/ax50_pebble07/pebble_runtime.py --smoke
-```
-
-产物（`outputs/nov20/ax50_pebble07/`）：
-
-- `object.xml`：清理后的场景（原盘 + 三石）。
-- `asset_audit.json`：删除项、保留项签名、作者质量/摩擦、导入结果与检查。
-- `static_check.json`：CPU 静态检查结果。
-- `shared_smoke.json`：仅 `--smoke` 时生成，本次不存在。
-
-## 发现
-
-- 源场景 `outputs/nov20/pebble.xml`（70195 B）为旧左手场景：1 个 `diagnostic_world`
-  （34 body / 102 geom / 27 joint / 102 STL mesh）、27 个 actuator、225 个接触对。
-- 提取后保留：
-  - worldbody：`floor`、`light`、`tray`、4 个 `rim_*`、`item`、`neighbor1`、`neighbor2`；
-  - 3 个 inline mesh：`peb0`、`peb1`、`peb2`；
-  - 21 个对象接触对（每石 foot/tray、stone/tray、stone/4 rim，另加 stone1-stone0、
-    stone2-stone0、stone2-stone1）。
-- 删除：34 个手 body、102 个手 geom、102 个 STL mesh、204 个手接触对、27 个 actuator。
-- 作者质量（body 内 geom mass 求和）与 Newton CPU 导入质量一致：
-
-  | body | 作者质量 (kg) | 导入质量 (kg) |
-  |---|---|---|
-  | item | 0.002110 | 0.0021100000012665987 |
-  | neighbor1 | 0.0013457176 | 0.0013457175809890032 |
-  | neighbor2 | 0.0010065592 | 0.0010065592359751463 |
-
-- 三石各保留 1 个 `freejoint`（`free0/free1/free2`），导入为 3 个 FREE 关节，
-  18 DOF、`joint_q` 长度 21；所有对象 DOF 的 `target_ke/kd` 为 0、target mode 为 NONE。
-- 导入后 12 个 shape，摩擦首系数：`floor` 1.0，其余（stone/foot/tray/rim）0.85，
-  与源 XML 一致（float32 误差 < 1e-6）。
-- 保真说明：源 `<pair>` 的 `solref/friction` 已原样写入 `object.xml`，但 Newton 刚体接触
-  按 shape 建模，导入器不会按 pair 应用这两项；shape 摩擦正常导入。这是已知差异，不是本
-  次引入的改动。
-
-## 适配方式
-
-`pebble_runtime.py` 的 `PebbleRuntime(HandleRuntime)` 复用 `ax50_handle13/handle_runtime.py`
-的架构：保留手腕 PD、palm 局部阻尼修复和碰撞过滤 pair 的表示恢复；仅把物体 XML 换成
-`object.xml`，按短名映射 `item/neighbor1/neighbor2` 与 `free0/free1/free2`，并关闭对象 DOF
-驱动。未修改物体尺寸，未新增全局禁碰。`_add_brush` 已用 CPU 哑元 builder 单独验证
-（body 映射、自由关节、驱动清零）。
-
-## 依赖
-
-- `/home/zjh/Evolution_PC_flip/IsaacLab3/.venv/bin/python`
-- `newton`（site-packages）、`warp`
-- `ax50_visualskin_v3_0_0`、`scripts/nov20/ax50_keys17/damped_adapter.py`
-- `scripts/nov20/ax50_handle13/handle_runtime.py`
-
-## 未完成项
-
-- 未运行 GPU smoke（`--smoke` 命令已提供）。
-- 未验证 AX50 双指捏取、抬升 ≥0.020 m、邻石位移 ≤0.005 m 等操作指标。
-- 未修改评分、旧模型、公共运行时或文档；`docs/TASK07_AX50_PEBBLE.md` 的状态保持原样。
-- 因此本目录当前只能说明“资产可提取、可 CPU 导入、接入代码路径已接通”，不能说明任务通过。
+需远端AX50 v3外部资产及原场景；不是独立发行包。旧早期检查记录为历史，最新状态以上文为准。
