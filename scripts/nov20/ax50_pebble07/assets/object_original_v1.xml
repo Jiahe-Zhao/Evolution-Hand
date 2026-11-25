@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="mechanical_v2_motion_contact_v3_arboreal_comparative_prior_v1_left">
+ <compiler angle="radian" />
+ <asset>
+  <mesh name="peb0" vertex="-0.01 -0.0036000000000000003 -0.0042 -0.003 -0.008 -0.0042 0.006500000000000001 -0.006240000000000001 -0.0042 0.01 0.0016 -0.0042 0.0032 0.00744 -0.0042 -0.0085 0.0057599999999999995 -0.0042 -0.0073 -0.00256 0.00336 0.0015 -0.00464 0.0064 0.0073 0.00096 0.00392 -0.002 0.0056 0.00512 0.0 0.0004 -0.004" />
+  <mesh name="peb1" vertex="-0.008963853007886222 -0.003377918856547151 -0.0036119999999999998 -0.0028027605768565274 -0.006164220235846661 -0.0036119999999999998 0.005691462631591623 -0.00489430249180719 -0.0036119999999999998 0.009232390058613645 0.0012282629611584312 -0.0036119999999999998 0.0026160127422436797 0.005881251553371477 -0.0036119999999999998 -0.007643714638197643 0.004585983637204531 -0.0036119999999999998 -0.005433936209504747 -0.0020989768080019564 0.0030431057434637896 0.0013833178636153555 -0.0037146667365140955 0.004976629144173882 0.006545196827245364 0.0007597533351209793 0.003015011784229754 -0.0016103306119255498 0.0044893601546191035 0.003942347155360817 0.0 0.0003440705758330405 -0.00344" />
+  <mesh name="peb2" vertex="-0.006574258606119281 -0.0027148109284138478 -0.003276 -0.002266616994785842 -0.006772119082081501 -0.003276 0.004548163483127545 -0.004976486454947126 -0.003276 0.007662443376927924 0.001087478190979124 -0.003276 0.002128537308555433 0.006460199457803597 -0.003276 -0.005901201611376127 0.004131357003686921 -0.003276 -0.005135400518225251 -0.0018248785373851575 0.0027777809504381003 0.0010535572655168519 -0.0034239901951677743 0.005063213604409325 0.006165664819166401 0.0007663450461934555 0.003288364810392949 -0.001681366636009008 0.0036854348269270473 0.004220723581346781 0.0 0.00029405368574529763 -0.0031200000000000004" />
+ </asset>
+ <worldbody>
+  <geom name="floor" type="plane" size="1 1 .01" pos="0 0 0" rgba=".35 .39 .42 1" friction="1 .01 .001" contype="2" conaffinity="3" />
+  <light pos="0 0 .55" dir="0 0 -1" diffuse=".8 .8 .8" ambient=".4 .4 .4" />
+  <geom name="tray" type="box" pos="-0.095 0 0.024" size=".059 .047 .003" rgba=".27 .34 .37 1" friction=".85 .005 .0001" contype="2" conaffinity="3" />
+  <geom name="rim_x-1" type="box" pos="-0.153 0 0.03" size=".001 .047 .003" rgba=".24 .30 .31 1" friction=".85 .005 .0001" contype="2" conaffinity="3" />
+  <geom name="rim_y-1" type="box" pos="-0.095 -0.046 0.03" size=".057 .001 .003" rgba=".24 .30 .31 1" friction=".85 .005 .0001" contype="2" conaffinity="3" />
+  <geom name="rim_x1" type="box" pos="-0.037 0 0.03" size=".001 .047 .003" rgba=".24 .30 .31 1" friction=".85 .005 .0001" contype="2" conaffinity="3" />
+  <geom name="rim_y1" type="box" pos="-0.095 0.046 0.03" size=".057 .001 .003" rgba=".24 .30 .31 1" friction=".85 .005 .0001" contype="2" conaffinity="3" />
+  <body name="item" pos="-0.093 0.003 0.031349999999999996" euler="0 0 0.2">
+   <freejoint name="free0" />
+   <geom name="stone0" type="mesh" pos="0 0 0" size=".01" rgba=".64 .44 .24 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mesh="peb0" mass="0.0021" />
+   <geom name="foot0" type="box" pos="0 0 -0.0041" size="0.0045 0.0035 0.00045" rgba=".64 .44 .24 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mass=".00001" />
+  </body>
+  <body name="neighbor1" pos="-0.111 0.021 0.030762" euler="0 0 1">
+   <freejoint name="free1" />
+   <geom name="stone1" type="mesh" pos="0 0 0" size=".01" rgba=".43 .47 .43 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mesh="peb1" mass="0.0013357176" />
+   <geom name="foot1" type="box" pos="0 0 -0.003526" size="0.0038699999999999997 0.00301 0.000387" rgba=".43 .47 .43 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mass=".00001" />
+  </body>
+  <body name="neighbor2" pos="-0.075 -0.016 0.030426" euler="0 0 -0.6">
+   <freejoint name="free2" />
+   <geom name="stone2" type="mesh" pos="0 0 0" size=".01" rgba=".46 .41 .38 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mesh="peb2" mass="0.0009965592" />
+   <geom name="foot2" type="box" pos="0 0 -0.0031980000000000003" size="0.0035099999999999997 0.0027300000000000002 0.000351" rgba=".46 .41 .38 1" friction=".85 .005 .0001" contype="2" conaffinity="3" mass=".00001" />
+  </body>
+ </worldbody>
+ <contact>
+  <pair geom1="foot0" geom2="tray" solref=".009 1" friction="1 1 .003 .0001 .0001" />
+  <pair geom1="stone0" geom2="tray" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone0" geom2="rim_x-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone0" geom2="rim_x1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone0" geom2="rim_y-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone0" geom2="rim_y1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="foot1" geom2="tray" solref=".009 1" friction="1 1 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="tray" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="rim_x-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="rim_x1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="rim_y-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="rim_y1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone1" geom2="stone0" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="foot2" geom2="tray" solref=".009 1" friction="1 1 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="tray" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="rim_x-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="rim_x1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="rim_y-1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="rim_y1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="stone0" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+  <pair geom1="stone2" geom2="stone1" solref=".01 1" friction=".9 .9 .003 .0001 .0001" />
+ </contact>
+</mujoco>

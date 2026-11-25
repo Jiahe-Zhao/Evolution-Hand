@@ -1,0 +1,31 @@
+{
+  "scope": "CPU import only; runtime not instantiated; GPU smoke not run",
+  "object_xml": "assets/object_topwide_v1.xml",
+  "body_names": [
+    "item",
+    "neighbor1",
+    "neighbor2"
+  ],
+  "body_mass_kg": {
+    "item": 0.0021100000012665987,
+    "neighbor1": 0.0013457175809890032,
+    "neighbor2": 0.0010065592359751463
+  },
+  "joint_names": [
+    "free0",
+    "free1",
+    "free2"
+  ],
+  "joint_dof_count": 18,
+  "joint_q_length": 21,
+  "shape_count": 12,
+  "checks": {
+    "bodies": true,
+    "free_joints": true,
+    "free_dof_18": true,
+    "joint_q_21": true,
+    "no_object_drive": true,
+    "mass_present": true
+  },
+  "passed": true
+}

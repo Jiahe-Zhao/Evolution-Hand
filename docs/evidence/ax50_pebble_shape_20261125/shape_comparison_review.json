@@ -1,0 +1,19 @@
+{
+  "scope": "review of this exact recorded run; offline rigid convex distances are not Newton contact depths",
+  "video_frame_sim_time_s": 4.78,
+  "geometry_frame_sim_time_s": 4.759999999999943,
+  "geometry": {
+    "thumb": {
+      "distance_mm": -7.817152873998482,
+      "geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74"
+    },
+    "index": {
+      "distance_mm": 7.18784191714769,
+      "geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    }
+  },
+  "visual_finding": "stone visibly embedded in thumb at lift-hold; index visibly separated in side view",
+  "acceptance_passed": false,
+  "conclusion": "failed: thumb penetration and apparent attachment, not a valid two-finger pinch",
+  "result_sha256": "2166f07fea4d79a236afa639d55dfcbb451fd04d9b5441908d657df5a7f62bc3"
+}

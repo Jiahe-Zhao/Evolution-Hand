@@ -4,12 +4,14 @@ import re,json,sys,numpy as np,mujoco as mj
 from scipy.spatial.transform import Rotation as R
 from xml.etree.ElementTree import Element,SubElement,tostring
 ROOT=Path('/home/zjh/Evolution_PC');O=ROOT/'outputs/nov20/ax50_pebble07'
-tag=sys.argv[1] if len(sys.argv)>1 else 'pinch_trial_v4';a=np.load(O/(tag+'.npz'),allow_pickle=True);frame=-2;bq=a['body_q'][frame]
+tag=sys.argv[1] if len(sys.argv)>1 else 'pinch_trial_v4';a=np.load(O/(tag+'.npz'),allow_pickle=True);frame=int(sys.argv[2]) if len(sys.argv)>2 else -2;bq=a['body_q'][frame]
 norm=lambda n:re.sub('[^a-zA-Z0-9]','',str(n))
 lookup={norm(n):bq[i] for i,n in enumerate(a['body_names'])}
 lookup.update({norm(str(n).split('/')[-1]):bq[i] for i,n in enumerate(a['body_names'])})
+meta_path=O/(tag+'_result.json');meta=json.loads(meta_path.read_text()) if meta_path.exists() else {}
+object_xml=Path(meta.get('object_xml',str(O/'object.xml')))
 x=Element('mujoco');SubElement(x,'compiler',angle='radian');assets=SubElement(x,'asset');world=SubElement(x,'worldbody');labels=[]
-for source,m in [('hand',mj.MjModel.from_binary_path(str(ROOT/'outputs/nov20/ax50_keys17/left_ik.mjb'))),('object',mj.MjModel.from_xml_path(str(O/'object.xml')))]:
+for source,m in [('hand',mj.MjModel.from_binary_path(str(ROOT/'outputs/nov20/ax50_keys17/left_ik.mjb'))),('object',mj.MjModel.from_xml_path(str(object_xml)))]:
  for g in range(m.ngeom):
   bn=m.body(int(m.geom_bodyid[g])).name;gn=m.geom(g).name or ''
   if source=='hand' and not any(bn.endswith(t) for t in ['link_1_2','link_2_3']):continue
@@ -32,5 +34,5 @@ for i,l in enumerate(labels):
   if ll['source']!='object':continue
   seg=np.zeros(6);dist=mj.mj_geomDistance(mm,dd,i,j,.1,seg)
   rows.append(dict(**l,target=ll['geom'],distance_mm=float(dist*1000),closest_world_mm=(seg.reshape(2,3)*1000).tolist()))
-rows.sort(key=lambda r:r['distance_mm']);out=dict(scope='offline MuJoCo convex collision distance on original geometry at recorded Newton poses; not a Newton contact replay',time_s=float(a['time'][frame]),pairs=rows)
-(O/(tag+'_gap_diagnostic.json')).write_text(json.dumps(out,indent=2));print(json.dumps(rows[:12],indent=2))
+rows.sort(key=lambda r:r['distance_mm']);out=dict(object_xml=str(object_xml),scope='offline MuJoCo convex collision distance at recorded Newton poses; rigid geometry only, not a Newton contact replay',time_s=float(a['time'][frame]),pairs=rows)
+(O/(tag+('_frame'+str(frame) if len(sys.argv)>2 else '')+'_gap_diagnostic.json')).write_text(json.dumps(out,indent=2));print(json.dumps(rows[:12],indent=2))
