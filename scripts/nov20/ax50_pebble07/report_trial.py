@@ -13,7 +13,7 @@ for i,v in enumerate(ok):
   if start is None:start=t[i]
   best=max(best,t[i]-start)
  else:start=None
-r=dict(scope='100 Hz recorded sample audit, not a per-substep certification',tag=tag,max_lift_mm=float(lift.max()),max_neighbor_displacement_mm=float(neighbor.max()),max_hand_tray_N=float(tray.max()),max_thumb_N=float(thumb.max()),max_index_N=float(index.max()),dual_contact_samples=int(((thumb>1e-6)&(index>1e-6)).sum()),sampled_qualified_hold_s=float(best),sampled_criteria_met=bool(best>=.3 and not invalid),all_sampled_finite=not invalid,invalid_frames=len(invalid),first_invalid_time_s=float(invalid[0]['time_s']) if invalid else None)
+r=dict(scope='100 Hz force-proxy audit; original acceptance uses geometric contacts; not a per-substep certification',tag=tag,max_lift_mm=float(lift.max()),max_neighbor_displacement_mm=float(neighbor.max()),max_hand_tray_N=float(tray.max()),max_thumb_N=float(thumb.max()),max_index_N=float(index.max()),dual_contact_samples=int(((thumb>1e-6)&(index>1e-6)).sum()),sampled_qualified_hold_s=float(best),sampled_criteria_met=bool(best>=.3 and not invalid),all_sampled_finite=not invalid,invalid_frames=len(invalid),first_invalid_time_s=float(invalid[0]['time_s']) if invalid else None)
 (OUT/f'{tag}_audit.json').write_text(json.dumps(r,indent=2))
 fig,ax=plt.subplots(4,1,figsize=(10,8),sharex=True)
 ax[0].plot(t,lift);ax[0].axhline(20,color='r',ls='--');ax[0].set_ylabel('lift (mm)')

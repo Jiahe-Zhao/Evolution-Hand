@@ -95,7 +95,7 @@ def render(tag='pinch_trial_v1'):
         ti=p[idx['item']];near.extend(v[np.linalg.norm(v-ti,axis=1)<.035])
     near=np.asarray(near);allpts=np.asarray(allpts)
     cams=[camera(allpts,[-.65,-1,.48]),camera(near,[-.15,-1,.20],.88),camera(near,[-1,-.08,.16],.88)]
-    if tag in ['pinch_trial_v5','pinch_trial_v6']:cams=[cams[0],camera(near,[1,-.8,.3],.88),camera(near,[1,.08,.16],.88)]
+    if tag in ['pinch_trial_v5','pinch_trial_v6','pinch_trial_v7','pinch_trial_v8']:cams=[cams[0],camera(near,[1,-.8,.3],.88),camera(near,[1,.08,.16],.88)]
     p0=bq[0,:,:3].copy();ii=idx['item'];n1,n2=idx['neighbor1'],idx['neighbor2']
     measured_lift=arr('lift_mm').astype(float)
     measured_neighbor=np.maximum.accumulate(np.maximum(arr('neighbor1_displacement_mm').astype(float),arr('neighbor2_displacement_mm').astype(float)))
@@ -109,6 +109,7 @@ def render(tag='pinch_trial_v1'):
         a=[f'实际阶段 {phases[i]}  时间 {t[i]:.2f} s',f'目标石抬升 {lift:.2f} mm  邻石最大位移 {nd:.2f} mm',f'拇指力 {thumb[i]:.5f} N  食指力 {index[i]:.5f} N  其余手-目标力 {other[i]:.5f} N']
         title='AX50 07 双指夹石：实际记录回放 2倍慢放  |  阶段试验未通过'
         if tag=='pinch_trial_v6':title='AX50 07 低速限力续测（预夹持状态起步） | 实际记录 2倍慢放 | 未通过'
+        if tag in ['pinch_trial_v7','pinch_trial_v8']:title='AX50 07 位置夹紧后提起（预夹持起步） | 实际记录 2倍慢放 | 验收见记录'
         return strip([panel(obj,cams[0]),panel(obj,cams[1]),panel(obj,cams[2])],['整手与石群','目标石与双指近景','侧面'],[a,a,a],title)
     valid=np.isfinite(bq).all((1,2));times=t.copy();dt=np.median(np.diff(times)) if len(times)>1 else 1/100
     frames=[i for i in np.unique(np.searchsorted(times,np.arange(times[0],times[-1]+1e-12,1/30)).clip(0,len(times)-1)) if valid[i]]
