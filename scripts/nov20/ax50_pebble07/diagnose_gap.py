@@ -1,10 +1,10 @@
 """Offline signed distance of original collision meshes at recorded body poses."""
 from pathlib import Path
-import re,json,numpy as np,mujoco as mj
+import re,json,sys,numpy as np,mujoco as mj
 from scipy.spatial.transform import Rotation as R
 from xml.etree.ElementTree import Element,SubElement,tostring
 ROOT=Path('/home/zjh/Evolution_PC');O=ROOT/'outputs/nov20/ax50_pebble07'
-a=np.load(O/'pinch_trial_v4.npz',allow_pickle=True);frame=-2;bq=a['body_q'][frame]
+tag=sys.argv[1] if len(sys.argv)>1 else 'pinch_trial_v4';a=np.load(O/(tag+'.npz'),allow_pickle=True);frame=-2;bq=a['body_q'][frame]
 norm=lambda n:re.sub('[^a-zA-Z0-9]','',str(n))
 lookup={norm(n):bq[i] for i,n in enumerate(a['body_names'])}
 lookup.update({norm(str(n).split('/')[-1]):bq[i] for i,n in enumerate(a['body_names'])})
@@ -33,4 +33,4 @@ for i,l in enumerate(labels):
   seg=np.zeros(6);dist=mj.mj_geomDistance(mm,dd,i,j,.1,seg)
   rows.append(dict(**l,target=ll['geom'],distance_mm=float(dist*1000),closest_world_mm=(seg.reshape(2,3)*1000).tolist()))
 rows.sort(key=lambda r:r['distance_mm']);out=dict(scope='offline MuJoCo convex collision distance on original geometry at recorded Newton poses; not a Newton contact replay',time_s=float(a['time'][frame]),pairs=rows)
-(O/'pinch_trial_v4_gap_diagnostic.json').write_text(json.dumps(out,indent=2));print(json.dumps(rows[:12],indent=2))
+(O/(tag+'_gap_diagnostic.json')).write_text(json.dumps(out,indent=2));print(json.dumps(rows[:12],indent=2))
