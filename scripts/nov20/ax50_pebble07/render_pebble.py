@@ -109,7 +109,9 @@ def render(tag='pinch_trial_v1'):
     if tag.startswith('shape_') or tag in ['pinch_trial_v5','pinch_trial_v6','pinch_trial_v7','pinch_trial_v8']:cams=[cams[0],camera(near,[1,-.8,.3],.88),camera(near,[1,.08,.16],.88)]
     if tag.startswith('shape_'):
         cp=OUT/'shape_comparison_cameras.json'
-        if tag=='shape_original_v1':
+        if (OUT/'shape_comparison_cameras_reviewed.json').exists():
+            cams=[(np.array(b),float(scale),np.array(offset)) for b,scale,offset in json.loads((OUT/'shape_comparison_cameras_reviewed.json').read_text())]
+        elif tag=='shape_original_v1':
             cp.write_text(json.dumps([[b.tolist(),float(scale),offset.tolist()] for b,scale,offset in cams],indent=2))
         else:
             cams=[(np.array(b),float(scale),np.array(offset)) for b,scale,offset in json.loads(cp.read_text())]

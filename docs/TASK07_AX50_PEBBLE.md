@@ -27,7 +27,7 @@
 
 核对：Newton导入后的世界外包范围与MuJoCo编译几何误差小于0.000003 mm；质量2.110 g，主体尺寸20×15.44×10.60 mm、组件总高10.95 mm均保持。惯量按新几何重算。无吸附、固定约束或额外驱动。
 
-交付：`shape_comparison.mp4`（同步近景，实际记录2倍慢放）、`shape_original_v1.mp4` / `shape_topwide_v1.mp4`（三视角）、`shape_comparison_curves.png`、两版contacts.csv/trace.csv、`shape_comparison_result.json`、`shape_comparison_review.json`。两版视频共用相机位置和比例。源码和小型证据归档至GitHub；大视频及NPZ留在远端outputs。
+交付：`shape_comparison_reviewed.mp4`（10.53秒，视频内明确标注两版未通过）；`shape_comparison.mp4`（同步近景，实际记录2倍慢放）、`shape_original_v1.mp4` / `shape_topwide_v1.mp4`（三视角）、`shape_comparison_curves.png`、两版contacts.csv/trace.csv、`shape_comparison_result.json`、`shape_comparison_review.json`。两版视频共用相机位置和比例，并按两版全过程石子与指尖的联合范围取景，保持段石子完整可见。源码和小型证据归档至GitHub；大视频及NPZ留在远端outputs。
 
 
 ## 2026-11-25 直接夹紧提起 v7/v8结果：动作执行完，未抓起

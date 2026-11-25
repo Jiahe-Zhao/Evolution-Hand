@@ -2,6 +2,8 @@ from pathlib import Path
 import subprocess,time,json
 R=Path('/home/zjh/Evolution_PC');O=R/'outputs/nov20/ax50_pebble07';P='/home/zjh/Evolution_PC_flip/IsaacLab3/.venv/bin/python'
 while not (O/'shape_topwide_v1_render.json').exists():time.sleep(20)
+for script,args in [('prepare_shape_cameras.py',[]),('render_pebble.py',['shape_original_v1']),('render_pebble.py',['shape_topwide_v1'])]:
+ subprocess.run([P,str(R/'scripts/nov20/ax50_pebble07'/script)]+args,cwd=R,check=True)
 subprocess.run([P,str(R/'scripts/nov20/ax50_pebble07/compare_shapes_report.py')],cwd=R,check=True)
 font='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
 filters=[]
