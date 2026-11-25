@@ -1,0 +1,9 @@
+from pathlib import Path
+import json,numpy as np
+from scipy.spatial.transform import Rotation as R
+OUT=Path('/home/zjh/Evolution_PC/outputs/nov20/ax50_pebble07');c=json.loads((Path(__file__).parent/'candidates/pinch_candidate_v3.json').read_text());close=json.loads((Path(__file__).parent/'candidates/pinch_close_candidate_v3.json').read_text());tilt=R.from_euler('y',.45);pivot=np.array([-.093,.003,.0345]);c['position']=(pivot+tilt.apply(np.array(c['position'])-pivot)).tolist();c['orientation']=(tilt*R.from_quat(c['orientation'])).as_quat().tolist()
+for k in [4,8,12]:c['joint_pose'][k:k+4]=[0,0,0,0]
+c['world_tilt_rad']=.45;c['world_tilt_pivot']=pivot.tolist();close['wrist_delta_world']=tilt.apply(close['wrist_delta_world']).tolist()
+for name,data in [('pinch_candidate',c),('pinch_close_candidate',close)]:
+ (OUT/(name+'.json')).write_text(json.dumps(data,indent=2));(OUT/(name+'_v4.json')).write_text(json.dumps(data,indent=2))
+print('tilt',c['world_tilt_rad'],'position',c['position'])
