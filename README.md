@@ -2,6 +2,23 @@
 
 Evolution Hand is the baseline repository for hand morphology evolution, multi-task evaluation, and Isaac Lab task integration. This repo keeps the reusable source code, robot descriptions, and slot overrides that should be shared across different compute nodes.
 
+## AX50 下载与导入 / AX50 assets
+
+**AX50 VisualSkin v3.0.0 完整包已包含在默认分支中。** 普通 `git clone` 或 GitHub 的 Download ZIP 均包含它，不需要 Git LFS，也不依赖实验机的 `outputs/` 目录。
+
+```bash
+git pull --ff-only origin main  # 已有 main checkout；有本地修改时建议另行 clone
+python3 scripts/unpack_ax50.py
+```
+
+解压位置：`local_assets/ax50_visualskin_v3_0_0/`，内含左右手、Newton 运行入口、wheel、示例、验收记录和同步视频。解压器会校验完整包及其中 967 个文件。
+
+- [完整资产包](assets/releases/AX50_VisualSkin_v3.0.0.zip)
+- [导入说明及版本边界](docs/AX50_ASSET_IMPORT.md)
+- [仓库同步审计：哪些已上传，哪些尚未整合](docs/GITHUB_ASSET_AUDIT_20261128.md)
+
+旧 AX50 原型和场景实验另在开发分支，不能把这些分支或实验机当前目录等同于本默认分支。此发布仅补齐已验收的 VisualSkin 资产，不替换现有训练基准。
+
 ## Repository layout
 
 - `Isaaclab_other/`: evolution entrypoints, hand generators, evaluation helpers, and Isaac Lab utility scripts.

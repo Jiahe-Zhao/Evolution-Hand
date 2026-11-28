@@ -10,3 +10,6 @@
 *.yml text
 *.sh text eol=lf
 *.py text eol=lf
+
+*.zip binary
+*.whl binary

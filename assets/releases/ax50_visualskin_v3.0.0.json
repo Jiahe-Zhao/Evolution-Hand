@@ -1,0 +1,9 @@
+{
+  "name": "AX50 VisualSkin",
+  "version": "3.0.0",
+  "archive": "AX50_VisualSkin_v3.0.0.zip",
+  "sha256": "47084259f9b76ae57d3da3c6af8f809c3fddf313ce6de6e13e2efa0767c2caca",
+  "size_bytes": 47158654,
+  "root": "ax50_visualskin_v3_0_0",
+  "validation": "2026-11-21 independent bilateral basic-function and relocation tests"
+}

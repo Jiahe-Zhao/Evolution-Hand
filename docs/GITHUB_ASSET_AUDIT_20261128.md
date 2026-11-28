@@ -1,0 +1,43 @@
+# GitHub 资产完整性审计（2026-11-28）
+
+## 结论
+
+实验机目录并未全部同步到 GitHub。以前交付的本地压缩包和路径不表示 GitHub 已发布；普通下载默认分支确实拿不到 AX50。
+
+本次只发布已验收的 AX50 VisualSkin v3.0.0 完整包、获取说明和校验解压入口。不会把未经整理的全部实验文件作为稳定版本发布。
+
+## 审计时的状态
+
+仓库：Jiahe-Zhao/Evolution-Hand。修改前 main：`36bd66ab77574d73eac6f0707ea8c8362f2b6314`。
+
+| 内容 | 审计时位置 / 状态 |
+|---|---|
+| main 默认分支 | 没有 AX50 / VisualSkin 文件 |
+| 旧 AX50 原型 | 已在 `codex/ax50-newton-prototype`，提交 `8ad40ef`，比 main 多 1 个提交；含 `prototypes/ax50/` |
+| AX50 场景进展 | 已在 `codex/ax50-scenes-progress-20261125`，提交 `6b7b81a`，比 main 多 23 个提交 |
+| VisualSkin v3.0.0 完整包 | 原来仅在实验机 `outputs/ax50_visualskin_v3_0_0/dist/` 和本地交付目录；没有 GitHub Release |
+| 实验机当前开发分支 | `codex/newton-hold-ppo-20261113`，HEAD `679d09e`，比 main 多 12 个提交；无同名远端分支 |
+| 未提交工作 | 47 个已跟踪文件修改、342 个未跟踪条目（含目录；不是文件总数）；另有被忽略输出 |
+
+计数为修复前只读快照，不代表所有未提交内容都适合发布。旧原型、VisualSkin 和后续场景实验不是同一套资产。
+
+## 为什么会缺失
+
+1. `.gitignore` 忽略整个 `outputs/`，新生成的资产不会自动进入 Git。
+2. 开发分支没有合入 main。默认 clone / Download ZIP 只拿到所选分支。
+3. Git 仓库内容、实验机工作目录和单独交付 ZIP 是三件事；之前缺少统一资产入口。
+4. 近期场景脚本可能仍依赖实验目录和额外资产，不能只把脚本复制到 main 就声称可复现。
+
+## 本次补齐
+
+- `assets/releases/AX50_VisualSkin_v3.0.0.zip`：47,158,654 字节，普通 Git 二进制文件，不是 LFS 指针或外链。
+- `assets/releases/ax50_visualskin_v3.0.0.json`：固定版本和 SHA-256。
+- `scripts/unpack_ax50.py`：校验 ZIP 和 967 个交付文件，默认解压到 `local_assets/`。
+- `docs/AX50_ASSET_IMPORT.md`：运行依赖、示例与已验证边界。
+- 根 README 添加醒目入口；解压副本被忽略，正式 ZIP 被跟踪。
+
+## 尚未整合
+
+旧原型分支、近期场景分支、12 个本地开发提交、47 处未提交修改和其他实验输出没有在这次资产发布中统一合入。训练 checkpoint、缓存和完整日志也不属于本次资产包。不能据此声称“所有内容都已上传”。
+
+需要复现近期场景时，应指定场景编号、对应分支和依赖版本，单独补齐运行资产；本包解决的是独立 AX50 VisualSkin 导入。

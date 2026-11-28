@@ -52,3 +52,6 @@ evolution_tasks/**/*.last_generated
 # Local IsaacLab and simulator installations belong outside this repository
 isaac-sim/
 _isaac_sim/
+
+# Extracted copies of versioned release archives
+/local_assets/
