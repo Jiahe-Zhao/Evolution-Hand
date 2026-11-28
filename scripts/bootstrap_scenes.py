@@ -38,8 +38,9 @@ def prepare_inputs():
                 if not dest.exists():dest.write_bytes(data)
     seed_folder=ROOT/'assets/scene_seed_overrides'
     seeds=json.loads((seed_folder/'manifest.json').read_text())
+    seed_archive=zipfile.ZipFile(seed_folder/'seeds.zip')
     for name, expected in seeds.items():
-        data=(seed_folder/name).read_bytes()
+        data=seed_archive.read(name)
         if hashlib.sha256(data).hexdigest()!=expected:
             raise RuntimeError('Seed checksum mismatch: '+name)
         dest=ROOT/name
@@ -47,6 +48,7 @@ def prepare_inputs():
             raise RuntimeError('Modified input seed: '+name+'. Use a fresh checkout.')
         dest.parent.mkdir(parents=True,exist_ok=True)
         if not dest.exists():dest.write_bytes(data)
+    seed_archive.close()
     print('Scene input files verified:',len(manifest['files']),'; named seeds:',len(seeds))
 
 
