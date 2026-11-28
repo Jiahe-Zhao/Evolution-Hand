@@ -1,0 +1,13 @@
+{
+  "scene": "ax50-16",
+  "name": "AX50 拨闩开盖",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "reset_max_error": 0.0,
+  "bodies": 32,
+  "dofs": 30,
+  "side": "left",
+  "steps": 400,
+  "dt": 0.000125,
+  "passed": true
+}

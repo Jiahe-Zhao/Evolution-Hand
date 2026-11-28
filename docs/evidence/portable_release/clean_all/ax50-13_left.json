@@ -1,0 +1,13 @@
+{
+  "scene": "ax50-13",
+  "name": "AX50 活动提梁",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "reset_max_error": 0.0,
+  "bodies": 32,
+  "dofs": 35,
+  "side": "left",
+  "steps": 400,
+  "dt": 0.000125,
+  "passed": true
+}

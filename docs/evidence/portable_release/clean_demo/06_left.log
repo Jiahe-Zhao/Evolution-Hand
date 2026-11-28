@@ -1,0 +1,104 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:333)
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'finger_pad' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'finger_pad' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_0' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_1' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_2' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'rigid_link_3' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'proximal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'distal_bearing' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'finger_pad' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'finger_pad' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'spread_shaft' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'spread_shaft' encountered in URDF, creating an unnamed geom.
+WARNING: Geom with duplicate name 'spread_shaft' encountered in URDF, creating an unnamed geom.
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, CUDA driver not available (NVRTC compilation available)
+   Devices:
+     "cpu"      : "x86_64"
+   Kernel cache:
+     /home/zjh/.cache/warp/1.17.0
+Module newton._src.geometry.inertia f6b4bd8 load on device 'cpu' took 1.54 ms  (cached)
+Module validate_and_correct_inertia_kernel_2a96c4bb 4f44601 load on device 'cpu' took 0.62 ms  (cached)
+Module newton._src.geometry.bvh 4a1c07f load on device 'cpu' took 0.46 ms  (cached)
+Module newton._src.sim.articulation 2e73608 load on device 'cpu' took 0.45 ms  (cached)
+Module newton._src.solvers.mujoco.kernels 90c0c67 load on device 'cpu' took 0.51 ms  (cached)
+{'task': 'stone', 'negative': False, 'contrast': False, 'backend': 'Newton / SolverMuJoCo CPU', 'steps': 720, 'dt': 0.004166666666666667, 'success': True, 'best_s': 1.7458333333333333, 'events': [], 'last': [2.995833333333333, 0.01690153343627147, 0.0340910369931586, 4.815604210821303, 0.0, 0.0009949207305908203, 39.253732550929264, 0.0, 1.0, 0.0], 'columns': ['time', 'drift', 'goal_xy_error', 'face_error_deg', 'hinge_rad', 'lift', 'tilt_deg', 'phone_phase', 'hand_contact', 'bail_contact']}

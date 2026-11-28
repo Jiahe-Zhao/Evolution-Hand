@@ -1,0 +1,11 @@
+{
+  "scene": "22",
+  "name": "夹具按压",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 37,
+  "dofs": 35,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

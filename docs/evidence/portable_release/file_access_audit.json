@@ -1,0 +1,37 @@
+{
+  "method": "Python open audit hook plus Linux strace -f -e trace=%file; completed suites only",
+  "forbidden_roots": [
+    "/home/zjh/Evolution_PC",
+    "/home/zjh/Evolution_PC_flip",
+    "/home/zjh/evolution_portable_20261128",
+    "/home/zjh/newton_lab3_trial"
+  ],
+  "reports": [
+    {
+      "group": "all",
+      "trace_sha256": "f734185d0dc3f4f1177ad42c1ae61f2b5d78b4ea638d3af8dcdc1e4bc28eed9d",
+      "trace_bytes": 148399997,
+      "trace_lines": 1167368,
+      "forbidden_root_metadata_calls": 304,
+      "metadata_reason": "Audit guard resolves forbidden directory names before installing the hook.",
+      "forbidden_nested_paths_or_nonmetadata_calls": 0,
+      "forbidden_syscalls": {
+        "lstat": 152,
+        "stat": 152
+      }
+    },
+    {
+      "group": "demo",
+      "trace_sha256": "6da4e3ec274d111767d5f1b46148af89b068d6adaff830bfee649b25e05d7534",
+      "trace_bytes": 85805371,
+      "trace_lines": 602937,
+      "forbidden_root_metadata_calls": 176,
+      "metadata_reason": "Audit guard resolves forbidden directory names before installing the hook.",
+      "forbidden_nested_paths_or_nonmetadata_calls": 0,
+      "forbidden_syscalls": {
+        "lstat": 88,
+        "stat": 88
+      }
+    }
+  ]
+}

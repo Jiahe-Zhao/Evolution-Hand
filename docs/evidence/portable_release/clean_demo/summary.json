@@ -1,0 +1,183 @@
+{
+  "group": "demo",
+  "scope": "installation and execution, not task-success qualification",
+  "passed": true,
+  "cases": [
+    {
+      "scene": "01",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.54,
+      "log": "outputs/portable_validation/demo/01_left.log"
+    },
+    {
+      "scene": "02",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.58,
+      "log": "outputs/portable_validation/demo/02_left.log"
+    },
+    {
+      "scene": "03",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.93,
+      "log": "outputs/portable_validation/demo/03_left.log"
+    },
+    {
+      "scene": "04",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 10.16,
+      "log": "outputs/portable_validation/demo/04_left.log"
+    },
+    {
+      "scene": "05",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 9.69,
+      "log": "outputs/portable_validation/demo/05_left.log"
+    },
+    {
+      "scene": "06",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.48,
+      "log": "outputs/portable_validation/demo/06_left.log"
+    },
+    {
+      "scene": "07",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 7.15,
+      "log": "outputs/portable_validation/demo/07_left.log"
+    },
+    {
+      "scene": "08",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 14.2,
+      "log": "outputs/portable_validation/demo/08_left.log"
+    },
+    {
+      "scene": "09",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.43,
+      "log": "outputs/portable_validation/demo/09_left.log"
+    },
+    {
+      "scene": "10",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 5.04,
+      "log": "outputs/portable_validation/demo/10_left.log"
+    },
+    {
+      "scene": "11",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 8.45,
+      "log": "outputs/portable_validation/demo/11_left.log"
+    },
+    {
+      "scene": "12",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 15.15,
+      "log": "outputs/portable_validation/demo/12_left.log"
+    },
+    {
+      "scene": "13",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.28,
+      "log": "outputs/portable_validation/demo/13_left.log"
+    },
+    {
+      "scene": "14",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 55.2,
+      "log": "outputs/portable_validation/demo/14_left.log"
+    },
+    {
+      "scene": "15",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 8.82,
+      "log": "outputs/portable_validation/demo/15_left.log"
+    },
+    {
+      "scene": "16",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.58,
+      "log": "outputs/portable_validation/demo/16_left.log"
+    },
+    {
+      "scene": "17",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 6.25,
+      "log": "outputs/portable_validation/demo/17_left.log"
+    },
+    {
+      "scene": "18",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.49,
+      "log": "outputs/portable_validation/demo/18_left.log"
+    },
+    {
+      "scene": "19",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 13.26,
+      "log": "outputs/portable_validation/demo/19_left.log"
+    },
+    {
+      "scene": "20",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 19.41,
+      "log": "outputs/portable_validation/demo/20_left.log"
+    },
+    {
+      "scene": "21",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 48.02,
+      "log": "outputs/portable_validation/demo/21_left.log"
+    },
+    {
+      "scene": "22",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 16.43,
+      "log": "outputs/portable_validation/demo/22_left.log"
+    }
+  ]
+}

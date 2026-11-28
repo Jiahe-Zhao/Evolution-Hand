@@ -1,0 +1,13 @@
+{
+  "scene": "ax50-14",
+  "name": "AX50 软笔描线",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "reset_max_error": 0.0,
+  "bodies": 163,
+  "dofs": 164,
+  "side": "left",
+  "steps": 400,
+  "dt": 0.000125,
+  "passed": true
+}

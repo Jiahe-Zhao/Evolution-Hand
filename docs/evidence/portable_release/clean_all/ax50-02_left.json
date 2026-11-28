@@ -1,0 +1,13 @@
+{
+  "scene": "ax50-02",
+  "name": "AX50 枝上采果",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "reset_max_error": 0.0,
+  "bodies": 31,
+  "dofs": 34,
+  "side": "left",
+  "steps": 400,
+  "dt": 0.000125,
+  "passed": true
+}

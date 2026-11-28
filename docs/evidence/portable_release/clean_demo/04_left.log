@@ -1,0 +1,38 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:333)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, CUDA driver not available (NVRTC compilation available)
+   Devices:
+     "cpu"      : "x86_64"
+   Kernel cache:
+     /home/zjh/.cache/warp/1.17.0
+Module newton._src.geometry.inertia f6b4bd8 load on device 'cpu' took 1.94 ms  (cached)
+Module validate_and_correct_inertia_kernel_2a96c4bb 4f44601 load on device 'cpu' took 0.51 ms  (cached)
+Module newton._src.geometry.bvh 4a1c07f load on device 'cpu' took 0.44 ms  (cached)
+Module newton._src.sim.articulation 2e73608 load on device 'cpu' took 0.45 ms  (cached)
+Module newton._src.solvers.mujoco.kernels 90c0c67 load on device 'cpu' took 0.83 ms  (cached)
+hand [[ 0.0000e+00 -3.9000e-02 -3.9000e-02  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 3.0000e-01 -1.7600e-01 -1.7600e-01  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 6.0000e-01  5.2357e+01 -1.7600e-01  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 9.0000e-01  7.5074e+01 -1.7600e-01  4.6000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 1.2000e+00  7.5059e+01 -1.7600e-01  4.6000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 1.5000e+00  7.4878e+01  6.1451e+01  4.5000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  7.2000e-02  0.0000e+00]
+ [ 1.8000e+00  7.4936e+01  7.2080e+01  4.6000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  4.4000e-02  0.0000e+00]
+ [ 2.1000e+00  7.4932e+01  7.2077e+01  4.6000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  4.4000e-02  0.0000e+00]
+ [ 2.4000e+00  7.4932e+01  7.2077e+01  4.6000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  4.4000e-02  0.0000e+00]
+ [ 2.7000e+00  6.3646e+01  6.0975e+01  2.8000e-02  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 3.0000e+00 -7.9600e-01 -6.9100e-01  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 3.3000e+00 -1.7600e-01 -1.7600e-01  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]
+ [ 3.6000e+00 -1.7600e-01 -1.7600e-01  0.0000e+00  0.0000e+00  0.0000e+00
+   0.0000e+00  0.0000e+00  0.0000e+00]]

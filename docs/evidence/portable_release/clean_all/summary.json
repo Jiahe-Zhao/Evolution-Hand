@@ -1,0 +1,311 @@
+{
+  "group": "all",
+  "scope": "installation and execution, not task-success qualification",
+  "passed": true,
+  "cases": [
+    {
+      "scene": "01",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.88,
+      "log": "outputs/portable_validation/all/01_left.log"
+    },
+    {
+      "scene": "02",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.93,
+      "log": "outputs/portable_validation/all/02_left.log"
+    },
+    {
+      "scene": "03",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 4.93,
+      "log": "outputs/portable_validation/all/03_left.log"
+    },
+    {
+      "scene": "04",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.38,
+      "log": "outputs/portable_validation/all/04_left.log"
+    },
+    {
+      "scene": "05",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.48,
+      "log": "outputs/portable_validation/all/05_left.log"
+    },
+    {
+      "scene": "06",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.23,
+      "log": "outputs/portable_validation/all/06_left.log"
+    },
+    {
+      "scene": "07",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.49,
+      "log": "outputs/portable_validation/all/07_left.log"
+    },
+    {
+      "scene": "08",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.63,
+      "log": "outputs/portable_validation/all/08_left.log"
+    },
+    {
+      "scene": "09",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.33,
+      "log": "outputs/portable_validation/all/09_left.log"
+    },
+    {
+      "scene": "10",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.47,
+      "log": "outputs/portable_validation/all/10_left.log"
+    },
+    {
+      "scene": "11",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.43,
+      "log": "outputs/portable_validation/all/11_left.log"
+    },
+    {
+      "scene": "12",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.38,
+      "log": "outputs/portable_validation/all/12_left.log"
+    },
+    {
+      "scene": "13",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.28,
+      "log": "outputs/portable_validation/all/13_left.log"
+    },
+    {
+      "scene": "14",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.58,
+      "log": "outputs/portable_validation/all/14_left.log"
+    },
+    {
+      "scene": "15",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.34,
+      "log": "outputs/portable_validation/all/15_left.log"
+    },
+    {
+      "scene": "16",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.38,
+      "log": "outputs/portable_validation/all/16_left.log"
+    },
+    {
+      "scene": "17",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.29,
+      "log": "outputs/portable_validation/all/17_left.log"
+    },
+    {
+      "scene": "18",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.28,
+      "log": "outputs/portable_validation/all/18_left.log"
+    },
+    {
+      "scene": "19",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.32,
+      "log": "outputs/portable_validation/all/19_left.log"
+    },
+    {
+      "scene": "20",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.57,
+      "log": "outputs/portable_validation/all/20_left.log"
+    },
+    {
+      "scene": "21",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.99,
+      "log": "outputs/portable_validation/all/21_left.log"
+    },
+    {
+      "scene": "22",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 3.17,
+      "log": "outputs/portable_validation/all/22_left.log"
+    },
+    {
+      "scene": "ax50-02",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 33.42,
+      "log": "outputs/portable_validation/all/ax50-02_left.log"
+    },
+    {
+      "scene": "ax50-02",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 33.11,
+      "log": "outputs/portable_validation/all/ax50-02_right.log"
+    },
+    {
+      "scene": "ax50-04",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 33.23,
+      "log": "outputs/portable_validation/all/ax50-04_left.log"
+    },
+    {
+      "scene": "ax50-04",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 29.6,
+      "log": "outputs/portable_validation/all/ax50-04_right.log"
+    },
+    {
+      "scene": "ax50-05",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.38,
+      "log": "outputs/portable_validation/all/ax50-05_left.log"
+    },
+    {
+      "scene": "ax50-05",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.63,
+      "log": "outputs/portable_validation/all/ax50-05_right.log"
+    },
+    {
+      "scene": "ax50-07",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.4,
+      "log": "outputs/portable_validation/all/ax50-07_left.log"
+    },
+    {
+      "scene": "ax50-07",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 31.79,
+      "log": "outputs/portable_validation/all/ax50-07_right.log"
+    },
+    {
+      "scene": "ax50-13",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 33.14,
+      "log": "outputs/portable_validation/all/ax50-13_left.log"
+    },
+    {
+      "scene": "ax50-13",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 32.9,
+      "log": "outputs/portable_validation/all/ax50-13_right.log"
+    },
+    {
+      "scene": "ax50-14",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 41.73,
+      "log": "outputs/portable_validation/all/ax50-14_left.log"
+    },
+    {
+      "scene": "ax50-14",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 33.56,
+      "log": "outputs/portable_validation/all/ax50-14_right.log"
+    },
+    {
+      "scene": "ax50-16",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.18,
+      "log": "outputs/portable_validation/all/ax50-16_left.log"
+    },
+    {
+      "scene": "ax50-16",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.32,
+      "log": "outputs/portable_validation/all/ax50-16_right.log"
+    },
+    {
+      "scene": "ax50-17",
+      "side": "left",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 24.93,
+      "log": "outputs/portable_validation/all/ax50-17_left.log"
+    },
+    {
+      "scene": "ax50-17",
+      "side": "right",
+      "passed": true,
+      "returncode": 0,
+      "elapsed_s": 25.0,
+      "log": "outputs/portable_validation/all/ax50-17_right.log"
+    }
+  ]
+}

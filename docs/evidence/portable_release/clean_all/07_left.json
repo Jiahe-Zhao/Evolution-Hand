@@ -1,0 +1,11 @@
+{
+  "scene": "07",
+  "name": "浅盘捏石",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 37,
+  "dofs": 45,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

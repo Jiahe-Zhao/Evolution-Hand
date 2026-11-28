@@ -1,0 +1,11 @@
+{
+  "scene": "17",
+  "name": "多指按键",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 38,
+  "dofs": 31,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

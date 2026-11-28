@@ -1,0 +1,137 @@
+{
+  "source_commit": "4d5ced0d7a889452520eec479432b18bb48fdc31",
+  "python": "Python 3.12.14",
+  "platform": "Linux x86_64",
+  "gpu": "NVIDIA GeForce RTX 4090, 580.178.04",
+  "packages": [
+    {
+      "name": "absl-py",
+      "version": "2.5.1"
+    },
+    {
+      "name": "ax50-visualskin",
+      "version": "3.0.0"
+    },
+    {
+      "name": "cloudpickle",
+      "version": "3.1.3"
+    },
+    {
+      "name": "contourpy",
+      "version": "1.4.0"
+    },
+    {
+      "name": "cycler",
+      "version": "0.12.1"
+    },
+    {
+      "name": "etils",
+      "version": "1.15.0"
+    },
+    {
+      "name": "Farama-Notifications",
+      "version": "0.0.6"
+    },
+    {
+      "name": "fonttools",
+      "version": "4.69.1"
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0"
+    },
+    {
+      "name": "glfw",
+      "version": "2.11.0"
+    },
+    {
+      "name": "gymnasium",
+      "version": "1.4.0"
+    },
+    {
+      "name": "ImageIO",
+      "version": "2.38.2"
+    },
+    {
+      "name": "imageio-ffmpeg",
+      "version": "0.8.2"
+    },
+    {
+      "name": "kiwisolver",
+      "version": "1.5.1"
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.11.2"
+    },
+    {
+      "name": "mujoco",
+      "version": "3.12.0"
+    },
+    {
+      "name": "mujoco-warp",
+      "version": "3.12.0"
+    },
+    {
+      "name": "newton-usd-schemas",
+      "version": "0.8.0"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.5"
+    },
+    {
+      "name": "packaging",
+      "version": "26.4"
+    },
+    {
+      "name": "pillow",
+      "version": "13.0.0"
+    },
+    {
+      "name": "pip",
+      "version": "25.0.1"
+    },
+    {
+      "name": "PyOpenGL",
+      "version": "3.1.10"
+    },
+    {
+      "name": "pyparsing",
+      "version": "3.3.3"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "4.0.0"
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.1"
+    },
+    {
+      "name": "trimesh",
+      "version": "5.2.2"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.6"
+    },
+    {
+      "name": "usd-core",
+      "version": "26.8"
+    },
+    {
+      "name": "warp-lang",
+      "version": "1.17.0"
+    },
+    {
+      "name": "zipp",
+      "version": "4.1.2"
+    }
+  ],
+  "installation": "Fresh isolated venv from pinned wheels via uv; bootstrap --install then verified with pip, pip check passed; system driver and compilation caches reused."
+}

@@ -1,0 +1,11 @@
+{
+  "scene": "21",
+  "name": "倾倒",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 65,
+  "dofs": 213,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

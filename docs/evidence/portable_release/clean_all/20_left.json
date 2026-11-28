@@ -1,0 +1,11 @@
+{
+  "scene": "20",
+  "name": "扫描器读码",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 36,
+  "dofs": 34,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

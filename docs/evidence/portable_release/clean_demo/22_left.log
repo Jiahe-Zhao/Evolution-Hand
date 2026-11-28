@@ -1,0 +1,33 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:333)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, CUDA driver not available (NVRTC compilation available)
+   Devices:
+     "cpu"      : "x86_64"
+   Kernel cache:
+     /home/zjh/.cache/warp/1.17.0
+Module newton._src.geometry.inertia f6b4bd8 load on device 'cpu' took 1.48 ms  (cached)
+Module validate_and_correct_inertia_kernel_2a96c4bb 4f44601 load on device 'cpu' took 0.47 ms  (cached)
+Module newton._src.geometry.bvh 4a1c07f load on device 'cpu' took 0.38 ms  (cached)
+Module newton._src.sim.articulation 2e73608 load on device 'cpu' took 0.39 ms  (cached)
+Module newton._src.solvers.mujoco.kernels 90c0c67 load on device 'cpu' took 0.53 ms  (cached)
+hand max [45.093  3.009  3.376  0.78   0.     0.     0.     0.886  0.     0.
+  0.   ] stages [[-1.000e-02  0.000e+00  0.000e+00  0.000e+00  0.000e+00  0.000e+00
+   0.000e+00  0.000e+00  0.000e+00]
+ [-0.000e+00  0.000e+00  4.600e-01  0.000e+00  0.000e+00  0.000e+00
+   0.000e+00  6.000e-02  0.000e+00]
+ [-0.000e+00  2.710e+00  3.190e+00  3.200e-01  0.000e+00  0.000e+00
+   0.000e+00  3.200e-01  0.000e+00]
+ [ 2.610e+00  2.930e+00  2.910e+00  3.100e-01  0.000e+00  0.000e+00
+   0.000e+00  3.600e-01  0.000e+00]
+ [ 2.264e+01  2.960e+00  2.870e+00  3.000e-01  0.000e+00  0.000e+00
+   0.000e+00  3.500e-01  0.000e+00]
+ [ 4.174e+01  2.940e+00  2.880e+00  2.900e-01  0.000e+00  0.000e+00
+   0.000e+00  3.300e-01  0.000e+00]
+ [ 4.370e+01  2.950e+00  2.860e+00  2.700e-01  0.000e+00  0.000e+00
+   0.000e+00  3.200e-01  0.000e+00]
+ [ 4.395e+01  2.880e+00  2.810e+00  2.600e-01  0.000e+00  0.000e+00
+   0.000e+00  3.100e-01  0.000e+00]
+ [ 4.014e+01  8.000e-02  1.500e-01  0.000e+00  0.000e+00  0.000e+00
+   0.000e+00  0.000e+00  0.000e+00]
+ [ 2.230e+01  0.000e+00  0.000e+00  0.000e+00  0.000e+00  0.000e+00
+   0.000e+00  0.000e+00  0.000e+00]]

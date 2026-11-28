@@ -33,7 +33,7 @@ python3 scripts/unpack_ax50.py
 - [导入说明及版本边界](docs/AX50_ASSET_IMPORT.md)
 - [仓库同步审计：哪些已上传，哪些尚未整合](docs/GITHUB_ASSET_AUDIT_20261128.md)
 
-旧 AX50 原型和场景实验另在开发分支，不能把这些分支或实验机当前目录等同于本默认分支。此发布仅补齐已验收的 VisualSkin 资产，不替换现有训练基准。
+本次已合入场景进展分支，并补齐统一入口所需资产。旧 AX50 原型仍与 VisualSkin 分开发行；本次不替换现有训练基准。完整实验历史、旧训练 checkpoint 不在便携运行包中。
 
 ## Repository layout
 

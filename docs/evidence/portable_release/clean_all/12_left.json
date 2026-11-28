@@ -1,0 +1,11 @@
+{
+  "scene": "12",
+  "name": "往复研磨",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 35,
+  "dofs": 33,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}

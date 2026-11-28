@@ -1,0 +1,13 @@
+Warp CUDA error 100: no CUDA-capable device is detected (in function init_cuda_driver, /builds/omniverse/warp/warp/native/cuda_util.cpp:333)
+Warp 1.17.0 initialized:
+   CUDA Toolkit 12.9, CUDA driver not available (NVRTC compilation available)
+   Devices:
+     "cpu"      : "x86_64"
+   Kernel cache:
+     /home/zjh/.cache/warp/1.17.0
+Module newton._src.geometry.inertia f6b4bd8 load on device 'cpu' took 1.71 ms  (cached)
+Module validate_and_correct_inertia_kernel_2a96c4bb 4f44601 load on device 'cpu' took 0.60 ms  (cached)
+Module newton._src.geometry.bvh 4a1c07f load on device 'cpu' took 0.57 ms  (cached)
+Module newton._src.sim.articulation 2e73608 load on device 'cpu' took 0.50 ms  (cached)
+Module newton._src.solvers.mujoco.kernels 90c0c67 load on device 'cpu' took 0.88 ms  (cached)
+{"scene": "16", "name": "拨闩开盖", "scope": "dependency/loading/short physics smoke; not task success certification", "finite": true, "bodies": 36, "dofs": 29, "steps": 24, "dt": 0.0020833333333333333, "passed": true}

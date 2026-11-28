@@ -1,0 +1,11 @@
+{
+  "scene": "01",
+  "name": "抓枝承重",
+  "scope": "dependency/loading/short physics smoke; not task success certification",
+  "finite": true,
+  "bodies": 34,
+  "dofs": 27,
+  "steps": 24,
+  "dt": 0.0020833333333333333,
+  "passed": true
+}
