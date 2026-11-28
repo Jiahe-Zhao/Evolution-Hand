@@ -1,0 +1,300 @@
+{
+  "01": {
+    "name": "抓枝承重",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/branch01/grip.xml",
+    "command": [
+      "scripts/nov20/branch01.py",
+      "grip",
+      "portable_grip"
+    ],
+    "historical": false
+  },
+  "02": {
+    "name": "枝上采果",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/fruit02/pick.xml",
+    "command": [
+      "scripts/nov20/fruit02.py",
+      "pick"
+    ],
+    "historical": false
+  },
+  "03": {
+    "name": "搬运（历史）",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/carry.xml",
+    "command": [
+      "scripts/nov20/run_final.py",
+      "carry",
+      "--no-video"
+    ],
+    "historical": true
+  },
+  "04": {
+    "name": "拨叶翻找",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/leaf04/hand.xml",
+    "command": [
+      "scripts/nov20/leaf04.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "05": {
+    "name": "装柄石锤",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/hafted05_verify/h.010.xml",
+    "command": [
+      "scripts/nov20/verify_hafted05.py",
+      "portable_hit"
+    ],
+    "historical": false,
+    "env": {
+      "ROT": "1.57",
+      "GRIP": ".055",
+      "CX": "-.008",
+      "CZ": ".080",
+      "BEND": "1.35",
+      "WARM": "g-.008_.080",
+      "WI": "1920",
+      "TX": ".010",
+      "TY": "-.125",
+      "TZ": ".045",
+      "DOWN": ".050"
+    }
+  },
+  "06": {
+    "name": "掌内换面",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/stone.xml",
+    "command": [
+      "scripts/nov20/run_final.py",
+      "stone",
+      "--no-video"
+    ],
+    "historical": false
+  },
+  "07": {
+    "name": "浅盘捏石",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/pebble.xml",
+    "command": [
+      "scripts/nov20/positive.py",
+      "pebble"
+    ],
+    "historical": false
+  },
+  "08": {
+    "name": "刮削",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/scrape.xml",
+    "command": [
+      "scripts/nov20/verify_positive.py",
+      "scrape",
+      "scrape_dwell/best046.npz",
+      "portable_scrape",
+      "--closed",
+      "--cpu"
+    ],
+    "historical": false
+  },
+  "09": {
+    "name": "石料堆放",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/stack09/stack09.xml",
+    "command": [
+      "scripts/nov20/stack09.py",
+      "custom"
+    ],
+    "historical": false
+  },
+  "10": {
+    "name": "骨珠穿杆",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/bead10/bead10.xml",
+    "command": [
+      "scripts/nov20/bead10.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "11": {
+    "name": "石片嵌槽",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/inlay11/seated_release.xml",
+    "command": [
+      "scripts/nov20/verify_shoot11.py",
+      "seated_release"
+    ],
+    "historical": false
+  },
+  "12": {
+    "name": "往复研磨",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/grind12/verified.xml",
+    "command": [
+      "scripts/nov20/grind12.py",
+      "verified"
+    ],
+    "historical": false
+  },
+  "13": {
+    "name": "活动提梁",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/handle.xml",
+    "command": [
+      "scripts/nov20/run_final.py",
+      "handle",
+      "--no-video"
+    ],
+    "historical": false
+  },
+  "14": {
+    "name": "软笔描线",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/brush14/verified.xml",
+    "command": [
+      "scripts/nov20/brush14/run_brush.py",
+      "verified"
+    ],
+    "historical": false
+  },
+  "15": {
+    "name": "旋拧螺帽",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/nut15/nut15.xml",
+    "command": [
+      "scripts/nov20/nut15.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "16": {
+    "name": "拨闩开盖",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/latch16/latch16.xml",
+    "command": [
+      "scripts/nov20/latch16.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "17": {
+    "name": "多指按键",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/keys17/keys.xml",
+    "command": [
+      "scripts/nov20/keys17.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "18": {
+    "name": "持机点选（历史）",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/phone.xml",
+    "command": [
+      "scripts/nov20/run_final.py",
+      "phone",
+      "--no-video"
+    ],
+    "historical": true
+  },
+  "19": {
+    "name": "薄卡分拣",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/card19/single.xml",
+    "command": [
+      "scripts/nov20/card19.py",
+      "single"
+    ],
+    "historical": false
+  },
+  "20": {
+    "name": "扫描器读码",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/scan20/hand.xml",
+    "command": [
+      "scripts/nov20/scan20.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "21": {
+    "name": "倾倒",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/pour21/verified.xml",
+    "command": [
+      "scripts/nov20/pour21.py",
+      "portable_pour"
+    ],
+    "historical": false
+  },
+  "22": {
+    "name": "夹具按压",
+    "backend": "legacy_rigid",
+    "xml": "outputs/nov20/clip22/hand.xml",
+    "command": [
+      "scripts/nov20/clip22.py",
+      "hand"
+    ],
+    "historical": false
+  },
+  "ax50-02": {
+    "name": "AX50 枝上采果",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_fruit02",
+    "module": "fruit_runtime",
+    "class": "FruitRuntime"
+  },
+  "ax50-04": {
+    "name": "AX50 拨叶翻找",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_leaf04",
+    "module": "leaf_runtime",
+    "class": "LeafRuntime"
+  },
+  "ax50-05": {
+    "name": "AX50 装柄石锤",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_strike05",
+    "module": "strike_runtime",
+    "class": "StrikeRuntime"
+  },
+  "ax50-07": {
+    "name": "AX50 浅盘捏石",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_pebble07",
+    "module": "pebble_runtime",
+    "class": "PebbleRuntime"
+  },
+  "ax50-13": {
+    "name": "AX50 活动提梁",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_handle13",
+    "module": "handle_runtime",
+    "class": "HandleRuntime"
+  },
+  "ax50-14": {
+    "name": "AX50 软笔描线",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_brush",
+    "module": "adapter",
+    "class": "AX50BrushRuntime"
+  },
+  "ax50-16": {
+    "name": "AX50 拨闩开盖",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_latch16",
+    "module": "latch_runtime",
+    "class": "LatchRuntime"
+  },
+  "ax50-17": {
+    "name": "AX50 多指按键",
+    "backend": "ax50_soft",
+    "module_dir": "scripts/nov20/ax50_keys17",
+    "module": "repair_keys_runtime",
+    "class": "KeysRuntime"
+  }
+}

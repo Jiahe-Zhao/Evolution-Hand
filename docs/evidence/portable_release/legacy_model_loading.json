@@ -1,0 +1,16 @@
+[
+  {
+    "model": "models/legacy_spread_20261128/left/urdf/australopithecus_hand_mirror.urdf",
+    "bodies": 26,
+    "dofs": 20,
+    "finite_fk": true,
+    "scope": "URDF and mesh loading, not loaded-contact qualification"
+  },
+  {
+    "model": "models/legacy_spread_20261128/right/urdf/australopithecus_hand.urdf",
+    "bodies": 26,
+    "dofs": 20,
+    "finite_fk": true,
+    "scope": "URDF and mesh loading, not loaded-contact qualification"
+  }
+]

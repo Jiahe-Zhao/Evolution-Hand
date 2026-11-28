@@ -1,0 +1,87 @@
+{
+  "scope": "offline MuJoCo convex distance using actual recorded Newton body poses and per-run object XML; rigid geometry only, excludes deformable pad surfaces; not a replay of Newton contacts",
+  "rows": [
+    {
+      "tag": "shape_original_v1",
+      "frame": 240,
+      "time_s": 2.4099999999999926,
+      "thumb_min_rigid_distance_mm": 1.0610530818680457,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 2.070617070227675,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_original_v1",
+      "frame": 340,
+      "time_s": 3.4099999999999713,
+      "thumb_min_rigid_distance_mm": -1.4901274574199836,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 2.2661865901908436,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_original_v1",
+      "frame": 475,
+      "time_s": 4.759999999999943,
+      "thumb_min_rigid_distance_mm": 22.401031185561965,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 25.81439092843024,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 190,
+      "time_s": 1.9100000000000015,
+      "thumb_min_rigid_distance_mm": 1.1511998500159162,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 3.431768377078494,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 220,
+      "time_s": 2.209999999999997,
+      "thumb_min_rigid_distance_mm": 0.5541171186720494,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 2.1350005939572667,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 240,
+      "time_s": 2.4099999999999926,
+      "thumb_min_rigid_distance_mm": -7.709545283950367,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 13.663372651801332,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 300,
+      "time_s": 3.00999999999998,
+      "thumb_min_rigid_distance_mm": -7.806776126735969,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 8.573378566614899,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 475,
+      "time_s": 4.759999999999943,
+      "thumb_min_rigid_distance_mm": -7.817152873998482,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 7.18784191714769,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    },
+    {
+      "tag": "shape_topwide_v1",
+      "frame": 525,
+      "time_s": 5.259999999999932,
+      "thumb_min_rigid_distance_mm": -7.841821517461883,
+      "thumb_geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74",
+      "index_min_rigid_distance_mm": 7.0948134971910415,
+      "index_geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+    }
+  ],
+  "assessment": "topwide is not accepted: visually embedded in thumb, deep rigid overlap confirmed at hold frame; apparent lift is not a valid pinch"
+}

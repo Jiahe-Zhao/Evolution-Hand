@@ -13,3 +13,14 @@
 
 *.zip binary
 *.whl binary
+
+*.zip.part* binary
+*.npz binary
+*.npy binary
+*.ttc binary
+*.ttf binary
+
+# Preserve exact historical patches and third-party notices.
+docs/review/*.patch -whitespace
+assets/fonts/*LICENSE.txt -whitespace
+scripts/nov20/ARPHICPL.TXT -whitespace

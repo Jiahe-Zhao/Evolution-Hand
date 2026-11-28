@@ -12,7 +12,7 @@ def install(env_id,cfg,out,task):
   tolerance(cls,cfg,task,out)
  original=cls._setup_scene
  cfg.robot_cfg.spawn.make_instanceable=False
- cfg.robot_cfg.spawn.usd_dir=str(out/'hand_usd');cfg.robot_cfg.spawn.force_usd_conversion=True
+ cfg.robot_cfg.spawn.usd_dir=str(Path(out).resolve()/'hand_usd');cfg.robot_cfg.spawn.force_usd_conversion=True
  def setup(self):
   original(self)
   root=self.hand.cfg.prim_path.replace('.*','0')

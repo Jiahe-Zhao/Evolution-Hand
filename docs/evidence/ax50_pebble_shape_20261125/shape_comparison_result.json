@@ -1,0 +1,63 @@
+{
+  "scope": "same fresh-start targets, dt, joint caps, friction and acceptance; target shape only changed, inertia recomputed at same mass",
+  "variants": {
+    "original": {
+      "stop": "completed",
+      "recorded_s": 5.259999999999932,
+      "max_lift_mm": 1.5979595184326172,
+      "final_lift_mm": 0.1775398850440979,
+      "max_neighbor_displacement_mm": 0.1287260204553604,
+      "thumb_peak_N": 0.06311737839132547,
+      "index_peak_N": 0.0,
+      "max_hand_tray_N": 0.0,
+      "actual_terminal_z_lift_mm": {
+        "link_1_2": 30.000179290771484,
+        "link_2_3": 29.998748779296875
+      },
+      "finite": true,
+      "acceptance_passed": false,
+      "conclusion": "failed: target lift below 20 mm",
+      "object_xml": "/home/zjh/Evolution_PC/scripts/nov20/ax50_pebble07/assets/object_original_v1.xml"
+    },
+    "topwide": {
+      "stop": "completed",
+      "recorded_s": 5.259999999999932,
+      "max_lift_mm": 35.86655807495117,
+      "final_lift_mm": 35.82755661010742,
+      "max_neighbor_displacement_mm": 2.998558282852173,
+      "thumb_peak_N": 24.388018027631915,
+      "index_peak_N": 0.0,
+      "max_hand_tray_N": 0.0,
+      "actual_terminal_z_lift_mm": {
+        "link_1_2": 30.00167465209961,
+        "link_2_3": 29.999814987182617
+      },
+      "finite": true,
+      "acceptance_passed": false,
+      "conclusion": "failed: thumb penetration and apparent attachment, not a valid two-finger pinch",
+      "object_xml": "/home/zjh/Evolution_PC/scripts/nov20/ax50_pebble07/assets/object_topwide_v1.xml"
+    }
+  },
+  "same_targets_common_prefix": true,
+  "target_max_difference": 0.0,
+  "common_target_samples": 526,
+  "contact_geometry_review": {
+    "scope": "review of this exact recorded run; offline rigid convex distances are not Newton contact depths",
+    "video_frame_sim_time_s": 4.78,
+    "geometry_frame_sim_time_s": 4.759999999999943,
+    "geometry": {
+      "thumb": {
+        "distance_mm": -7.817152873998482,
+        "geom": "/ax50_left/Geometry/link_1_2/skin_1_2_74"
+      },
+      "index": {
+        "distance_mm": 7.18784191714769,
+        "geom": "/ax50_left/Geometry/link_2_3/skin_2_3_115"
+      }
+    },
+    "visual_finding": "stone visibly embedded in thumb at lift-hold; index visibly separated in side view",
+    "acceptance_passed": false,
+    "conclusion": "failed: thumb penetration and apparent attachment, not a valid two-finger pinch",
+    "result_sha256": "2166f07fea4d79a236afa639d55dfcbb451fd04d9b5441908d657df5a7f62bc3"
+  }
+}

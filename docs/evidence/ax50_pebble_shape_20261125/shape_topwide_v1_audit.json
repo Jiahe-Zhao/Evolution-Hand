@@ -1,0 +1,15 @@
+{
+  "scope": "100 Hz force-proxy audit; original acceptance uses geometric contacts; not a per-substep certification",
+  "tag": "shape_topwide_v1",
+  "max_lift_mm": 35.86655807495117,
+  "max_neighbor_displacement_mm": 2.998558282852173,
+  "max_hand_tray_N": 0.0,
+  "max_thumb_N": 24.388018027631915,
+  "max_index_N": 0.0,
+  "dual_contact_samples": 0,
+  "sampled_qualified_hold_s": 0.0,
+  "sampled_criteria_met": false,
+  "all_sampled_finite": true,
+  "invalid_frames": 0,
+  "first_invalid_time_s": null
+}

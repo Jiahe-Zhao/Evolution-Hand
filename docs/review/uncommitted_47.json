@@ -1,0 +1,284 @@
+[
+  {
+    "path": "Isaaclab_other/australopithecus_hand_assets/left/urdf/australopithecus_hand_mirror.urdf",
+    "decision": "published_as_separate_model",
+    "reason": "包含展开机构的旧骨手，单独发布完整 URDF/STL，保留默认基准及 AX50 v3",
+    "source_sha256": "65a523187984ef562356f02805df5c38831a3a0683b8b22b165192d6380a6c58"
+  },
+  {
+    "path": "Isaaclab_other/australopithecus_hand_assets/right/urdf/australopithecus_hand.urdf",
+    "decision": "published_as_separate_model",
+    "reason": "包含展开机构的旧骨手，单独发布完整 URDF/STL，保留默认基准及 AX50 v3",
+    "source_sha256": "3ed21446d2f5bb9b41689f0cbcef23212d3034cfb2b25016886998edebd185b6"
+  },
+  {
+    "path": "Isaaclab_other/build_compliant_palm.py",
+    "decision": "deferred_patch",
+    "reason": "旧 PhysX 软掌实验，非 AX50 Newton 运行依赖；需另做 PhysX 回归",
+    "source_sha256": "8ac9ace24ffb2ac8da0337cfbfa1485f24cec7dc00a6cfe74c1e6258f4f748c0"
+  },
+  {
+    "path": "Isaaclab_other/compliant_palm_runtime.py",
+    "decision": "deferred_patch",
+    "reason": "旧 PhysX 软掌实验，非 AX50 Newton 运行依赖；需另做 PhysX 回归",
+    "source_sha256": "5aaf7eff22eda5e1275ec36f4dbdc29c8d8524858b01e11e387d2b6c160c165e"
+  },
+  {
+    "path": "Isaaclab_other/compliant_palm_task.py",
+    "decision": "deferred_patch",
+    "reason": "旧 PhysX 软掌实验，非 AX50 Newton 运行依赖；需另做 PhysX 回归",
+    "source_sha256": "53c229e364c1144e1199ed8bd69ea2ffdc6ae916d97d3b7a4d2e7bd7da9e0e3d"
+  },
+  {
+    "path": "Isaaclab_other/evaluation_interface.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "4653266c3ed7587a854ea194a28a61f83c022511a7915cc03063623051bbe978"
+  },
+  {
+    "path": "Isaaclab_other/isaaclab_tool.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "fe7d521578ac7cb6e281bb6e98e3ce8baa9f59c6c8da962381d2c9c7b754d4fd"
+  },
+  {
+    "path": "Isaaclab_other/main_evolution.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "5382e81f028fe93a084125997e3426919ee4f53e9dc824c8f064119bb801c85f"
+  },
+  {
+    "path": "Isaaclab_other/mechanical_evolution_interface.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "cf14821bc33460ff4c48eb9332cf917a0627052529d708e177ebb5a10e11e421"
+  },
+  {
+    "path": "Isaaclab_other/mirror_agent.py",
+    "decision": "included",
+    "reason": "显式左右手标记，避免名称推断失效",
+    "source_sha256": "1681210a691eeaad6bb562915438a7bd99c906ec4e3da18492b5be9f6e5175bb"
+  },
+  {
+    "path": "Isaaclab_other/persistent_isaac_worker.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "d6d51c29f2c8d2ec2a9c41209b26b83e3de9fc05a043618bca75e8b05ed29929"
+  },
+  {
+    "path": "Isaaclab_other/policy_inheritance.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "e4a26b2dc71eda72d691c79f827f56322e10fe3870fe4cfeb774767d7f9b45c1"
+  },
+  {
+    "path": "Isaaclab_other/read_results.py",
+    "decision": "included",
+    "reason": "奖励文件名解析；另修复双下划线负号丢失",
+    "source_sha256": "317c57be62384c8977818900c2544d36e09f3c253b84c7626e056c413561837e"
+  },
+  {
+    "path": "Isaaclab_other/run_formal_mechanical_bc_20261018.sh",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "180054a2bdbbf5b2352d96b5b1345073c27cd045fba4ece80be0adec2c154cb4"
+  },
+  {
+    "path": "Isaaclab_other/train_worker.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "2d40758680551dcfc46276f1f72e00bbd3c844e4780ff593f8fd50c92afea12a"
+  },
+  {
+    "path": "Isaaclab_other/validate_collision_runtime.py",
+    "decision": "deferred_patch",
+    "reason": "旧 IsaacLab 进化/训练/校验链路扩展，非本次原生 Newton 场景依赖；保留差异待对应环境回归",
+    "source_sha256": "18e6cc45065b1b1b3b53c27ff2f955b1b259b771ba694705cc97f546603ff146"
+  },
+  {
+    "path": "Isaaclab_other/validate_compliant_palm.py",
+    "decision": "deferred_patch",
+    "reason": "旧 PhysX 软掌实验，非 AX50 Newton 运行依赖；需另做 PhysX 回归",
+    "source_sha256": "fb25316b5c1c19a9b46c5fee2737012e7161bd7085411ee96140a0a4a61065b9"
+  },
+  {
+    "path": "evolution_tasks/cartesian_hand_controller.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "1eff4ea84ba7f731eefdfcd24d3ac6bc20457ce270c66347440e72bce2021666"
+  },
+  {
+    "path": "evolution_tasks/current_evolution_agent/current_hand_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "当前运行生成的配置/个体快照，不覆盖默认配置",
+    "source_sha256": "2744069dc53100f690727b9f85fc23eff331b11a19e53c321eb506c65b379253"
+  },
+  {
+    "path": "evolution_tasks/current_evolution_agent/human_hand_414.py",
+    "decision": "deferred_patch",
+    "reason": "当前运行生成的配置/个体快照，不覆盖默认配置",
+    "source_sha256": "61369ce8db5bec9e878ce6779b3374f2553865d5f981df8411bb56ba292b5661"
+  },
+  {
+    "path": "evolution_tasks/current_evolution_agent/human_mirror_hand_414.py",
+    "decision": "deferred_patch",
+    "reason": "当前运行生成的配置/个体快照，不覆盖默认配置",
+    "source_sha256": "e2addb5ce5eeef0716ed5a5618c3c54d6518b4d5996970c3a15156495be7c2a2"
+  },
+  {
+    "path": "evolution_tasks/current_left_hand/current_left_hand_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "当前运行生成的配置/个体快照，不覆盖默认配置",
+    "source_sha256": "0f69b87c453af839319cfbba0e980aa9eba9fce250d8c62bea19ee51890d5395"
+  },
+  {
+    "path": "evolution_tasks/current_right_hand/current_right_hand_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "当前运行生成的配置/个体快照，不覆盖默认配置",
+    "source_sha256": "cd6340b7761fd4bef5391cedb3764601c5649f717bcf8518b2a66aaa66663c19"
+  },
+  {
+    "path": "evolution_tasks/mechanical_hand_interface.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "2e4bd30db3cf364ae4e4a0eba08efd849c651d9d26fac9195d94514fc31fd461"
+  },
+  {
+    "path": "evolution_tasks/task_branch_grasp/branch_grasp_env.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "ebda8ea23ab884f70baf471b326d68e288b3035ceb3bdaff6c327c3e65df8469"
+  },
+  {
+    "path": "evolution_tasks/task_branch_grasp/branch_grasp_env_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "bd4b5e73ddc2bd5cae1f7c0c06ceedc4fe79f80cfe3e01b277c65f02a5bfa296"
+  },
+  {
+    "path": "evolution_tasks/task_branch_grasp/calibrate_branch_trajectory.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "3ebdb5f5aed5d56f31ca3b5180c77231b213047631c3215408857337441917d1"
+  },
+  {
+    "path": "evolution_tasks/task_forage/forage_env.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "3f3c77e32878d356b3e1dbfb1ad0cf8ad1a680961b279247d0abca5843f8f5dc"
+  },
+  {
+    "path": "evolution_tasks/task_forage/forage_env_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "803e81a9367675436d732ef71ea8748510412e96db51f31eebd518bfba6bb0e8"
+  },
+  {
+    "path": "evolution_tasks/task_grasp/evolution_grasp_env.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "938000ff08bac913a38a0fdf56c617e8918a4c32c53921b5f7c12d9a77136a40"
+  },
+  {
+    "path": "evolution_tasks/task_grasp/evolution_grasp_env_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "9a0ea569327f8b4738c8facc0034de98426df5ec8e3426239e620b50d7b156f8"
+  },
+  {
+    "path": "evolution_tasks/task_grasp/scripted_adaptive_grasp.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "b7a721efec89c81327a89226b631bfa3c6c414cd2627e53279ecc7818a2ca854"
+  },
+  {
+    "path": "evolution_tasks/task_strike/__init__.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "ea37ec470252ae2af05da4d7643bbd345681542996e8253aa01415bbfb6da88b"
+  },
+  {
+    "path": "evolution_tasks/task_strike/evolution_strike_env.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "6037e14b7fdbef50c1810db0d9b32dd12c565e8e991e45c1763bf6abe2af38cb"
+  },
+  {
+    "path": "evolution_tasks/task_strike/evolution_strike_env_cfg.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "8378040f817320405306b33e560c87866c2306613a95960d485a85da18f58b0c"
+  },
+  {
+    "path": "evolution_tasks/task_strike/probe_strike_grasp.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "23bdca3525d6c4577f1b1e9741f296607bb64f23cfd8a7487bb9be49f0197f62"
+  },
+  {
+    "path": "evolution_tasks/task_strike/strike_bc_teacher.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "c0b9125dfcf4acf4b511a59490c1ea276f8d81cdb3f0231cd242cc9e90e9fe83"
+  },
+  {
+    "path": "evolution_tasks/task_suite/evaluate_task.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "3a3d3965710bc09fa746af9a7855db41f5988392348a2a3ab47fb4e04e278b64"
+  },
+  {
+    "path": "evolution_tasks/task_suite/scripted_adaptive_task_demo.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "d7515de017efd726205724f168c79f1ccbecbfd31c884a514049ff2f8beda9dd"
+  },
+  {
+    "path": "evolution_tasks/train_interface.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "f5b29222c6e301e068595fa2defb17bc9899adb6adbb12a8e8438d21463a1645"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/NORMALIZATION_AB_20261026.md",
+    "decision": "included",
+    "reason": "补齐已有实验结论，不启动训练",
+    "source_sha256": "13ee7a4384c89186f87c535d67957b5aa6ba5b8454170979ebc093da9e1a1deb"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/branch_policy_video.py",
+    "decision": "deferred_patch",
+    "reason": "依赖旧策略 checkpoint 的回放扩展，不是场景从零启动依赖",
+    "source_sha256": "abf01b25d9e8c50cfe23c78805f99de42486d9db57b3a4ee68aacb47ba81a2d1"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/forage_policy_video.py",
+    "decision": "deferred_patch",
+    "reason": "依赖旧策略 checkpoint 的回放扩展，不是场景从零启动依赖",
+    "source_sha256": "472fb038f5a1b8020b232e864bd6767974a643853a3f3cffc9deee8a21b67c93"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/native_contact_hooks.py",
+    "decision": "included",
+    "reason": "USD 缓存目录规范化",
+    "source_sha256": "31cee5568df4ebf742d55df9b73c770105cc9191dff47203e93d2977d5e4171b"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/native_goal_ppo.py",
+    "decision": "included",
+    "reason": "训练步数 frames 初值补齐",
+    "source_sha256": "27467f27117210a7b2c26e2c50f910cc20304540c969b1686b44e2a352885466"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/native_goal_worker.py",
+    "decision": "included",
+    "reason": "优先使用实际末节骨段",
+    "source_sha256": "b4e60aab51bbee534142468fcb5b4ac0e317fffda150ca99563daad849532b53"
+  },
+  {
+    "path": "outputs/derl_pure_ppo_20261025/task_bottleneck_audit.py",
+    "decision": "deferred_patch",
+    "reason": "涉及控制器、动作观测或任务判据；非本次原生 Newton 场景依赖，保留差异待原后端回归",
+    "source_sha256": "586b38112b56c4d5620654190c3d4fd656035055acf97066bde728a5809258f6"
+  }
+]

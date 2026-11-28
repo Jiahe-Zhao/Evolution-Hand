@@ -1,6 +1,12 @@
 """Reproducible, per-episode evaluation for Evolution RL-Games policies."""
 from __future__ import annotations
 
+# Resolve this checkout, not the original experiment machine.
+from pathlib import Path as _EvoPath
+import sys as _evo_sys
+_EVOLUTION_ROOT = next(p for p in _EvoPath(__file__).resolve().parents if (p / 'scripts/unpack_ax50.py').is_file())
+_evo_sys.path.insert(0, str(_EVOLUTION_ROOT))
+
 import argparse
 import hashlib
 import importlib
@@ -17,13 +23,13 @@ from pathlib import Path
 from typing import Any
 import xml.etree.ElementTree as ET
 
-sys.path.insert(0,'/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021')
-sys.path.insert(0,'/home/zjh/Evolution_PC/outputs/trusted_hand_baseline_20261021/four_tasks')
+sys.path.insert(0,(str(_EVOLUTION_ROOT) + '/outputs/trusted_hand_baseline_20261021'))
+sys.path.insert(0,(str(_EVOLUTION_ROOT) + '/outputs/trusted_hand_baseline_20261021/four_tasks'))
 from isaaclab.app import AppLauncher
 
 # This entry point lives beside the mechanical asset tools, while the shared
 # evaluation helpers live in the repository's task suite.
-sys.path.insert(0, '/home/zjh/Evolution_PC/evolution_tasks/task_suite')
+sys.path.insert(0, (str(_EVOLUTION_ROOT) + '/evolution_tasks/task_suite'))
 from task_registry import TASKS
 
 
@@ -100,7 +106,7 @@ if os.environ.get("GRAPH_SKIP_LOG_SCAN") == "1":
     # Diagnostic-process-only: historical training logs contain no task modules.
     import omni.ext._impl.fast_importer as _fast_importer
     _original_fast_walk = _fast_importer._fast_walk
-    _excluded_logs = '/home/zjh/Evolution_PC/evolution_tasks/logs'
+    _excluded_logs = (str(_EVOLUTION_ROOT) + '/evolution_tasks/logs')
     def _diagnostic_fast_walk(path, *walk_args, **walk_kwargs):
         if os.path.realpath(path) == _excluded_logs:
             return
@@ -161,7 +167,7 @@ def _resolve_checkpoint() -> str:
     run_name = next((value for key, value in run_names.items() if key.endswith(f":{env_id}")), None)
     if run_name is None:
         raise FileNotFoundError(f"No {stage} run metadata for {args.task}")
-    root = Path(os.environ.get("EVOLUTION_CODE_ROOT", "/home/zjh/Evolution_PC"))
+    root = Path(os.environ.get("EVOLUTION_CODE_ROOT", (str(_EVOLUTION_ROOT))))
     nn_dir = root / "evolution_tasks" / "logs" / "evolution_task" / run_name / "nn"
     named = nn_dir / "evolution_task.pth"
     if named.is_file():
@@ -282,7 +288,7 @@ def _initial_geometry(task: str, raw_env: Any) -> dict[str, Any]:
 def _prepare_morphology(output_dir: Path) -> MorphologyContext | None:
     """Build one morphology in an evaluation-local import override."""
     args.individual_key='baseline'
-    code_root = Path(os.environ.get("EVOLUTION_CODE_ROOT", "/home/zjh/Evolution_PC"))
+    code_root = Path(os.environ.get("EVOLUTION_CODE_ROOT", (str(_EVOLUTION_ROOT))))
     sys.path.insert(0, str(code_root / "Isaaclab_other"))
     from code_to_urdf import generate_urdf_from_dict
     from isaaclab_tool import parse_urdf_and_generate_articulation_cfg
@@ -355,7 +361,8 @@ def _evolved_fingertips(backup: MorphologyContext) -> list[str]:
     fingertip_names = []
     available_joints = set(backup.morphology_contract["all_actuated_joints"])
     for finger_id in range(1, 6):
-        body_name = distal_body_name(finger_id, available_joints)
+        preferred = f"link_{finger_id}_3"
+        body_name = preferred if preferred in backup.body_names else distal_body_name(finger_id, available_joints)
         if body_name is None:
             raise ValueError(f"Morphology {args.individual_key} has no remaining body for finger {finger_id}.")
         fingertip_names.append(body_name)

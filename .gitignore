@@ -55,3 +55,7 @@ _isaac_sim/
 
 # Extracted copies of versioned release archives
 /local_assets/
+
+# Portable scene environment and regenerated artifacts
+.venv/
+.portable_validation/

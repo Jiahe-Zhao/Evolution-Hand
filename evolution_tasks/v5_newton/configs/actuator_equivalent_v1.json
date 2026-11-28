@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "name": "actuator_equivalent_v1",
+  "status": "provisional_engineering_prior_not_hardware_calibrated",
+  "actuator_type": "implicit_pd",
+  "hand": {
+    "stiffness": 3.0,
+    "damping": 0.3,
+    "armature": 0.001,
+    "friction": 0.003,
+    "dynamic_friction": 0.0,
+    "viscous_friction": 0.01
+  },
+  "wrist": {
+    "stiffness": 3000.0,
+    "damping": 100.0,
+    "armature": 0.0,
+    "friction": 0.0,
+    "dynamic_friction": 0.0,
+    "viscous_friction": 0.0
+  },
+  "units": {
+    "hand_stiffness": "N m/rad",
+    "hand_damping_and_viscous_friction": "N m s/rad",
+    "hand_armature": "kg m^2",
+    "hand_friction": "N m"
+  },
+  "limits": "Preserve per-joint effort and velocity limits from fixed baseline URDF; never scale with morphology automatically",
+  "notes": [
+    "PD damping is separate from passive viscous friction.",
+    "Newton MJWarp has no separate kinetic joint friction property; dynamic_friction must remain zero.",
+    "Dry friction is a soft solver constraint and may creep; it is not an exact static lock.",
+    "New dry friction 0.003 N m and passive damping 0.01 N m s/rad are test priors, not measured motor values.",
+    "Preserve existing PD and armature values for a controlled comparison. No thermal, electrical, gear backlash, or torque-speed curve model is claimed."
+  ]
+}

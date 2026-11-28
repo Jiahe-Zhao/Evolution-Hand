@@ -43,14 +43,15 @@ def get_latest_reward(raw_path):
         return None
 
     # Pattern to match the reward in filenames
-    reward_pattern = re.compile(r"rew_([-+]?\d*\.\d+|\d+)")
+    # RL-Games emits negative rewards as ``rew__123.4``; accept both forms.
+    reward_pattern = re.compile(r"rew_((?:[-+]|_)?(?:\d+(?:\.\d*)?|\.\d+))")
     max_reward = None
 
     # Iterate through model files in the "nn" folder
     for file_name in os.listdir(latest_folder_path):
         match = reward_pattern.search(file_name)
         if match:
-            reward = float(match.group(1))
+            reward = float(match.group(1).replace("_", "-"))
             if max_reward is None or reward > max_reward:
                 max_reward = reward
 
@@ -77,12 +78,13 @@ def get_reward_from_run_dir(run_dir):
         print(f"Folder 'nn' not found in run dir: {run_dir}")
         return None
 
-    reward_pattern = re.compile(r"rew_([-+]?\d*\.\d+|\d+)")
+    # RL-Games emits negative rewards as ``rew__123.4``; accept both forms.
+    reward_pattern = re.compile(r"rew_((?:[-+]|_)?(?:\d+(?:\.\d*)?|\.\d+))")
     max_reward = None
     for file_name in os.listdir(latest_folder_path):
         match = reward_pattern.search(file_name)
         if match:
-            reward = float(match.group(1))
+            reward = float(match.group(1).replace("_", "-"))
             if max_reward is None or reward > max_reward:
                 max_reward = reward
 

@@ -1,0 +1,73 @@
+{
+  "original": "/home/zjh/Evolution_PC/scripts/nov20/ax50_pebble07/assets/object_original_v1.xml",
+  "variant": "/home/zjh/Evolution_PC/scripts/nov20/ax50_pebble07/assets/object_topwide_v1.xml",
+  "changed": "target peb0 mesh only; base foot, neighbors, tray, materials, free joints and initial poses unchanged",
+  "mass_g": 2.11,
+  "mesh_bounds_local_mm": [
+    [
+      -10.0,
+      -8.0,
+      -4.2
+    ],
+    [
+      10.0,
+      7.44,
+      6.4
+    ]
+  ],
+  "mesh_dimensions_mm": [
+    20.0,
+    15.440000000000001,
+    10.6
+  ],
+  "mesh_dimensions_initial_world_mm": [
+    18.95769610617043,
+    16.36397781279815,
+    10.6
+  ],
+  "all_8_xy_support_errors_mm": 5.204170427930421e-15,
+  "rounding_radius_mm": 4.0,
+  "vertices": 1249,
+  "triangles": 2494,
+  "profile_t": [
+    0.0,
+    0.03,
+    0.08,
+    0.15,
+    0.3,
+    0.5,
+    0.7,
+    0.78,
+    0.85,
+    0.93,
+    0.98,
+    1.0
+  ],
+  "profile_relative_width": [
+    0.72,
+    0.78,
+    0.82,
+    0.86,
+    0.9,
+    0.95,
+    0.99,
+    1.0,
+    0.98,
+    0.83,
+    0.5,
+    0.0
+  ],
+  "inertia_original": [
+    5.735163722375561e-08,
+    4.9146539801913175e-08,
+    3.646623827286053e-08
+  ],
+  "inertia_variant": [
+    8.114345783118714e-08,
+    6.673610329008218e-08,
+    4.866131221960597e-08
+  ],
+  "inertia_note": "recomputed from changed geometry at the same mass; not artificially held equal",
+  "original_sha256": "8bb469121b81056e1b0678b46eaf3096098e39f614c45064de6fff6b3715297a",
+  "variant_sha256": "6ba2c6cf985c49bda519a0676cdf1112289ea3fc693cd07d7ef1a043ae5c366d"
+}

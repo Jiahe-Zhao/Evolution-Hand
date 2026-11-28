@@ -132,7 +132,7 @@ def run(env,args,out):
  obs=env.reset();rms.update(obs)
  before=evaluate(env,net,rms,args,out,'before_training')
  obs=env.reset();rms.update(obs);discounted=torch.zeros(N,device=device)
- train_episodes=train_success=0;next_eval=args.eval_every;best=-1;evaluations=[dict(frames=0,**before)]
+ frames=0;train_episodes=train_success=0;next_eval=args.eval_every;best=-1;evaluations=[dict(frames=0,**before)]
  started=time.monotonic();run_started=started
  for iteration in range(iterations):
   lr=3e-4*(1-iteration/iterations)

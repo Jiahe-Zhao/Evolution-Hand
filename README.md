@@ -2,6 +2,22 @@
 
 Evolution Hand is the baseline repository for hand morphology evolution, multi-task evaluation, and Isaac Lab task integration. This repo keeps the reusable source code, robot descriptions, and slot overrides that should be shared across different compute nodes.
 
+## 从零运行场景（推荐入口）
+
+已补齐原生 Newton 场景脚本、模型、固定动作种子和锁定依赖，不需要原实验机或 IsaacLab 安装。
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python scripts/bootstrap_scenes.py --install
+.venv/bin/python scripts/run_scene.py --list
+.venv/bin/python scripts/run_scene.py 04 --mode demo
+.venv/bin/python scripts/run_scene.py ax50-04 --side right
+```
+
+Linux / Python 3.12；AX50 软体需要 NVIDIA GPU。基础刚体示例可用 CPU。启动成功和任务得分成功分别记录。
+
+[完整安装与验证说明](docs/PORTABLE_NEWTON_SCENES.md) · [场景清单](configs/newton_scenes.json) · [47 处改动的处理](docs/review/UNCOMMITTED_47.md)
+
 ## AX50 下载与导入 / AX50 assets
 
 **AX50 VisualSkin v3.0.0 完整包已包含在默认分支中。** 普通 `git clone` 或 GitHub 的 Download ZIP 均包含它，不需要 Git LFS，也不依赖实验机的 `outputs/` 目录。
